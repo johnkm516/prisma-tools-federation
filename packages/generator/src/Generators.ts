@@ -11,6 +11,7 @@ export class Generators {
   options: Options = {
     prismaName: 'prisma',
     output: join(projectRoot, 'src/graphql'),
+    federation: false,
     excludeFields: [],
     excludeModels: [],
     excludeFieldsByModel: {},
@@ -166,6 +167,10 @@ export class Generators {
 
   protected upperModel(name: string) {
     return name.charAt(0).toUpperCase() + name.slice(1);
+  }
+
+  protected federatedOption() {
+    return this.options.federation;
   }
 
   protected excludedOperations(model: string) {

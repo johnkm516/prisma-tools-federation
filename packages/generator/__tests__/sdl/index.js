@@ -7,8 +7,12 @@ async function main() {
       {
         name: 'sdl',
         schemaPath: './schema.prisma',
+        
       },
-      { output: join(process.cwd(), './graphql') },
+      { 
+        output: join(process.cwd(), './graphql'),
+        federation: true
+      },
     );
     await generator.run();
   } catch (error) {

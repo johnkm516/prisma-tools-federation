@@ -5,7 +5,7 @@
     "postinstall": "husky install"
   },
   "devDependencies": {
-	  "tsdx": "^0.14.1",
+	"tsdx": "^0.14.1"
     "husky": "7.0.4",
     "lerna": "4.0.0",
     "prettier": "2.5.1",

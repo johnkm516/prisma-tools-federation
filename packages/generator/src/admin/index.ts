@@ -9,6 +9,7 @@ import { createFile } from './createFile';
 const defaultOptions: Options = {
   prismaName: 'prisma',
   output: './src/graphql',
+  federation: false,
   excludeFields: [],
   excludeModels: [],
   excludeFieldsByModel: {},

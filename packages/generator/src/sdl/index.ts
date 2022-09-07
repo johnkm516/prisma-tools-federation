@@ -36,7 +36,11 @@ export class GenerateSdl extends Generators {
     for (const model of await this.models()) {
       const dataModel = this.dataModel(dataModels.models, model.name);
       const modelDocs = this.filterDocs(dataModel?.documentation);
-      let fileContent = `${modelDocs ? `"""${modelDocs}"""\n` : ''}type ${
+      let fileContent = ``;
+      if (this.options.federation) {
+        fileContent += `extend schema\n\t@link(url: "https://specs.apollo.dev/federation/v2.0", import: ["@key", "@shareable"])\n\n`;
+      }
+      fileContent += `${modelDocs ? `"""${modelDocs}"""\n` : ''}type ${
         model.name
       } {`;
       const excludeFields = this.excludeFields(model.name);
@@ -64,15 +68,16 @@ export class GenerateSdl extends Generators {
           }`;
         }
       });
-
       fileContent += `\n}\n\n`;
       await this.createFiles(model.name, fileContent);
+      console.log(dataModel);
     }
   }
 
   private async getOperations(model: string) {
     const exclude = this.excludedOperations(model);
-    return await createQueriesAndMutations(model, exclude, this);
+    const federation = this.federatedOption();
+    return await createQueriesAndMutations(model, exclude, this, federation);
   }
 
   private async createFiles(model: string, typeContent: string) {
