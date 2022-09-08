@@ -38,5 +38,10 @@ const resolvers: Resolvers = {
       return prisma.comment.updateMany(args);
     },
   },
+  Comment: {
+    __resolveReference(_parent, args, { prisma }) {
+      return prisma.Comment.findUnique(args);
+    },
+  },
 };
 export default resolvers;

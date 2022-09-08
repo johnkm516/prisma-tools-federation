@@ -65,6 +65,8 @@ export interface Apple {
   [key: string]: Resolver<any, any, any>;
   seeds?: Resolver<Client.Apple, {}, number>;
   core?: Resolver<Client.Apple, {}, string>;
+
+  __resolveReference?: Resolver<{}, FindUniqueAppleArgs, Client.Apple | null>;
 }
 
 export interface User {
@@ -80,6 +82,8 @@ export interface User {
   groupId?: Resolver<Client.User, {}, number | null>;
   comments?: Resolver<Client.User, UserCommentsArgs, Client.Comment[] | null>;
   _count?: Resolver<Client.User, {}, Client.Prisma.UserCountOutputType>;
+
+  __resolveReference?: Resolver<{}, FindUniqueUserArgs, Client.User | null>;
 }
 
 export interface Post {
@@ -93,6 +97,8 @@ export interface Post {
   createdAt?: Resolver<Client.Post, {}, Date>;
   updatedAt?: Resolver<Client.Post, {}, Date>;
   _count?: Resolver<Client.Post, {}, Client.Prisma.PostCountOutputType>;
+
+  __resolveReference?: Resolver<{}, FindUniquePostArgs, Client.Post | null>;
 }
 
 export interface Comment {
@@ -105,6 +111,12 @@ export interface Comment {
   authorId?: Resolver<Client.Comment, {}, number | null>;
   createdAt?: Resolver<Client.Comment, {}, Date>;
   updatedAt?: Resolver<Client.Comment, {}, Date>;
+
+  __resolveReference?: Resolver<
+    {},
+    FindUniqueCommentArgs,
+    Client.Comment | null
+  >;
 }
 
 export interface Group {
@@ -115,6 +127,8 @@ export interface Group {
   updatedAt?: Resolver<Client.Group, {}, Date>;
   users?: Resolver<Client.Group, GroupUsersArgs, Client.User[] | null>;
   _count?: Resolver<Client.Group, {}, Client.Prisma.GroupCountOutputType>;
+
+  __resolveReference?: Resolver<{}, FindUniqueGroupArgs, Client.Group | null>;
 }
 
 export interface Query {

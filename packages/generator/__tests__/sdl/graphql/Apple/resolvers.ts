@@ -38,5 +38,10 @@ const resolvers: Resolvers = {
       return prisma.apple.updateMany(args);
     },
   },
+  Apple: {
+    __resolveReference(_parent, args, { prisma }) {
+      return prisma.Apple.findUnique(args);
+    },
+  },
 };
 export default resolvers;
