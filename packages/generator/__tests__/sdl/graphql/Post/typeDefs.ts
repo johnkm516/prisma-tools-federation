@@ -7,7 +7,7 @@ export default gql`
       import: ["@key", "@shareable"]
     )
 
-  type Post {
+  type Post @key(fields: "id") {
     id: Int!
     published: Boolean!
     title: String!

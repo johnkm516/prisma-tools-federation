@@ -7,7 +7,7 @@ export default gql`
       import: ["@key", "@shareable"]
     )
 
-  type User {
+  type User @key(fields: "id") @key(fields: "email") {
     id: Int!
     createdAt: DateTime!
     email: String!

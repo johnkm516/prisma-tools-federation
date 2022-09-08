@@ -7,6 +7,11 @@ generator client {
   provider        = "prisma-client-js"
 }
 
+model Apple {
+  seeds   Int
+  core    String  @unique
+}
+
 // models examples
 model User {
   id        Int       @unique @default(autoincrement())
@@ -29,7 +34,7 @@ model Post {
   published Boolean   @default(false)
   title     String
   author    User?     @relation(fields: [authorId], references: [id])
-  authorId  Int?
+  authorId  Int?      @unique
   /// @onDelete(CASCADE)
   comments  Comment[]
   createdAt DateTime  @default(now())
@@ -40,7 +45,7 @@ model Comment {
   id        Int      @id @default(autoincrement())
   contain   String
   post      Post     @relation(fields: [postId], references: [id])
-  postId    Int
+  postId    Int      
   author    User?    @relation(fields: [authorId], references: [id])
   authorId  Int?
   createdAt DateTime @default(now())

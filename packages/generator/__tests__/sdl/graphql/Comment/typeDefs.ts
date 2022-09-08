@@ -7,7 +7,7 @@ export default gql`
       import: ["@key", "@shareable"]
     )
 
-  type Comment {
+  type Comment @key(fields: "id") {
     id: Int!
     contain: String!
     post: Post!

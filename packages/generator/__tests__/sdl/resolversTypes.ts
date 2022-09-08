@@ -13,12 +13,15 @@ type Resolver<T extends {}, A extends {}, R extends any> = (
 
 export interface Resolvers {
   [key: string]: { [key: string]: Resolver<any, any, any> };
+  Apple?: Apple;
   User?: User;
   Post?: Post;
   Comment?: Comment;
   Group?: Group;
   Query?: Query;
   Mutation?: Mutation;
+  AggregateApple?: AggregateApple;
+  AppleGroupByOutputType?: AppleGroupByOutputType;
   AggregateUser?: AggregateUser;
   UserGroupByOutputType?: UserGroupByOutputType;
   AggregatePost?: AggregatePost;
@@ -28,6 +31,11 @@ export interface Resolvers {
   AggregateGroup?: AggregateGroup;
   GroupGroupByOutputType?: GroupGroupByOutputType;
   AffectedRowsOutput?: AffectedRowsOutput;
+  AppleCountAggregateOutputType?: AppleCountAggregateOutputType;
+  AppleAvgAggregateOutputType?: AppleAvgAggregateOutputType;
+  AppleSumAggregateOutputType?: AppleSumAggregateOutputType;
+  AppleMinAggregateOutputType?: AppleMinAggregateOutputType;
+  AppleMaxAggregateOutputType?: AppleMaxAggregateOutputType;
   UserCountOutputType?: UserCountOutputType;
   UserCountAggregateOutputType?: UserCountAggregateOutputType;
   UserAvgAggregateOutputType?: UserAvgAggregateOutputType;
@@ -51,6 +59,12 @@ export interface Resolvers {
   GroupSumAggregateOutputType?: GroupSumAggregateOutputType;
   GroupMinAggregateOutputType?: GroupMinAggregateOutputType;
   GroupMaxAggregateOutputType?: GroupMaxAggregateOutputType;
+}
+
+export interface Apple {
+  [key: string]: Resolver<any, any, any>;
+  seeds?: Resolver<Client.Apple, {}, number>;
+  core?: Resolver<Client.Apple, {}, string>;
 }
 
 export interface User {
@@ -105,6 +119,20 @@ export interface Group {
 
 export interface Query {
   [key: string]: Resolver<any, any, any>;
+  findFirstApple?: Resolver<{}, FindFirstAppleArgs, Client.Apple | null>;
+  findManyApple?: Resolver<{}, FindManyAppleArgs, Client.Apple[]>;
+  findManyAppleCount?: Resolver<{}, FindManyAppleArgs, number>;
+  aggregateApple?: Resolver<
+    {},
+    AggregateAppleArgs,
+    Client.Prisma.GetAppleAggregateType<AggregateAppleArgs>
+  >;
+  groupByApple?: Resolver<
+    {},
+    GroupByAppleArgs,
+    Client.Prisma.AppleGroupByOutputType[]
+  >;
+  findUniqueApple?: Resolver<{}, FindUniqueAppleArgs, Client.Apple | null>;
   findFirstUser?: Resolver<{}, FindFirstUserArgs, Client.User | null>;
   findManyUser?: Resolver<{}, FindManyUserArgs, Client.User[]>;
   findManyUserCount?: Resolver<{}, FindManyUserArgs, number>;
@@ -169,6 +197,25 @@ export interface Query {
 
 export interface Mutation {
   [key: string]: Resolver<any, any, any>;
+  createOneApple?: Resolver<{}, CreateOneAppleArgs, Client.Apple>;
+  upsertOneApple?: Resolver<{}, UpsertOneAppleArgs, Client.Apple>;
+  createManyApple?: Resolver<
+    {},
+    CreateManyAppleArgs,
+    Client.Prisma.BatchPayload
+  >;
+  deleteOneApple?: Resolver<{}, DeleteOneAppleArgs, Client.Apple | null>;
+  updateOneApple?: Resolver<{}, UpdateOneAppleArgs, Client.Apple | null>;
+  updateManyApple?: Resolver<
+    {},
+    UpdateManyAppleArgs,
+    Client.Prisma.BatchPayload
+  >;
+  deleteManyApple?: Resolver<
+    {},
+    DeleteManyAppleArgs,
+    Client.Prisma.BatchPayload
+  >;
   createOneUser?: Resolver<{}, CreateOneUserArgs, Client.User>;
   upsertOneUser?: Resolver<{}, UpsertOneUserArgs, Client.User>;
   createManyUser?: Resolver<{}, CreateManyUserArgs, Client.Prisma.BatchPayload>;
@@ -223,6 +270,66 @@ export interface Mutation {
   >;
   executeRaw?: Resolver<{}, ExecuteRawArgs, any>;
   queryRaw?: Resolver<{}, QueryRawArgs, any>;
+}
+
+export interface AggregateApple {
+  [key: string]: Resolver<any, any, any>;
+  _count?: Resolver<
+    Client.Prisma.AggregateApple,
+    {},
+    Client.Prisma.AppleCountAggregateOutputType | null
+  >;
+  _avg?: Resolver<
+    Client.Prisma.AggregateApple,
+    {},
+    Client.Prisma.AppleAvgAggregateOutputType | null
+  >;
+  _sum?: Resolver<
+    Client.Prisma.AggregateApple,
+    {},
+    Client.Prisma.AppleSumAggregateOutputType | null
+  >;
+  _min?: Resolver<
+    Client.Prisma.AggregateApple,
+    {},
+    Client.Prisma.AppleMinAggregateOutputType | null
+  >;
+  _max?: Resolver<
+    Client.Prisma.AggregateApple,
+    {},
+    Client.Prisma.AppleMaxAggregateOutputType | null
+  >;
+}
+
+export interface AppleGroupByOutputType {
+  [key: string]: Resolver<any, any, any>;
+  seeds?: Resolver<Client.Prisma.AppleGroupByOutputType, {}, number>;
+  core?: Resolver<Client.Prisma.AppleGroupByOutputType, {}, string>;
+  _count?: Resolver<
+    Client.Prisma.AppleGroupByOutputType,
+    {},
+    Client.Prisma.AppleCountAggregateOutputType | null
+  >;
+  _avg?: Resolver<
+    Client.Prisma.AppleGroupByOutputType,
+    {},
+    Client.Prisma.AppleAvgAggregateOutputType | null
+  >;
+  _sum?: Resolver<
+    Client.Prisma.AppleGroupByOutputType,
+    {},
+    Client.Prisma.AppleSumAggregateOutputType | null
+  >;
+  _min?: Resolver<
+    Client.Prisma.AppleGroupByOutputType,
+    {},
+    Client.Prisma.AppleMinAggregateOutputType | null
+  >;
+  _max?: Resolver<
+    Client.Prisma.AppleGroupByOutputType,
+    {},
+    Client.Prisma.AppleMaxAggregateOutputType | null
+  >;
 }
 
 export interface AggregateUser {
@@ -487,6 +594,51 @@ export interface GroupGroupByOutputType {
 export interface AffectedRowsOutput {
   [key: string]: Resolver<any, any, any>;
   count?: Resolver<Client.Prisma.BatchPayload, {}, number>;
+}
+
+export interface AppleCountAggregateOutputType {
+  [key: string]: Resolver<any, any, any>;
+  seeds?: Resolver<Client.Prisma.AppleCountAggregateOutputType, {}, number>;
+  core?: Resolver<Client.Prisma.AppleCountAggregateOutputType, {}, number>;
+  _all?: Resolver<Client.Prisma.AppleCountAggregateOutputType, {}, number>;
+}
+
+export interface AppleAvgAggregateOutputType {
+  [key: string]: Resolver<any, any, any>;
+  seeds?: Resolver<
+    Client.Prisma.AppleAvgAggregateOutputType,
+    {},
+    number | null
+  >;
+}
+
+export interface AppleSumAggregateOutputType {
+  [key: string]: Resolver<any, any, any>;
+  seeds?: Resolver<
+    Client.Prisma.AppleSumAggregateOutputType,
+    {},
+    number | null
+  >;
+}
+
+export interface AppleMinAggregateOutputType {
+  [key: string]: Resolver<any, any, any>;
+  seeds?: Resolver<
+    Client.Prisma.AppleMinAggregateOutputType,
+    {},
+    number | null
+  >;
+  core?: Resolver<Client.Prisma.AppleMinAggregateOutputType, {}, string | null>;
+}
+
+export interface AppleMaxAggregateOutputType {
+  [key: string]: Resolver<any, any, any>;
+  seeds?: Resolver<
+    Client.Prisma.AppleMaxAggregateOutputType,
+    {},
+    number | null
+  >;
+  core?: Resolver<Client.Prisma.AppleMaxAggregateOutputType, {}, string | null>;
 }
 
 export interface UserCountOutputType {
@@ -874,6 +1026,50 @@ export interface GroupUsersArgs {
   distinct?: UserScalarFieldEnum[] | null;
 }
 
+export interface FindFirstAppleArgs {
+  where?: AppleWhereInput | null;
+  orderBy?: AppleOrderByWithRelationInput[] | null;
+  cursor?: AppleWhereUniqueInput | null;
+  take?: number | null;
+  skip?: number | null;
+  distinct?: AppleScalarFieldEnum[] | null;
+}
+
+export interface FindManyAppleArgs {
+  where?: AppleWhereInput;
+  orderBy?: AppleOrderByWithRelationInput[];
+  cursor?: AppleWhereUniqueInput;
+  take?: number;
+  skip?: number;
+  distinct?: AppleScalarFieldEnum[];
+}
+
+export interface AggregateAppleArgs {
+  where?: AppleWhereInput;
+  orderBy?: AppleOrderByWithRelationInput[];
+  cursor?: AppleWhereUniqueInput;
+  take?: number;
+  skip?: number;
+  _count?: Client.Prisma.AppleCountAggregateInputType;
+  _avg?: Client.Prisma.AppleAvgAggregateInputType;
+  _sum?: Client.Prisma.AppleSumAggregateInputType;
+  _min?: Client.Prisma.AppleMinAggregateInputType;
+  _max?: Client.Prisma.AppleMaxAggregateInputType;
+}
+
+export interface GroupByAppleArgs {
+  where?: AppleWhereInput;
+  orderBy?: AppleOrderByWithAggregationInput[];
+  by: AppleScalarFieldEnum[];
+  having?: AppleScalarWhereWithAggregatesInput;
+  take?: number;
+  skip?: number;
+}
+
+export interface FindUniqueAppleArgs {
+  where: AppleWhereUniqueInput | null;
+}
+
 export interface FindFirstUserArgs {
   where?: UserWhereInput | null;
   orderBy?: UserOrderByWithRelationInput[] | null;
@@ -1050,6 +1246,39 @@ export interface FindUniqueGroupArgs {
   where: GroupWhereUniqueInput | null;
 }
 
+export interface CreateOneAppleArgs {
+  data: AppleCreateInput;
+}
+
+export interface UpsertOneAppleArgs {
+  where: AppleWhereUniqueInput;
+  create: AppleCreateInput;
+  update: AppleUpdateInput;
+}
+
+export interface CreateManyAppleArgs {
+  data: AppleCreateManyInput[];
+  skipDuplicates?: boolean;
+}
+
+export interface DeleteOneAppleArgs {
+  where: AppleWhereUniqueInput | null;
+}
+
+export interface UpdateOneAppleArgs {
+  data: AppleUpdateInput | null;
+  where: AppleWhereUniqueInput | null;
+}
+
+export interface UpdateManyAppleArgs {
+  data: AppleUpdateManyMutationInput;
+  where?: AppleWhereInput;
+}
+
+export interface DeleteManyAppleArgs {
+  where?: AppleWhereInput;
+}
+
 export interface CreateOneUserArgs {
   data: UserCreateInput;
 }
@@ -1192,6 +1421,41 @@ export interface QueryRawArgs {
   parameters?: any;
 }
 
+export interface AppleWhereInput {
+  AND?: AppleWhereInput[];
+  OR?: AppleWhereInput[];
+  NOT?: AppleWhereInput[];
+  seeds?: IntFilter;
+  core?: StringFilter;
+}
+
+export interface AppleOrderByWithRelationInput {
+  seeds?: SortOrder;
+  core?: SortOrder;
+}
+
+export interface AppleWhereUniqueInput {
+  core?: string;
+}
+
+export interface AppleOrderByWithAggregationInput {
+  seeds?: SortOrder;
+  core?: SortOrder;
+  _count?: AppleCountOrderByAggregateInput;
+  _avg?: AppleAvgOrderByAggregateInput;
+  _max?: AppleMaxOrderByAggregateInput;
+  _min?: AppleMinOrderByAggregateInput;
+  _sum?: AppleSumOrderByAggregateInput;
+}
+
+export interface AppleScalarWhereWithAggregatesInput {
+  AND?: AppleScalarWhereWithAggregatesInput[];
+  OR?: AppleScalarWhereWithAggregatesInput[];
+  NOT?: AppleScalarWhereWithAggregatesInput[];
+  seeds?: IntWithAggregatesFilter;
+  core?: StringWithAggregatesFilter;
+}
+
 export interface UserWhereInput {
   AND?: UserWhereInput[];
   OR?: UserWhereInput[];
@@ -1282,6 +1546,7 @@ export interface PostOrderByWithRelationInput {
 
 export interface PostWhereUniqueInput {
   id?: number;
+  authorId?: number;
 }
 
 export interface PostOrderByWithAggregationInput {
@@ -1408,6 +1673,41 @@ export interface GroupScalarWhereWithAggregatesInput {
   name?: StringWithAggregatesFilter;
   createdAt?: DateTimeWithAggregatesFilter;
   updatedAt?: DateTimeWithAggregatesFilter;
+}
+
+export interface AppleCreateInput {
+  seeds: number;
+  core: string;
+}
+
+export interface AppleUncheckedCreateInput {
+  seeds: number;
+  core: string;
+}
+
+export interface AppleUpdateInput {
+  seeds?: IntFieldUpdateOperationsInput;
+  core?: StringFieldUpdateOperationsInput;
+}
+
+export interface AppleUncheckedUpdateInput {
+  seeds?: IntFieldUpdateOperationsInput;
+  core?: StringFieldUpdateOperationsInput;
+}
+
+export interface AppleCreateManyInput {
+  seeds: number;
+  core: string;
+}
+
+export interface AppleUpdateManyMutationInput {
+  seeds?: IntFieldUpdateOperationsInput;
+  core?: StringFieldUpdateOperationsInput;
+}
+
+export interface AppleUncheckedUpdateManyInput {
+  seeds?: IntFieldUpdateOperationsInput;
+  core?: StringFieldUpdateOperationsInput;
 }
 
 export interface UserCreateInput {
@@ -1668,17 +1968,6 @@ export interface IntFilter {
   not?: NestedIntFilter;
 }
 
-export interface DateTimeFilter {
-  equals?: Date;
-  in?: Date[];
-  notIn?: Date[];
-  lt?: Date;
-  lte?: Date;
-  gt?: Date;
-  gte?: Date;
-  not?: NestedDateTimeFilter;
-}
-
 export interface StringFilter {
   equals?: string;
   in?: string[];
@@ -1692,6 +1981,74 @@ export interface StringFilter {
   endsWith?: string;
   mode?: QueryMode;
   not?: NestedStringFilter;
+}
+
+export interface AppleCountOrderByAggregateInput {
+  seeds?: SortOrder;
+  core?: SortOrder;
+}
+
+export interface AppleAvgOrderByAggregateInput {
+  seeds?: SortOrder;
+}
+
+export interface AppleMaxOrderByAggregateInput {
+  seeds?: SortOrder;
+  core?: SortOrder;
+}
+
+export interface AppleMinOrderByAggregateInput {
+  seeds?: SortOrder;
+  core?: SortOrder;
+}
+
+export interface AppleSumOrderByAggregateInput {
+  seeds?: SortOrder;
+}
+
+export interface IntWithAggregatesFilter {
+  equals?: number;
+  in?: number[];
+  notIn?: number[];
+  lt?: number;
+  lte?: number;
+  gt?: number;
+  gte?: number;
+  not?: NestedIntWithAggregatesFilter;
+  _count?: NestedIntFilter;
+  _avg?: NestedFloatFilter;
+  _sum?: NestedIntFilter;
+  _min?: NestedIntFilter;
+  _max?: NestedIntFilter;
+}
+
+export interface StringWithAggregatesFilter {
+  equals?: string;
+  in?: string[];
+  notIn?: string[];
+  lt?: string;
+  lte?: string;
+  gt?: string;
+  gte?: string;
+  contains?: string;
+  startsWith?: string;
+  endsWith?: string;
+  mode?: QueryMode;
+  not?: NestedStringWithAggregatesFilter;
+  _count?: NestedIntFilter;
+  _min?: NestedStringFilter;
+  _max?: NestedStringFilter;
+}
+
+export interface DateTimeFilter {
+  equals?: Date;
+  in?: Date[];
+  notIn?: Date[];
+  lt?: Date;
+  lte?: Date;
+  gt?: Date;
+  gte?: Date;
+  not?: NestedDateTimeFilter;
 }
 
 export interface StringNullableFilter {
@@ -1797,22 +2154,6 @@ export interface UserSumOrderByAggregateInput {
   groupId?: SortOrder;
 }
 
-export interface IntWithAggregatesFilter {
-  equals?: number;
-  in?: number[];
-  notIn?: number[];
-  lt?: number;
-  lte?: number;
-  gt?: number;
-  gte?: number;
-  not?: NestedIntWithAggregatesFilter;
-  _count?: NestedIntFilter;
-  _avg?: NestedFloatFilter;
-  _sum?: NestedIntFilter;
-  _min?: NestedIntFilter;
-  _max?: NestedIntFilter;
-}
-
 export interface DateTimeWithAggregatesFilter {
   equals?: Date;
   in?: Date[];
@@ -1825,24 +2166,6 @@ export interface DateTimeWithAggregatesFilter {
   _count?: NestedIntFilter;
   _min?: NestedDateTimeFilter;
   _max?: NestedDateTimeFilter;
-}
-
-export interface StringWithAggregatesFilter {
-  equals?: string;
-  in?: string[];
-  notIn?: string[];
-  lt?: string;
-  lte?: string;
-  gt?: string;
-  gte?: string;
-  contains?: string;
-  startsWith?: string;
-  endsWith?: string;
-  mode?: QueryMode;
-  not?: NestedStringWithAggregatesFilter;
-  _count?: NestedIntFilter;
-  _min?: NestedStringFilter;
-  _max?: NestedStringFilter;
 }
 
 export interface StringNullableWithAggregatesFilter {
@@ -2027,6 +2350,18 @@ export interface GroupSumOrderByAggregateInput {
   id?: SortOrder;
 }
 
+export interface IntFieldUpdateOperationsInput {
+  set?: number;
+  increment?: number;
+  decrement?: number;
+  multiply?: number;
+  divide?: number;
+}
+
+export interface StringFieldUpdateOperationsInput {
+  set?: string;
+}
+
 export interface PostCreateNestedManyWithoutAuthorInput {
   create?: PostCreateWithoutAuthorInput[];
   connectOrCreate?: PostCreateOrConnectWithoutAuthorInput[];
@@ -2063,10 +2398,6 @@ export interface CommentUncheckedCreateNestedManyWithoutAuthorInput {
 
 export interface DateTimeFieldUpdateOperationsInput {
   set?: Date;
-}
-
-export interface StringFieldUpdateOperationsInput {
-  set?: string;
 }
 
 export interface NullableStringFieldUpdateOperationsInput {
@@ -2113,14 +2444,6 @@ export interface CommentUpdateManyWithoutAuthorNestedInput {
   update?: CommentUpdateWithWhereUniqueWithoutAuthorInput[];
   updateMany?: CommentUpdateManyWithWhereWithoutAuthorInput[];
   deleteMany?: CommentScalarWhereInput[];
-}
-
-export interface IntFieldUpdateOperationsInput {
-  set?: number;
-  increment?: number;
-  decrement?: number;
-  multiply?: number;
-  divide?: number;
 }
 
 export interface PostUncheckedUpdateManyWithoutAuthorNestedInput {
@@ -2304,17 +2627,6 @@ export interface NestedIntFilter {
   not?: NestedIntFilter;
 }
 
-export interface NestedDateTimeFilter {
-  equals?: Date;
-  in?: Date[];
-  notIn?: Date[];
-  lt?: Date;
-  lte?: Date;
-  gt?: Date;
-  gte?: Date;
-  not?: NestedDateTimeFilter;
-}
-
 export interface NestedStringFilter {
   equals?: string;
   in?: string[];
@@ -2327,6 +2639,61 @@ export interface NestedStringFilter {
   startsWith?: string;
   endsWith?: string;
   not?: NestedStringFilter;
+}
+
+export interface NestedIntWithAggregatesFilter {
+  equals?: number;
+  in?: number[];
+  notIn?: number[];
+  lt?: number;
+  lte?: number;
+  gt?: number;
+  gte?: number;
+  not?: NestedIntWithAggregatesFilter;
+  _count?: NestedIntFilter;
+  _avg?: NestedFloatFilter;
+  _sum?: NestedIntFilter;
+  _min?: NestedIntFilter;
+  _max?: NestedIntFilter;
+}
+
+export interface NestedFloatFilter {
+  equals?: number;
+  in?: number[];
+  notIn?: number[];
+  lt?: number;
+  lte?: number;
+  gt?: number;
+  gte?: number;
+  not?: NestedFloatFilter;
+}
+
+export interface NestedStringWithAggregatesFilter {
+  equals?: string;
+  in?: string[];
+  notIn?: string[];
+  lt?: string;
+  lte?: string;
+  gt?: string;
+  gte?: string;
+  contains?: string;
+  startsWith?: string;
+  endsWith?: string;
+  not?: NestedStringWithAggregatesFilter;
+  _count?: NestedIntFilter;
+  _min?: NestedStringFilter;
+  _max?: NestedStringFilter;
+}
+
+export interface NestedDateTimeFilter {
+  equals?: Date;
+  in?: Date[];
+  notIn?: Date[];
+  lt?: Date;
+  lte?: Date;
+  gt?: Date;
+  gte?: Date;
+  not?: NestedDateTimeFilter;
 }
 
 export interface NestedStringNullableFilter {
@@ -2361,33 +2728,6 @@ export interface NestedIntNullableFilter {
   not?: NestedIntNullableFilter | null;
 }
 
-export interface NestedIntWithAggregatesFilter {
-  equals?: number;
-  in?: number[];
-  notIn?: number[];
-  lt?: number;
-  lte?: number;
-  gt?: number;
-  gte?: number;
-  not?: NestedIntWithAggregatesFilter;
-  _count?: NestedIntFilter;
-  _avg?: NestedFloatFilter;
-  _sum?: NestedIntFilter;
-  _min?: NestedIntFilter;
-  _max?: NestedIntFilter;
-}
-
-export interface NestedFloatFilter {
-  equals?: number;
-  in?: number[];
-  notIn?: number[];
-  lt?: number;
-  lte?: number;
-  gt?: number;
-  gte?: number;
-  not?: NestedFloatFilter;
-}
-
 export interface NestedDateTimeWithAggregatesFilter {
   equals?: Date;
   in?: Date[];
@@ -2400,23 +2740,6 @@ export interface NestedDateTimeWithAggregatesFilter {
   _count?: NestedIntFilter;
   _min?: NestedDateTimeFilter;
   _max?: NestedDateTimeFilter;
-}
-
-export interface NestedStringWithAggregatesFilter {
-  equals?: string;
-  in?: string[];
-  notIn?: string[];
-  lt?: string;
-  lte?: string;
-  gt?: string;
-  gte?: string;
-  contains?: string;
-  startsWith?: string;
-  endsWith?: string;
-  not?: NestedStringWithAggregatesFilter;
-  _count?: NestedIntFilter;
-  _min?: NestedStringFilter;
-  _max?: NestedStringFilter;
 }
 
 export interface NestedStringNullableWithAggregatesFilter {
@@ -3010,6 +3333,10 @@ export interface UserUncheckedUpdateManyWithoutUsersInput {
   role?: EnumRoleFieldUpdateOperationsInput;
 }
 
+export enum AppleScalarFieldEnum {
+  seeds = 'seeds',
+  core = 'core',
+}
 export enum CommentScalarFieldEnum {
   id = 'id',
   contain = 'contain',

@@ -7,7 +7,7 @@ export default gql`
       import: ["@key", "@shareable"]
     )
 
-  type Group {
+  type Group @key(fields: "id") {
     id: Int!
     name: String!
     createdAt: DateTime!
