@@ -4,7 +4,12 @@ import { format, Options as PrettierOptions } from 'prettier';
 import pkgDir from 'pkg-dir';
 import { join } from 'path';
 import { DMMF } from '@prisma/client/runtime';
-import { getDMMF, getConfig, getEnvPaths, tryLoadEnvs } from '@prisma/sdk';
+import {
+  getDMMF,
+  getConfig,
+  getEnvPaths,
+  tryLoadEnvs,
+} from '@prisma/internals';
 const projectRoot = pkgDir.sync() || process.cwd();
 
 export class Generators {
