@@ -39,10 +39,37 @@ export class GenerateSdl extends Generators {
       let fileContent = ``;
       if (this.options.federation) {
         fileContent += `extend schema\n\t@link(url: "https://specs.apollo.dev/federation/v2.0", import: ["@key", "@shareable"])\n\n`;
+        let uniqueFieldIDs: string[] = []; //list of @unique fields that are required
+        let ID = ``; //the keyfields to be added to @key directive
+        let keyStr = ``;
+        dataModel?.fields.forEach(function (field) {
+          if (field.isId) {
+            ID = field.name;
+          } else if (field.isRequired && field.isUnique) {
+            uniqueFieldIDs.push(field.name);
+          }
+        });
+
+        if (ID != ``) {
+          keyStr += `@key(fields: "${ID}") `;
+        } else if (dataModel?.primaryKey?.fields) {
+          dataModel?.primaryKey?.fields.forEach(function (field) {
+            keyStr += `@key(fields: "${field}") `;
+          });
+        } else if (uniqueFieldIDs.length > 0) {
+          //take the first @unique candidate as @key; uniqueFieldIDs contains all the candidate fields in case we want to modify this logic later
+          keyStr += `@key(fields: "${uniqueFieldIDs[0]}") `;
+        }
+
+        fileContent += `${modelDocs ? `"""${modelDocs}"""\n` : ''}type ${
+          model.name
+        } `;
+        fileContent += keyStr + `{`;
+      } else {
+        fileContent += `${modelDocs ? `"""${modelDocs}"""\n` : ''}type ${
+          model.name
+        } {`;
       }
-      fileContent += `${modelDocs ? `"""${modelDocs}"""\n` : ''}type ${
-        model.name
-      } {`;
       const excludeFields = this.excludeFields(model.name);
       model.fields.forEach((field) => {
         if (!excludeFields.includes(field.name)) {
@@ -70,14 +97,12 @@ export class GenerateSdl extends Generators {
       });
       fileContent += `\n}\n\n`;
       await this.createFiles(model.name, fileContent);
-      console.log(dataModel);
     }
   }
 
   private async getOperations(model: string) {
     const exclude = this.excludedOperations(model);
-    const federation = this.federatedOption();
-    return await createQueriesAndMutations(model, exclude, this, federation);
+    return await createQueriesAndMutations(model, exclude, this);
   }
 
   private async createFiles(model: string, typeContent: string) {
@@ -92,6 +117,11 @@ export class GenerateSdl extends Generators {
     if (!this.disableMutations(model)) {
       resolvers += operations.mutations.resolver;
       typeContent += operations.mutations.type;
+    }
+    if (this.federatedOption()) {
+      resolvers += `,${model}: {\n\t__resolveReference(_parent, args, { prisma }) {\n`;
+      resolvers += `return prisma.${model}.findUnique(args)\n`;
+      resolvers += `\t}\n}\n`;
     }
     this.createResolvers(resolvers, model);
     this.createTypes(typeContent, model);

@@ -5,7 +5,6 @@ export async function createQueriesAndMutations(
   modelName: string,
   exclude: QueriesAndMutations[],
   generator: GenerateSdl,
-  federation: boolean,
 ) {
   const operations = {
     queries: {
@@ -32,9 +31,6 @@ export async function createQueriesAndMutations(
     findUnique${name}: (_parent, args, {${prismaName}}) => {
       return ${prismaName}.${model}.findUnique(args)
     },`;
-    if (federation) {
-      //console.log(operations.queries.type);
-    }
   }
 
   if (!exclude.includes('findFirst')) {

@@ -3,13 +3,13 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'fs';
 import { format, Options as PrettierOptions } from 'prettier';
 import pkgDir from 'pkg-dir';
 import { join } from 'path';
-import { DMMF } from '@prisma/client/runtime';
 import {
   getDMMF,
   getConfig,
   getEnvPaths,
   tryLoadEnvs,
 } from '@prisma/internals';
+import { DMMF } from '@prisma/client/runtime';
 const projectRoot = pkgDir.sync() || process.cwd();
 
 export class Generators {

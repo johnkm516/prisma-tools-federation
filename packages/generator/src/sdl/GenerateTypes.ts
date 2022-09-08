@@ -186,6 +186,13 @@ export class GenerateTypes {
           argsTypes.push(args.join('\n'));
         }
       });
+      if (this.options.federation) {
+        if ([...this.schema.outputObjectTypes.model].includes(type)) {
+          fields.push(
+            `\n\n__resolveReference?: Resolver<{}, FindUnique${type.name}Args, Client.${type.name} | null>`,
+          );
+        }
+      }
       fields.push('}');
       resolversTypes.push(fields.join('\n'));
     });
