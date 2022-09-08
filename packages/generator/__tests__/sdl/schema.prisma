@@ -9,7 +9,7 @@ generator client {
 
 // models examples
 model User {
-  id        Int       @id @default(autoincrement())
+  id        Int       @unique @default(autoincrement())
   createdAt DateTime  @default(now())
   email     String    @unique
   name      String?
@@ -21,10 +21,11 @@ model User {
   groupId   Int?
   /// @onDelete(SET_NULL)
   comments  Comment[]
+  @@id([id, email])
 }
 
 model Post {
-  id        Int       @id @default(autoincrement())
+  id        Int       @unique @default(autoincrement())
   published Boolean   @default(false)
   title     String
   author    User?     @relation(fields: [authorId], references: [id])
