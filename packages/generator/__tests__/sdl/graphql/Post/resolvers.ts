@@ -39,8 +39,11 @@ const resolvers: Resolvers = {
     },
   },
   Post: {
-    __resolveReference(_parent, args, { prisma }) {
-      return prisma.Post.findUnique(args);
+    __resolveReference(reference, { prisma }) {
+      const [field, value] = Object.entries(reference).find(
+        (e) => e[0] !== '__typename',
+      );
+      return prisma.post.findUnique({ where: { [field]: value } });
     },
   },
 };
