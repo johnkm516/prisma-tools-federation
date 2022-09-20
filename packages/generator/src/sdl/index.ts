@@ -42,6 +42,7 @@ export class GenerateSdl extends Generators {
         let uniqueFieldIDs: string[] = []; //list of @unique fields that are required
         let ID = ``; //the keyfields to be added to @key directive
         let keyStr = ``;
+        console.log(dataModel?.fields);
         dataModel?.fields.forEach(function (field) {
           if (field.isId) {
             ID = field.name;

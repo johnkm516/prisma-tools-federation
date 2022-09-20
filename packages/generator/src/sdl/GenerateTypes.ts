@@ -1,5 +1,6 @@
 import { Options } from '@paljs/types';
 import { DMMF } from '../schema';
+import { Document } from '../Generators';
 
 export class GenerateTypes {
   code: string[] = [
@@ -19,7 +20,7 @@ export class GenerateTypes {
 
   testedTypes: string[] = [];
 
-  constructor(private dmmf: DMMF.Document, private options: Partial<Options>) {}
+  constructor(private dmmf: Document, private options: Partial<Options>) {}
 
   get schema() {
     return this.dmmf.schema;

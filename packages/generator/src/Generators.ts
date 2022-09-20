@@ -12,6 +12,151 @@ import {
 import { DMMF } from '@prisma/client/runtime';
 const projectRoot = pkgDir.sync() || process.cwd();
 
+export type CustomFieldAttributes = {
+  columnName?: string;
+  dbType?: string;
+  relationOnUpdate?: string;
+  shareable?: boolean;
+  inaccessible?: boolean;
+  external?: boolean;
+  requires?: boolean;
+};
+export type CustomModelAttributes = { doubleAtIndexes?: string[] };
+
+export type CustomAttributes = {
+  fields: Record<string, CustomFieldAttributes>;
+} & CustomModelAttributes;
+
+export type Field = DMMF.Field & CustomFieldAttributes;
+export type Model = DMMF.Model & {
+  fields: Field[];
+} & CustomModelAttributes;
+
+export type Datamodel = DMMF.Datamodel & {
+  models: Model[];
+};
+
+export type Document = DMMF.Document & {
+  datamodel: Datamodel;
+};
+
+async function getSchema(schema: string) {
+  let document: Document = await getDMMF({ datamodel: schema });
+  //console.log(schema);
+  const customAttributes = getCustomAttributes(schema);
+  const models: Model[] = document.datamodel.models.map((model: Model) => ({
+    ...model,
+    doubleAtIndexes: customAttributes[model.name]?.doubleAtIndexes,
+    fields: model.fields.map((field) =>
+      // Inject columnName and db.Type from the parsed fieldMappings above
+      {
+        const attributes =
+          customAttributes[model.name]?.fields[field.name] ?? {};
+
+        return {
+          ...field,
+          columnName: attributes.columnName,
+          dbType: attributes.dbType,
+          relationOnUpdate: attributes.relationOnUpdate,
+          shareable: attributes.shareable,
+          inaccessible: attributes.inaccessible,
+          external: attributes.external,
+          requires: attributes.requires,
+        };
+      },
+    ),
+  }));
+  document.datamodel.models = models;
+  return document;
+}
+
+// Extract @map attributes, which aren't accessible from the prisma SDK
+// Adapted from https://github.com/sabinadams/aurora/commit/acb020d868f2ba16b114cf084b959b65d0294a73#diff-8f1b0a136f29e1af67b019f53772aa2e80bf4d24e2c8b844cfa993d8cc9df789
+function getCustomAttributes(datamodel: string) {
+  // Split the schema up by the ending of each block and then keep each starting with 'model'
+  // This should essentially give us an array of the model blocks
+  const modelChunks = datamodel.split('\n}');
+  return modelChunks.reduce(
+    (
+      modelDefinitions: Record<string, CustomAttributes>,
+      modelChunk: string,
+    ) => {
+      // Split the model chunk by line to get the individual fields
+      let pieces = modelChunk
+        .split('\n')
+        .filter((chunk) => chunk.trim().length);
+      // Pull out model name
+      const modelName = pieces
+        .find((name) => name.match(/model (.*) {/))
+        ?.split(' ')[1];
+      if (!modelName) return modelDefinitions;
+      // Regex for getting our @map attribute
+      const mapRegex = new RegExp(/[^@]@map\("(?<name>.*)"\)/);
+      const dbRegex = new RegExp(/(?<type>@db\.(.[^\s@]*))/);
+      const federationDirectiveRegex = new RegExp(
+        /\/\/@(?<attribute>shareable|inaccessible|external|requires)/gi,
+      );
+      const relationOnUpdateRegex = new RegExp(
+        /onUpdate: (?<op>Cascade|NoAction|Restrict|SetDefault|SetNull)/,
+      );
+      const doubleAtIndexRegex = new RegExp(/(?<index>@@index\(.*\))/);
+      const doubleAtIndexes = pieces
+        .reduce((ac: string[], field) => {
+          const item = field.match(doubleAtIndexRegex)?.groups?.index;
+          return item ? [...ac, item] : ac;
+        }, [])
+        .filter((f) => f);
+      const fieldsWithCustomAttributes = pieces
+        .map((field) => {
+          const columnName = field.match(mapRegex)?.groups?.name;
+          const dbType = field.match(dbRegex)?.groups?.type;
+          const relationOnUpdate = field.match(relationOnUpdateRegex)?.groups
+            ?.op;
+          //const federationAttributes = [...field.matchAll(federationDirectiveRegex)]?.map(matches =>
+          //    matches.filter(match => match.includes("//@"))[0].toLowerCase()
+          //);
+          const federationAttributes = Array.from(
+            field.matchAll(federationDirectiveRegex),
+          )?.map((matches) =>
+            matches.filter((match) => match.includes('//@'))[0].toLowerCase(),
+          );
+
+          return [
+            field.trim().split(' ')[0],
+            {
+              columnName,
+              dbType,
+              relationOnUpdate,
+              shareable: federationAttributes?.includes('//@shareable'),
+              inaccessible: federationAttributes?.includes('//@inaccessible'),
+              external: federationAttributes?.includes('//@external'),
+              requires: federationAttributes?.includes('//@requires'),
+            },
+          ] as [string, CustomAttributes['fields'][0]];
+        })
+        .filter(
+          (f) =>
+            f[1]?.columnName ||
+            f[1]?.dbType ||
+            f[1]?.relationOnUpdate ||
+            f[1]?.external ||
+            f[1]?.inaccessible ||
+            f[1]?.requires ||
+            f[1]?.shareable,
+        );
+
+      return {
+        ...modelDefinitions,
+        [modelName]: {
+          fields: Object.fromEntries(fieldsWithCustomAttributes),
+          doubleAtIndexes,
+        },
+      };
+    },
+    {},
+  );
+}
+
 export class Generators {
   options: Options = {
     prismaName: 'prisma',
@@ -44,7 +189,7 @@ export class Generators {
 
   schemaString: string;
 
-  readyDmmf?: DMMF.Document;
+  readyDmmf?: Document;
 
   constructor(private schemaPath: string, customOptions?: Partial<Options>) {
     this.options = { ...this.options, ...customOptions };
@@ -53,9 +198,9 @@ export class Generators {
     tryLoadEnvs(getEnvPaths());
   }
 
-  protected async dmmf(): Promise<DMMF.Document> {
+  protected async dmmf(): Promise<Document> {
     if (!this.readyDmmf) {
-      this.readyDmmf = await getDMMF({ datamodel: this.schemaString });
+      this.readyDmmf = await getSchema(this.schemaString);
       return this.readyDmmf;
     } else {
       return this.readyDmmf;
@@ -67,15 +212,15 @@ export class Generators {
   }
 
   protected async datamodel() {
-    const { datamodel }: { datamodel: DMMF.Datamodel } = await this.dmmf();
+    const { datamodel }: { datamodel: Datamodel } = await this.dmmf();
     return datamodel;
   }
 
-  protected dataModel(models: DMMF.Model[], name: string) {
+  protected dataModel(models: Model[], name: string) {
     return models.find((m) => m.name === name);
   }
 
-  protected dataField(name: string, model?: DMMF.Model) {
+  protected dataField(name: string, model?: Model) {
     return model?.fields.find((f) => f.name === name);
   }
 

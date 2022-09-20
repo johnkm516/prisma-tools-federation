@@ -8,7 +8,7 @@ generator client {
 }
 
 model Apple {
-  seeds   Int
+  seeds   Int     //@shareable
   core    String  @unique
 }
 
