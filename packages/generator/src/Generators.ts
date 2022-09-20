@@ -12,6 +12,7 @@ import {
 import { DMMF } from '@prisma/client/runtime';
 const projectRoot = pkgDir.sync() || process.cwd();
 
+///Custom DMMF extension code taken from Prismix : https://github.com/jamiepine/prismix///
 export type CustomFieldAttributes = {
   columnName?: string;
   dbType?: string;
@@ -42,7 +43,6 @@ export type Document = DMMF.Document & {
 
 async function getSchema(schema: string) {
   let document: Document = await getDMMF({ datamodel: schema });
-  //console.log(schema);
   const customAttributes = getCustomAttributes(schema);
   const models: Model[] = document.datamodel.models.map((model: Model) => ({
     ...model,
