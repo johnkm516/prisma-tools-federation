@@ -2,7 +2,7 @@ import gql from 'graphql-tag';
 
 export default gql`
   type Apple @key(fields: "core") {
-    seeds: Int!
+    seeds: Int! @shareable @external
     core: String!
   }
 

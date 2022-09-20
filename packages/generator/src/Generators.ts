@@ -221,7 +221,7 @@ export class Generators {
   }
 
   protected dataField(name: string, model?: Model) {
-    return model?.fields.find((f) => f.name === name);
+    return model?.fields.find((f: Field) => f.name === name);
   }
 
   protected async models() {
