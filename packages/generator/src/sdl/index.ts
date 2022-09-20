@@ -38,7 +38,7 @@ export class GenerateSdl extends Generators {
       const modelDocs = this.filterDocs(dataModel?.documentation);
       let fileContent = ``;
       if (this.options.federation) {
-        fileContent += `extend schema\n\t@link(url: "https://specs.apollo.dev/federation/v2.0", import: ["@key", "@shareable"])\n\n`;
+        //fileContent += `extend schema\n\t@link(url: "https://specs.apollo.dev/federation/v2.0", import: ["@key", "@shareable"])\n\n`;
         let uniqueFieldIDs: string[] = []; //list of @unique fields that are required
         let ID = ``; //the keyfields to be added to @key directive
         let keyStr = ``;
@@ -120,8 +120,9 @@ export class GenerateSdl extends Generators {
       typeContent += operations.mutations.type;
     }
     if (this.federatedOption()) {
-      resolvers += `,${model}: {\n\t__resolveReference(_parent, args, { prisma }) {\n`;
-      resolvers += `return prisma.${model}.findUnique(args)\n`;
+      resolvers += `,${model}: {\n\t__resolveReference(reference, { prisma }) {\n`;
+      resolvers += `const [field, value] = Object.entries(reference).find(e => e[0] !== '__typename');\n`;
+      resolvers += `return prisma.${model.toLowerCase()}.findUnique({ where: { [field]: value } });`;
       resolvers += `\t}\n}\n`;
     }
     this.createResolvers(resolvers, model);

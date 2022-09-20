@@ -1,12 +1,6 @@
 import gql from 'graphql-tag';
 
 export default gql`
-  extend schema
-    @link(
-      url: "https://specs.apollo.dev/federation/v2.0"
-      import: ["@key", "@shareable"]
-    )
-
   type User @key(fields: "id") @key(fields: "email") {
     id: Int!
     createdAt: DateTime!
