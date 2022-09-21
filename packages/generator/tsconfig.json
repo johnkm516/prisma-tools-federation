@@ -1,19 +1,25 @@
 {
   "include": ["src", "types"],
   "compilerOptions": {
-    "module": "esnext",
-    "lib": ["dom", "esnext"],
-    "target": "ESNext",
+    "module": "CommonJS",
+    "lib": ["dom", "ES2022"],
+    "target": "ES2022",
     "importHelpers": true,
     "declaration": true,
     "sourceMap": true,
     "rootDir": "./src",
-    "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
     "moduleResolution": "node",
-    "esModuleInterop": true
+    "resolveJsonModule": true,
+    "isolatedModules": true,
   }
 }

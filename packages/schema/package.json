@@ -1,8 +1,8 @@
 {
   "name": "@paljs/schema",
   "version": "4.1.0",
-  "main": "dist/index.js",
-  "module": "dist/schema.esm.js",
+  "main": "dist/index.cjs",
+  "module": "dist/index.esm.mjs",
   "types": "dist/index.d.ts",
   "repository": {
     "type": "git",

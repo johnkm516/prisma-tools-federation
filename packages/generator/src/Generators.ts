@@ -20,7 +20,8 @@ export type CustomFieldAttributes = {
   shareable?: boolean;
   inaccessible?: boolean;
   external?: boolean;
-  requires?: boolean;
+  requires?: string;
+  override?: string;
 };
 export type CustomModelAttributes = { doubleAtIndexes?: string[] };
 
@@ -62,6 +63,7 @@ async function getSchema(schema: string) {
           inaccessible: attributes.inaccessible,
           external: attributes.external,
           requires: attributes.requires,
+          override: attributes.override,
         };
       },
     ),
@@ -91,10 +93,13 @@ function getCustomAttributes(datamodel: string) {
         ?.split(' ')[1];
       if (!modelName) return modelDefinitions;
       // Regex for getting our @map attribute
-      const mapRegex = new RegExp(/[^@]@map\("(?<name>.*)"\)/);
+      const mapRegex = new RegExp(/@?@map\("(?<name>.*)"\)/);
       const dbRegex = new RegExp(/(?<type>@db\.(.[^\s@]*))/);
       const federationDirectiveRegex = new RegExp(
-        /\/\/@(?<attribute>shareable|inaccessible|external|requires)/gi,
+        /\/\/@(shareable|inaccessible|external|requires\(\s*fields:\s*.*\)|override\(\s*from:\s*.*\))/gi,
+      );
+      const federationDirectiveFieldRegex = new RegExp(
+        /\/\/@.*\(\s*.*:\s*(?<value>.*)\)/,
       );
       const relationOnUpdateRegex = new RegExp(
         /onUpdate: (?<op>Cascade|NoAction|Restrict|SetDefault|SetNull)/,
@@ -118,7 +123,16 @@ function getCustomAttributes(datamodel: string) {
           const federationAttributes = Array.from(
             field.matchAll(federationDirectiveRegex),
           )?.map((matches) =>
-            matches.filter((match) => match.includes('//@'))[0].toLowerCase(),
+            matches.filter((match) => match?.includes('//@'))[0].toLowerCase(),
+          );
+
+          console.log(federationAttributes);
+          console.log(field.match(mapRegex));
+          console.log(field.match(dbRegex));
+          console.log(
+            federationAttributes
+              ?.find((a) => a.includes('//@requires'))
+              ?.match(federationDirectiveFieldRegex)?.groups?.value,
           );
 
           return [
@@ -130,7 +144,12 @@ function getCustomAttributes(datamodel: string) {
               shareable: federationAttributes?.includes('//@shareable'),
               inaccessible: federationAttributes?.includes('//@inaccessible'),
               external: federationAttributes?.includes('//@external'),
-              requires: federationAttributes?.includes('//@requires'),
+              requires: federationAttributes
+                ?.find((a) => a.includes('//@requires'))
+                ?.match(federationDirectiveFieldRegex)?.groups?.value,
+              override: federationAttributes
+                ?.find((a) => a.includes('//@override'))
+                ?.match(federationDirectiveFieldRegex)?.groups?.value,
             },
           ] as [string, CustomAttributes['fields'][0]];
         })

@@ -1,8 +1,8 @@
 {
   "name": "@paljs/generator",
-  "version": "5.0.0",
-  "main": "dist/index.js",
-  "module": "dist/types.esm.js",
+  "version": "5.0.1",
+  "main": "dist/index.cjs",
+  "module": "dist/index.esm.mjs",
   "types": "dist/index.d.ts",
   "repository": {
     "type": "git",
@@ -14,7 +14,7 @@
   "license": "MIT",
   "private": false,
   "scripts": {
-    "start": "tsdx watch",
+    "start": "tsdx watch --format cjs,esm,umd",
     "build": "tsdx build",
     "test": "tsdx test",
     "lint": "tsdx lint",

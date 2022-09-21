@@ -4,6 +4,9 @@
   "description": "Display package for the paljs CLI",
   "homepage": "https://paljs.com",
   "license": "MIT",
+  "main": "dist/index.cjs",
+  "module": "dist/index.esm.mjs",
+  "types": "dist/index.d.ts",
   "scripts": {
     "start": "tsdx watch",
     "build": "tsdx build",
@@ -16,9 +19,6 @@
     "email": "hello@paljs.com",
     "url": "https://twitter.com/AhmedElywh"
   },
-  "main": "dist/index.js",
-  "module": "dist/display.esm.js",
-  "types": "dist/index.d.ts",
   "files": [
     "dist"
   ],

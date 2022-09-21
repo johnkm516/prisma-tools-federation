@@ -1,8 +1,10 @@
 const { join } = require('path');
-const { Generator } = require('../../dist');
+const { Generator } = require('../../dist/index.cjs');
+
 
 async function main() {
   try {
+    
     const generator = new Generator(
       {
         name: 'sdl',
@@ -14,7 +16,9 @@ async function main() {
         federation: true
       },
     );
+    
     await generator.run();
+    
   } catch (error) {
     console.log(error);
   }
