@@ -8,7 +8,7 @@ generator client {
 }
 
 model Apple {
-  seeds   Int     //@shareable //@external //@requires(fields: core)
+  seeds   Int     //@shareable //@external //@requires(fields: "core") //@override(from: "User") //@provides(fields: "seeds")
   core    String  @unique @db.VarChar(200)
   @@map("comments")
 }

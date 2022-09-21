@@ -42,7 +42,7 @@ export class GenerateSdl extends Generators {
         let uniqueFieldIDs: string[] = []; //list of @unique fields that are required
         let ID = ``; //the keyfields to be added to @key directive
         let keyStr = ``;
-        //console.log(dataModel?.fields);
+        console.log(dataModel?.fields);
         dataModel?.fields.forEach(function (field) {
           if (field.isId) {
             ID = field.name;
@@ -104,6 +104,24 @@ export class GenerateSdl extends Generators {
             }
             if (dataField?.external) {
               fileContent += ` @external`;
+            }
+            if (dataField?.requires) {
+              {
+                fileContent +=
+                  ' @requires(fields: "' + dataField?.requires + '")';
+              }
+            }
+            if (dataField?.provides) {
+              {
+                fileContent +=
+                  ' @provides(fields: "' + dataField?.provides + '")';
+              }
+            }
+            if (dataField?.override) {
+              {
+                fileContent +=
+                  ' @override(from: "' + dataField?.override + '")';
+              }
             }
           }
         }
