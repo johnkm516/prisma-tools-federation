@@ -39,9 +39,10 @@ export class GenerateSdl extends Generators {
       let fileContent = ``;
       if (this.options.federation) {
         //fileContent += `extend schema\n\t@link(url: "https://specs.apollo.dev/federation/v2.0", import: ["@key", "@shareable"])\n\n`;
-        let uniqueFieldIDs: string[] = []; //list of @unique fields that are required
-        let ID = ``; //the keyfields to be added to @key directive
+        let uniqueFieldIDs: string[] = []; //list of isUnique and isRequired fields
+        let ID = ``; //isID field
         let keyStr = ``;
+        let keyFields: string[] = []; // list of all keyFields
         console.log(dataModel?.fields);
         dataModel?.fields.forEach(function (field) {
           if (field.isId) {
@@ -53,19 +54,23 @@ export class GenerateSdl extends Generators {
 
         if (ID != ``) {
           keyStr += `@key(fields: "${ID}") `;
+          keyFields = [ID];
         } else if (dataModel?.primaryKey?.fields) {
-          dataModel?.primaryKey?.fields.forEach(function (field) {
-            keyStr += `@key(fields: "${field}") `;
-          });
+          keyStr +=
+            `@key(fields: "` + dataModel?.primaryKey?.fields.join(' ') + `") `;
+          keyFields = dataModel?.primaryKey?.fields;
         } else if (uniqueFieldIDs.length > 0) {
           //take the first @unique candidate as @key; uniqueFieldIDs contains all the candidate fields in case we want to modify this logic later
           keyStr += `@key(fields: "${uniqueFieldIDs[0]}") `;
+          keyFields = [uniqueFieldIDs[0]];
         }
 
         fileContent += `${modelDocs ? `"""${modelDocs}"""\n` : ''}type ${
           model.name
         } `;
         fileContent += keyStr + `{`;
+
+        //modelTypes is a dictionary used to validate whether or not the model in the subgraph will be resolvable or not
       } else {
         fileContent += `${modelDocs ? `"""${modelDocs}"""\n` : ''}type ${
           model.name
