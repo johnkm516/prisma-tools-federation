@@ -78,7 +78,7 @@ export interface Options {
   prismaName: string;
   models?: string[];
   output: string;
-  federation: boolean;
+  federation?: string;
   javaScript?: boolean;
   excludeFields: string[];
   excludeModels: { name: string; queries?: boolean; mutations?: boolean }[];

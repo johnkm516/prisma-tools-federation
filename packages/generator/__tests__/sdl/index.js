@@ -13,7 +13,7 @@ async function main() {
       },
       { 
         output: join(process.cwd(), './graphql'),
-        federation: true
+        federation: "Users"
       },
     );
     

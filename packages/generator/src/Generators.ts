@@ -24,7 +24,10 @@ export type CustomFieldAttributes = {
   provides?: string;
   override?: string;
 };
-export type CustomModelAttributes = { doubleAtIndexes?: string[] };
+export type CustomModelAttributes = {
+  doubleAtIndexes?: string[];
+  keyFields?: string[][];
+};
 
 export type CustomAttributes = {
   fields: Record<string, CustomFieldAttributes>;
@@ -46,30 +49,44 @@ export type Document = DMMF.Document & {
 async function getSchema(schema: string) {
   let document: Document = await getDMMF({ datamodel: schema });
   const customAttributes = getCustomAttributes(schema);
-  const models: Model[] = document.datamodel.models.map((model: Model) => ({
-    ...model,
-    doubleAtIndexes: customAttributes[model.name]?.doubleAtIndexes,
-    fields: model.fields.map((field) =>
-      // Inject columnName and db.Type from the parsed fieldMappings above
-      {
-        const attributes =
-          customAttributes[model.name]?.fields[field.name] ?? {};
+  const models: Model[] = document.datamodel.models.map((model: Model) => {
+    let keyFields: string[][] = [];
+    if (model.primaryKey?.fields) {
+      keyFields.push(model.primaryKey?.fields);
+    }
+    if (model.uniqueFields) {
+      model.uniqueFields.forEach((uniques) => keyFields.push(uniques));
+    }
 
-        return {
-          ...field,
-          columnName: attributes.columnName,
-          dbType: attributes.dbType,
-          relationOnUpdate: attributes.relationOnUpdate,
-          shareable: attributes.shareable,
-          inaccessible: attributes.inaccessible,
-          external: attributes.external,
-          requires: attributes.requires,
-          provides: attributes.provides,
-          override: attributes.override,
-        };
-      },
-    ),
-  }));
+    return {
+      ...model,
+      doubleAtIndexes: customAttributes[model.name]?.doubleAtIndexes,
+      fields: model.fields.map((field) =>
+        // Inject columnName and db.Type from the parsed fieldMappings above
+        {
+          const attributes =
+            customAttributes[model.name]?.fields[field.name] ?? {};
+          if (field.isId || (field.isRequired && field.isUnique)) {
+            keyFields.push([field.name]);
+          }
+          return {
+            ...field,
+            columnName: attributes.columnName,
+            dbType: attributes.dbType,
+            relationOnUpdate: attributes.relationOnUpdate,
+            shareable: attributes.shareable,
+            inaccessible: attributes.inaccessible,
+            external: attributes.external,
+            requires: attributes.requires,
+            provides: attributes.provides,
+            override: attributes.override,
+          };
+        },
+      ),
+      keyFields: keyFields,
+    };
+  });
+
   document.datamodel.models = models;
   return document;
 }
@@ -188,7 +205,6 @@ export class Generators {
   options: Options = {
     prismaName: 'prisma',
     output: join(projectRoot, 'src/graphql'),
-    federation: false,
     excludeFields: [],
     excludeModels: [],
     excludeFieldsByModel: {},
@@ -215,12 +231,13 @@ export class Generators {
   ];
 
   schemaString: string;
-
+  schemaPath: string;
   readyDmmf?: Document;
 
-  constructor(private schemaPath: string, customOptions?: Partial<Options>) {
+  constructor(schemaPath: string, customOptions?: Partial<Options>) {
     this.options = { ...this.options, ...customOptions };
     this.isJS = this.options.javaScript;
+    this.schemaPath = schemaPath;
     this.schemaString = readFileSync(this.schemaPath, 'utf-8');
     tryLoadEnvs(getEnvPaths());
   }

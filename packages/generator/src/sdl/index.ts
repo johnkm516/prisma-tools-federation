@@ -3,6 +3,8 @@ import { existsSync, readFileSync, writeFileSync } from 'fs';
 import { createQueriesAndMutations } from './CreateQueriesAndMutations';
 import { Generators } from '../Generators';
 import { GenerateTypes } from './GenerateTypes';
+import { sdlInputsString, SDLInputsTemplate } from './sdl-inputs';
+import { modelNamesExport } from './model-names';
 
 export class GenerateSdl extends Generators {
   constructor(schemaPath: string, customOptions?: Partial<Options>) {
@@ -31,50 +33,30 @@ export class GenerateSdl extends Generators {
     : defaultTypeFile(this.isJS);
   private typeDefsExport: string[] = getCurrentExport(this.typeDefsIndex);
 
+  private SDLInputsPath = this.output(this.withExtension('sdl-inputs'));
+  private inputsString: string = '';
+
+  private modelNamesPath = this.output(this.withExtension('model-names'));
+  private modelNames: string[] = [];
+
   private async createModels() {
     const dataModels = await this.datamodel();
     for (const model of await this.models()) {
       const dataModel = this.dataModel(dataModels.models, model.name);
       const modelDocs = this.filterDocs(dataModel?.documentation);
       let fileContent = ``;
+      this.modelNames.push(model.name);
       if (this.options.federation) {
         //fileContent += `extend schema\n\t@link(url: "https://specs.apollo.dev/federation/v2.0", import: ["@key", "@shareable"])\n\n`;
-        let uniqueFieldIDs: string[] = []; //list of isUnique and isRequired fields
-        let ID = ``; //isID field
         let keyStr = ``;
-        let keyFields: string[] = []; // list of all keyFields
-        console.log(dataModel?.fields);
-        dataModel?.fields.forEach(function (field) {
-          if (field.isId) {
-            ID = field.name;
-          } else if (field.isRequired && field.isUnique) {
-            uniqueFieldIDs.push(field.name);
-          }
+        dataModel?.keyFields?.forEach((keys) => {
+          keyStr += `@key(fields: "` + keys.join(' ') + `") `;
         });
-
-        if (ID != ``) {
-          keyStr += `@key(fields: "${ID}") `;
-          keyFields = [ID];
-        } else if (dataModel?.primaryKey?.fields) {
-          keyStr +=
-            `@key(fields: "` + dataModel?.primaryKey?.fields.join(' ') + `") `;
-          keyFields = dataModel?.primaryKey?.fields;
-        } else if (uniqueFieldIDs.length > 0) {
-          //take the first @unique candidate as @key; uniqueFieldIDs contains all the candidate fields in case we want to modify this logic later
-          keyStr += `@key(fields: "${uniqueFieldIDs[0]}") `;
-          keyFields = [uniqueFieldIDs[0]];
-        }
 
         fileContent += `${modelDocs ? `"""${modelDocs}"""\n` : ''}type ${
           model.name
         } `;
         fileContent += keyStr + `{`;
-
-        //modelTypes is a dictionary used to validate whether or not the model in the subgraph will be resolvable or not
-      } else {
-        fileContent += `${modelDocs ? `"""${modelDocs}"""\n` : ''}type ${
-          model.name
-        } {`;
       }
       const excludeFields = this.excludeFields(model.name);
       model.fields.forEach((field) => {
@@ -134,6 +116,7 @@ export class GenerateSdl extends Generators {
       fileContent += `\n}\n\n`;
       await this.createFiles(model.name, fileContent);
     }
+    this.inputsString = await this.getSDLInputs();
   }
 
   private async getOperations(model: string) {
@@ -236,6 +219,24 @@ export class GenerateSdl extends Generators {
       this.typeDefsPath,
       this.formation(replaceExports(this.typeDefsExport, this.typeDefsIndex)),
     );
+
+    writeFileSync(this.SDLInputsPath, SDLInputsTemplate(this.inputsString), {
+      encoding: 'utf8',
+      flag: 'w',
+    });
+    writeFileSync(
+      this.modelNamesPath,
+      modelNamesExport(this.modelNames, this.options.federation),
+      { encoding: 'utf8', flag: 'w' },
+    );
+  }
+
+  private async getSDLInputs(): Promise<string> {
+    return (this.inputsString = await sdlInputsString({
+      dmmfOptions: { datamodelPath: this.schemaPath },
+      doNotUseFieldUpdateOperationsInput:
+        this.options.doNotUseFieldUpdateOperationsInput,
+    }));
   }
 }
 
@@ -273,10 +274,10 @@ const defaultTypeFile = (isJs?: boolean) =>
     ? `const { mergeTypeDefs } = require('@graphql-tools/merge');
 const { sdlInputs } = require('@paljs/plugins');
 
-const typeDefs = mergeTypeDefs([sdlInputs()]);
+const typeDefs = mergeTypeDefs([SDLInputs]);
 
 module.exports = {typeDefs};`
     : `import { mergeTypeDefs } from '@graphql-tools/merge';
-import { sdlInputs } from '@paljs/plugins';
+import SDLInputs from './sdl-inputs';;
 
-export default mergeTypeDefs([sdlInputs()]);`;
+export default mergeTypeDefs([SDLInputs]);`;
