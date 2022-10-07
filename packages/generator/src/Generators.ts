@@ -10,6 +10,7 @@ import {
   tryLoadEnvs,
 } from '@prisma/internals';
 import { DMMF } from '@prisma/client/runtime';
+
 const projectRoot = pkgDir.sync() || process.cwd();
 
 ///Custom DMMF extension code taken from Prismix : https://github.com/jamiepine/prismix///
@@ -44,11 +45,19 @@ export type Datamodel = DMMF.Datamodel & {
 
 export type Document = DMMF.Document & {
   datamodel: Datamodel;
+  modelmap?: Map<string, Model>;
+  modelInputTypesMap?: Map<string, string>;
+  modelOutputTypesMap?: Map<string, string>;
 };
 
 async function getSchema(schema: string) {
   let document: Document = await getDMMF({ datamodel: schema });
   const customAttributes = getCustomAttributes(schema);
+
+  console.log(document.schema.outputObjectTypes.prisma.map((p) => p.name));
+  let modelInputTypesMap: Map<string, string> = new Map([]);
+  let modelOutputTypesMap: Map<string, string> = new Map([]);
+  let modelMap: Map<string, Model> = new Map([]);
   const models: Model[] = document.datamodel.models.map((model: Model) => {
     let keyFields: string[][] = [];
     if (model.primaryKey?.fields) {
@@ -58,7 +67,7 @@ async function getSchema(schema: string) {
       model.uniqueFields.forEach((uniques) => keyFields.push(uniques));
     }
 
-    return {
+    let result: Model = {
       ...model,
       doubleAtIndexes: customAttributes[model.name]?.doubleAtIndexes,
       fields: model.fields.map((field) =>
@@ -85,9 +94,36 @@ async function getSchema(schema: string) {
       ),
       keyFields: keyFields,
     };
+    modelMap.set(model.name, result);
+
+    const inputTypeRegex = new RegExp(
+      `(${model.name})(WhereInput|OrderByWithRelationInput|WhereUniqueInput|OrderByWithAggregationInput|ScalarWhereWithAggregatesInput|CreateInput|UncheckedCreateInput|UpdateInput|UncheckedUpdateInput|CreateManyInput|UpdateManyMutationInput|UncheckedUpdateManyInput|CountOrderByAggregateInput|AvgOrderByAggregateInput|MaxOrderByAggregateInput|MinOrderByAggregateInput|SumOrderByAggregateInput|Create.*?Input|Update.*?Input)`,
+    );
+    const inputTypes = document.schema.inputObjectTypes.prisma
+      .filter((type) => type.name.match(inputTypeRegex)?.input)
+      .map((type) => type.name);
+    inputTypes.forEach((typename) => {
+      modelInputTypesMap.set(typename, model.name);
+    });
+
+    const outputTypeRegex = new RegExp(
+      `(${model.name}(GroupByOutputType|CountAggregateOutputType|AvgAggregateOutputType|SumAggregateOutputType|MinAggregateOutputType|MaxAggregateOutputType))|(${model.name})`,
+    );
+    const outputTypes = document.schema.outputObjectTypes.prisma
+      .filter((type) => type.name.match(outputTypeRegex)?.input)
+      .map((type) => type.name);
+    outputTypes.forEach((typename) => {
+      modelOutputTypesMap.set(typename, model.name);
+    });
+
+    return result;
   });
 
   document.datamodel.models = models;
+  document.modelmap = modelMap;
+  document.modelInputTypesMap = modelInputTypesMap;
+  document.modelOutputTypesMap = modelOutputTypesMap;
+
   return document;
 }
 

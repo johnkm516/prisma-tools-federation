@@ -6,17 +6,16 @@ export const modelNamesExport = (modelNames: string[], federation?: string) => {
     })
     .join(`, `);
   fileContent += `];\n\n`;
-  fileContent += `export function checkIfStringStartsWithAny(compareString: string, listOfSubstrings: string[]) {
-    return listOfSubstrings.some(substr => compareString.startsWith(substr));
-}\n\n`;
 
   if (federation) {
     fileContent += `//This subgraph's name is set to "${federation}". 
 //Input type args is modified to be preceded by "${federation}_" because inputs are merged using the intersection strategy in the current version of Apollo Federation and directives are not supported with input types.
 export const renamedInputTypesSchema = async (schema: GraphQLSchema) => {
     const typeMap = schema.getTypeMap();
+    const models: string = modelNames.join("|");
     const inputTypes = Object.keys(typeMap).filter(type => {
-    return type.endsWith("Input") && checkIfStringStartsWithAny(type, modelNames);
+        const inputTypesRegex = new RegExp(\`(\${models})(WhereInput|OrderByWithRelationInput|WhereUniqueInput|OrderByWithAggregationInput|ScalarWhereWithAggregatesInput|CreateInput|UncheckedCreateInput|UpdateInput|UncheckedUpdateInput|CreateManyInput|UpdateManyMutationInput|UncheckedUpdateManyInput|CountOrderByAggregateInput|AvgOrderByAggregateInput|MaxOrderByAggregateInput|MinOrderByAggregateInput|SumOrderByAggregateInput|Create.*?Input|Update.*?Input)\`);
+        return type.match(inputTypesRegex)?.input;
     });
 
     return wrapSchema({
@@ -34,30 +33,3 @@ export const renamedInputTypesSchema = async (schema: GraphQLSchema) => {
 
   return fileContent;
 };
-
-/*
-import { wrapSchema, RenameTypes } from '@graphql-tools/wrap'
-import { GraphQLSchema } from 'graphql';
-  
-
-export const modelNames = ["Product"];
-export function checkIfStringStartsWithAny(compareString: string, listOfSubstrings: string[]) {
-  return listOfSubstrings.some(substr => compareString.startsWith(substr));
-}
-
-export const renamedInputTypesSchema = async (schema: GraphQLSchema) => {
-    const typeMap = schema.getTypeMap();
-    const inputTypes = Object.keys(typeMap).filter(type => {
-      return type.endsWith("Input") && checkIfStringStartsWithAny(type, modelNames);
-    });
-    console.log(inputTypes);
-
-    return wrapSchema({
-        schema: schema,
-        transforms: [
-            new RenameTypes(
-                name => inputTypes.includes(name) ? `Product_${name}` : name
-              )
-        ]
-    });
-}*/

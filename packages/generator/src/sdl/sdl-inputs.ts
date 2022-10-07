@@ -1,6 +1,7 @@
 import { DMMF } from '@prisma/client/runtime';
 import { GetDMMFOptions, getDMMF } from '@prisma/internals';
 import gql from 'graphql-tag';
+import { Document, Field } from '../Generators';
 
 export function SDLInputsTemplate(graphqlSDL: string) {
   return `import gql from 'graphql-tag';
@@ -15,6 +16,7 @@ export interface SDLInputOptions {
   excludeFields?: string[];
   filterInputs?: (input: DMMF.InputType) => DMMF.SchemaArg[];
   doNotUseFieldUpdateOperationsInput?: boolean;
+  federation?: string;
 }
 
 const testedTypes: string[] = [];
@@ -76,6 +78,7 @@ const getInputType = (
 
 async function generateInputsString(
   schema: DMMF.Schema,
+  readyDmmf: Document,
   options?: SDLInputOptions,
 ) {
   let fileContent = `
@@ -105,8 +108,11 @@ type BatchPayload {
     if (schema.inputObjectTypes.model)
       inputObjectTypes.push(...schema.inputObjectTypes.model);
 
+    //console.log(readyDmmf.modelInputTypesMap);
+    //console.log(readyDmmf.modelOutputTypesMap);
+    //console.log(readyDmmf.datamodel);
+    //console.log(readyDmmf.schema.outputObjectTypes.prisma.map(p => p.name));
     inputObjectTypes.forEach((input) => {
-      console.log(input);
       if (input.fields.length > 0) {
         fileContent += `input ${input.name} {
 `;
@@ -124,10 +130,10 @@ type BatchPayload {
               hasEmptyTypeFields(inputType.type as string, schema, options);
 
             if (!hasEmptyType) {
-              fileContent += `${field.name}: ${
+              fileContent += `  ${field.name}: ${
                 inputType.isList ? `[${inputType.type}!]` : inputType.type
-              }${field.isRequired ? '!' : ''}
-        `;
+              }${field.isRequired ? '!' : ''}`;
+              fileContent += `\n`;
             }
           });
         fileContent += `}
@@ -143,33 +149,73 @@ type BatchPayload {
           type.name.endsWith('CountOutputType'),
       )
       .forEach((type) => {
-        fileContent += `type ${type.name} {
-      `;
-        type.fields
-          .filter((field) => !options?.excludeFields?.includes(field.name))
-          .forEach((field) => {
-            fileContent += `${field.name}: ${
-              field.outputType.isList
-                ? `[${field.outputType.type}!]`
-                : field.outputType.type
-            }${!field.isNullable ? '!' : ''}
-        `;
+        if (options?.federation) {
+          const model = readyDmmf.modelmap?.get(
+            readyDmmf.modelOutputTypesMap?.get(type.name) ?? ``,
+          );
+          fileContent += `type ${type.name} `;
+          let keyStr = ``;
+          model?.keyFields?.forEach((keys) => {
+            keyStr += `@key(fields: "` + keys.join(' ') + `") `;
           });
-        fileContent += `}
-    
-`;
+          fileContent += keyStr + `{\n`;
+
+          if (model) {
+            type.fields
+              .filter((field) => !options?.excludeFields?.includes(field.name))
+              .forEach((field) => {
+                fileContent += `  ${field.name}: ${
+                  field.outputType.isList
+                    ? `[${field.outputType.type}!]`
+                    : field.outputType.type
+                }${!field.isNullable ? '!' : ''}`;
+
+                const modelField: Field | undefined = model.fields.find(
+                  (f) => (f.name = field.name),
+                );
+                if (modelField) {
+                }
+                fileContent += `\n`;
+              });
+
+            fileContent += `}\n\n`;
+          }
+        } else {
+          fileContent += `type ${type.name} {\n`;
+          type.fields
+            .filter((field) => !options?.excludeFields?.includes(field.name))
+            .forEach((field) => {
+              fileContent += `  ${field.name}: ${
+                field.outputType.isList
+                  ? `[${field.outputType.type}!]`
+                  : field.outputType.type
+              }${!field.isNullable ? '!' : ''}`;
+              fileContent += `\n`;
+            });
+          fileContent += `}\n\n`;
+        }
       });
   }
   return fileContent;
 }
 
-export const sdlInputs = async (options: SDLInputOptions) => {
+export const sdlInputs = async (
+  options: SDLInputOptions,
+  readyDmmf: Document,
+) => {
   const dmmf = await getDMMF(options.dmmfOptions);
-  const inputString = await generateInputsString(dmmf.schema, options);
+  const inputString = await generateInputsString(
+    dmmf.schema,
+    readyDmmf,
+    options,
+  );
   return gql(inputString);
 };
 
-export const sdlInputsString = async (options: SDLInputOptions) => {
+export const sdlInputsString = async (
+  options: SDLInputOptions,
+  readyDmmf: Document,
+) => {
   const dmmf = await getDMMF(options.dmmfOptions);
   /*
   console.log("printing datamodel types : ");
@@ -177,5 +223,5 @@ export const sdlInputsString = async (options: SDLInputOptions) => {
   console.log("printing mappings : ");
   console.log(dmmf.mappings);
   console.log(dmmf.schema.outputObjectTypes.prisma)
-  */ return generateInputsString(dmmf.schema, options);
+  */ return generateInputsString(dmmf.schema, readyDmmf, options);
 };

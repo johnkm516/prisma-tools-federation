@@ -1,32 +1,15 @@
 import gql from 'graphql-tag';
 
 export default gql`
-  type User @key(fields: "id email") @key(fields: "id") @key(fields: "email") {
+  type User @key(fields: "id") @key(fields: "email") {
     id: Int!
     createdAt: DateTime!
+    username: String
+    password: String
     email: String!
-    name: String
-    password: String!
-    role: Role!
-    posts(
-      where: PostWhereInput
-      orderBy: PostOrderByWithRelationInput
-      cursor: PostWhereUniqueInput
-      take: Int
-      skip: Int
-      distinct: PostScalarFieldEnum
-    ): [Post!]!
-    group: Group
-    groupId: Int
-    comments(
-      where: CommentWhereInput
-      orderBy: CommentOrderByWithRelationInput
-      cursor: CommentWhereUniqueInput
-      take: Int
-      skip: Int
-      distinct: CommentScalarFieldEnum
-    ): [Comment!]!
-    _count: UserCountOutputType!
+    roles: [String!]!
+    googleId: String
+    googleProfile: Json
   }
 
   type Query {

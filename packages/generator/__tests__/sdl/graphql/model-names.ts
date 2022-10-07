@@ -1,23 +1,18 @@
 import { wrapSchema, RenameTypes } from '@graphql-tools/wrap';
 import { GraphQLSchema } from 'graphql';
 
-export const modelNames = ['Apple', 'User', 'Post', 'Comment', 'Group'];
-
-export function checkIfStringStartsWithAny(
-  compareString: string,
-  listOfSubstrings: string[],
-) {
-  return listOfSubstrings.some((substr) => compareString.startsWith(substr));
-}
+export const modelNames = ['User'];
 
 //This subgraph's name is set to "Users".
 //Input type args is modified to be preceded by "Users_" because inputs are merged using the intersection strategy in the current version of Apollo Federation and directives are not supported with input types.
 export const renamedInputTypesSchema = async (schema: GraphQLSchema) => {
   const typeMap = schema.getTypeMap();
+  const models: string = modelNames.join('|');
   const inputTypes = Object.keys(typeMap).filter((type) => {
-    return (
-      type.endsWith('Input') && checkIfStringStartsWithAny(type, modelNames)
+    const inputTypesRegex = new RegExp(
+      `(${models})(WhereInput|OrderByWithRelationInput|WhereUniqueInput|OrderByWithAggregationInput|ScalarWhereWithAggregatesInput|CreateInput|UncheckedCreateInput|UpdateInput|UncheckedUpdateInput|CreateManyInput|UpdateManyMutationInput|UncheckedUpdateManyInput|CountOrderByAggregateInput|AvgOrderByAggregateInput|MaxOrderByAggregateInput|MinOrderByAggregateInput|SumOrderByAggregateInput|Create.*?Input|Update.*?Input)`,
     );
+    return type.match(inputTypesRegex)?.input;
   });
 
   return wrapSchema({

@@ -1,7 +1,7 @@
 import { Options } from '@paljs/types';
 import { existsSync, readFileSync, writeFileSync } from 'fs';
 import { createQueriesAndMutations } from './CreateQueriesAndMutations';
-import { Generators } from '../Generators';
+import { Document, Generators } from '../Generators';
 import { GenerateTypes } from './GenerateTypes';
 import { sdlInputsString, SDLInputsTemplate } from './sdl-inputs';
 import { modelNamesExport } from './model-names';
@@ -116,7 +116,7 @@ export class GenerateSdl extends Generators {
       fileContent += `\n}\n\n`;
       await this.createFiles(model.name, fileContent);
     }
-    this.inputsString = await this.getSDLInputs();
+    this.inputsString = await this.getSDLInputs(await this.dmmf());
   }
 
   private async getOperations(model: string) {
@@ -231,12 +231,16 @@ export class GenerateSdl extends Generators {
     );
   }
 
-  private async getSDLInputs(): Promise<string> {
-    return (this.inputsString = await sdlInputsString({
-      dmmfOptions: { datamodelPath: this.schemaPath },
-      doNotUseFieldUpdateOperationsInput:
-        this.options.doNotUseFieldUpdateOperationsInput,
-    }));
+  private async getSDLInputs(readyDmmf: Document): Promise<string> {
+    return (this.inputsString = await sdlInputsString(
+      {
+        dmmfOptions: { datamodelPath: this.schemaPath },
+        doNotUseFieldUpdateOperationsInput:
+          this.options.doNotUseFieldUpdateOperationsInput,
+        federation: this.federatedOption(),
+      },
+      readyDmmf,
+    ));
   }
 }
 
