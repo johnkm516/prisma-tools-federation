@@ -153,14 +153,27 @@ type BatchPayload {
           const model = readyDmmf.modelmap?.get(
             readyDmmf.modelOutputTypesMap?.get(type.name) ?? ``,
           );
-          fileContent += `type ${type.name} `;
-          let keyStr = ``;
-          model?.keyFields?.forEach((keys) => {
-            keyStr += `@key(fields: "` + keys.join(' ') + `") `;
-          });
-          fileContent += keyStr + `{\n`;
 
           if (model) {
+            fileContent += `type ${type.name} `;
+            if (
+              type.name === `Aggregate` + model.name ||
+              type.name === model.name + `CountOutputType` ||
+              type.name === model.name + `AvgAggregateOutputType` ||
+              type.name === model.name + `SumAggregateOutputType` ||
+              type.name === model.name + `CountAggregateOutputType`
+            ) {
+              fileContent += `@shareable {\n`;
+            } else {
+              let keyStr = ``;
+              model?.keyFields?.forEach((keys) => {
+                //let isNumber: boolean = false;
+
+                keyStr += `@key(fields: "` + keys.join(' ') + `") `;
+              });
+              fileContent += keyStr + `{\n`;
+            }
+
             type.fields
               .filter((field) => !options?.excludeFields?.includes(field.name))
               .forEach((field) => {

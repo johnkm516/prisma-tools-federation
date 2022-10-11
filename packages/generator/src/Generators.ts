@@ -28,6 +28,7 @@ export type CustomFieldAttributes = {
 export type CustomModelAttributes = {
   doubleAtIndexes?: string[];
   keyFields?: string[][];
+  fieldsTypeMap?: Map<string, Field>;
 };
 
 export type CustomAttributes = {
@@ -60,6 +61,7 @@ async function getSchema(schema: string) {
   let modelMap: Map<string, Model> = new Map([]);
   const models: Model[] = document.datamodel.models.map((model: Model) => {
     let keyFields: string[][] = [];
+    let fieldsTypeMap: Map<string, Field> = new Map([]);
     if (model.primaryKey?.fields) {
       keyFields.push(model.primaryKey?.fields);
     }
@@ -78,7 +80,7 @@ async function getSchema(schema: string) {
           if (field.isId || (field.isRequired && field.isUnique)) {
             keyFields.push([field.name]);
           }
-          return {
+          let fieldResult: Field = {
             ...field,
             columnName: attributes.columnName,
             dbType: attributes.dbType,
@@ -90,9 +92,12 @@ async function getSchema(schema: string) {
             provides: attributes.provides,
             override: attributes.override,
           };
+          fieldsTypeMap.set(fieldResult.name, fieldResult);
+          return fieldResult;
         },
       ),
       keyFields: keyFields,
+      fieldsTypeMap: fieldsTypeMap,
     };
     modelMap.set(model.name, result);
 

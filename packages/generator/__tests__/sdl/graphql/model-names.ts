@@ -1,7 +1,7 @@
 import { wrapSchema, RenameTypes } from '@graphql-tools/wrap';
 import { GraphQLSchema } from 'graphql';
 
-export const modelNames = ['User'];
+export const modelNames = ['User', 'Post', 'Category', 'CategoriesOnPosts'];
 
 //This subgraph's name is set to "Users".
 //Input type args is modified to be preceded by "Users_" because inputs are merged using the intersection strategy in the current version of Apollo Federation and directives are not supported with input types.

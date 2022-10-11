@@ -1,7 +1,11 @@
 import gql from 'graphql-tag';
 
 export default gql`
-  type User @key(fields: "id") @key(fields: "email") {
+  type User
+    @key(fields: "id")
+    @key(fields: "createdAt")
+    @key(fields: "email")
+    @key(fields: "number") {
     id: Int!
     createdAt: DateTime!
     username: String
@@ -10,6 +14,17 @@ export default gql`
     roles: [String!]!
     googleId: String
     googleProfile: Json
+    posts(
+      where: PostWhereInput
+      orderBy: PostOrderByWithRelationInput
+      cursor: PostWhereUniqueInput
+      take: Int
+      skip: Int
+      distinct: PostScalarFieldEnum
+    ): [Post!]!
+    number2: [Decimal!]!
+    number: Decimal!
+    _count: UserCountOutputType!
   }
 
   type Query {
