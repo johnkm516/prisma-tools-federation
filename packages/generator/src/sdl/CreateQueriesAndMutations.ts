@@ -5,6 +5,7 @@ export async function createQueriesAndMutations(
   modelName: string,
   exclude: QueriesAndMutations[],
   generator: GenerateSdl,
+  generateUpdateMany: boolean,
 ) {
   const operations = {
     queries: {
@@ -114,13 +115,16 @@ export async function createQueriesAndMutations(
     },`;
   }
 
-  if (!exclude.includes('updateMany')) {
+  if (!exclude.includes('updateMany') && generateUpdateMany) {
     operations.mutations.type += `
     updateMany${name}(${await args('updateMany')}): BatchPayload`;
     operations.mutations.resolver += `
     updateMany${name}: (_parent, args, {${prismaName}}) => {
       return ${prismaName}.${model}.updateMany(args)
     },`;
+  } else if (!generateUpdateMany) {
+    operations.mutations.type += `\n# updateMany for this model cannot exist as this model contains only unique fields or relations.`;
+    operations.mutations.resolver += `\n//updateMany for this model cannot exist as this model contains only unique fields or relations.`;
   }
 
   operations.queries.type += `

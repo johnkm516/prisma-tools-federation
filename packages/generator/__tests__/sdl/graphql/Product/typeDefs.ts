@@ -3,8 +3,15 @@ import gql from 'graphql-tag';
 export default gql`
   type Product @key(fields: "id") {
     id: Int!
-    sku: String!
-    description: String!
+    review(
+      where: ReviewWhereInput
+      orderBy: ReviewOrderByWithRelationInput
+      cursor: ReviewWhereUniqueInput
+      take: Int
+      skip: Int
+      distinct: ReviewScalarFieldEnum
+    ): [Review!]!
+    _count: ProductCountOutputType!
   }
 
   type Query {
@@ -55,9 +62,6 @@ export default gql`
       update: ProductUpdateInput!
     ): Product
     deleteManyProduct(where: ProductWhereInput): BatchPayload
-    updateManyProduct(
-      data: ProductUpdateManyMutationInput!
-      where: ProductWhereInput
-    ): BatchPayload
+    # updateMany for this model cannot exist as this model contains only unique fields or relations.
   }
 `;

@@ -14,43 +14,33 @@ type Resolver<T extends {}, A extends {}, R extends any> = (
 export interface Resolvers {
   [key: string]: { [key: string]: Resolver<any, any, any> };
   User?: User;
-  Post?: Post;
-  Category?: Category;
-  CategoriesOnPosts?: CategoriesOnPosts;
+  Review?: Review;
+  Product?: Product;
   Query?: Query;
   Mutation?: Mutation;
   AggregateUser?: AggregateUser;
   UserGroupByOutputType?: UserGroupByOutputType;
-  AggregatePost?: AggregatePost;
-  PostGroupByOutputType?: PostGroupByOutputType;
-  AggregateCategory?: AggregateCategory;
-  CategoryGroupByOutputType?: CategoryGroupByOutputType;
-  AggregateCategoriesOnPosts?: AggregateCategoriesOnPosts;
-  CategoriesOnPostsGroupByOutputType?: CategoriesOnPostsGroupByOutputType;
+  AggregateReview?: AggregateReview;
+  ReviewGroupByOutputType?: ReviewGroupByOutputType;
+  AggregateProduct?: AggregateProduct;
+  ProductGroupByOutputType?: ProductGroupByOutputType;
   AffectedRowsOutput?: AffectedRowsOutput;
-  UserCountOutputType?: UserCountOutputType;
   UserCountAggregateOutputType?: UserCountAggregateOutputType;
   UserAvgAggregateOutputType?: UserAvgAggregateOutputType;
   UserSumAggregateOutputType?: UserSumAggregateOutputType;
   UserMinAggregateOutputType?: UserMinAggregateOutputType;
   UserMaxAggregateOutputType?: UserMaxAggregateOutputType;
-  PostCountOutputType?: PostCountOutputType;
-  PostCountAggregateOutputType?: PostCountAggregateOutputType;
-  PostAvgAggregateOutputType?: PostAvgAggregateOutputType;
-  PostSumAggregateOutputType?: PostSumAggregateOutputType;
-  PostMinAggregateOutputType?: PostMinAggregateOutputType;
-  PostMaxAggregateOutputType?: PostMaxAggregateOutputType;
-  CategoryCountOutputType?: CategoryCountOutputType;
-  CategoryCountAggregateOutputType?: CategoryCountAggregateOutputType;
-  CategoryAvgAggregateOutputType?: CategoryAvgAggregateOutputType;
-  CategorySumAggregateOutputType?: CategorySumAggregateOutputType;
-  CategoryMinAggregateOutputType?: CategoryMinAggregateOutputType;
-  CategoryMaxAggregateOutputType?: CategoryMaxAggregateOutputType;
-  CategoriesOnPostsCountAggregateOutputType?: CategoriesOnPostsCountAggregateOutputType;
-  CategoriesOnPostsAvgAggregateOutputType?: CategoriesOnPostsAvgAggregateOutputType;
-  CategoriesOnPostsSumAggregateOutputType?: CategoriesOnPostsSumAggregateOutputType;
-  CategoriesOnPostsMinAggregateOutputType?: CategoriesOnPostsMinAggregateOutputType;
-  CategoriesOnPostsMaxAggregateOutputType?: CategoriesOnPostsMaxAggregateOutputType;
+  ReviewCountAggregateOutputType?: ReviewCountAggregateOutputType;
+  ReviewAvgAggregateOutputType?: ReviewAvgAggregateOutputType;
+  ReviewSumAggregateOutputType?: ReviewSumAggregateOutputType;
+  ReviewMinAggregateOutputType?: ReviewMinAggregateOutputType;
+  ReviewMaxAggregateOutputType?: ReviewMaxAggregateOutputType;
+  ProductCountOutputType?: ProductCountOutputType;
+  ProductCountAggregateOutputType?: ProductCountAggregateOutputType;
+  ProductAvgAggregateOutputType?: ProductAvgAggregateOutputType;
+  ProductSumAggregateOutputType?: ProductSumAggregateOutputType;
+  ProductMinAggregateOutputType?: ProductMinAggregateOutputType;
+  ProductMaxAggregateOutputType?: ProductMaxAggregateOutputType;
 }
 
 export interface User {
@@ -63,52 +53,25 @@ export interface User {
   roles?: Resolver<Client.User, {}, string[] | null>;
   googleId?: Resolver<Client.User, {}, string | null>;
   googleProfile?: Resolver<Client.User, {}, any | null>;
-  posts?: Resolver<Client.User, UserPostsArgs, Client.Post[] | null>;
-  number2?: Resolver<Client.User, {}, undefined[] | null>;
-  number?: Resolver<Client.User, {}, undefined>;
-  _count?: Resolver<Client.User, {}, Client.Prisma.UserCountOutputType>;
 
   __resolveReference?: any;
 }
 
-export interface Post {
+export interface Review {
   [key: string]: Resolver<any, any, any>;
-  id?: Resolver<Client.Post, {}, number>;
-  user?: Resolver<Client.Post, {}, Client.User>;
-  user_id?: Resolver<Client.Post, {}, number>;
-  title?: Resolver<Client.Post, {}, string>;
-  categories?: Resolver<
-    Client.Post,
-    PostCategoriesArgs,
-    Client.CategoriesOnPosts[] | null
-  >;
-  _count?: Resolver<Client.Post, {}, Client.Prisma.PostCountOutputType>;
+  id?: Resolver<Client.Review, {}, number>;
+  product?: Resolver<Client.Review, {}, Client.Product>;
+  product_id?: Resolver<Client.Review, {}, number>;
+  score?: Resolver<Client.Review, {}, number>;
 
   __resolveReference?: any;
 }
 
-export interface Category {
+export interface Product {
   [key: string]: Resolver<any, any, any>;
-  id?: Resolver<Client.Category, {}, number>;
-  name?: Resolver<Client.Category, {}, string>;
-  posts?: Resolver<
-    Client.Category,
-    CategoryPostsArgs,
-    Client.CategoriesOnPosts[] | null
-  >;
-  _count?: Resolver<Client.Category, {}, Client.Prisma.CategoryCountOutputType>;
-
-  __resolveReference?: any;
-}
-
-export interface CategoriesOnPosts {
-  [key: string]: Resolver<any, any, any>;
-  post?: Resolver<Client.CategoriesOnPosts, {}, Client.Post>;
-  postId?: Resolver<Client.CategoriesOnPosts, {}, number>;
-  category?: Resolver<Client.CategoriesOnPosts, {}, Client.Category>;
-  categoryId?: Resolver<Client.CategoriesOnPosts, {}, number>;
-  assignedAt?: Resolver<Client.CategoriesOnPosts, {}, Date>;
-  assignedBy?: Resolver<Client.CategoriesOnPosts, {}, string>;
+  id?: Resolver<Client.Product, {}, number>;
+  review?: Resolver<Client.Product, ProductReviewArgs, Client.Review[] | null>;
+  _count?: Resolver<Client.Product, {}, Client.Prisma.ProductCountOutputType>;
 
   __resolveReference?: any;
 }
@@ -129,71 +92,37 @@ export interface Query {
     Client.Prisma.UserGroupByOutputType[]
   >;
   findUniqueUser?: Resolver<{}, FindUniqueUserArgs, Client.User | null>;
-  findFirstPost?: Resolver<{}, FindFirstPostArgs, Client.Post | null>;
-  findManyPost?: Resolver<{}, FindManyPostArgs, Client.Post[]>;
-  findManyPostCount?: Resolver<{}, FindManyPostArgs, number>;
-  aggregatePost?: Resolver<
+  findFirstReview?: Resolver<{}, FindFirstReviewArgs, Client.Review | null>;
+  findManyReview?: Resolver<{}, FindManyReviewArgs, Client.Review[]>;
+  findManyReviewCount?: Resolver<{}, FindManyReviewArgs, number>;
+  aggregateReview?: Resolver<
     {},
-    AggregatePostArgs,
-    Client.Prisma.GetPostAggregateType<AggregatePostArgs>
+    AggregateReviewArgs,
+    Client.Prisma.GetReviewAggregateType<AggregateReviewArgs>
   >;
-  groupByPost?: Resolver<
+  groupByReview?: Resolver<
     {},
-    GroupByPostArgs,
-    Client.Prisma.PostGroupByOutputType[]
+    GroupByReviewArgs,
+    Client.Prisma.ReviewGroupByOutputType[]
   >;
-  findUniquePost?: Resolver<{}, FindUniquePostArgs, Client.Post | null>;
-  findFirstCategory?: Resolver<
+  findUniqueReview?: Resolver<{}, FindUniqueReviewArgs, Client.Review | null>;
+  findFirstProduct?: Resolver<{}, FindFirstProductArgs, Client.Product | null>;
+  findManyProduct?: Resolver<{}, FindManyProductArgs, Client.Product[]>;
+  findManyProductCount?: Resolver<{}, FindManyProductArgs, number>;
+  aggregateProduct?: Resolver<
     {},
-    FindFirstCategoryArgs,
-    Client.Category | null
+    AggregateProductArgs,
+    Client.Prisma.GetProductAggregateType<AggregateProductArgs>
   >;
-  findManyCategory?: Resolver<{}, FindManyCategoryArgs, Client.Category[]>;
-  findManyCategoryCount?: Resolver<{}, FindManyCategoryArgs, number>;
-  aggregateCategory?: Resolver<
+  groupByProduct?: Resolver<
     {},
-    AggregateCategoryArgs,
-    Client.Prisma.GetCategoryAggregateType<AggregateCategoryArgs>
+    GroupByProductArgs,
+    Client.Prisma.ProductGroupByOutputType[]
   >;
-  groupByCategory?: Resolver<
+  findUniqueProduct?: Resolver<
     {},
-    GroupByCategoryArgs,
-    Client.Prisma.CategoryGroupByOutputType[]
-  >;
-  findUniqueCategory?: Resolver<
-    {},
-    FindUniqueCategoryArgs,
-    Client.Category | null
-  >;
-  findFirstCategoriesOnPosts?: Resolver<
-    {},
-    FindFirstCategoriesOnPostsArgs,
-    Client.CategoriesOnPosts | null
-  >;
-  findManyCategoriesOnPosts?: Resolver<
-    {},
-    FindManyCategoriesOnPostsArgs,
-    Client.CategoriesOnPosts[]
-  >;
-  findManyCategoriesOnPostsCount?: Resolver<
-    {},
-    FindManyCategoriesOnPostsArgs,
-    number
-  >;
-  aggregateCategoriesOnPosts?: Resolver<
-    {},
-    AggregateCategoriesOnPostsArgs,
-    Client.Prisma.GetCategoriesOnPostsAggregateType<AggregateCategoriesOnPostsArgs>
-  >;
-  groupByCategoriesOnPosts?: Resolver<
-    {},
-    GroupByCategoriesOnPostsArgs,
-    Client.Prisma.CategoriesOnPostsGroupByOutputType[]
-  >;
-  findUniqueCategoriesOnPosts?: Resolver<
-    {},
-    FindUniqueCategoriesOnPostsArgs,
-    Client.CategoriesOnPosts | null
+    FindUniqueProductArgs,
+    Client.Product | null
   >;
 }
 
@@ -206,73 +135,38 @@ export interface Mutation {
   updateOneUser?: Resolver<{}, UpdateOneUserArgs, Client.User | null>;
   updateManyUser?: Resolver<{}, UpdateManyUserArgs, Client.Prisma.BatchPayload>;
   deleteManyUser?: Resolver<{}, DeleteManyUserArgs, Client.Prisma.BatchPayload>;
-  createOnePost?: Resolver<{}, CreateOnePostArgs, Client.Post>;
-  upsertOnePost?: Resolver<{}, UpsertOnePostArgs, Client.Post>;
-  createManyPost?: Resolver<{}, CreateManyPostArgs, Client.Prisma.BatchPayload>;
-  deleteOnePost?: Resolver<{}, DeleteOnePostArgs, Client.Post | null>;
-  updateOnePost?: Resolver<{}, UpdateOnePostArgs, Client.Post | null>;
-  updateManyPost?: Resolver<{}, UpdateManyPostArgs, Client.Prisma.BatchPayload>;
-  deleteManyPost?: Resolver<{}, DeleteManyPostArgs, Client.Prisma.BatchPayload>;
-  createOneCategory?: Resolver<{}, CreateOneCategoryArgs, Client.Category>;
-  upsertOneCategory?: Resolver<{}, UpsertOneCategoryArgs, Client.Category>;
-  createManyCategory?: Resolver<
+  createOneReview?: Resolver<{}, CreateOneReviewArgs, Client.Review>;
+  upsertOneReview?: Resolver<{}, UpsertOneReviewArgs, Client.Review>;
+  createManyReview?: Resolver<
     {},
-    CreateManyCategoryArgs,
+    CreateManyReviewArgs,
     Client.Prisma.BatchPayload
   >;
-  deleteOneCategory?: Resolver<
+  deleteOneReview?: Resolver<{}, DeleteOneReviewArgs, Client.Review | null>;
+  updateOneReview?: Resolver<{}, UpdateOneReviewArgs, Client.Review | null>;
+  updateManyReview?: Resolver<
     {},
-    DeleteOneCategoryArgs,
-    Client.Category | null
-  >;
-  updateOneCategory?: Resolver<
-    {},
-    UpdateOneCategoryArgs,
-    Client.Category | null
-  >;
-  updateManyCategory?: Resolver<
-    {},
-    UpdateManyCategoryArgs,
+    UpdateManyReviewArgs,
     Client.Prisma.BatchPayload
   >;
-  deleteManyCategory?: Resolver<
+  deleteManyReview?: Resolver<
     {},
-    DeleteManyCategoryArgs,
+    DeleteManyReviewArgs,
     Client.Prisma.BatchPayload
   >;
-  createOneCategoriesOnPosts?: Resolver<
+  createOneProduct?: Resolver<{}, CreateOneProductArgs, Client.Product>;
+  upsertOneProduct?: Resolver<{}, UpsertOneProductArgs, Client.Product>;
+  createManyProduct?: Resolver<
     {},
-    CreateOneCategoriesOnPostsArgs,
-    Client.CategoriesOnPosts
-  >;
-  upsertOneCategoriesOnPosts?: Resolver<
-    {},
-    UpsertOneCategoriesOnPostsArgs,
-    Client.CategoriesOnPosts
-  >;
-  createManyCategoriesOnPosts?: Resolver<
-    {},
-    CreateManyCategoriesOnPostsArgs,
+    CreateManyProductArgs,
     Client.Prisma.BatchPayload
   >;
-  deleteOneCategoriesOnPosts?: Resolver<
+  deleteOneProduct?: Resolver<{}, DeleteOneProductArgs, Client.Product | null>;
+  updateOneProduct?: Resolver<{}, UpdateOneProductArgs, Client.Product | null>;
+  //updateManyProduct is not generated because model has only unique fields or relations.
+  deleteManyProduct?: Resolver<
     {},
-    DeleteOneCategoriesOnPostsArgs,
-    Client.CategoriesOnPosts | null
-  >;
-  updateOneCategoriesOnPosts?: Resolver<
-    {},
-    UpdateOneCategoriesOnPostsArgs,
-    Client.CategoriesOnPosts | null
-  >;
-  updateManyCategoriesOnPosts?: Resolver<
-    {},
-    UpdateManyCategoriesOnPostsArgs,
-    Client.Prisma.BatchPayload
-  >;
-  deleteManyCategoriesOnPosts?: Resolver<
-    {},
-    DeleteManyCategoriesOnPostsArgs,
+    DeleteManyProductArgs,
     Client.Prisma.BatchPayload
   >;
   executeRaw?: Resolver<{}, ExecuteRawArgs, any>;
@@ -318,12 +212,6 @@ export interface UserGroupByOutputType {
   roles?: Resolver<Client.Prisma.UserGroupByOutputType, {}, string[] | null>;
   googleId?: Resolver<Client.Prisma.UserGroupByOutputType, {}, string | null>;
   googleProfile?: Resolver<Client.Prisma.UserGroupByOutputType, {}, any | null>;
-  number2?: Resolver<
-    Client.Prisma.UserGroupByOutputType,
-    {},
-    undefined[] | null
-  >;
-  number?: Resolver<Client.Prisma.UserGroupByOutputType, {}, undefined>;
   _count?: Resolver<
     Client.Prisma.UserGroupByOutputType,
     {},
@@ -351,213 +239,129 @@ export interface UserGroupByOutputType {
   >;
 }
 
-export interface AggregatePost {
+export interface AggregateReview {
   [key: string]: Resolver<any, any, any>;
   _count?: Resolver<
-    Client.Prisma.AggregatePost,
+    Client.Prisma.AggregateReview,
     {},
-    Client.Prisma.PostCountAggregateOutputType | null
+    Client.Prisma.ReviewCountAggregateOutputType | null
   >;
   _avg?: Resolver<
-    Client.Prisma.AggregatePost,
+    Client.Prisma.AggregateReview,
     {},
-    Client.Prisma.PostAvgAggregateOutputType | null
+    Client.Prisma.ReviewAvgAggregateOutputType | null
   >;
   _sum?: Resolver<
-    Client.Prisma.AggregatePost,
+    Client.Prisma.AggregateReview,
     {},
-    Client.Prisma.PostSumAggregateOutputType | null
+    Client.Prisma.ReviewSumAggregateOutputType | null
   >;
   _min?: Resolver<
-    Client.Prisma.AggregatePost,
+    Client.Prisma.AggregateReview,
     {},
-    Client.Prisma.PostMinAggregateOutputType | null
+    Client.Prisma.ReviewMinAggregateOutputType | null
   >;
   _max?: Resolver<
-    Client.Prisma.AggregatePost,
+    Client.Prisma.AggregateReview,
     {},
-    Client.Prisma.PostMaxAggregateOutputType | null
+    Client.Prisma.ReviewMaxAggregateOutputType | null
   >;
 }
 
-export interface PostGroupByOutputType {
+export interface ReviewGroupByOutputType {
   [key: string]: Resolver<any, any, any>;
-  id?: Resolver<Client.Prisma.PostGroupByOutputType, {}, number>;
-  user_id?: Resolver<Client.Prisma.PostGroupByOutputType, {}, number>;
-  title?: Resolver<Client.Prisma.PostGroupByOutputType, {}, string>;
+  id?: Resolver<Client.Prisma.ReviewGroupByOutputType, {}, number>;
+  product_id?: Resolver<Client.Prisma.ReviewGroupByOutputType, {}, number>;
+  score?: Resolver<Client.Prisma.ReviewGroupByOutputType, {}, number>;
   _count?: Resolver<
-    Client.Prisma.PostGroupByOutputType,
+    Client.Prisma.ReviewGroupByOutputType,
     {},
-    Client.Prisma.PostCountAggregateOutputType | null
+    Client.Prisma.ReviewCountAggregateOutputType | null
   >;
   _avg?: Resolver<
-    Client.Prisma.PostGroupByOutputType,
+    Client.Prisma.ReviewGroupByOutputType,
     {},
-    Client.Prisma.PostAvgAggregateOutputType | null
+    Client.Prisma.ReviewAvgAggregateOutputType | null
   >;
   _sum?: Resolver<
-    Client.Prisma.PostGroupByOutputType,
+    Client.Prisma.ReviewGroupByOutputType,
     {},
-    Client.Prisma.PostSumAggregateOutputType | null
+    Client.Prisma.ReviewSumAggregateOutputType | null
   >;
   _min?: Resolver<
-    Client.Prisma.PostGroupByOutputType,
+    Client.Prisma.ReviewGroupByOutputType,
     {},
-    Client.Prisma.PostMinAggregateOutputType | null
+    Client.Prisma.ReviewMinAggregateOutputType | null
   >;
   _max?: Resolver<
-    Client.Prisma.PostGroupByOutputType,
+    Client.Prisma.ReviewGroupByOutputType,
     {},
-    Client.Prisma.PostMaxAggregateOutputType | null
+    Client.Prisma.ReviewMaxAggregateOutputType | null
   >;
 }
 
-export interface AggregateCategory {
+export interface AggregateProduct {
   [key: string]: Resolver<any, any, any>;
   _count?: Resolver<
-    Client.Prisma.AggregateCategory,
+    Client.Prisma.AggregateProduct,
     {},
-    Client.Prisma.CategoryCountAggregateOutputType | null
+    Client.Prisma.ProductCountAggregateOutputType | null
   >;
   _avg?: Resolver<
-    Client.Prisma.AggregateCategory,
+    Client.Prisma.AggregateProduct,
     {},
-    Client.Prisma.CategoryAvgAggregateOutputType | null
+    Client.Prisma.ProductAvgAggregateOutputType | null
   >;
   _sum?: Resolver<
-    Client.Prisma.AggregateCategory,
+    Client.Prisma.AggregateProduct,
     {},
-    Client.Prisma.CategorySumAggregateOutputType | null
+    Client.Prisma.ProductSumAggregateOutputType | null
   >;
   _min?: Resolver<
-    Client.Prisma.AggregateCategory,
+    Client.Prisma.AggregateProduct,
     {},
-    Client.Prisma.CategoryMinAggregateOutputType | null
+    Client.Prisma.ProductMinAggregateOutputType | null
   >;
   _max?: Resolver<
-    Client.Prisma.AggregateCategory,
+    Client.Prisma.AggregateProduct,
     {},
-    Client.Prisma.CategoryMaxAggregateOutputType | null
+    Client.Prisma.ProductMaxAggregateOutputType | null
   >;
 }
 
-export interface CategoryGroupByOutputType {
+export interface ProductGroupByOutputType {
   [key: string]: Resolver<any, any, any>;
-  id?: Resolver<Client.Prisma.CategoryGroupByOutputType, {}, number>;
-  name?: Resolver<Client.Prisma.CategoryGroupByOutputType, {}, string>;
+  id?: Resolver<Client.Prisma.ProductGroupByOutputType, {}, number>;
   _count?: Resolver<
-    Client.Prisma.CategoryGroupByOutputType,
+    Client.Prisma.ProductGroupByOutputType,
     {},
-    Client.Prisma.CategoryCountAggregateOutputType | null
+    Client.Prisma.ProductCountAggregateOutputType | null
   >;
   _avg?: Resolver<
-    Client.Prisma.CategoryGroupByOutputType,
+    Client.Prisma.ProductGroupByOutputType,
     {},
-    Client.Prisma.CategoryAvgAggregateOutputType | null
+    Client.Prisma.ProductAvgAggregateOutputType | null
   >;
   _sum?: Resolver<
-    Client.Prisma.CategoryGroupByOutputType,
+    Client.Prisma.ProductGroupByOutputType,
     {},
-    Client.Prisma.CategorySumAggregateOutputType | null
+    Client.Prisma.ProductSumAggregateOutputType | null
   >;
   _min?: Resolver<
-    Client.Prisma.CategoryGroupByOutputType,
+    Client.Prisma.ProductGroupByOutputType,
     {},
-    Client.Prisma.CategoryMinAggregateOutputType | null
+    Client.Prisma.ProductMinAggregateOutputType | null
   >;
   _max?: Resolver<
-    Client.Prisma.CategoryGroupByOutputType,
+    Client.Prisma.ProductGroupByOutputType,
     {},
-    Client.Prisma.CategoryMaxAggregateOutputType | null
-  >;
-}
-
-export interface AggregateCategoriesOnPosts {
-  [key: string]: Resolver<any, any, any>;
-  _count?: Resolver<
-    Client.Prisma.AggregateCategoriesOnPosts,
-    {},
-    Client.Prisma.CategoriesOnPostsCountAggregateOutputType | null
-  >;
-  _avg?: Resolver<
-    Client.Prisma.AggregateCategoriesOnPosts,
-    {},
-    Client.Prisma.CategoriesOnPostsAvgAggregateOutputType | null
-  >;
-  _sum?: Resolver<
-    Client.Prisma.AggregateCategoriesOnPosts,
-    {},
-    Client.Prisma.CategoriesOnPostsSumAggregateOutputType | null
-  >;
-  _min?: Resolver<
-    Client.Prisma.AggregateCategoriesOnPosts,
-    {},
-    Client.Prisma.CategoriesOnPostsMinAggregateOutputType | null
-  >;
-  _max?: Resolver<
-    Client.Prisma.AggregateCategoriesOnPosts,
-    {},
-    Client.Prisma.CategoriesOnPostsMaxAggregateOutputType | null
-  >;
-}
-
-export interface CategoriesOnPostsGroupByOutputType {
-  [key: string]: Resolver<any, any, any>;
-  postId?: Resolver<
-    Client.Prisma.CategoriesOnPostsGroupByOutputType,
-    {},
-    number
-  >;
-  categoryId?: Resolver<
-    Client.Prisma.CategoriesOnPostsGroupByOutputType,
-    {},
-    number
-  >;
-  assignedAt?: Resolver<
-    Client.Prisma.CategoriesOnPostsGroupByOutputType,
-    {},
-    Date
-  >;
-  assignedBy?: Resolver<
-    Client.Prisma.CategoriesOnPostsGroupByOutputType,
-    {},
-    string
-  >;
-  _count?: Resolver<
-    Client.Prisma.CategoriesOnPostsGroupByOutputType,
-    {},
-    Client.Prisma.CategoriesOnPostsCountAggregateOutputType | null
-  >;
-  _avg?: Resolver<
-    Client.Prisma.CategoriesOnPostsGroupByOutputType,
-    {},
-    Client.Prisma.CategoriesOnPostsAvgAggregateOutputType | null
-  >;
-  _sum?: Resolver<
-    Client.Prisma.CategoriesOnPostsGroupByOutputType,
-    {},
-    Client.Prisma.CategoriesOnPostsSumAggregateOutputType | null
-  >;
-  _min?: Resolver<
-    Client.Prisma.CategoriesOnPostsGroupByOutputType,
-    {},
-    Client.Prisma.CategoriesOnPostsMinAggregateOutputType | null
-  >;
-  _max?: Resolver<
-    Client.Prisma.CategoriesOnPostsGroupByOutputType,
-    {},
-    Client.Prisma.CategoriesOnPostsMaxAggregateOutputType | null
+    Client.Prisma.ProductMaxAggregateOutputType | null
   >;
 }
 
 export interface AffectedRowsOutput {
   [key: string]: Resolver<any, any, any>;
   count?: Resolver<Client.Prisma.BatchPayload, {}, number>;
-}
-
-export interface UserCountOutputType {
-  [key: string]: Resolver<any, any, any>;
-  posts?: Resolver<Client.Prisma.UserCountOutputType, {}, number>;
 }
 
 export interface UserCountAggregateOutputType {
@@ -574,39 +378,17 @@ export interface UserCountAggregateOutputType {
     {},
     number
   >;
-  number2?: Resolver<Client.Prisma.UserCountAggregateOutputType, {}, number>;
-  number?: Resolver<Client.Prisma.UserCountAggregateOutputType, {}, number>;
   _all?: Resolver<Client.Prisma.UserCountAggregateOutputType, {}, number>;
 }
 
 export interface UserAvgAggregateOutputType {
   [key: string]: Resolver<any, any, any>;
   id?: Resolver<Client.Prisma.UserAvgAggregateOutputType, {}, number | null>;
-  number2?: Resolver<
-    Client.Prisma.UserAvgAggregateOutputType,
-    {},
-    undefined | null
-  >;
-  number?: Resolver<
-    Client.Prisma.UserAvgAggregateOutputType,
-    {},
-    undefined | null
-  >;
 }
 
 export interface UserSumAggregateOutputType {
   [key: string]: Resolver<any, any, any>;
   id?: Resolver<Client.Prisma.UserSumAggregateOutputType, {}, number | null>;
-  number2?: Resolver<
-    Client.Prisma.UserSumAggregateOutputType,
-    {},
-    undefined[] | null
-  >;
-  number?: Resolver<
-    Client.Prisma.UserSumAggregateOutputType,
-    {},
-    undefined | null
-  >;
 }
 
 export interface UserMinAggregateOutputType {
@@ -632,11 +414,6 @@ export interface UserMinAggregateOutputType {
     Client.Prisma.UserMinAggregateOutputType,
     {},
     string | null
-  >;
-  number?: Resolver<
-    Client.Prisma.UserMinAggregateOutputType,
-    {},
-    undefined | null
   >;
 }
 
@@ -664,574 +441,109 @@ export interface UserMaxAggregateOutputType {
     {},
     string | null
   >;
-  number?: Resolver<
-    Client.Prisma.UserMaxAggregateOutputType,
-    {},
-    undefined | null
-  >;
 }
 
-export interface PostCountOutputType {
+export interface ReviewCountAggregateOutputType {
   [key: string]: Resolver<any, any, any>;
-  categories?: Resolver<Client.Prisma.PostCountOutputType, {}, number>;
-}
-
-export interface PostCountAggregateOutputType {
-  [key: string]: Resolver<any, any, any>;
-  id?: Resolver<Client.Prisma.PostCountAggregateOutputType, {}, number>;
-  user_id?: Resolver<Client.Prisma.PostCountAggregateOutputType, {}, number>;
-  title?: Resolver<Client.Prisma.PostCountAggregateOutputType, {}, number>;
-  _all?: Resolver<Client.Prisma.PostCountAggregateOutputType, {}, number>;
-}
-
-export interface PostAvgAggregateOutputType {
-  [key: string]: Resolver<any, any, any>;
-  id?: Resolver<Client.Prisma.PostAvgAggregateOutputType, {}, number | null>;
-  user_id?: Resolver<
-    Client.Prisma.PostAvgAggregateOutputType,
-    {},
-    number | null
-  >;
-}
-
-export interface PostSumAggregateOutputType {
-  [key: string]: Resolver<any, any, any>;
-  id?: Resolver<Client.Prisma.PostSumAggregateOutputType, {}, number | null>;
-  user_id?: Resolver<
-    Client.Prisma.PostSumAggregateOutputType,
-    {},
-    number | null
-  >;
-}
-
-export interface PostMinAggregateOutputType {
-  [key: string]: Resolver<any, any, any>;
-  id?: Resolver<Client.Prisma.PostMinAggregateOutputType, {}, number | null>;
-  user_id?: Resolver<
-    Client.Prisma.PostMinAggregateOutputType,
-    {},
-    number | null
-  >;
-  title?: Resolver<Client.Prisma.PostMinAggregateOutputType, {}, string | null>;
-}
-
-export interface PostMaxAggregateOutputType {
-  [key: string]: Resolver<any, any, any>;
-  id?: Resolver<Client.Prisma.PostMaxAggregateOutputType, {}, number | null>;
-  user_id?: Resolver<
-    Client.Prisma.PostMaxAggregateOutputType,
-    {},
-    number | null
-  >;
-  title?: Resolver<Client.Prisma.PostMaxAggregateOutputType, {}, string | null>;
-}
-
-export interface CategoryCountOutputType {
-  [key: string]: Resolver<any, any, any>;
-  posts?: Resolver<Client.Prisma.CategoryCountOutputType, {}, number>;
-}
-
-export interface CategoryCountAggregateOutputType {
-  [key: string]: Resolver<any, any, any>;
-  id?: Resolver<Client.Prisma.CategoryCountAggregateOutputType, {}, number>;
-  name?: Resolver<Client.Prisma.CategoryCountAggregateOutputType, {}, number>;
-  _all?: Resolver<Client.Prisma.CategoryCountAggregateOutputType, {}, number>;
-}
-
-export interface CategoryAvgAggregateOutputType {
-  [key: string]: Resolver<any, any, any>;
-  id?: Resolver<
-    Client.Prisma.CategoryAvgAggregateOutputType,
-    {},
-    number | null
-  >;
-}
-
-export interface CategorySumAggregateOutputType {
-  [key: string]: Resolver<any, any, any>;
-  id?: Resolver<
-    Client.Prisma.CategorySumAggregateOutputType,
-    {},
-    number | null
-  >;
-}
-
-export interface CategoryMinAggregateOutputType {
-  [key: string]: Resolver<any, any, any>;
-  id?: Resolver<
-    Client.Prisma.CategoryMinAggregateOutputType,
-    {},
-    number | null
-  >;
-  name?: Resolver<
-    Client.Prisma.CategoryMinAggregateOutputType,
-    {},
-    string | null
-  >;
-}
-
-export interface CategoryMaxAggregateOutputType {
-  [key: string]: Resolver<any, any, any>;
-  id?: Resolver<
-    Client.Prisma.CategoryMaxAggregateOutputType,
-    {},
-    number | null
-  >;
-  name?: Resolver<
-    Client.Prisma.CategoryMaxAggregateOutputType,
-    {},
-    string | null
-  >;
-}
-
-export interface CategoriesOnPostsCountAggregateOutputType {
-  [key: string]: Resolver<any, any, any>;
-  postId?: Resolver<
-    Client.Prisma.CategoriesOnPostsCountAggregateOutputType,
+  id?: Resolver<Client.Prisma.ReviewCountAggregateOutputType, {}, number>;
+  product_id?: Resolver<
+    Client.Prisma.ReviewCountAggregateOutputType,
     {},
     number
   >;
-  categoryId?: Resolver<
-    Client.Prisma.CategoriesOnPostsCountAggregateOutputType,
-    {},
-    number
-  >;
-  assignedAt?: Resolver<
-    Client.Prisma.CategoriesOnPostsCountAggregateOutputType,
-    {},
-    number
-  >;
-  assignedBy?: Resolver<
-    Client.Prisma.CategoriesOnPostsCountAggregateOutputType,
-    {},
-    number
-  >;
-  _all?: Resolver<
-    Client.Prisma.CategoriesOnPostsCountAggregateOutputType,
-    {},
-    number
-  >;
+  score?: Resolver<Client.Prisma.ReviewCountAggregateOutputType, {}, number>;
+  _all?: Resolver<Client.Prisma.ReviewCountAggregateOutputType, {}, number>;
 }
 
-export interface CategoriesOnPostsAvgAggregateOutputType {
+export interface ReviewAvgAggregateOutputType {
   [key: string]: Resolver<any, any, any>;
-  postId?: Resolver<
-    Client.Prisma.CategoriesOnPostsAvgAggregateOutputType,
+  id?: Resolver<Client.Prisma.ReviewAvgAggregateOutputType, {}, number | null>;
+  product_id?: Resolver<
+    Client.Prisma.ReviewAvgAggregateOutputType,
     {},
     number | null
   >;
-  categoryId?: Resolver<
-    Client.Prisma.CategoriesOnPostsAvgAggregateOutputType,
+  score?: Resolver<
+    Client.Prisma.ReviewAvgAggregateOutputType,
     {},
     number | null
   >;
 }
 
-export interface CategoriesOnPostsSumAggregateOutputType {
+export interface ReviewSumAggregateOutputType {
   [key: string]: Resolver<any, any, any>;
-  postId?: Resolver<
-    Client.Prisma.CategoriesOnPostsSumAggregateOutputType,
+  id?: Resolver<Client.Prisma.ReviewSumAggregateOutputType, {}, number | null>;
+  product_id?: Resolver<
+    Client.Prisma.ReviewSumAggregateOutputType,
     {},
     number | null
   >;
-  categoryId?: Resolver<
-    Client.Prisma.CategoriesOnPostsSumAggregateOutputType,
+  score?: Resolver<
+    Client.Prisma.ReviewSumAggregateOutputType,
     {},
     number | null
   >;
 }
 
-export interface CategoriesOnPostsMinAggregateOutputType {
+export interface ReviewMinAggregateOutputType {
   [key: string]: Resolver<any, any, any>;
-  postId?: Resolver<
-    Client.Prisma.CategoriesOnPostsMinAggregateOutputType,
+  id?: Resolver<Client.Prisma.ReviewMinAggregateOutputType, {}, number | null>;
+  product_id?: Resolver<
+    Client.Prisma.ReviewMinAggregateOutputType,
     {},
     number | null
   >;
-  categoryId?: Resolver<
-    Client.Prisma.CategoriesOnPostsMinAggregateOutputType,
+  score?: Resolver<
+    Client.Prisma.ReviewMinAggregateOutputType,
     {},
     number | null
-  >;
-  assignedAt?: Resolver<
-    Client.Prisma.CategoriesOnPostsMinAggregateOutputType,
-    {},
-    Date | null
-  >;
-  assignedBy?: Resolver<
-    Client.Prisma.CategoriesOnPostsMinAggregateOutputType,
-    {},
-    string | null
   >;
 }
 
-export interface CategoriesOnPostsMaxAggregateOutputType {
+export interface ReviewMaxAggregateOutputType {
   [key: string]: Resolver<any, any, any>;
-  postId?: Resolver<
-    Client.Prisma.CategoriesOnPostsMaxAggregateOutputType,
+  id?: Resolver<Client.Prisma.ReviewMaxAggregateOutputType, {}, number | null>;
+  product_id?: Resolver<
+    Client.Prisma.ReviewMaxAggregateOutputType,
     {},
     number | null
   >;
-  categoryId?: Resolver<
-    Client.Prisma.CategoriesOnPostsMaxAggregateOutputType,
+  score?: Resolver<
+    Client.Prisma.ReviewMaxAggregateOutputType,
     {},
     number | null
   >;
-  assignedAt?: Resolver<
-    Client.Prisma.CategoriesOnPostsMaxAggregateOutputType,
-    {},
-    Date | null
-  >;
-  assignedBy?: Resolver<
-    Client.Prisma.CategoriesOnPostsMaxAggregateOutputType,
-    {},
-    string | null
-  >;
 }
 
-export interface UserPostsArgs {
-  where?: PostWhereInput | null;
-  orderBy?: PostOrderByWithRelationInput[] | null;
-  cursor?: PostWhereUniqueInput | null;
-  take?: number | null;
-  skip?: number | null;
-  distinct?: PostScalarFieldEnum[] | null;
+export interface ProductCountOutputType {
+  [key: string]: Resolver<any, any, any>;
+  review?: Resolver<Client.Prisma.ProductCountOutputType, {}, number>;
 }
 
-export interface PostCategoriesArgs {
-  where?: CategoriesOnPostsWhereInput | null;
-  orderBy?: CategoriesOnPostsOrderByWithRelationInput[] | null;
-  cursor?: CategoriesOnPostsWhereUniqueInput | null;
-  take?: number | null;
-  skip?: number | null;
-  distinct?: CategoriesOnPostsScalarFieldEnum[] | null;
+export interface ProductCountAggregateOutputType {
+  [key: string]: Resolver<any, any, any>;
+  id?: Resolver<Client.Prisma.ProductCountAggregateOutputType, {}, number>;
+  _all?: Resolver<Client.Prisma.ProductCountAggregateOutputType, {}, number>;
 }
 
-export interface CategoryPostsArgs {
-  where?: CategoriesOnPostsWhereInput | null;
-  orderBy?: CategoriesOnPostsOrderByWithRelationInput[] | null;
-  cursor?: CategoriesOnPostsWhereUniqueInput | null;
-  take?: number | null;
-  skip?: number | null;
-  distinct?: CategoriesOnPostsScalarFieldEnum[] | null;
+export interface ProductAvgAggregateOutputType {
+  [key: string]: Resolver<any, any, any>;
+  id?: Resolver<Client.Prisma.ProductAvgAggregateOutputType, {}, number | null>;
 }
 
-export interface FindFirstUserArgs {
-  where?: UserWhereInput | null;
-  orderBy?: UserOrderByWithRelationInput[] | null;
-  cursor?: UserWhereUniqueInput | null;
-  take?: number | null;
-  skip?: number | null;
-  distinct?: UserScalarFieldEnum[] | null;
+export interface ProductSumAggregateOutputType {
+  [key: string]: Resolver<any, any, any>;
+  id?: Resolver<Client.Prisma.ProductSumAggregateOutputType, {}, number | null>;
 }
 
-export interface FindManyUserArgs {
-  where?: UserWhereInput;
-  orderBy?: UserOrderByWithRelationInput[];
-  cursor?: UserWhereUniqueInput;
-  take?: number;
-  skip?: number;
-  distinct?: UserScalarFieldEnum[];
+export interface ProductMinAggregateOutputType {
+  [key: string]: Resolver<any, any, any>;
+  id?: Resolver<Client.Prisma.ProductMinAggregateOutputType, {}, number | null>;
 }
 
-export interface AggregateUserArgs {
-  where?: UserWhereInput;
-  orderBy?: UserOrderByWithRelationInput[];
-  cursor?: UserWhereUniqueInput;
-  take?: number;
-  skip?: number;
-  _count?: Client.Prisma.UserCountAggregateInputType;
-  _avg?: Client.Prisma.UserAvgAggregateInputType;
-  _sum?: Client.Prisma.UserSumAggregateInputType;
-  _min?: Client.Prisma.UserMinAggregateInputType;
-  _max?: Client.Prisma.UserMaxAggregateInputType;
-}
-
-export interface GroupByUserArgs {
-  where?: UserWhereInput;
-  orderBy?: UserOrderByWithAggregationInput[];
-  by: UserScalarFieldEnum[];
-  having?: UserScalarWhereWithAggregatesInput;
-  take?: number;
-  skip?: number;
-}
-
-export interface FindUniqueUserArgs {
-  where: UserWhereUniqueInput | null;
-}
-
-export interface FindFirstPostArgs {
-  where?: PostWhereInput | null;
-  orderBy?: PostOrderByWithRelationInput[] | null;
-  cursor?: PostWhereUniqueInput | null;
-  take?: number | null;
-  skip?: number | null;
-  distinct?: PostScalarFieldEnum[] | null;
-}
-
-export interface FindManyPostArgs {
-  where?: PostWhereInput;
-  orderBy?: PostOrderByWithRelationInput[];
-  cursor?: PostWhereUniqueInput;
-  take?: number;
-  skip?: number;
-  distinct?: PostScalarFieldEnum[];
-}
-
-export interface AggregatePostArgs {
-  where?: PostWhereInput;
-  orderBy?: PostOrderByWithRelationInput[];
-  cursor?: PostWhereUniqueInput;
-  take?: number;
-  skip?: number;
-  _count?: Client.Prisma.PostCountAggregateInputType;
-  _avg?: Client.Prisma.PostAvgAggregateInputType;
-  _sum?: Client.Prisma.PostSumAggregateInputType;
-  _min?: Client.Prisma.PostMinAggregateInputType;
-  _max?: Client.Prisma.PostMaxAggregateInputType;
-}
-
-export interface GroupByPostArgs {
-  where?: PostWhereInput;
-  orderBy?: PostOrderByWithAggregationInput[];
-  by: PostScalarFieldEnum[];
-  having?: PostScalarWhereWithAggregatesInput;
-  take?: number;
-  skip?: number;
-}
-
-export interface FindUniquePostArgs {
-  where: PostWhereUniqueInput | null;
-}
-
-export interface FindFirstCategoryArgs {
-  where?: CategoryWhereInput | null;
-  orderBy?: CategoryOrderByWithRelationInput[] | null;
-  cursor?: CategoryWhereUniqueInput | null;
-  take?: number | null;
-  skip?: number | null;
-  distinct?: CategoryScalarFieldEnum[] | null;
-}
-
-export interface FindManyCategoryArgs {
-  where?: CategoryWhereInput;
-  orderBy?: CategoryOrderByWithRelationInput[];
-  cursor?: CategoryWhereUniqueInput;
-  take?: number;
-  skip?: number;
-  distinct?: CategoryScalarFieldEnum[];
-}
-
-export interface AggregateCategoryArgs {
-  where?: CategoryWhereInput;
-  orderBy?: CategoryOrderByWithRelationInput[];
-  cursor?: CategoryWhereUniqueInput;
-  take?: number;
-  skip?: number;
-  _count?: Client.Prisma.CategoryCountAggregateInputType;
-  _avg?: Client.Prisma.CategoryAvgAggregateInputType;
-  _sum?: Client.Prisma.CategorySumAggregateInputType;
-  _min?: Client.Prisma.CategoryMinAggregateInputType;
-  _max?: Client.Prisma.CategoryMaxAggregateInputType;
-}
-
-export interface GroupByCategoryArgs {
-  where?: CategoryWhereInput;
-  orderBy?: CategoryOrderByWithAggregationInput[];
-  by: CategoryScalarFieldEnum[];
-  having?: CategoryScalarWhereWithAggregatesInput;
-  take?: number;
-  skip?: number;
-}
-
-export interface FindUniqueCategoryArgs {
-  where: CategoryWhereUniqueInput | null;
-}
-
-export interface FindFirstCategoriesOnPostsArgs {
-  where?: CategoriesOnPostsWhereInput | null;
-  orderBy?: CategoriesOnPostsOrderByWithRelationInput[] | null;
-  cursor?: CategoriesOnPostsWhereUniqueInput | null;
-  take?: number | null;
-  skip?: number | null;
-  distinct?: CategoriesOnPostsScalarFieldEnum[] | null;
-}
-
-export interface FindManyCategoriesOnPostsArgs {
-  where?: CategoriesOnPostsWhereInput;
-  orderBy?: CategoriesOnPostsOrderByWithRelationInput[];
-  cursor?: CategoriesOnPostsWhereUniqueInput;
-  take?: number;
-  skip?: number;
-  distinct?: CategoriesOnPostsScalarFieldEnum[];
-}
-
-export interface AggregateCategoriesOnPostsArgs {
-  where?: CategoriesOnPostsWhereInput;
-  orderBy?: CategoriesOnPostsOrderByWithRelationInput[];
-  cursor?: CategoriesOnPostsWhereUniqueInput;
-  take?: number;
-  skip?: number;
-  _count?: Client.Prisma.CategoriesOnPostsCountAggregateInputType;
-  _avg?: Client.Prisma.CategoriesOnPostsAvgAggregateInputType;
-  _sum?: Client.Prisma.CategoriesOnPostsSumAggregateInputType;
-  _min?: Client.Prisma.CategoriesOnPostsMinAggregateInputType;
-  _max?: Client.Prisma.CategoriesOnPostsMaxAggregateInputType;
-}
-
-export interface GroupByCategoriesOnPostsArgs {
-  where?: CategoriesOnPostsWhereInput;
-  orderBy?: CategoriesOnPostsOrderByWithAggregationInput[];
-  by: CategoriesOnPostsScalarFieldEnum[];
-  having?: CategoriesOnPostsScalarWhereWithAggregatesInput;
-  take?: number;
-  skip?: number;
-}
-
-export interface FindUniqueCategoriesOnPostsArgs {
-  where: CategoriesOnPostsWhereUniqueInput | null;
-}
-
-export interface CreateOneUserArgs {
-  data: UserCreateInput;
-}
-
-export interface UpsertOneUserArgs {
-  where: UserWhereUniqueInput;
-  create: UserCreateInput;
-  update: UserUpdateInput;
-}
-
-export interface CreateManyUserArgs {
-  data: UserCreateManyInput[];
-  skipDuplicates?: boolean;
-}
-
-export interface DeleteOneUserArgs {
-  where: UserWhereUniqueInput | null;
-}
-
-export interface UpdateOneUserArgs {
-  data: UserUpdateInput | null;
-  where: UserWhereUniqueInput | null;
-}
-
-export interface UpdateManyUserArgs {
-  data: UserUpdateManyMutationInput;
-  where?: UserWhereInput;
-}
-
-export interface DeleteManyUserArgs {
-  where?: UserWhereInput;
-}
-
-export interface CreateOnePostArgs {
-  data: PostCreateInput;
-}
-
-export interface UpsertOnePostArgs {
-  where: PostWhereUniqueInput;
-  create: PostCreateInput;
-  update: PostUpdateInput;
-}
-
-export interface CreateManyPostArgs {
-  data: PostCreateManyInput[];
-  skipDuplicates?: boolean;
-}
-
-export interface DeleteOnePostArgs {
-  where: PostWhereUniqueInput | null;
-}
-
-export interface UpdateOnePostArgs {
-  data: PostUpdateInput | null;
-  where: PostWhereUniqueInput | null;
-}
-
-export interface UpdateManyPostArgs {
-  data: PostUpdateManyMutationInput;
-  where?: PostWhereInput;
-}
-
-export interface DeleteManyPostArgs {
-  where?: PostWhereInput;
-}
-
-export interface CreateOneCategoryArgs {
-  data: CategoryCreateInput;
-}
-
-export interface UpsertOneCategoryArgs {
-  where: CategoryWhereUniqueInput;
-  create: CategoryCreateInput;
-  update: CategoryUpdateInput;
-}
-
-export interface CreateManyCategoryArgs {
-  data: CategoryCreateManyInput[];
-  skipDuplicates?: boolean;
-}
-
-export interface DeleteOneCategoryArgs {
-  where: CategoryWhereUniqueInput | null;
-}
-
-export interface UpdateOneCategoryArgs {
-  data: CategoryUpdateInput | null;
-  where: CategoryWhereUniqueInput | null;
-}
-
-export interface UpdateManyCategoryArgs {
-  data: CategoryUpdateManyMutationInput;
-  where?: CategoryWhereInput;
-}
-
-export interface DeleteManyCategoryArgs {
-  where?: CategoryWhereInput;
-}
-
-export interface CreateOneCategoriesOnPostsArgs {
-  data: CategoriesOnPostsCreateInput;
-}
-
-export interface UpsertOneCategoriesOnPostsArgs {
-  where: CategoriesOnPostsWhereUniqueInput;
-  create: CategoriesOnPostsCreateInput;
-  update: CategoriesOnPostsUpdateInput;
-}
-
-export interface CreateManyCategoriesOnPostsArgs {
-  data: CategoriesOnPostsCreateManyInput[];
-  skipDuplicates?: boolean;
-}
-
-export interface DeleteOneCategoriesOnPostsArgs {
-  where: CategoriesOnPostsWhereUniqueInput | null;
-}
-
-export interface UpdateOneCategoriesOnPostsArgs {
-  data: CategoriesOnPostsUpdateInput | null;
-  where: CategoriesOnPostsWhereUniqueInput | null;
-}
-
-export interface UpdateManyCategoriesOnPostsArgs {
-  data: CategoriesOnPostsUpdateManyMutationInput;
-  where?: CategoriesOnPostsWhereInput;
-}
-
-export interface DeleteManyCategoriesOnPostsArgs {
-  where?: CategoriesOnPostsWhereInput;
-}
-
-export interface ExecuteRawArgs {
-  query: string;
-  parameters?: any;
-}
-
-export interface QueryRawArgs {
-  query: string;
-  parameters?: any;
+export interface ProductMaxAggregateOutputType {
+  [key: string]: Resolver<any, any, any>;
+  id?: Resolver<Client.Prisma.ProductMaxAggregateOutputType, {}, number | null>;
 }
 
 export interface UserWhereInput {
@@ -1246,9 +558,6 @@ export interface UserWhereInput {
   roles?: StringNullableListFilter;
   googleId?: StringNullableFilter | null;
   googleProfile?: JsonNullableFilter;
-  posts?: PostListRelationFilter;
-  number2?: DecimalNullableListFilter;
-  number?: DecimalFilter;
 }
 
 export interface UserOrderByWithRelationInput {
@@ -1260,18 +569,13 @@ export interface UserOrderByWithRelationInput {
   roles?: SortOrder;
   googleId?: SortOrder;
   googleProfile?: SortOrder;
-  posts?: PostOrderByRelationAggregateInput;
-  number2?: SortOrder;
-  number?: SortOrder;
 }
 
 export interface UserWhereUniqueInput {
   id?: number;
-  createdAt?: Date;
   username?: string;
   email?: string;
   googleId?: string;
-  number?: undefined;
 }
 
 export interface UserOrderByWithAggregationInput {
@@ -1283,8 +587,6 @@ export interface UserOrderByWithAggregationInput {
   roles?: SortOrder;
   googleId?: SortOrder;
   googleProfile?: SortOrder;
-  number2?: SortOrder;
-  number?: SortOrder;
   _count?: UserCountOrderByAggregateInput;
   _avg?: UserAvgOrderByAggregateInput;
   _max?: UserMaxOrderByAggregateInput;
@@ -1304,136 +606,81 @@ export interface UserScalarWhereWithAggregatesInput {
   roles?: StringNullableListFilter;
   googleId?: StringNullableWithAggregatesFilter | null;
   googleProfile?: JsonNullableWithAggregatesFilter;
-  number2?: DecimalNullableListFilter;
-  number?: DecimalWithAggregatesFilter;
 }
 
-export interface PostWhereInput {
-  AND?: PostWhereInput[];
-  OR?: PostWhereInput[];
-  NOT?: PostWhereInput[];
+export interface ReviewWhereInput {
+  AND?: ReviewWhereInput[];
+  OR?: ReviewWhereInput[];
+  NOT?: ReviewWhereInput[];
   id?: IntFilter;
-  user?: UserWhereInput;
-  user_id?: IntFilter;
-  title?: StringFilter;
-  categories?: CategoriesOnPostsListRelationFilter;
+  product?: ProductWhereInput;
+  product_id?: IntFilter;
+  score?: IntFilter;
 }
 
-export interface PostOrderByWithRelationInput {
+export interface ReviewOrderByWithRelationInput {
   id?: SortOrder;
-  user?: UserOrderByWithRelationInput;
-  user_id?: SortOrder;
-  title?: SortOrder;
-  categories?: CategoriesOnPostsOrderByRelationAggregateInput;
+  product?: ProductOrderByWithRelationInput;
+  product_id?: SortOrder;
+  score?: SortOrder;
 }
 
-export interface PostWhereUniqueInput {
+export interface ReviewWhereUniqueInput {
   id?: number;
-  user_id?: number;
+  product_id?: number;
 }
 
-export interface PostOrderByWithAggregationInput {
+export interface ReviewOrderByWithAggregationInput {
   id?: SortOrder;
-  user_id?: SortOrder;
-  title?: SortOrder;
-  _count?: PostCountOrderByAggregateInput;
-  _avg?: PostAvgOrderByAggregateInput;
-  _max?: PostMaxOrderByAggregateInput;
-  _min?: PostMinOrderByAggregateInput;
-  _sum?: PostSumOrderByAggregateInput;
+  product_id?: SortOrder;
+  score?: SortOrder;
+  _count?: ReviewCountOrderByAggregateInput;
+  _avg?: ReviewAvgOrderByAggregateInput;
+  _max?: ReviewMaxOrderByAggregateInput;
+  _min?: ReviewMinOrderByAggregateInput;
+  _sum?: ReviewSumOrderByAggregateInput;
 }
 
-export interface PostScalarWhereWithAggregatesInput {
-  AND?: PostScalarWhereWithAggregatesInput[];
-  OR?: PostScalarWhereWithAggregatesInput[];
-  NOT?: PostScalarWhereWithAggregatesInput[];
+export interface ReviewScalarWhereWithAggregatesInput {
+  AND?: ReviewScalarWhereWithAggregatesInput[];
+  OR?: ReviewScalarWhereWithAggregatesInput[];
+  NOT?: ReviewScalarWhereWithAggregatesInput[];
   id?: IntWithAggregatesFilter;
-  user_id?: IntWithAggregatesFilter;
-  title?: StringWithAggregatesFilter;
+  product_id?: IntWithAggregatesFilter;
+  score?: IntWithAggregatesFilter;
 }
 
-export interface CategoryWhereInput {
-  AND?: CategoryWhereInput[];
-  OR?: CategoryWhereInput[];
-  NOT?: CategoryWhereInput[];
+export interface ProductWhereInput {
+  AND?: ProductWhereInput[];
+  OR?: ProductWhereInput[];
+  NOT?: ProductWhereInput[];
   id?: IntFilter;
-  name?: StringFilter;
-  posts?: CategoriesOnPostsListRelationFilter;
+  review?: ReviewListRelationFilter;
 }
 
-export interface CategoryOrderByWithRelationInput {
+export interface ProductOrderByWithRelationInput {
   id?: SortOrder;
-  name?: SortOrder;
-  posts?: CategoriesOnPostsOrderByRelationAggregateInput;
+  review?: ReviewOrderByRelationAggregateInput;
 }
 
-export interface CategoryWhereUniqueInput {
+export interface ProductWhereUniqueInput {
   id?: number;
 }
 
-export interface CategoryOrderByWithAggregationInput {
+export interface ProductOrderByWithAggregationInput {
   id?: SortOrder;
-  name?: SortOrder;
-  _count?: CategoryCountOrderByAggregateInput;
-  _avg?: CategoryAvgOrderByAggregateInput;
-  _max?: CategoryMaxOrderByAggregateInput;
-  _min?: CategoryMinOrderByAggregateInput;
-  _sum?: CategorySumOrderByAggregateInput;
+  _count?: ProductCountOrderByAggregateInput;
+  _avg?: ProductAvgOrderByAggregateInput;
+  _max?: ProductMaxOrderByAggregateInput;
+  _min?: ProductMinOrderByAggregateInput;
+  _sum?: ProductSumOrderByAggregateInput;
 }
 
-export interface CategoryScalarWhereWithAggregatesInput {
-  AND?: CategoryScalarWhereWithAggregatesInput[];
-  OR?: CategoryScalarWhereWithAggregatesInput[];
-  NOT?: CategoryScalarWhereWithAggregatesInput[];
+export interface ProductScalarWhereWithAggregatesInput {
+  AND?: ProductScalarWhereWithAggregatesInput[];
+  OR?: ProductScalarWhereWithAggregatesInput[];
+  NOT?: ProductScalarWhereWithAggregatesInput[];
   id?: IntWithAggregatesFilter;
-  name?: StringWithAggregatesFilter;
-}
-
-export interface CategoriesOnPostsWhereInput {
-  AND?: CategoriesOnPostsWhereInput[];
-  OR?: CategoriesOnPostsWhereInput[];
-  NOT?: CategoriesOnPostsWhereInput[];
-  post?: PostWhereInput;
-  postId?: IntFilter;
-  category?: CategoryWhereInput;
-  categoryId?: IntFilter;
-  assignedAt?: DateTimeFilter;
-  assignedBy?: StringFilter;
-}
-
-export interface CategoriesOnPostsOrderByWithRelationInput {
-  post?: PostOrderByWithRelationInput;
-  postId?: SortOrder;
-  category?: CategoryOrderByWithRelationInput;
-  categoryId?: SortOrder;
-  assignedAt?: SortOrder;
-  assignedBy?: SortOrder;
-}
-
-export interface CategoriesOnPostsWhereUniqueInput {
-  postId_categoryId?: CategoriesOnPostsPostIdCategoryIdCompoundUniqueInput;
-}
-
-export interface CategoriesOnPostsOrderByWithAggregationInput {
-  postId?: SortOrder;
-  categoryId?: SortOrder;
-  assignedAt?: SortOrder;
-  assignedBy?: SortOrder;
-  _count?: CategoriesOnPostsCountOrderByAggregateInput;
-  _avg?: CategoriesOnPostsAvgOrderByAggregateInput;
-  _max?: CategoriesOnPostsMaxOrderByAggregateInput;
-  _min?: CategoriesOnPostsMinOrderByAggregateInput;
-  _sum?: CategoriesOnPostsSumOrderByAggregateInput;
-}
-
-export interface CategoriesOnPostsScalarWhereWithAggregatesInput {
-  AND?: CategoriesOnPostsScalarWhereWithAggregatesInput[];
-  OR?: CategoriesOnPostsScalarWhereWithAggregatesInput[];
-  NOT?: CategoriesOnPostsScalarWhereWithAggregatesInput[];
-  postId?: IntWithAggregatesFilter;
-  categoryId?: IntWithAggregatesFilter;
-  assignedAt?: DateTimeWithAggregatesFilter;
-  assignedBy?: StringWithAggregatesFilter;
 }
 
 export interface UserCreateInput {
@@ -1444,9 +691,6 @@ export interface UserCreateInput {
   roles?: UserCreaterolesInput;
   googleId?: string | null;
   googleProfile?: NullableJsonNullValueInput;
-  posts?: PostCreateNestedManyWithoutUserInput;
-  number2?: UserCreatenumber2Input;
-  number: undefined;
 }
 
 export interface UserUncheckedCreateInput {
@@ -1458,9 +702,6 @@ export interface UserUncheckedCreateInput {
   roles?: UserCreaterolesInput;
   googleId?: string | null;
   googleProfile?: NullableJsonNullValueInput;
-  posts?: PostUncheckedCreateNestedManyWithoutUserInput;
-  number2?: UserCreatenumber2Input;
-  number: undefined;
 }
 
 export interface UserUpdateInput {
@@ -1471,9 +712,6 @@ export interface UserUpdateInput {
   roles?: UserUpdaterolesInput;
   googleId?: NullableStringFieldUpdateOperationsInput | null;
   googleProfile?: NullableJsonNullValueInput;
-  posts?: PostUpdateManyWithoutUserNestedInput;
-  number2?: UserUpdatenumber2Input;
-  number?: DecimalFieldUpdateOperationsInput;
 }
 
 export interface UserUncheckedUpdateInput {
@@ -1485,9 +723,6 @@ export interface UserUncheckedUpdateInput {
   roles?: UserUpdaterolesInput;
   googleId?: NullableStringFieldUpdateOperationsInput | null;
   googleProfile?: NullableJsonNullValueInput;
-  posts?: PostUncheckedUpdateManyWithoutUserNestedInput;
-  number2?: UserUpdatenumber2Input;
-  number?: DecimalFieldUpdateOperationsInput;
 }
 
 export interface UserCreateManyInput {
@@ -1499,8 +734,6 @@ export interface UserCreateManyInput {
   roles?: UserCreaterolesInput;
   googleId?: string | null;
   googleProfile?: NullableJsonNullValueInput;
-  number2?: UserCreatenumber2Input;
-  number: undefined;
 }
 
 export interface UserUpdateManyMutationInput {
@@ -1511,8 +744,6 @@ export interface UserUpdateManyMutationInput {
   roles?: UserUpdaterolesInput;
   googleId?: NullableStringFieldUpdateOperationsInput | null;
   googleProfile?: NullableJsonNullValueInput;
-  number2?: UserUpdatenumber2Input;
-  number?: DecimalFieldUpdateOperationsInput;
 }
 
 export interface UserUncheckedUpdateManyInput {
@@ -1524,133 +755,70 @@ export interface UserUncheckedUpdateManyInput {
   roles?: UserUpdaterolesInput;
   googleId?: NullableStringFieldUpdateOperationsInput | null;
   googleProfile?: NullableJsonNullValueInput;
-  number2?: UserUpdatenumber2Input;
-  number?: DecimalFieldUpdateOperationsInput;
 }
 
-export interface PostCreateInput {
-  user: UserCreateNestedOneWithoutPostsInput;
-  title: string;
-  categories?: CategoriesOnPostsCreateNestedManyWithoutPostInput;
+export interface ReviewCreateInput {
+  product: ProductCreateNestedOneWithoutReviewInput;
+  score: number;
 }
 
-export interface PostUncheckedCreateInput {
+export interface ReviewUncheckedCreateInput {
   id?: number;
-  user_id: number;
-  title: string;
-  categories?: CategoriesOnPostsUncheckedCreateNestedManyWithoutPostInput;
+  product_id: number;
+  score: number;
 }
 
-export interface PostUpdateInput {
-  user?: UserUpdateOneRequiredWithoutPostsNestedInput;
-  title?: StringFieldUpdateOperationsInput;
-  categories?: CategoriesOnPostsUpdateManyWithoutPostNestedInput;
+export interface ReviewUpdateInput {
+  product?: ProductUpdateOneRequiredWithoutReviewNestedInput;
+  score?: IntFieldUpdateOperationsInput;
 }
 
-export interface PostUncheckedUpdateInput {
+export interface ReviewUncheckedUpdateInput {
   id?: IntFieldUpdateOperationsInput;
-  user_id?: IntFieldUpdateOperationsInput;
-  title?: StringFieldUpdateOperationsInput;
-  categories?: CategoriesOnPostsUncheckedUpdateManyWithoutPostNestedInput;
+  product_id?: IntFieldUpdateOperationsInput;
+  score?: IntFieldUpdateOperationsInput;
 }
 
-export interface PostCreateManyInput {
+export interface ReviewCreateManyInput {
   id?: number;
-  user_id: number;
-  title: string;
+  product_id: number;
+  score: number;
 }
 
-export interface PostUpdateManyMutationInput {
-  title?: StringFieldUpdateOperationsInput;
+export interface ReviewUpdateManyMutationInput {
+  score?: IntFieldUpdateOperationsInput;
 }
 
-export interface PostUncheckedUpdateManyInput {
+export interface ReviewUncheckedUpdateManyInput {
   id?: IntFieldUpdateOperationsInput;
-  user_id?: IntFieldUpdateOperationsInput;
-  title?: StringFieldUpdateOperationsInput;
+  product_id?: IntFieldUpdateOperationsInput;
+  score?: IntFieldUpdateOperationsInput;
 }
 
-export interface CategoryCreateInput {
-  name: string;
-  posts?: CategoriesOnPostsCreateNestedManyWithoutCategoryInput;
+export interface ProductCreateInput {
+  review?: ReviewCreateNestedManyWithoutProductInput;
 }
 
-export interface CategoryUncheckedCreateInput {
+export interface ProductUncheckedCreateInput {
   id?: number;
-  name: string;
-  posts?: CategoriesOnPostsUncheckedCreateNestedManyWithoutCategoryInput;
+  review?: ReviewUncheckedCreateNestedManyWithoutProductInput;
 }
 
-export interface CategoryUpdateInput {
-  name?: StringFieldUpdateOperationsInput;
-  posts?: CategoriesOnPostsUpdateManyWithoutCategoryNestedInput;
+export interface ProductUpdateInput {
+  review?: ReviewUpdateManyWithoutProductNestedInput;
 }
 
-export interface CategoryUncheckedUpdateInput {
+export interface ProductUncheckedUpdateInput {
   id?: IntFieldUpdateOperationsInput;
-  name?: StringFieldUpdateOperationsInput;
-  posts?: CategoriesOnPostsUncheckedUpdateManyWithoutCategoryNestedInput;
+  review?: ReviewUncheckedUpdateManyWithoutProductNestedInput;
 }
 
-export interface CategoryCreateManyInput {
+export interface ProductCreateManyInput {
   id?: number;
-  name: string;
 }
 
-export interface CategoryUpdateManyMutationInput {
-  name?: StringFieldUpdateOperationsInput;
-}
-
-export interface CategoryUncheckedUpdateManyInput {
+export interface ProductUncheckedUpdateManyInput {
   id?: IntFieldUpdateOperationsInput;
-  name?: StringFieldUpdateOperationsInput;
-}
-
-export interface CategoriesOnPostsCreateInput {
-  post: PostCreateNestedOneWithoutCategoriesInput;
-  category: CategoryCreateNestedOneWithoutPostsInput;
-  assignedAt?: Date;
-  assignedBy: string;
-}
-
-export interface CategoriesOnPostsUncheckedCreateInput {
-  postId: number;
-  categoryId: number;
-  assignedAt?: Date;
-  assignedBy: string;
-}
-
-export interface CategoriesOnPostsUpdateInput {
-  post?: PostUpdateOneRequiredWithoutCategoriesNestedInput;
-  category?: CategoryUpdateOneRequiredWithoutPostsNestedInput;
-  assignedAt?: DateTimeFieldUpdateOperationsInput;
-  assignedBy?: StringFieldUpdateOperationsInput;
-}
-
-export interface CategoriesOnPostsUncheckedUpdateInput {
-  postId?: IntFieldUpdateOperationsInput;
-  categoryId?: IntFieldUpdateOperationsInput;
-  assignedAt?: DateTimeFieldUpdateOperationsInput;
-  assignedBy?: StringFieldUpdateOperationsInput;
-}
-
-export interface CategoriesOnPostsCreateManyInput {
-  postId: number;
-  categoryId: number;
-  assignedAt?: Date;
-  assignedBy: string;
-}
-
-export interface CategoriesOnPostsUpdateManyMutationInput {
-  assignedAt?: DateTimeFieldUpdateOperationsInput;
-  assignedBy?: StringFieldUpdateOperationsInput;
-}
-
-export interface CategoriesOnPostsUncheckedUpdateManyInput {
-  postId?: IntFieldUpdateOperationsInput;
-  categoryId?: IntFieldUpdateOperationsInput;
-  assignedAt?: DateTimeFieldUpdateOperationsInput;
-  assignedBy?: StringFieldUpdateOperationsInput;
 }
 
 export interface IntFilter {
@@ -1729,35 +897,6 @@ export interface JsonNullableFilter {
   not?: any;
 }
 
-export interface PostListRelationFilter {
-  every?: PostWhereInput;
-  some?: PostWhereInput;
-  none?: PostWhereInput;
-}
-
-export interface DecimalNullableListFilter {
-  equals?: undefined[] | null;
-  has?: undefined | null;
-  hasEvery?: undefined[];
-  hasSome?: undefined[];
-  isEmpty?: boolean;
-}
-
-export interface DecimalFilter {
-  equals?: undefined;
-  in?: undefined[];
-  notIn?: undefined[];
-  lt?: undefined;
-  lte?: undefined;
-  gt?: undefined;
-  gte?: undefined;
-  not?: NestedDecimalFilter;
-}
-
-export interface PostOrderByRelationAggregateInput {
-  _count?: SortOrder;
-}
-
 export interface UserCountOrderByAggregateInput {
   id?: SortOrder;
   createdAt?: SortOrder;
@@ -1767,14 +906,10 @@ export interface UserCountOrderByAggregateInput {
   roles?: SortOrder;
   googleId?: SortOrder;
   googleProfile?: SortOrder;
-  number2?: SortOrder;
-  number?: SortOrder;
 }
 
 export interface UserAvgOrderByAggregateInput {
   id?: SortOrder;
-  number2?: SortOrder;
-  number?: SortOrder;
 }
 
 export interface UserMaxOrderByAggregateInput {
@@ -1784,7 +919,6 @@ export interface UserMaxOrderByAggregateInput {
   password?: SortOrder;
   email?: SortOrder;
   googleId?: SortOrder;
-  number?: SortOrder;
 }
 
 export interface UserMinOrderByAggregateInput {
@@ -1794,13 +928,10 @@ export interface UserMinOrderByAggregateInput {
   password?: SortOrder;
   email?: SortOrder;
   googleId?: SortOrder;
-  number?: SortOrder;
 }
 
 export interface UserSumOrderByAggregateInput {
   id?: SortOrder;
-  number2?: SortOrder;
-  number?: SortOrder;
 }
 
 export interface IntWithAggregatesFilter {
@@ -1888,154 +1019,73 @@ export interface JsonNullableWithAggregatesFilter {
   _max?: NestedJsonNullableFilter;
 }
 
-export interface DecimalWithAggregatesFilter {
-  equals?: undefined;
-  in?: undefined[];
-  notIn?: undefined[];
-  lt?: undefined;
-  lte?: undefined;
-  gt?: undefined;
-  gte?: undefined;
-  not?: NestedDecimalWithAggregatesFilter;
-  _count?: NestedIntFilter;
-  _avg?: NestedDecimalFilter;
-  _sum?: NestedDecimalFilter;
-  _min?: NestedDecimalFilter;
-  _max?: NestedDecimalFilter;
+export interface ProductRelationFilter {
+  is?: ProductWhereInput;
+  isNot?: ProductWhereInput;
 }
 
-export interface UserRelationFilter {
-  is?: UserWhereInput;
-  isNot?: UserWhereInput;
+export interface ReviewCountOrderByAggregateInput {
+  id?: SortOrder;
+  product_id?: SortOrder;
+  score?: SortOrder;
 }
 
-export interface CategoriesOnPostsListRelationFilter {
-  every?: CategoriesOnPostsWhereInput;
-  some?: CategoriesOnPostsWhereInput;
-  none?: CategoriesOnPostsWhereInput;
+export interface ReviewAvgOrderByAggregateInput {
+  id?: SortOrder;
+  product_id?: SortOrder;
+  score?: SortOrder;
 }
 
-export interface CategoriesOnPostsOrderByRelationAggregateInput {
+export interface ReviewMaxOrderByAggregateInput {
+  id?: SortOrder;
+  product_id?: SortOrder;
+  score?: SortOrder;
+}
+
+export interface ReviewMinOrderByAggregateInput {
+  id?: SortOrder;
+  product_id?: SortOrder;
+  score?: SortOrder;
+}
+
+export interface ReviewSumOrderByAggregateInput {
+  id?: SortOrder;
+  product_id?: SortOrder;
+  score?: SortOrder;
+}
+
+export interface ReviewListRelationFilter {
+  every?: ReviewWhereInput;
+  some?: ReviewWhereInput;
+  none?: ReviewWhereInput;
+}
+
+export interface ReviewOrderByRelationAggregateInput {
   _count?: SortOrder;
 }
 
-export interface PostCountOrderByAggregateInput {
-  id?: SortOrder;
-  user_id?: SortOrder;
-  title?: SortOrder;
-}
-
-export interface PostAvgOrderByAggregateInput {
-  id?: SortOrder;
-  user_id?: SortOrder;
-}
-
-export interface PostMaxOrderByAggregateInput {
-  id?: SortOrder;
-  user_id?: SortOrder;
-  title?: SortOrder;
-}
-
-export interface PostMinOrderByAggregateInput {
-  id?: SortOrder;
-  user_id?: SortOrder;
-  title?: SortOrder;
-}
-
-export interface PostSumOrderByAggregateInput {
-  id?: SortOrder;
-  user_id?: SortOrder;
-}
-
-export interface CategoryCountOrderByAggregateInput {
-  id?: SortOrder;
-  name?: SortOrder;
-}
-
-export interface CategoryAvgOrderByAggregateInput {
+export interface ProductCountOrderByAggregateInput {
   id?: SortOrder;
 }
 
-export interface CategoryMaxOrderByAggregateInput {
-  id?: SortOrder;
-  name?: SortOrder;
-}
-
-export interface CategoryMinOrderByAggregateInput {
-  id?: SortOrder;
-  name?: SortOrder;
-}
-
-export interface CategorySumOrderByAggregateInput {
+export interface ProductAvgOrderByAggregateInput {
   id?: SortOrder;
 }
 
-export interface PostRelationFilter {
-  is?: PostWhereInput;
-  isNot?: PostWhereInput;
+export interface ProductMaxOrderByAggregateInput {
+  id?: SortOrder;
 }
 
-export interface CategoryRelationFilter {
-  is?: CategoryWhereInput;
-  isNot?: CategoryWhereInput;
+export interface ProductMinOrderByAggregateInput {
+  id?: SortOrder;
 }
 
-export interface CategoriesOnPostsPostIdCategoryIdCompoundUniqueInput {
-  postId: number;
-  categoryId: number;
-}
-
-export interface CategoriesOnPostsCountOrderByAggregateInput {
-  postId?: SortOrder;
-  categoryId?: SortOrder;
-  assignedAt?: SortOrder;
-  assignedBy?: SortOrder;
-}
-
-export interface CategoriesOnPostsAvgOrderByAggregateInput {
-  postId?: SortOrder;
-  categoryId?: SortOrder;
-}
-
-export interface CategoriesOnPostsMaxOrderByAggregateInput {
-  postId?: SortOrder;
-  categoryId?: SortOrder;
-  assignedAt?: SortOrder;
-  assignedBy?: SortOrder;
-}
-
-export interface CategoriesOnPostsMinOrderByAggregateInput {
-  postId?: SortOrder;
-  categoryId?: SortOrder;
-  assignedAt?: SortOrder;
-  assignedBy?: SortOrder;
-}
-
-export interface CategoriesOnPostsSumOrderByAggregateInput {
-  postId?: SortOrder;
-  categoryId?: SortOrder;
+export interface ProductSumOrderByAggregateInput {
+  id?: SortOrder;
 }
 
 export interface UserCreaterolesInput {
   set: string[];
-}
-
-export interface PostCreateNestedManyWithoutUserInput {
-  create?: PostCreateWithoutUserInput[];
-  connectOrCreate?: PostCreateOrConnectWithoutUserInput[];
-  createMany?: PostCreateManyUserInputEnvelope;
-  connect?: PostWhereUniqueInput[];
-}
-
-export interface UserCreatenumber2Input {
-  set: undefined[];
-}
-
-export interface PostUncheckedCreateNestedManyWithoutUserInput {
-  create?: PostCreateWithoutUserInput[];
-  connectOrCreate?: PostCreateOrConnectWithoutUserInput[];
-  createMany?: PostCreateManyUserInputEnvelope;
-  connect?: PostWhereUniqueInput[];
 }
 
 export interface DateTimeFieldUpdateOperationsInput {
@@ -2055,33 +1105,6 @@ export interface UserUpdaterolesInput {
   push?: string;
 }
 
-export interface PostUpdateManyWithoutUserNestedInput {
-  create?: PostCreateWithoutUserInput[];
-  connectOrCreate?: PostCreateOrConnectWithoutUserInput[];
-  upsert?: PostUpsertWithWhereUniqueWithoutUserInput[];
-  createMany?: PostCreateManyUserInputEnvelope;
-  set?: PostWhereUniqueInput[];
-  disconnect?: PostWhereUniqueInput[];
-  delete?: PostWhereUniqueInput[];
-  connect?: PostWhereUniqueInput[];
-  update?: PostUpdateWithWhereUniqueWithoutUserInput[];
-  updateMany?: PostUpdateManyWithWhereWithoutUserInput[];
-  deleteMany?: PostScalarWhereInput[];
-}
-
-export interface UserUpdatenumber2Input {
-  set?: undefined[];
-  push?: undefined;
-}
-
-export interface DecimalFieldUpdateOperationsInput {
-  set?: undefined;
-  increment?: undefined;
-  decrement?: undefined;
-  multiply?: undefined;
-  divide?: undefined;
-}
-
 export interface IntFieldUpdateOperationsInput {
   set?: number;
   increment?: number;
@@ -2090,144 +1113,60 @@ export interface IntFieldUpdateOperationsInput {
   divide?: number;
 }
 
-export interface PostUncheckedUpdateManyWithoutUserNestedInput {
-  create?: PostCreateWithoutUserInput[];
-  connectOrCreate?: PostCreateOrConnectWithoutUserInput[];
-  upsert?: PostUpsertWithWhereUniqueWithoutUserInput[];
-  createMany?: PostCreateManyUserInputEnvelope;
-  set?: PostWhereUniqueInput[];
-  disconnect?: PostWhereUniqueInput[];
-  delete?: PostWhereUniqueInput[];
-  connect?: PostWhereUniqueInput[];
-  update?: PostUpdateWithWhereUniqueWithoutUserInput[];
-  updateMany?: PostUpdateManyWithWhereWithoutUserInput[];
-  deleteMany?: PostScalarWhereInput[];
+export interface ProductCreateNestedOneWithoutReviewInput {
+  create?: ProductUncheckedCreateWithoutReviewInput;
+  connectOrCreate?: ProductCreateOrConnectWithoutReviewInput;
+  connect?: ProductWhereUniqueInput;
 }
 
-export interface UserCreateNestedOneWithoutPostsInput {
-  create?: UserUncheckedCreateWithoutPostsInput;
-  connectOrCreate?: UserCreateOrConnectWithoutPostsInput;
-  connect?: UserWhereUniqueInput;
+export interface ProductUpdateOneRequiredWithoutReviewNestedInput {
+  create?: ProductUncheckedCreateWithoutReviewInput;
+  connectOrCreate?: ProductCreateOrConnectWithoutReviewInput;
+  upsert?: ProductUpsertWithoutReviewInput;
+  connect?: ProductWhereUniqueInput;
+  update?: ProductUncheckedUpdateWithoutReviewInput;
 }
 
-export interface CategoriesOnPostsCreateNestedManyWithoutPostInput {
-  create?: CategoriesOnPostsCreateWithoutPostInput[];
-  connectOrCreate?: CategoriesOnPostsCreateOrConnectWithoutPostInput[];
-  createMany?: CategoriesOnPostsCreateManyPostInputEnvelope;
-  connect?: CategoriesOnPostsWhereUniqueInput[];
+export interface ReviewCreateNestedManyWithoutProductInput {
+  create?: ReviewCreateWithoutProductInput[];
+  connectOrCreate?: ReviewCreateOrConnectWithoutProductInput[];
+  createMany?: ReviewCreateManyProductInputEnvelope;
+  connect?: ReviewWhereUniqueInput[];
 }
 
-export interface CategoriesOnPostsUncheckedCreateNestedManyWithoutPostInput {
-  create?: CategoriesOnPostsCreateWithoutPostInput[];
-  connectOrCreate?: CategoriesOnPostsCreateOrConnectWithoutPostInput[];
-  createMany?: CategoriesOnPostsCreateManyPostInputEnvelope;
-  connect?: CategoriesOnPostsWhereUniqueInput[];
+export interface ReviewUncheckedCreateNestedManyWithoutProductInput {
+  create?: ReviewCreateWithoutProductInput[];
+  connectOrCreate?: ReviewCreateOrConnectWithoutProductInput[];
+  createMany?: ReviewCreateManyProductInputEnvelope;
+  connect?: ReviewWhereUniqueInput[];
 }
 
-export interface UserUpdateOneRequiredWithoutPostsNestedInput {
-  create?: UserUncheckedCreateWithoutPostsInput;
-  connectOrCreate?: UserCreateOrConnectWithoutPostsInput;
-  upsert?: UserUpsertWithoutPostsInput;
-  connect?: UserWhereUniqueInput;
-  update?: UserUncheckedUpdateWithoutPostsInput;
+export interface ReviewUpdateManyWithoutProductNestedInput {
+  create?: ReviewCreateWithoutProductInput[];
+  connectOrCreate?: ReviewCreateOrConnectWithoutProductInput[];
+  upsert?: ReviewUpsertWithWhereUniqueWithoutProductInput[];
+  createMany?: ReviewCreateManyProductInputEnvelope;
+  set?: ReviewWhereUniqueInput[];
+  disconnect?: ReviewWhereUniqueInput[];
+  delete?: ReviewWhereUniqueInput[];
+  connect?: ReviewWhereUniqueInput[];
+  update?: ReviewUpdateWithWhereUniqueWithoutProductInput[];
+  updateMany?: ReviewUpdateManyWithWhereWithoutProductInput[];
+  deleteMany?: ReviewScalarWhereInput[];
 }
 
-export interface CategoriesOnPostsUpdateManyWithoutPostNestedInput {
-  create?: CategoriesOnPostsCreateWithoutPostInput[];
-  connectOrCreate?: CategoriesOnPostsCreateOrConnectWithoutPostInput[];
-  upsert?: CategoriesOnPostsUpsertWithWhereUniqueWithoutPostInput[];
-  createMany?: CategoriesOnPostsCreateManyPostInputEnvelope;
-  set?: CategoriesOnPostsWhereUniqueInput[];
-  disconnect?: CategoriesOnPostsWhereUniqueInput[];
-  delete?: CategoriesOnPostsWhereUniqueInput[];
-  connect?: CategoriesOnPostsWhereUniqueInput[];
-  update?: CategoriesOnPostsUpdateWithWhereUniqueWithoutPostInput[];
-  updateMany?: CategoriesOnPostsUpdateManyWithWhereWithoutPostInput[];
-  deleteMany?: CategoriesOnPostsScalarWhereInput[];
-}
-
-export interface CategoriesOnPostsUncheckedUpdateManyWithoutPostNestedInput {
-  create?: CategoriesOnPostsCreateWithoutPostInput[];
-  connectOrCreate?: CategoriesOnPostsCreateOrConnectWithoutPostInput[];
-  upsert?: CategoriesOnPostsUpsertWithWhereUniqueWithoutPostInput[];
-  createMany?: CategoriesOnPostsCreateManyPostInputEnvelope;
-  set?: CategoriesOnPostsWhereUniqueInput[];
-  disconnect?: CategoriesOnPostsWhereUniqueInput[];
-  delete?: CategoriesOnPostsWhereUniqueInput[];
-  connect?: CategoriesOnPostsWhereUniqueInput[];
-  update?: CategoriesOnPostsUpdateWithWhereUniqueWithoutPostInput[];
-  updateMany?: CategoriesOnPostsUpdateManyWithWhereWithoutPostInput[];
-  deleteMany?: CategoriesOnPostsScalarWhereInput[];
-}
-
-export interface CategoriesOnPostsCreateNestedManyWithoutCategoryInput {
-  create?: CategoriesOnPostsCreateWithoutCategoryInput[];
-  connectOrCreate?: CategoriesOnPostsCreateOrConnectWithoutCategoryInput[];
-  createMany?: CategoriesOnPostsCreateManyCategoryInputEnvelope;
-  connect?: CategoriesOnPostsWhereUniqueInput[];
-}
-
-export interface CategoriesOnPostsUncheckedCreateNestedManyWithoutCategoryInput {
-  create?: CategoriesOnPostsCreateWithoutCategoryInput[];
-  connectOrCreate?: CategoriesOnPostsCreateOrConnectWithoutCategoryInput[];
-  createMany?: CategoriesOnPostsCreateManyCategoryInputEnvelope;
-  connect?: CategoriesOnPostsWhereUniqueInput[];
-}
-
-export interface CategoriesOnPostsUpdateManyWithoutCategoryNestedInput {
-  create?: CategoriesOnPostsCreateWithoutCategoryInput[];
-  connectOrCreate?: CategoriesOnPostsCreateOrConnectWithoutCategoryInput[];
-  upsert?: CategoriesOnPostsUpsertWithWhereUniqueWithoutCategoryInput[];
-  createMany?: CategoriesOnPostsCreateManyCategoryInputEnvelope;
-  set?: CategoriesOnPostsWhereUniqueInput[];
-  disconnect?: CategoriesOnPostsWhereUniqueInput[];
-  delete?: CategoriesOnPostsWhereUniqueInput[];
-  connect?: CategoriesOnPostsWhereUniqueInput[];
-  update?: CategoriesOnPostsUpdateWithWhereUniqueWithoutCategoryInput[];
-  updateMany?: CategoriesOnPostsUpdateManyWithWhereWithoutCategoryInput[];
-  deleteMany?: CategoriesOnPostsScalarWhereInput[];
-}
-
-export interface CategoriesOnPostsUncheckedUpdateManyWithoutCategoryNestedInput {
-  create?: CategoriesOnPostsCreateWithoutCategoryInput[];
-  connectOrCreate?: CategoriesOnPostsCreateOrConnectWithoutCategoryInput[];
-  upsert?: CategoriesOnPostsUpsertWithWhereUniqueWithoutCategoryInput[];
-  createMany?: CategoriesOnPostsCreateManyCategoryInputEnvelope;
-  set?: CategoriesOnPostsWhereUniqueInput[];
-  disconnect?: CategoriesOnPostsWhereUniqueInput[];
-  delete?: CategoriesOnPostsWhereUniqueInput[];
-  connect?: CategoriesOnPostsWhereUniqueInput[];
-  update?: CategoriesOnPostsUpdateWithWhereUniqueWithoutCategoryInput[];
-  updateMany?: CategoriesOnPostsUpdateManyWithWhereWithoutCategoryInput[];
-  deleteMany?: CategoriesOnPostsScalarWhereInput[];
-}
-
-export interface PostCreateNestedOneWithoutCategoriesInput {
-  create?: PostUncheckedCreateWithoutCategoriesInput;
-  connectOrCreate?: PostCreateOrConnectWithoutCategoriesInput;
-  connect?: PostWhereUniqueInput;
-}
-
-export interface CategoryCreateNestedOneWithoutPostsInput {
-  create?: CategoryUncheckedCreateWithoutPostsInput;
-  connectOrCreate?: CategoryCreateOrConnectWithoutPostsInput;
-  connect?: CategoryWhereUniqueInput;
-}
-
-export interface PostUpdateOneRequiredWithoutCategoriesNestedInput {
-  create?: PostUncheckedCreateWithoutCategoriesInput;
-  connectOrCreate?: PostCreateOrConnectWithoutCategoriesInput;
-  upsert?: PostUpsertWithoutCategoriesInput;
-  connect?: PostWhereUniqueInput;
-  update?: PostUncheckedUpdateWithoutCategoriesInput;
-}
-
-export interface CategoryUpdateOneRequiredWithoutPostsNestedInput {
-  create?: CategoryUncheckedCreateWithoutPostsInput;
-  connectOrCreate?: CategoryCreateOrConnectWithoutPostsInput;
-  upsert?: CategoryUpsertWithoutPostsInput;
-  connect?: CategoryWhereUniqueInput;
-  update?: CategoryUncheckedUpdateWithoutPostsInput;
+export interface ReviewUncheckedUpdateManyWithoutProductNestedInput {
+  create?: ReviewCreateWithoutProductInput[];
+  connectOrCreate?: ReviewCreateOrConnectWithoutProductInput[];
+  upsert?: ReviewUpsertWithWhereUniqueWithoutProductInput[];
+  createMany?: ReviewCreateManyProductInputEnvelope;
+  set?: ReviewWhereUniqueInput[];
+  disconnect?: ReviewWhereUniqueInput[];
+  delete?: ReviewWhereUniqueInput[];
+  connect?: ReviewWhereUniqueInput[];
+  update?: ReviewUpdateWithWhereUniqueWithoutProductInput[];
+  updateMany?: ReviewUpdateManyWithWhereWithoutProductInput[];
+  deleteMany?: ReviewScalarWhereInput[];
 }
 
 export interface NestedIntFilter {
@@ -2278,17 +1217,6 @@ export interface NestedStringFilter {
   startsWith?: string;
   endsWith?: string;
   not?: NestedStringFilter;
-}
-
-export interface NestedDecimalFilter {
-  equals?: undefined;
-  in?: undefined[];
-  notIn?: undefined[];
-  lt?: undefined;
-  lte?: undefined;
-  gt?: undefined;
-  gte?: undefined;
-  not?: NestedDecimalFilter;
 }
 
 export interface NestedIntWithAggregatesFilter {
@@ -2393,353 +1321,87 @@ export interface NestedJsonNullableFilter {
   not?: any;
 }
 
-export interface NestedDecimalWithAggregatesFilter {
-  equals?: undefined;
-  in?: undefined[];
-  notIn?: undefined[];
-  lt?: undefined;
-  lte?: undefined;
-  gt?: undefined;
-  gte?: undefined;
-  not?: NestedDecimalWithAggregatesFilter;
-  _count?: NestedIntFilter;
-  _avg?: NestedDecimalFilter;
-  _sum?: NestedDecimalFilter;
-  _min?: NestedDecimalFilter;
-  _max?: NestedDecimalFilter;
-}
-
-export interface PostCreateWithoutUserInput {
-  title: string;
-  categories?: CategoriesOnPostsCreateNestedManyWithoutPostInput;
-}
-
-export interface PostUncheckedCreateWithoutUserInput {
+export interface ProductUncheckedCreateWithoutReviewInput {
   id?: number;
-  title: string;
-  categories?: CategoriesOnPostsUncheckedCreateNestedManyWithoutPostInput;
 }
 
-export interface PostCreateOrConnectWithoutUserInput {
-  where: PostWhereUniqueInput;
-  create: PostUncheckedCreateWithoutUserInput;
+export interface ProductCreateOrConnectWithoutReviewInput {
+  where: ProductWhereUniqueInput;
+  create: ProductUncheckedCreateWithoutReviewInput;
 }
 
-export interface PostCreateManyUserInputEnvelope {
-  data: PostCreateManyUserInput[];
+export interface ProductUpsertWithoutReviewInput {
+  update: ProductUncheckedUpdateWithoutReviewInput;
+  create: ProductUncheckedCreateWithoutReviewInput;
+}
+
+export interface ProductUncheckedUpdateWithoutReviewInput {
+  id?: IntFieldUpdateOperationsInput;
+}
+
+export interface ReviewCreateWithoutProductInput {
+  score: number;
+}
+
+export interface ReviewUncheckedCreateWithoutProductInput {
+  id?: number;
+  score: number;
+}
+
+export interface ReviewCreateOrConnectWithoutProductInput {
+  where: ReviewWhereUniqueInput;
+  create: ReviewUncheckedCreateWithoutProductInput;
+}
+
+export interface ReviewCreateManyProductInputEnvelope {
+  data: ReviewCreateManyProductInput[];
   skipDuplicates?: boolean;
 }
 
-export interface PostUpsertWithWhereUniqueWithoutUserInput {
-  where: PostWhereUniqueInput;
-  update: PostUncheckedUpdateWithoutUserInput;
-  create: PostUncheckedCreateWithoutUserInput;
+export interface ReviewUpsertWithWhereUniqueWithoutProductInput {
+  where: ReviewWhereUniqueInput;
+  update: ReviewUncheckedUpdateWithoutProductInput;
+  create: ReviewUncheckedCreateWithoutProductInput;
 }
 
-export interface PostUpdateWithWhereUniqueWithoutUserInput {
-  where: PostWhereUniqueInput;
-  data: PostUncheckedUpdateWithoutUserInput;
+export interface ReviewUpdateWithWhereUniqueWithoutProductInput {
+  where: ReviewWhereUniqueInput;
+  data: ReviewUncheckedUpdateWithoutProductInput;
 }
 
-export interface PostUpdateManyWithWhereWithoutUserInput {
-  where: PostScalarWhereInput;
-  data: PostUncheckedUpdateManyWithoutPostsInput;
+export interface ReviewUpdateManyWithWhereWithoutProductInput {
+  where: ReviewScalarWhereInput;
+  data: ReviewUncheckedUpdateManyWithoutReviewInput;
 }
 
-export interface PostScalarWhereInput {
-  AND?: PostScalarWhereInput[];
-  OR?: PostScalarWhereInput[];
-  NOT?: PostScalarWhereInput[];
+export interface ReviewScalarWhereInput {
+  AND?: ReviewScalarWhereInput[];
+  OR?: ReviewScalarWhereInput[];
+  NOT?: ReviewScalarWhereInput[];
   id?: IntFilter;
-  user_id?: IntFilter;
-  title?: StringFilter;
+  product_id?: IntFilter;
+  score?: IntFilter;
 }
 
-export interface UserCreateWithoutPostsInput {
-  createdAt?: Date;
-  username?: string | null;
-  password?: string | null;
-  email: string;
-  roles?: UserCreaterolesInput;
-  googleId?: string | null;
-  googleProfile?: NullableJsonNullValueInput;
-  number2?: UserCreatenumber2Input;
-  number: undefined;
-}
-
-export interface UserUncheckedCreateWithoutPostsInput {
+export interface ReviewCreateManyProductInput {
   id?: number;
-  createdAt?: Date;
-  username?: string | null;
-  password?: string | null;
-  email: string;
-  roles?: UserCreaterolesInput;
-  googleId?: string | null;
-  googleProfile?: NullableJsonNullValueInput;
-  number2?: UserCreatenumber2Input;
-  number: undefined;
+  score: number;
 }
 
-export interface UserCreateOrConnectWithoutPostsInput {
-  where: UserWhereUniqueInput;
-  create: UserUncheckedCreateWithoutPostsInput;
+export interface ReviewUpdateWithoutProductInput {
+  score?: IntFieldUpdateOperationsInput;
 }
 
-export interface CategoriesOnPostsCreateWithoutPostInput {
-  category: CategoryCreateNestedOneWithoutPostsInput;
-  assignedAt?: Date;
-  assignedBy: string;
-}
-
-export interface CategoriesOnPostsUncheckedCreateWithoutPostInput {
-  categoryId: number;
-  assignedAt?: Date;
-  assignedBy: string;
-}
-
-export interface CategoriesOnPostsCreateOrConnectWithoutPostInput {
-  where: CategoriesOnPostsWhereUniqueInput;
-  create: CategoriesOnPostsUncheckedCreateWithoutPostInput;
-}
-
-export interface CategoriesOnPostsCreateManyPostInputEnvelope {
-  data: CategoriesOnPostsCreateManyPostInput[];
-  skipDuplicates?: boolean;
-}
-
-export interface UserUpsertWithoutPostsInput {
-  update: UserUncheckedUpdateWithoutPostsInput;
-  create: UserUncheckedCreateWithoutPostsInput;
-}
-
-export interface UserUpdateWithoutPostsInput {
-  createdAt?: DateTimeFieldUpdateOperationsInput;
-  username?: NullableStringFieldUpdateOperationsInput | null;
-  password?: NullableStringFieldUpdateOperationsInput | null;
-  email?: StringFieldUpdateOperationsInput;
-  roles?: UserUpdaterolesInput;
-  googleId?: NullableStringFieldUpdateOperationsInput | null;
-  googleProfile?: NullableJsonNullValueInput;
-  number2?: UserUpdatenumber2Input;
-  number?: DecimalFieldUpdateOperationsInput;
-}
-
-export interface UserUncheckedUpdateWithoutPostsInput {
+export interface ReviewUncheckedUpdateWithoutProductInput {
   id?: IntFieldUpdateOperationsInput;
-  createdAt?: DateTimeFieldUpdateOperationsInput;
-  username?: NullableStringFieldUpdateOperationsInput | null;
-  password?: NullableStringFieldUpdateOperationsInput | null;
-  email?: StringFieldUpdateOperationsInput;
-  roles?: UserUpdaterolesInput;
-  googleId?: NullableStringFieldUpdateOperationsInput | null;
-  googleProfile?: NullableJsonNullValueInput;
-  number2?: UserUpdatenumber2Input;
-  number?: DecimalFieldUpdateOperationsInput;
+  score?: IntFieldUpdateOperationsInput;
 }
 
-export interface CategoriesOnPostsUpsertWithWhereUniqueWithoutPostInput {
-  where: CategoriesOnPostsWhereUniqueInput;
-  update: CategoriesOnPostsUncheckedUpdateWithoutPostInput;
-  create: CategoriesOnPostsUncheckedCreateWithoutPostInput;
-}
-
-export interface CategoriesOnPostsUpdateWithWhereUniqueWithoutPostInput {
-  where: CategoriesOnPostsWhereUniqueInput;
-  data: CategoriesOnPostsUncheckedUpdateWithoutPostInput;
-}
-
-export interface CategoriesOnPostsUpdateManyWithWhereWithoutPostInput {
-  where: CategoriesOnPostsScalarWhereInput;
-  data: CategoriesOnPostsUncheckedUpdateManyWithoutCategoriesInput;
-}
-
-export interface CategoriesOnPostsScalarWhereInput {
-  AND?: CategoriesOnPostsScalarWhereInput[];
-  OR?: CategoriesOnPostsScalarWhereInput[];
-  NOT?: CategoriesOnPostsScalarWhereInput[];
-  postId?: IntFilter;
-  categoryId?: IntFilter;
-  assignedAt?: DateTimeFilter;
-  assignedBy?: StringFilter;
-}
-
-export interface CategoriesOnPostsCreateWithoutCategoryInput {
-  post: PostCreateNestedOneWithoutCategoriesInput;
-  assignedAt?: Date;
-  assignedBy: string;
-}
-
-export interface CategoriesOnPostsUncheckedCreateWithoutCategoryInput {
-  postId: number;
-  assignedAt?: Date;
-  assignedBy: string;
-}
-
-export interface CategoriesOnPostsCreateOrConnectWithoutCategoryInput {
-  where: CategoriesOnPostsWhereUniqueInput;
-  create: CategoriesOnPostsUncheckedCreateWithoutCategoryInput;
-}
-
-export interface CategoriesOnPostsCreateManyCategoryInputEnvelope {
-  data: CategoriesOnPostsCreateManyCategoryInput[];
-  skipDuplicates?: boolean;
-}
-
-export interface CategoriesOnPostsUpsertWithWhereUniqueWithoutCategoryInput {
-  where: CategoriesOnPostsWhereUniqueInput;
-  update: CategoriesOnPostsUncheckedUpdateWithoutCategoryInput;
-  create: CategoriesOnPostsUncheckedCreateWithoutCategoryInput;
-}
-
-export interface CategoriesOnPostsUpdateWithWhereUniqueWithoutCategoryInput {
-  where: CategoriesOnPostsWhereUniqueInput;
-  data: CategoriesOnPostsUncheckedUpdateWithoutCategoryInput;
-}
-
-export interface CategoriesOnPostsUpdateManyWithWhereWithoutCategoryInput {
-  where: CategoriesOnPostsScalarWhereInput;
-  data: CategoriesOnPostsUncheckedUpdateManyWithoutPostsInput;
-}
-
-export interface PostCreateWithoutCategoriesInput {
-  user: UserCreateNestedOneWithoutPostsInput;
-  title: string;
-}
-
-export interface PostUncheckedCreateWithoutCategoriesInput {
-  id?: number;
-  user_id: number;
-  title: string;
-}
-
-export interface PostCreateOrConnectWithoutCategoriesInput {
-  where: PostWhereUniqueInput;
-  create: PostUncheckedCreateWithoutCategoriesInput;
-}
-
-export interface CategoryCreateWithoutPostsInput {
-  name: string;
-}
-
-export interface CategoryUncheckedCreateWithoutPostsInput {
-  id?: number;
-  name: string;
-}
-
-export interface CategoryCreateOrConnectWithoutPostsInput {
-  where: CategoryWhereUniqueInput;
-  create: CategoryUncheckedCreateWithoutPostsInput;
-}
-
-export interface PostUpsertWithoutCategoriesInput {
-  update: PostUncheckedUpdateWithoutCategoriesInput;
-  create: PostUncheckedCreateWithoutCategoriesInput;
-}
-
-export interface PostUpdateWithoutCategoriesInput {
-  user?: UserUpdateOneRequiredWithoutPostsNestedInput;
-  title?: StringFieldUpdateOperationsInput;
-}
-
-export interface PostUncheckedUpdateWithoutCategoriesInput {
+export interface ReviewUncheckedUpdateManyWithoutReviewInput {
   id?: IntFieldUpdateOperationsInput;
-  user_id?: IntFieldUpdateOperationsInput;
-  title?: StringFieldUpdateOperationsInput;
+  score?: IntFieldUpdateOperationsInput;
 }
 
-export interface CategoryUpsertWithoutPostsInput {
-  update: CategoryUncheckedUpdateWithoutPostsInput;
-  create: CategoryUncheckedCreateWithoutPostsInput;
-}
-
-export interface CategoryUpdateWithoutPostsInput {
-  name?: StringFieldUpdateOperationsInput;
-}
-
-export interface CategoryUncheckedUpdateWithoutPostsInput {
-  id?: IntFieldUpdateOperationsInput;
-  name?: StringFieldUpdateOperationsInput;
-}
-
-export interface PostCreateManyUserInput {
-  id?: number;
-  title: string;
-}
-
-export interface PostUpdateWithoutUserInput {
-  title?: StringFieldUpdateOperationsInput;
-  categories?: CategoriesOnPostsUpdateManyWithoutPostNestedInput;
-}
-
-export interface PostUncheckedUpdateWithoutUserInput {
-  id?: IntFieldUpdateOperationsInput;
-  title?: StringFieldUpdateOperationsInput;
-  categories?: CategoriesOnPostsUncheckedUpdateManyWithoutPostNestedInput;
-}
-
-export interface PostUncheckedUpdateManyWithoutPostsInput {
-  id?: IntFieldUpdateOperationsInput;
-  title?: StringFieldUpdateOperationsInput;
-}
-
-export interface CategoriesOnPostsCreateManyPostInput {
-  categoryId: number;
-  assignedAt?: Date;
-  assignedBy: string;
-}
-
-export interface CategoriesOnPostsUpdateWithoutPostInput {
-  category?: CategoryUpdateOneRequiredWithoutPostsNestedInput;
-  assignedAt?: DateTimeFieldUpdateOperationsInput;
-  assignedBy?: StringFieldUpdateOperationsInput;
-}
-
-export interface CategoriesOnPostsUncheckedUpdateWithoutPostInput {
-  categoryId?: IntFieldUpdateOperationsInput;
-  assignedAt?: DateTimeFieldUpdateOperationsInput;
-  assignedBy?: StringFieldUpdateOperationsInput;
-}
-
-export interface CategoriesOnPostsUncheckedUpdateManyWithoutCategoriesInput {
-  categoryId?: IntFieldUpdateOperationsInput;
-  assignedAt?: DateTimeFieldUpdateOperationsInput;
-  assignedBy?: StringFieldUpdateOperationsInput;
-}
-
-export interface CategoriesOnPostsCreateManyCategoryInput {
-  postId: number;
-  assignedAt?: Date;
-  assignedBy: string;
-}
-
-export interface CategoriesOnPostsUpdateWithoutCategoryInput {
-  post?: PostUpdateOneRequiredWithoutCategoriesNestedInput;
-  assignedAt?: DateTimeFieldUpdateOperationsInput;
-  assignedBy?: StringFieldUpdateOperationsInput;
-}
-
-export interface CategoriesOnPostsUncheckedUpdateWithoutCategoryInput {
-  postId?: IntFieldUpdateOperationsInput;
-  assignedAt?: DateTimeFieldUpdateOperationsInput;
-  assignedBy?: StringFieldUpdateOperationsInput;
-}
-
-export interface CategoriesOnPostsUncheckedUpdateManyWithoutPostsInput {
-  postId?: IntFieldUpdateOperationsInput;
-  assignedAt?: DateTimeFieldUpdateOperationsInput;
-  assignedBy?: StringFieldUpdateOperationsInput;
-}
-
-export enum CategoriesOnPostsScalarFieldEnum {
-  postId = 'postId',
-  categoryId = 'categoryId',
-  assignedAt = 'assignedAt',
-  assignedBy = 'assignedBy',
-}
-export enum CategoryScalarFieldEnum {
-  id = 'id',
-  name = 'name',
-}
 export enum JsonNullValueFilter {
   DbNull = 'DbNull',
   JsonNull = 'JsonNull',
@@ -2749,14 +1411,17 @@ export enum NullableJsonNullValueInput {
   DbNull = 'DbNull',
   JsonNull = 'JsonNull',
 }
-export enum PostScalarFieldEnum {
+export enum ProductScalarFieldEnum {
   id = 'id',
-  user_id = 'user_id',
-  title = 'title',
 }
 export enum QueryMode {
   default = 'default',
   insensitive = 'insensitive',
+}
+export enum ReviewScalarFieldEnum {
+  id = 'id',
+  product_id = 'product_id',
+  score = 'score',
 }
 export enum SortOrder {
   asc = 'asc',
@@ -2777,6 +1442,4 @@ export enum UserScalarFieldEnum {
   roles = 'roles',
   googleId = 'googleId',
   googleProfile = 'googleProfile',
-  number2 = 'number2',
-  number = 'number',
 }

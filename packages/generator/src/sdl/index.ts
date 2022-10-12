@@ -1,7 +1,7 @@
 import { Options } from '@paljs/types';
 import { existsSync, readFileSync, writeFileSync } from 'fs';
 import { createQueriesAndMutations } from './CreateQueriesAndMutations';
-import { Document, Generators } from '../Generators';
+import { Document, Generators, Model } from '../Generators';
 import { GenerateTypes } from './GenerateTypes';
 import { sdlInputsString, SDLInputsTemplate } from './sdl-inputs';
 import { modelNamesExport } from './model-names';
@@ -41,6 +41,7 @@ export class GenerateSdl extends Generators {
 
   private async createModels() {
     const dataModels = await this.datamodel();
+    this.inputsString = await this.getSDLInputs(await this.dmmf());
     for (const model of await this.models()) {
       const dataModel = this.dataModel(dataModels.models, model.name);
       const modelDocs = this.filterDocs(dataModel?.documentation);
@@ -114,37 +115,43 @@ export class GenerateSdl extends Generators {
         }
       });
       fileContent += `\n}\n\n`;
-      await this.createFiles(model.name, fileContent);
+      if (dataModel) {
+        await this.createFiles(dataModel, fileContent);
+      }
     }
-    this.inputsString = await this.getSDLInputs(await this.dmmf());
   }
 
-  private async getOperations(model: string) {
-    const exclude = this.excludedOperations(model);
-    return await createQueriesAndMutations(model, exclude, this);
+  private async getOperations(model: Model) {
+    const exclude = this.excludedOperations(model.name);
+    return await createQueriesAndMutations(
+      model.name,
+      exclude,
+      this,
+      model.generateUpdateMany ? true : false,
+    );
   }
 
-  private async createFiles(model: string, typeContent: string) {
+  private async createFiles(model: Model, typeContent: string) {
     const operations = await this.getOperations(model);
-    this.mkdir(this.output(model));
+    this.mkdir(this.output(model.name));
 
     let resolvers = '';
-    if (!this.disableQueries(model)) {
+    if (!this.disableQueries(model.name)) {
       resolvers += operations.queries.resolver;
       typeContent += operations.queries.type;
     }
-    if (!this.disableMutations(model)) {
+    if (!this.disableMutations(model.name)) {
       resolvers += operations.mutations.resolver;
       typeContent += operations.mutations.type;
     }
     if (this.federatedOption()) {
-      resolvers += `,${model}: {\n\t__resolveReference(reference, { prisma }) {\n`;
+      resolvers += `,${model.name}: {\n\t__resolveReference(reference, { prisma }) {\n`;
       resolvers += `const [field, value] = Object.entries(reference).find(e => e[0] !== '__typename');\n`;
-      resolvers += `return prisma.${model.toLowerCase()}.findUnique({ where: { [field]: value } });`;
+      resolvers += `return prisma.${model.name.toLowerCase()}.findUnique({ where: { [field]: value } });`;
       resolvers += `\t}\n}\n`;
     }
-    this.createResolvers(resolvers, model);
-    this.createTypes(typeContent, model);
+    this.createResolvers(resolvers, model.name);
+    this.createTypes(typeContent, model.name);
   }
 
   private createResolvers(resolvers: string, model: string) {

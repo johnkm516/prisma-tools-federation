@@ -34,9 +34,7 @@ const resolvers: Resolvers = {
     deleteManyProduct: async (_parent, args, { prisma }) => {
       return prisma.product.deleteMany(args);
     },
-    updateManyProduct: (_parent, args, { prisma }) => {
-      return prisma.product.updateMany(args);
-    },
+    //updateMany for this model cannot exist as this model contains only unique fields or relations.
   },
   Product: {
     __resolveReference(reference, { prisma }) {

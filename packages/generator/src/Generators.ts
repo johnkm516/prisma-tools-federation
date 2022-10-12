@@ -29,6 +29,7 @@ export type CustomModelAttributes = {
   doubleAtIndexes?: string[];
   keyFields?: string[][];
   fieldsTypeMap?: Map<string, Field>;
+  generateUpdateMany?: boolean;
 };
 
 export type CustomAttributes = {
@@ -55,7 +56,6 @@ async function getSchema(schema: string) {
   let document: Document = await getDMMF({ datamodel: schema });
   const customAttributes = getCustomAttributes(schema);
 
-  console.log(document.schema.outputObjectTypes.prisma.map((p) => p.name));
   let modelInputTypesMap: Map<string, string> = new Map([]);
   let modelOutputTypesMap: Map<string, string> = new Map([]);
   let modelMap: Map<string, Model> = new Map([]);
@@ -100,6 +100,16 @@ async function getSchema(schema: string) {
       fieldsTypeMap: fieldsTypeMap,
     };
     modelMap.set(model.name, result);
+    result.generateUpdateMany = false;
+
+    model.fields.forEach((field) => {
+      if (
+        !keyFields.some((row) => row.includes(field.name)) &&
+        !field.relationName
+      ) {
+        result.generateUpdateMany = true;
+      }
+    });
 
     const inputTypeRegex = new RegExp(
       `(${model.name})(WhereInput|OrderByWithRelationInput|WhereUniqueInput|OrderByWithAggregationInput|ScalarWhereWithAggregatesInput|CreateInput|UncheckedCreateInput|UpdateInput|UncheckedUpdateInput|CreateManyInput|UpdateManyMutationInput|UncheckedUpdateManyInput|CountOrderByAggregateInput|AvgOrderByAggregateInput|MaxOrderByAggregateInput|MinOrderByAggregateInput|SumOrderByAggregateInput|Create.*?Input|Update.*?Input)`,

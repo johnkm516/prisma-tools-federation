@@ -6,18 +6,6 @@ export default gql`
   type BatchPayload {
     count: Int!
   }
-  enum CategoriesOnPostsScalarFieldEnum {
-    postId
-    categoryId
-    assignedAt
-    assignedBy
-  }
-
-  enum CategoryScalarFieldEnum {
-    id
-    name
-  }
-
   enum JsonNullValueFilter {
     DbNull
     JsonNull
@@ -29,15 +17,19 @@ export default gql`
     JsonNull
   }
 
-  enum PostScalarFieldEnum {
+  enum ProductScalarFieldEnum {
     id
-    user_id
-    title
   }
 
   enum QueryMode {
     default
     insensitive
+  }
+
+  enum ReviewScalarFieldEnum {
+    id
+    product_id
+    score
   }
 
   enum SortOrder {
@@ -61,8 +53,6 @@ export default gql`
     roles
     googleId
     googleProfile
-    number2
-    number
   }
 
   input UserWhereInput {
@@ -77,9 +67,6 @@ export default gql`
     roles: StringNullableListFilter
     googleId: StringNullableFilter
     googleProfile: JsonNullableFilter
-    posts: PostListRelationFilter
-    number2: DecimalNullableListFilter
-    number: DecimalFilter
   }
 
   input UserOrderByWithRelationInput {
@@ -91,18 +78,13 @@ export default gql`
     roles: SortOrder
     googleId: SortOrder
     googleProfile: SortOrder
-    posts: PostOrderByRelationAggregateInput
-    number2: SortOrder
-    number: SortOrder
   }
 
   input UserWhereUniqueInput {
     id: Int
-    createdAt: DateTime
     username: String
     email: String
     googleId: String
-    number: Decimal
   }
 
   input UserOrderByWithAggregationInput {
@@ -114,8 +96,6 @@ export default gql`
     roles: SortOrder
     googleId: SortOrder
     googleProfile: SortOrder
-    number2: SortOrder
-    number: SortOrder
     _count: UserCountOrderByAggregateInput
     _avg: UserAvgOrderByAggregateInput
     _max: UserMaxOrderByAggregateInput
@@ -135,136 +115,81 @@ export default gql`
     roles: StringNullableListFilter
     googleId: StringNullableWithAggregatesFilter
     googleProfile: JsonNullableWithAggregatesFilter
-    number2: DecimalNullableListFilter
-    number: DecimalWithAggregatesFilter
   }
 
-  input PostWhereInput {
-    AND: [PostWhereInput!]
-    OR: [PostWhereInput!]
-    NOT: [PostWhereInput!]
+  input ReviewWhereInput {
+    AND: [ReviewWhereInput!]
+    OR: [ReviewWhereInput!]
+    NOT: [ReviewWhereInput!]
     id: IntFilter
-    user: UserWhereInput
-    user_id: IntFilter
-    title: StringFilter
-    categories: CategoriesOnPostsListRelationFilter
+    product: ProductWhereInput
+    product_id: IntFilter
+    score: IntFilter
   }
 
-  input PostOrderByWithRelationInput {
+  input ReviewOrderByWithRelationInput {
     id: SortOrder
-    user: UserOrderByWithRelationInput
-    user_id: SortOrder
-    title: SortOrder
-    categories: CategoriesOnPostsOrderByRelationAggregateInput
+    product: ProductOrderByWithRelationInput
+    product_id: SortOrder
+    score: SortOrder
   }
 
-  input PostWhereUniqueInput {
+  input ReviewWhereUniqueInput {
     id: Int
-    user_id: Int
+    product_id: Int
   }
 
-  input PostOrderByWithAggregationInput {
+  input ReviewOrderByWithAggregationInput {
     id: SortOrder
-    user_id: SortOrder
-    title: SortOrder
-    _count: PostCountOrderByAggregateInput
-    _avg: PostAvgOrderByAggregateInput
-    _max: PostMaxOrderByAggregateInput
-    _min: PostMinOrderByAggregateInput
-    _sum: PostSumOrderByAggregateInput
+    product_id: SortOrder
+    score: SortOrder
+    _count: ReviewCountOrderByAggregateInput
+    _avg: ReviewAvgOrderByAggregateInput
+    _max: ReviewMaxOrderByAggregateInput
+    _min: ReviewMinOrderByAggregateInput
+    _sum: ReviewSumOrderByAggregateInput
   }
 
-  input PostScalarWhereWithAggregatesInput {
-    AND: [PostScalarWhereWithAggregatesInput!]
-    OR: [PostScalarWhereWithAggregatesInput!]
-    NOT: [PostScalarWhereWithAggregatesInput!]
+  input ReviewScalarWhereWithAggregatesInput {
+    AND: [ReviewScalarWhereWithAggregatesInput!]
+    OR: [ReviewScalarWhereWithAggregatesInput!]
+    NOT: [ReviewScalarWhereWithAggregatesInput!]
     id: IntWithAggregatesFilter
-    user_id: IntWithAggregatesFilter
-    title: StringWithAggregatesFilter
+    product_id: IntWithAggregatesFilter
+    score: IntWithAggregatesFilter
   }
 
-  input CategoryWhereInput {
-    AND: [CategoryWhereInput!]
-    OR: [CategoryWhereInput!]
-    NOT: [CategoryWhereInput!]
+  input ProductWhereInput {
+    AND: [ProductWhereInput!]
+    OR: [ProductWhereInput!]
+    NOT: [ProductWhereInput!]
     id: IntFilter
-    name: StringFilter
-    posts: CategoriesOnPostsListRelationFilter
+    review: ReviewListRelationFilter
   }
 
-  input CategoryOrderByWithRelationInput {
+  input ProductOrderByWithRelationInput {
     id: SortOrder
-    name: SortOrder
-    posts: CategoriesOnPostsOrderByRelationAggregateInput
+    review: ReviewOrderByRelationAggregateInput
   }
 
-  input CategoryWhereUniqueInput {
+  input ProductWhereUniqueInput {
     id: Int
   }
 
-  input CategoryOrderByWithAggregationInput {
+  input ProductOrderByWithAggregationInput {
     id: SortOrder
-    name: SortOrder
-    _count: CategoryCountOrderByAggregateInput
-    _avg: CategoryAvgOrderByAggregateInput
-    _max: CategoryMaxOrderByAggregateInput
-    _min: CategoryMinOrderByAggregateInput
-    _sum: CategorySumOrderByAggregateInput
+    _count: ProductCountOrderByAggregateInput
+    _avg: ProductAvgOrderByAggregateInput
+    _max: ProductMaxOrderByAggregateInput
+    _min: ProductMinOrderByAggregateInput
+    _sum: ProductSumOrderByAggregateInput
   }
 
-  input CategoryScalarWhereWithAggregatesInput {
-    AND: [CategoryScalarWhereWithAggregatesInput!]
-    OR: [CategoryScalarWhereWithAggregatesInput!]
-    NOT: [CategoryScalarWhereWithAggregatesInput!]
+  input ProductScalarWhereWithAggregatesInput {
+    AND: [ProductScalarWhereWithAggregatesInput!]
+    OR: [ProductScalarWhereWithAggregatesInput!]
+    NOT: [ProductScalarWhereWithAggregatesInput!]
     id: IntWithAggregatesFilter
-    name: StringWithAggregatesFilter
-  }
-
-  input CategoriesOnPostsWhereInput {
-    AND: [CategoriesOnPostsWhereInput!]
-    OR: [CategoriesOnPostsWhereInput!]
-    NOT: [CategoriesOnPostsWhereInput!]
-    post: PostWhereInput
-    postId: IntFilter
-    category: CategoryWhereInput
-    categoryId: IntFilter
-    assignedAt: DateTimeFilter
-    assignedBy: StringFilter
-  }
-
-  input CategoriesOnPostsOrderByWithRelationInput {
-    post: PostOrderByWithRelationInput
-    postId: SortOrder
-    category: CategoryOrderByWithRelationInput
-    categoryId: SortOrder
-    assignedAt: SortOrder
-    assignedBy: SortOrder
-  }
-
-  input CategoriesOnPostsWhereUniqueInput {
-    postId_categoryId: CategoriesOnPostsPostIdCategoryIdCompoundUniqueInput
-  }
-
-  input CategoriesOnPostsOrderByWithAggregationInput {
-    postId: SortOrder
-    categoryId: SortOrder
-    assignedAt: SortOrder
-    assignedBy: SortOrder
-    _count: CategoriesOnPostsCountOrderByAggregateInput
-    _avg: CategoriesOnPostsAvgOrderByAggregateInput
-    _max: CategoriesOnPostsMaxOrderByAggregateInput
-    _min: CategoriesOnPostsMinOrderByAggregateInput
-    _sum: CategoriesOnPostsSumOrderByAggregateInput
-  }
-
-  input CategoriesOnPostsScalarWhereWithAggregatesInput {
-    AND: [CategoriesOnPostsScalarWhereWithAggregatesInput!]
-    OR: [CategoriesOnPostsScalarWhereWithAggregatesInput!]
-    NOT: [CategoriesOnPostsScalarWhereWithAggregatesInput!]
-    postId: IntWithAggregatesFilter
-    categoryId: IntWithAggregatesFilter
-    assignedAt: DateTimeWithAggregatesFilter
-    assignedBy: StringWithAggregatesFilter
   }
 
   input UserCreateInput {
@@ -275,9 +200,6 @@ export default gql`
     roles: [String!]
     googleId: String
     googleProfile: Json
-    posts: PostCreateNestedManyWithoutUserInput
-    number2: [Decimal!]
-    number: Decimal!
   }
 
   input UserUncheckedCreateInput {
@@ -289,9 +211,6 @@ export default gql`
     roles: [String!]
     googleId: String
     googleProfile: Json
-    posts: PostUncheckedCreateNestedManyWithoutUserInput
-    number2: [Decimal!]
-    number: Decimal!
   }
 
   input UserUpdateInput {
@@ -302,9 +221,6 @@ export default gql`
     roles: [String!]
     googleId: NullableStringFieldUpdateOperationsInput
     googleProfile: Json
-    posts: PostUpdateManyWithoutUserNestedInput
-    number2: [Decimal!]
-    number: DecimalFieldUpdateOperationsInput
   }
 
   input UserUncheckedUpdateInput {
@@ -316,9 +232,6 @@ export default gql`
     roles: [String!]
     googleId: NullableStringFieldUpdateOperationsInput
     googleProfile: Json
-    posts: PostUncheckedUpdateManyWithoutUserNestedInput
-    number2: [Decimal!]
-    number: DecimalFieldUpdateOperationsInput
   }
 
   input UserCreateManyInput {
@@ -330,8 +243,6 @@ export default gql`
     roles: [String!]
     googleId: String
     googleProfile: Json
-    number2: [Decimal!]
-    number: Decimal!
   }
 
   input UserUpdateManyMutationInput {
@@ -342,8 +253,6 @@ export default gql`
     roles: [String!]
     googleId: NullableStringFieldUpdateOperationsInput
     googleProfile: Json
-    number2: [Decimal!]
-    number: DecimalFieldUpdateOperationsInput
   }
 
   input UserUncheckedUpdateManyInput {
@@ -355,133 +264,70 @@ export default gql`
     roles: [String!]
     googleId: NullableStringFieldUpdateOperationsInput
     googleProfile: Json
-    number2: [Decimal!]
-    number: DecimalFieldUpdateOperationsInput
   }
 
-  input PostCreateInput {
-    user: UserCreateNestedOneWithoutPostsInput!
-    title: String!
-    categories: CategoriesOnPostsCreateNestedManyWithoutPostInput
+  input ReviewCreateInput {
+    product: ProductCreateNestedOneWithoutReviewInput!
+    score: Int!
   }
 
-  input PostUncheckedCreateInput {
+  input ReviewUncheckedCreateInput {
     id: Int
-    user_id: Int!
-    title: String!
-    categories: CategoriesOnPostsUncheckedCreateNestedManyWithoutPostInput
+    product_id: Int!
+    score: Int!
   }
 
-  input PostUpdateInput {
-    user: UserUpdateOneRequiredWithoutPostsNestedInput
-    title: StringFieldUpdateOperationsInput
-    categories: CategoriesOnPostsUpdateManyWithoutPostNestedInput
+  input ReviewUpdateInput {
+    product: ProductUpdateOneRequiredWithoutReviewNestedInput
+    score: IntFieldUpdateOperationsInput
   }
 
-  input PostUncheckedUpdateInput {
+  input ReviewUncheckedUpdateInput {
     id: IntFieldUpdateOperationsInput
-    user_id: IntFieldUpdateOperationsInput
-    title: StringFieldUpdateOperationsInput
-    categories: CategoriesOnPostsUncheckedUpdateManyWithoutPostNestedInput
+    product_id: IntFieldUpdateOperationsInput
+    score: IntFieldUpdateOperationsInput
   }
 
-  input PostCreateManyInput {
+  input ReviewCreateManyInput {
     id: Int
-    user_id: Int!
-    title: String!
+    product_id: Int!
+    score: Int!
   }
 
-  input PostUpdateManyMutationInput {
-    title: StringFieldUpdateOperationsInput
+  input ReviewUpdateManyMutationInput {
+    score: IntFieldUpdateOperationsInput
   }
 
-  input PostUncheckedUpdateManyInput {
+  input ReviewUncheckedUpdateManyInput {
     id: IntFieldUpdateOperationsInput
-    user_id: IntFieldUpdateOperationsInput
-    title: StringFieldUpdateOperationsInput
+    product_id: IntFieldUpdateOperationsInput
+    score: IntFieldUpdateOperationsInput
   }
 
-  input CategoryCreateInput {
-    name: String!
-    posts: CategoriesOnPostsCreateNestedManyWithoutCategoryInput
+  input ProductCreateInput {
+    review: ReviewCreateNestedManyWithoutProductInput
   }
 
-  input CategoryUncheckedCreateInput {
+  input ProductUncheckedCreateInput {
     id: Int
-    name: String!
-    posts: CategoriesOnPostsUncheckedCreateNestedManyWithoutCategoryInput
+    review: ReviewUncheckedCreateNestedManyWithoutProductInput
   }
 
-  input CategoryUpdateInput {
-    name: StringFieldUpdateOperationsInput
-    posts: CategoriesOnPostsUpdateManyWithoutCategoryNestedInput
+  input ProductUpdateInput {
+    review: ReviewUpdateManyWithoutProductNestedInput
   }
 
-  input CategoryUncheckedUpdateInput {
+  input ProductUncheckedUpdateInput {
     id: IntFieldUpdateOperationsInput
-    name: StringFieldUpdateOperationsInput
-    posts: CategoriesOnPostsUncheckedUpdateManyWithoutCategoryNestedInput
+    review: ReviewUncheckedUpdateManyWithoutProductNestedInput
   }
 
-  input CategoryCreateManyInput {
+  input ProductCreateManyInput {
     id: Int
-    name: String!
   }
 
-  input CategoryUpdateManyMutationInput {
-    name: StringFieldUpdateOperationsInput
-  }
-
-  input CategoryUncheckedUpdateManyInput {
+  input ProductUncheckedUpdateManyInput {
     id: IntFieldUpdateOperationsInput
-    name: StringFieldUpdateOperationsInput
-  }
-
-  input CategoriesOnPostsCreateInput {
-    post: PostCreateNestedOneWithoutCategoriesInput!
-    category: CategoryCreateNestedOneWithoutPostsInput!
-    assignedAt: DateTime
-    assignedBy: String!
-  }
-
-  input CategoriesOnPostsUncheckedCreateInput {
-    postId: Int!
-    categoryId: Int!
-    assignedAt: DateTime
-    assignedBy: String!
-  }
-
-  input CategoriesOnPostsUpdateInput {
-    post: PostUpdateOneRequiredWithoutCategoriesNestedInput
-    category: CategoryUpdateOneRequiredWithoutPostsNestedInput
-    assignedAt: DateTimeFieldUpdateOperationsInput
-    assignedBy: StringFieldUpdateOperationsInput
-  }
-
-  input CategoriesOnPostsUncheckedUpdateInput {
-    postId: IntFieldUpdateOperationsInput
-    categoryId: IntFieldUpdateOperationsInput
-    assignedAt: DateTimeFieldUpdateOperationsInput
-    assignedBy: StringFieldUpdateOperationsInput
-  }
-
-  input CategoriesOnPostsCreateManyInput {
-    postId: Int!
-    categoryId: Int!
-    assignedAt: DateTime
-    assignedBy: String!
-  }
-
-  input CategoriesOnPostsUpdateManyMutationInput {
-    assignedAt: DateTimeFieldUpdateOperationsInput
-    assignedBy: StringFieldUpdateOperationsInput
-  }
-
-  input CategoriesOnPostsUncheckedUpdateManyInput {
-    postId: IntFieldUpdateOperationsInput
-    categoryId: IntFieldUpdateOperationsInput
-    assignedAt: DateTimeFieldUpdateOperationsInput
-    assignedBy: StringFieldUpdateOperationsInput
   }
 
   input IntFilter {
@@ -560,35 +406,6 @@ export default gql`
     not: Json
   }
 
-  input PostListRelationFilter {
-    every: PostWhereInput
-    some: PostWhereInput
-    none: PostWhereInput
-  }
-
-  input DecimalNullableListFilter {
-    equals: [Decimal!]
-    has: Decimal
-    hasEvery: [Decimal!]
-    hasSome: [Decimal!]
-    isEmpty: Boolean
-  }
-
-  input DecimalFilter {
-    equals: Decimal
-    in: [Decimal!]
-    notIn: [Decimal!]
-    lt: Decimal
-    lte: Decimal
-    gt: Decimal
-    gte: Decimal
-    not: NestedDecimalFilter
-  }
-
-  input PostOrderByRelationAggregateInput {
-    _count: SortOrder
-  }
-
   input UserCountOrderByAggregateInput {
     id: SortOrder
     createdAt: SortOrder
@@ -598,14 +415,10 @@ export default gql`
     roles: SortOrder
     googleId: SortOrder
     googleProfile: SortOrder
-    number2: SortOrder
-    number: SortOrder
   }
 
   input UserAvgOrderByAggregateInput {
     id: SortOrder
-    number2: SortOrder
-    number: SortOrder
   }
 
   input UserMaxOrderByAggregateInput {
@@ -615,7 +428,6 @@ export default gql`
     password: SortOrder
     email: SortOrder
     googleId: SortOrder
-    number: SortOrder
   }
 
   input UserMinOrderByAggregateInput {
@@ -625,13 +437,10 @@ export default gql`
     password: SortOrder
     email: SortOrder
     googleId: SortOrder
-    number: SortOrder
   }
 
   input UserSumOrderByAggregateInput {
     id: SortOrder
-    number2: SortOrder
-    number: SortOrder
   }
 
   input IntWithAggregatesFilter {
@@ -719,154 +528,73 @@ export default gql`
     _max: NestedJsonNullableFilter
   }
 
-  input DecimalWithAggregatesFilter {
-    equals: Decimal
-    in: [Decimal!]
-    notIn: [Decimal!]
-    lt: Decimal
-    lte: Decimal
-    gt: Decimal
-    gte: Decimal
-    not: NestedDecimalWithAggregatesFilter
-    _count: NestedIntFilter
-    _avg: NestedDecimalFilter
-    _sum: NestedDecimalFilter
-    _min: NestedDecimalFilter
-    _max: NestedDecimalFilter
+  input ProductRelationFilter {
+    is: ProductWhereInput
+    isNot: ProductWhereInput
   }
 
-  input UserRelationFilter {
-    is: UserWhereInput
-    isNot: UserWhereInput
+  input ReviewCountOrderByAggregateInput {
+    id: SortOrder
+    product_id: SortOrder
+    score: SortOrder
   }
 
-  input CategoriesOnPostsListRelationFilter {
-    every: CategoriesOnPostsWhereInput
-    some: CategoriesOnPostsWhereInput
-    none: CategoriesOnPostsWhereInput
+  input ReviewAvgOrderByAggregateInput {
+    id: SortOrder
+    product_id: SortOrder
+    score: SortOrder
   }
 
-  input CategoriesOnPostsOrderByRelationAggregateInput {
+  input ReviewMaxOrderByAggregateInput {
+    id: SortOrder
+    product_id: SortOrder
+    score: SortOrder
+  }
+
+  input ReviewMinOrderByAggregateInput {
+    id: SortOrder
+    product_id: SortOrder
+    score: SortOrder
+  }
+
+  input ReviewSumOrderByAggregateInput {
+    id: SortOrder
+    product_id: SortOrder
+    score: SortOrder
+  }
+
+  input ReviewListRelationFilter {
+    every: ReviewWhereInput
+    some: ReviewWhereInput
+    none: ReviewWhereInput
+  }
+
+  input ReviewOrderByRelationAggregateInput {
     _count: SortOrder
   }
 
-  input PostCountOrderByAggregateInput {
-    id: SortOrder
-    user_id: SortOrder
-    title: SortOrder
-  }
-
-  input PostAvgOrderByAggregateInput {
-    id: SortOrder
-    user_id: SortOrder
-  }
-
-  input PostMaxOrderByAggregateInput {
-    id: SortOrder
-    user_id: SortOrder
-    title: SortOrder
-  }
-
-  input PostMinOrderByAggregateInput {
-    id: SortOrder
-    user_id: SortOrder
-    title: SortOrder
-  }
-
-  input PostSumOrderByAggregateInput {
-    id: SortOrder
-    user_id: SortOrder
-  }
-
-  input CategoryCountOrderByAggregateInput {
-    id: SortOrder
-    name: SortOrder
-  }
-
-  input CategoryAvgOrderByAggregateInput {
+  input ProductCountOrderByAggregateInput {
     id: SortOrder
   }
 
-  input CategoryMaxOrderByAggregateInput {
-    id: SortOrder
-    name: SortOrder
-  }
-
-  input CategoryMinOrderByAggregateInput {
-    id: SortOrder
-    name: SortOrder
-  }
-
-  input CategorySumOrderByAggregateInput {
+  input ProductAvgOrderByAggregateInput {
     id: SortOrder
   }
 
-  input PostRelationFilter {
-    is: PostWhereInput
-    isNot: PostWhereInput
+  input ProductMaxOrderByAggregateInput {
+    id: SortOrder
   }
 
-  input CategoryRelationFilter {
-    is: CategoryWhereInput
-    isNot: CategoryWhereInput
+  input ProductMinOrderByAggregateInput {
+    id: SortOrder
   }
 
-  input CategoriesOnPostsPostIdCategoryIdCompoundUniqueInput {
-    postId: Int!
-    categoryId: Int!
-  }
-
-  input CategoriesOnPostsCountOrderByAggregateInput {
-    postId: SortOrder
-    categoryId: SortOrder
-    assignedAt: SortOrder
-    assignedBy: SortOrder
-  }
-
-  input CategoriesOnPostsAvgOrderByAggregateInput {
-    postId: SortOrder
-    categoryId: SortOrder
-  }
-
-  input CategoriesOnPostsMaxOrderByAggregateInput {
-    postId: SortOrder
-    categoryId: SortOrder
-    assignedAt: SortOrder
-    assignedBy: SortOrder
-  }
-
-  input CategoriesOnPostsMinOrderByAggregateInput {
-    postId: SortOrder
-    categoryId: SortOrder
-    assignedAt: SortOrder
-    assignedBy: SortOrder
-  }
-
-  input CategoriesOnPostsSumOrderByAggregateInput {
-    postId: SortOrder
-    categoryId: SortOrder
+  input ProductSumOrderByAggregateInput {
+    id: SortOrder
   }
 
   input UserCreaterolesInput {
     set: [String!]!
-  }
-
-  input PostCreateNestedManyWithoutUserInput {
-    create: [PostCreateWithoutUserInput!]
-    connectOrCreate: [PostCreateOrConnectWithoutUserInput!]
-    createMany: PostCreateManyUserInputEnvelope
-    connect: [PostWhereUniqueInput!]
-  }
-
-  input UserCreatenumber2Input {
-    set: [Decimal!]!
-  }
-
-  input PostUncheckedCreateNestedManyWithoutUserInput {
-    create: [PostCreateWithoutUserInput!]
-    connectOrCreate: [PostCreateOrConnectWithoutUserInput!]
-    createMany: PostCreateManyUserInputEnvelope
-    connect: [PostWhereUniqueInput!]
   }
 
   input DateTimeFieldUpdateOperationsInput {
@@ -886,33 +614,6 @@ export default gql`
     push: [String!]
   }
 
-  input PostUpdateManyWithoutUserNestedInput {
-    create: [PostCreateWithoutUserInput!]
-    connectOrCreate: [PostCreateOrConnectWithoutUserInput!]
-    upsert: [PostUpsertWithWhereUniqueWithoutUserInput!]
-    createMany: PostCreateManyUserInputEnvelope
-    set: [PostWhereUniqueInput!]
-    disconnect: [PostWhereUniqueInput!]
-    delete: [PostWhereUniqueInput!]
-    connect: [PostWhereUniqueInput!]
-    update: [PostUpdateWithWhereUniqueWithoutUserInput!]
-    updateMany: [PostUpdateManyWithWhereWithoutUserInput!]
-    deleteMany: [PostScalarWhereInput!]
-  }
-
-  input UserUpdatenumber2Input {
-    set: [Decimal!]
-    push: [Decimal!]
-  }
-
-  input DecimalFieldUpdateOperationsInput {
-    set: Decimal
-    increment: Decimal
-    decrement: Decimal
-    multiply: Decimal
-    divide: Decimal
-  }
-
   input IntFieldUpdateOperationsInput {
     set: Int
     increment: Int
@@ -921,144 +622,60 @@ export default gql`
     divide: Int
   }
 
-  input PostUncheckedUpdateManyWithoutUserNestedInput {
-    create: [PostCreateWithoutUserInput!]
-    connectOrCreate: [PostCreateOrConnectWithoutUserInput!]
-    upsert: [PostUpsertWithWhereUniqueWithoutUserInput!]
-    createMany: PostCreateManyUserInputEnvelope
-    set: [PostWhereUniqueInput!]
-    disconnect: [PostWhereUniqueInput!]
-    delete: [PostWhereUniqueInput!]
-    connect: [PostWhereUniqueInput!]
-    update: [PostUpdateWithWhereUniqueWithoutUserInput!]
-    updateMany: [PostUpdateManyWithWhereWithoutUserInput!]
-    deleteMany: [PostScalarWhereInput!]
+  input ProductCreateNestedOneWithoutReviewInput {
+    create: ProductUncheckedCreateWithoutReviewInput
+    connectOrCreate: ProductCreateOrConnectWithoutReviewInput
+    connect: ProductWhereUniqueInput
   }
 
-  input UserCreateNestedOneWithoutPostsInput {
-    create: UserUncheckedCreateWithoutPostsInput
-    connectOrCreate: UserCreateOrConnectWithoutPostsInput
-    connect: UserWhereUniqueInput
+  input ProductUpdateOneRequiredWithoutReviewNestedInput {
+    create: ProductUncheckedCreateWithoutReviewInput
+    connectOrCreate: ProductCreateOrConnectWithoutReviewInput
+    upsert: ProductUpsertWithoutReviewInput
+    connect: ProductWhereUniqueInput
+    update: ProductUncheckedUpdateWithoutReviewInput
   }
 
-  input CategoriesOnPostsCreateNestedManyWithoutPostInput {
-    create: [CategoriesOnPostsCreateWithoutPostInput!]
-    connectOrCreate: [CategoriesOnPostsCreateOrConnectWithoutPostInput!]
-    createMany: CategoriesOnPostsCreateManyPostInputEnvelope
-    connect: [CategoriesOnPostsWhereUniqueInput!]
+  input ReviewCreateNestedManyWithoutProductInput {
+    create: [ReviewCreateWithoutProductInput!]
+    connectOrCreate: [ReviewCreateOrConnectWithoutProductInput!]
+    createMany: ReviewCreateManyProductInputEnvelope
+    connect: [ReviewWhereUniqueInput!]
   }
 
-  input CategoriesOnPostsUncheckedCreateNestedManyWithoutPostInput {
-    create: [CategoriesOnPostsCreateWithoutPostInput!]
-    connectOrCreate: [CategoriesOnPostsCreateOrConnectWithoutPostInput!]
-    createMany: CategoriesOnPostsCreateManyPostInputEnvelope
-    connect: [CategoriesOnPostsWhereUniqueInput!]
+  input ReviewUncheckedCreateNestedManyWithoutProductInput {
+    create: [ReviewCreateWithoutProductInput!]
+    connectOrCreate: [ReviewCreateOrConnectWithoutProductInput!]
+    createMany: ReviewCreateManyProductInputEnvelope
+    connect: [ReviewWhereUniqueInput!]
   }
 
-  input UserUpdateOneRequiredWithoutPostsNestedInput {
-    create: UserUncheckedCreateWithoutPostsInput
-    connectOrCreate: UserCreateOrConnectWithoutPostsInput
-    upsert: UserUpsertWithoutPostsInput
-    connect: UserWhereUniqueInput
-    update: UserUncheckedUpdateWithoutPostsInput
+  input ReviewUpdateManyWithoutProductNestedInput {
+    create: [ReviewCreateWithoutProductInput!]
+    connectOrCreate: [ReviewCreateOrConnectWithoutProductInput!]
+    upsert: [ReviewUpsertWithWhereUniqueWithoutProductInput!]
+    createMany: ReviewCreateManyProductInputEnvelope
+    set: [ReviewWhereUniqueInput!]
+    disconnect: [ReviewWhereUniqueInput!]
+    delete: [ReviewWhereUniqueInput!]
+    connect: [ReviewWhereUniqueInput!]
+    update: [ReviewUpdateWithWhereUniqueWithoutProductInput!]
+    updateMany: [ReviewUpdateManyWithWhereWithoutProductInput!]
+    deleteMany: [ReviewScalarWhereInput!]
   }
 
-  input CategoriesOnPostsUpdateManyWithoutPostNestedInput {
-    create: [CategoriesOnPostsCreateWithoutPostInput!]
-    connectOrCreate: [CategoriesOnPostsCreateOrConnectWithoutPostInput!]
-    upsert: [CategoriesOnPostsUpsertWithWhereUniqueWithoutPostInput!]
-    createMany: CategoriesOnPostsCreateManyPostInputEnvelope
-    set: [CategoriesOnPostsWhereUniqueInput!]
-    disconnect: [CategoriesOnPostsWhereUniqueInput!]
-    delete: [CategoriesOnPostsWhereUniqueInput!]
-    connect: [CategoriesOnPostsWhereUniqueInput!]
-    update: [CategoriesOnPostsUpdateWithWhereUniqueWithoutPostInput!]
-    updateMany: [CategoriesOnPostsUpdateManyWithWhereWithoutPostInput!]
-    deleteMany: [CategoriesOnPostsScalarWhereInput!]
-  }
-
-  input CategoriesOnPostsUncheckedUpdateManyWithoutPostNestedInput {
-    create: [CategoriesOnPostsCreateWithoutPostInput!]
-    connectOrCreate: [CategoriesOnPostsCreateOrConnectWithoutPostInput!]
-    upsert: [CategoriesOnPostsUpsertWithWhereUniqueWithoutPostInput!]
-    createMany: CategoriesOnPostsCreateManyPostInputEnvelope
-    set: [CategoriesOnPostsWhereUniqueInput!]
-    disconnect: [CategoriesOnPostsWhereUniqueInput!]
-    delete: [CategoriesOnPostsWhereUniqueInput!]
-    connect: [CategoriesOnPostsWhereUniqueInput!]
-    update: [CategoriesOnPostsUpdateWithWhereUniqueWithoutPostInput!]
-    updateMany: [CategoriesOnPostsUpdateManyWithWhereWithoutPostInput!]
-    deleteMany: [CategoriesOnPostsScalarWhereInput!]
-  }
-
-  input CategoriesOnPostsCreateNestedManyWithoutCategoryInput {
-    create: [CategoriesOnPostsCreateWithoutCategoryInput!]
-    connectOrCreate: [CategoriesOnPostsCreateOrConnectWithoutCategoryInput!]
-    createMany: CategoriesOnPostsCreateManyCategoryInputEnvelope
-    connect: [CategoriesOnPostsWhereUniqueInput!]
-  }
-
-  input CategoriesOnPostsUncheckedCreateNestedManyWithoutCategoryInput {
-    create: [CategoriesOnPostsCreateWithoutCategoryInput!]
-    connectOrCreate: [CategoriesOnPostsCreateOrConnectWithoutCategoryInput!]
-    createMany: CategoriesOnPostsCreateManyCategoryInputEnvelope
-    connect: [CategoriesOnPostsWhereUniqueInput!]
-  }
-
-  input CategoriesOnPostsUpdateManyWithoutCategoryNestedInput {
-    create: [CategoriesOnPostsCreateWithoutCategoryInput!]
-    connectOrCreate: [CategoriesOnPostsCreateOrConnectWithoutCategoryInput!]
-    upsert: [CategoriesOnPostsUpsertWithWhereUniqueWithoutCategoryInput!]
-    createMany: CategoriesOnPostsCreateManyCategoryInputEnvelope
-    set: [CategoriesOnPostsWhereUniqueInput!]
-    disconnect: [CategoriesOnPostsWhereUniqueInput!]
-    delete: [CategoriesOnPostsWhereUniqueInput!]
-    connect: [CategoriesOnPostsWhereUniqueInput!]
-    update: [CategoriesOnPostsUpdateWithWhereUniqueWithoutCategoryInput!]
-    updateMany: [CategoriesOnPostsUpdateManyWithWhereWithoutCategoryInput!]
-    deleteMany: [CategoriesOnPostsScalarWhereInput!]
-  }
-
-  input CategoriesOnPostsUncheckedUpdateManyWithoutCategoryNestedInput {
-    create: [CategoriesOnPostsCreateWithoutCategoryInput!]
-    connectOrCreate: [CategoriesOnPostsCreateOrConnectWithoutCategoryInput!]
-    upsert: [CategoriesOnPostsUpsertWithWhereUniqueWithoutCategoryInput!]
-    createMany: CategoriesOnPostsCreateManyCategoryInputEnvelope
-    set: [CategoriesOnPostsWhereUniqueInput!]
-    disconnect: [CategoriesOnPostsWhereUniqueInput!]
-    delete: [CategoriesOnPostsWhereUniqueInput!]
-    connect: [CategoriesOnPostsWhereUniqueInput!]
-    update: [CategoriesOnPostsUpdateWithWhereUniqueWithoutCategoryInput!]
-    updateMany: [CategoriesOnPostsUpdateManyWithWhereWithoutCategoryInput!]
-    deleteMany: [CategoriesOnPostsScalarWhereInput!]
-  }
-
-  input PostCreateNestedOneWithoutCategoriesInput {
-    create: PostUncheckedCreateWithoutCategoriesInput
-    connectOrCreate: PostCreateOrConnectWithoutCategoriesInput
-    connect: PostWhereUniqueInput
-  }
-
-  input CategoryCreateNestedOneWithoutPostsInput {
-    create: CategoryUncheckedCreateWithoutPostsInput
-    connectOrCreate: CategoryCreateOrConnectWithoutPostsInput
-    connect: CategoryWhereUniqueInput
-  }
-
-  input PostUpdateOneRequiredWithoutCategoriesNestedInput {
-    create: PostUncheckedCreateWithoutCategoriesInput
-    connectOrCreate: PostCreateOrConnectWithoutCategoriesInput
-    upsert: PostUpsertWithoutCategoriesInput
-    connect: PostWhereUniqueInput
-    update: PostUncheckedUpdateWithoutCategoriesInput
-  }
-
-  input CategoryUpdateOneRequiredWithoutPostsNestedInput {
-    create: CategoryUncheckedCreateWithoutPostsInput
-    connectOrCreate: CategoryCreateOrConnectWithoutPostsInput
-    upsert: CategoryUpsertWithoutPostsInput
-    connect: CategoryWhereUniqueInput
-    update: CategoryUncheckedUpdateWithoutPostsInput
+  input ReviewUncheckedUpdateManyWithoutProductNestedInput {
+    create: [ReviewCreateWithoutProductInput!]
+    connectOrCreate: [ReviewCreateOrConnectWithoutProductInput!]
+    upsert: [ReviewUpsertWithWhereUniqueWithoutProductInput!]
+    createMany: ReviewCreateManyProductInputEnvelope
+    set: [ReviewWhereUniqueInput!]
+    disconnect: [ReviewWhereUniqueInput!]
+    delete: [ReviewWhereUniqueInput!]
+    connect: [ReviewWhereUniqueInput!]
+    update: [ReviewUpdateWithWhereUniqueWithoutProductInput!]
+    updateMany: [ReviewUpdateManyWithWhereWithoutProductInput!]
+    deleteMany: [ReviewScalarWhereInput!]
   }
 
   input NestedIntFilter {
@@ -1109,17 +726,6 @@ export default gql`
     startsWith: String
     endsWith: String
     not: NestedStringFilter
-  }
-
-  input NestedDecimalFilter {
-    equals: Decimal
-    in: [Decimal!]
-    notIn: [Decimal!]
-    lt: Decimal
-    lte: Decimal
-    gt: Decimal
-    gte: Decimal
-    not: NestedDecimalFilter
   }
 
   input NestedIntWithAggregatesFilter {
@@ -1224,341 +830,85 @@ export default gql`
     not: Json
   }
 
-  input NestedDecimalWithAggregatesFilter {
-    equals: Decimal
-    in: [Decimal!]
-    notIn: [Decimal!]
-    lt: Decimal
-    lte: Decimal
-    gt: Decimal
-    gte: Decimal
-    not: NestedDecimalWithAggregatesFilter
-    _count: NestedIntFilter
-    _avg: NestedDecimalFilter
-    _sum: NestedDecimalFilter
-    _min: NestedDecimalFilter
-    _max: NestedDecimalFilter
-  }
-
-  input PostCreateWithoutUserInput {
-    title: String!
-    categories: CategoriesOnPostsCreateNestedManyWithoutPostInput
-  }
-
-  input PostUncheckedCreateWithoutUserInput {
+  input ProductUncheckedCreateWithoutReviewInput {
     id: Int
-    title: String!
-    categories: CategoriesOnPostsUncheckedCreateNestedManyWithoutPostInput
   }
 
-  input PostCreateOrConnectWithoutUserInput {
-    where: PostWhereUniqueInput!
-    create: PostUncheckedCreateWithoutUserInput!
+  input ProductCreateOrConnectWithoutReviewInput {
+    where: ProductWhereUniqueInput!
+    create: ProductUncheckedCreateWithoutReviewInput!
   }
 
-  input PostCreateManyUserInputEnvelope {
-    data: [PostCreateManyUserInput!]!
+  input ProductUpsertWithoutReviewInput {
+    update: ProductUncheckedUpdateWithoutReviewInput!
+    create: ProductUncheckedCreateWithoutReviewInput!
+  }
+
+  input ProductUncheckedUpdateWithoutReviewInput {
+    id: IntFieldUpdateOperationsInput
+  }
+
+  input ReviewCreateWithoutProductInput {
+    score: Int!
+  }
+
+  input ReviewUncheckedCreateWithoutProductInput {
+    id: Int
+    score: Int!
+  }
+
+  input ReviewCreateOrConnectWithoutProductInput {
+    where: ReviewWhereUniqueInput!
+    create: ReviewUncheckedCreateWithoutProductInput!
+  }
+
+  input ReviewCreateManyProductInputEnvelope {
+    data: [ReviewCreateManyProductInput!]!
     skipDuplicates: Boolean
   }
 
-  input PostUpsertWithWhereUniqueWithoutUserInput {
-    where: PostWhereUniqueInput!
-    update: PostUncheckedUpdateWithoutUserInput!
-    create: PostUncheckedCreateWithoutUserInput!
+  input ReviewUpsertWithWhereUniqueWithoutProductInput {
+    where: ReviewWhereUniqueInput!
+    update: ReviewUncheckedUpdateWithoutProductInput!
+    create: ReviewUncheckedCreateWithoutProductInput!
   }
 
-  input PostUpdateWithWhereUniqueWithoutUserInput {
-    where: PostWhereUniqueInput!
-    data: PostUncheckedUpdateWithoutUserInput!
+  input ReviewUpdateWithWhereUniqueWithoutProductInput {
+    where: ReviewWhereUniqueInput!
+    data: ReviewUncheckedUpdateWithoutProductInput!
   }
 
-  input PostUpdateManyWithWhereWithoutUserInput {
-    where: PostScalarWhereInput!
-    data: PostUncheckedUpdateManyWithoutPostsInput!
+  input ReviewUpdateManyWithWhereWithoutProductInput {
+    where: ReviewScalarWhereInput!
+    data: ReviewUncheckedUpdateManyWithoutReviewInput!
   }
 
-  input PostScalarWhereInput {
-    AND: [PostScalarWhereInput!]
-    OR: [PostScalarWhereInput!]
-    NOT: [PostScalarWhereInput!]
+  input ReviewScalarWhereInput {
+    AND: [ReviewScalarWhereInput!]
+    OR: [ReviewScalarWhereInput!]
+    NOT: [ReviewScalarWhereInput!]
     id: IntFilter
-    user_id: IntFilter
-    title: StringFilter
+    product_id: IntFilter
+    score: IntFilter
   }
 
-  input UserCreateWithoutPostsInput {
-    createdAt: DateTime
-    username: String
-    password: String
-    email: String!
-    roles: [String!]
-    googleId: String
-    googleProfile: Json
-    number2: [Decimal!]
-    number: Decimal!
-  }
-
-  input UserUncheckedCreateWithoutPostsInput {
+  input ReviewCreateManyProductInput {
     id: Int
-    createdAt: DateTime
-    username: String
-    password: String
-    email: String!
-    roles: [String!]
-    googleId: String
-    googleProfile: Json
-    number2: [Decimal!]
-    number: Decimal!
+    score: Int!
   }
 
-  input UserCreateOrConnectWithoutPostsInput {
-    where: UserWhereUniqueInput!
-    create: UserUncheckedCreateWithoutPostsInput!
+  input ReviewUpdateWithoutProductInput {
+    score: IntFieldUpdateOperationsInput
   }
 
-  input CategoriesOnPostsCreateWithoutPostInput {
-    category: CategoryCreateNestedOneWithoutPostsInput!
-    assignedAt: DateTime
-    assignedBy: String!
-  }
-
-  input CategoriesOnPostsUncheckedCreateWithoutPostInput {
-    categoryId: Int!
-    assignedAt: DateTime
-    assignedBy: String!
-  }
-
-  input CategoriesOnPostsCreateOrConnectWithoutPostInput {
-    where: CategoriesOnPostsWhereUniqueInput!
-    create: CategoriesOnPostsUncheckedCreateWithoutPostInput!
-  }
-
-  input CategoriesOnPostsCreateManyPostInputEnvelope {
-    data: [CategoriesOnPostsCreateManyPostInput!]!
-    skipDuplicates: Boolean
-  }
-
-  input UserUpsertWithoutPostsInput {
-    update: UserUncheckedUpdateWithoutPostsInput!
-    create: UserUncheckedCreateWithoutPostsInput!
-  }
-
-  input UserUpdateWithoutPostsInput {
-    createdAt: DateTimeFieldUpdateOperationsInput
-    username: NullableStringFieldUpdateOperationsInput
-    password: NullableStringFieldUpdateOperationsInput
-    email: StringFieldUpdateOperationsInput
-    roles: [String!]
-    googleId: NullableStringFieldUpdateOperationsInput
-    googleProfile: Json
-    number2: [Decimal!]
-    number: DecimalFieldUpdateOperationsInput
-  }
-
-  input UserUncheckedUpdateWithoutPostsInput {
+  input ReviewUncheckedUpdateWithoutProductInput {
     id: IntFieldUpdateOperationsInput
-    createdAt: DateTimeFieldUpdateOperationsInput
-    username: NullableStringFieldUpdateOperationsInput
-    password: NullableStringFieldUpdateOperationsInput
-    email: StringFieldUpdateOperationsInput
-    roles: [String!]
-    googleId: NullableStringFieldUpdateOperationsInput
-    googleProfile: Json
-    number2: [Decimal!]
-    number: DecimalFieldUpdateOperationsInput
+    score: IntFieldUpdateOperationsInput
   }
 
-  input CategoriesOnPostsUpsertWithWhereUniqueWithoutPostInput {
-    where: CategoriesOnPostsWhereUniqueInput!
-    update: CategoriesOnPostsUncheckedUpdateWithoutPostInput!
-    create: CategoriesOnPostsUncheckedCreateWithoutPostInput!
-  }
-
-  input CategoriesOnPostsUpdateWithWhereUniqueWithoutPostInput {
-    where: CategoriesOnPostsWhereUniqueInput!
-    data: CategoriesOnPostsUncheckedUpdateWithoutPostInput!
-  }
-
-  input CategoriesOnPostsUpdateManyWithWhereWithoutPostInput {
-    where: CategoriesOnPostsScalarWhereInput!
-    data: CategoriesOnPostsUncheckedUpdateManyWithoutCategoriesInput!
-  }
-
-  input CategoriesOnPostsScalarWhereInput {
-    AND: [CategoriesOnPostsScalarWhereInput!]
-    OR: [CategoriesOnPostsScalarWhereInput!]
-    NOT: [CategoriesOnPostsScalarWhereInput!]
-    postId: IntFilter
-    categoryId: IntFilter
-    assignedAt: DateTimeFilter
-    assignedBy: StringFilter
-  }
-
-  input CategoriesOnPostsCreateWithoutCategoryInput {
-    post: PostCreateNestedOneWithoutCategoriesInput!
-    assignedAt: DateTime
-    assignedBy: String!
-  }
-
-  input CategoriesOnPostsUncheckedCreateWithoutCategoryInput {
-    postId: Int!
-    assignedAt: DateTime
-    assignedBy: String!
-  }
-
-  input CategoriesOnPostsCreateOrConnectWithoutCategoryInput {
-    where: CategoriesOnPostsWhereUniqueInput!
-    create: CategoriesOnPostsUncheckedCreateWithoutCategoryInput!
-  }
-
-  input CategoriesOnPostsCreateManyCategoryInputEnvelope {
-    data: [CategoriesOnPostsCreateManyCategoryInput!]!
-    skipDuplicates: Boolean
-  }
-
-  input CategoriesOnPostsUpsertWithWhereUniqueWithoutCategoryInput {
-    where: CategoriesOnPostsWhereUniqueInput!
-    update: CategoriesOnPostsUncheckedUpdateWithoutCategoryInput!
-    create: CategoriesOnPostsUncheckedCreateWithoutCategoryInput!
-  }
-
-  input CategoriesOnPostsUpdateWithWhereUniqueWithoutCategoryInput {
-    where: CategoriesOnPostsWhereUniqueInput!
-    data: CategoriesOnPostsUncheckedUpdateWithoutCategoryInput!
-  }
-
-  input CategoriesOnPostsUpdateManyWithWhereWithoutCategoryInput {
-    where: CategoriesOnPostsScalarWhereInput!
-    data: CategoriesOnPostsUncheckedUpdateManyWithoutPostsInput!
-  }
-
-  input PostCreateWithoutCategoriesInput {
-    user: UserCreateNestedOneWithoutPostsInput!
-    title: String!
-  }
-
-  input PostUncheckedCreateWithoutCategoriesInput {
-    id: Int
-    user_id: Int!
-    title: String!
-  }
-
-  input PostCreateOrConnectWithoutCategoriesInput {
-    where: PostWhereUniqueInput!
-    create: PostUncheckedCreateWithoutCategoriesInput!
-  }
-
-  input CategoryCreateWithoutPostsInput {
-    name: String!
-  }
-
-  input CategoryUncheckedCreateWithoutPostsInput {
-    id: Int
-    name: String!
-  }
-
-  input CategoryCreateOrConnectWithoutPostsInput {
-    where: CategoryWhereUniqueInput!
-    create: CategoryUncheckedCreateWithoutPostsInput!
-  }
-
-  input PostUpsertWithoutCategoriesInput {
-    update: PostUncheckedUpdateWithoutCategoriesInput!
-    create: PostUncheckedCreateWithoutCategoriesInput!
-  }
-
-  input PostUpdateWithoutCategoriesInput {
-    user: UserUpdateOneRequiredWithoutPostsNestedInput
-    title: StringFieldUpdateOperationsInput
-  }
-
-  input PostUncheckedUpdateWithoutCategoriesInput {
+  input ReviewUncheckedUpdateManyWithoutReviewInput {
     id: IntFieldUpdateOperationsInput
-    user_id: IntFieldUpdateOperationsInput
-    title: StringFieldUpdateOperationsInput
-  }
-
-  input CategoryUpsertWithoutPostsInput {
-    update: CategoryUncheckedUpdateWithoutPostsInput!
-    create: CategoryUncheckedCreateWithoutPostsInput!
-  }
-
-  input CategoryUpdateWithoutPostsInput {
-    name: StringFieldUpdateOperationsInput
-  }
-
-  input CategoryUncheckedUpdateWithoutPostsInput {
-    id: IntFieldUpdateOperationsInput
-    name: StringFieldUpdateOperationsInput
-  }
-
-  input PostCreateManyUserInput {
-    id: Int
-    title: String!
-  }
-
-  input PostUpdateWithoutUserInput {
-    title: StringFieldUpdateOperationsInput
-    categories: CategoriesOnPostsUpdateManyWithoutPostNestedInput
-  }
-
-  input PostUncheckedUpdateWithoutUserInput {
-    id: IntFieldUpdateOperationsInput
-    title: StringFieldUpdateOperationsInput
-    categories: CategoriesOnPostsUncheckedUpdateManyWithoutPostNestedInput
-  }
-
-  input PostUncheckedUpdateManyWithoutPostsInput {
-    id: IntFieldUpdateOperationsInput
-    title: StringFieldUpdateOperationsInput
-  }
-
-  input CategoriesOnPostsCreateManyPostInput {
-    categoryId: Int!
-    assignedAt: DateTime
-    assignedBy: String!
-  }
-
-  input CategoriesOnPostsUpdateWithoutPostInput {
-    category: CategoryUpdateOneRequiredWithoutPostsNestedInput
-    assignedAt: DateTimeFieldUpdateOperationsInput
-    assignedBy: StringFieldUpdateOperationsInput
-  }
-
-  input CategoriesOnPostsUncheckedUpdateWithoutPostInput {
-    categoryId: IntFieldUpdateOperationsInput
-    assignedAt: DateTimeFieldUpdateOperationsInput
-    assignedBy: StringFieldUpdateOperationsInput
-  }
-
-  input CategoriesOnPostsUncheckedUpdateManyWithoutCategoriesInput {
-    categoryId: IntFieldUpdateOperationsInput
-    assignedAt: DateTimeFieldUpdateOperationsInput
-    assignedBy: StringFieldUpdateOperationsInput
-  }
-
-  input CategoriesOnPostsCreateManyCategoryInput {
-    postId: Int!
-    assignedAt: DateTime
-    assignedBy: String!
-  }
-
-  input CategoriesOnPostsUpdateWithoutCategoryInput {
-    post: PostUpdateOneRequiredWithoutCategoriesNestedInput
-    assignedAt: DateTimeFieldUpdateOperationsInput
-    assignedBy: StringFieldUpdateOperationsInput
-  }
-
-  input CategoriesOnPostsUncheckedUpdateWithoutCategoryInput {
-    postId: IntFieldUpdateOperationsInput
-    assignedAt: DateTimeFieldUpdateOperationsInput
-    assignedBy: StringFieldUpdateOperationsInput
-  }
-
-  input CategoriesOnPostsUncheckedUpdateManyWithoutPostsInput {
-    postId: IntFieldUpdateOperationsInput
-    assignedAt: DateTimeFieldUpdateOperationsInput
-    assignedBy: StringFieldUpdateOperationsInput
+    score: IntFieldUpdateOperationsInput
   }
 
   type AggregateUser @shareable {
@@ -1569,32 +919,20 @@ export default gql`
     _max: UserMaxAggregateOutputType
   }
 
-  type AggregatePost @shareable {
-    _count: PostCountAggregateOutputType
-    _avg: PostAvgAggregateOutputType
-    _sum: PostSumAggregateOutputType
-    _min: PostMinAggregateOutputType
-    _max: PostMaxAggregateOutputType
+  type AggregateReview @shareable {
+    _count: ReviewCountAggregateOutputType
+    _avg: ReviewAvgAggregateOutputType
+    _sum: ReviewSumAggregateOutputType
+    _min: ReviewMinAggregateOutputType
+    _max: ReviewMaxAggregateOutputType
   }
 
-  type AggregateCategory @shareable {
-    _count: CategoryCountAggregateOutputType
-    _avg: CategoryAvgAggregateOutputType
-    _sum: CategorySumAggregateOutputType
-    _min: CategoryMinAggregateOutputType
-    _max: CategoryMaxAggregateOutputType
-  }
-
-  type AggregateCategoriesOnPosts @shareable {
-    _count: CategoriesOnPostsCountAggregateOutputType
-    _avg: CategoriesOnPostsAvgAggregateOutputType
-    _sum: CategoriesOnPostsSumAggregateOutputType
-    _min: CategoriesOnPostsMinAggregateOutputType
-    _max: CategoriesOnPostsMaxAggregateOutputType
-  }
-
-  type UserCountOutputType @shareable {
-    posts: Int!
+  type AggregateProduct @shareable {
+    _count: ProductCountAggregateOutputType
+    _avg: ProductAvgAggregateOutputType
+    _sum: ProductSumAggregateOutputType
+    _min: ProductMinAggregateOutputType
+    _max: ProductMaxAggregateOutputType
   }
 
   type UserCountAggregateOutputType @shareable {
@@ -1606,143 +944,92 @@ export default gql`
     roles: Int!
     googleId: Int!
     googleProfile: Int!
-    number2: Int!
-    number: Int!
     _all: Int!
   }
 
   type UserAvgAggregateOutputType @shareable {
     id: Float
-    number2: Decimal
-    number: Decimal
   }
 
   type UserSumAggregateOutputType @shareable {
     id: Int
-    number2: [Decimal!]
-    number: Decimal
   }
 
-  type UserMinAggregateOutputType
-    @key(fields: "id")
-    @key(fields: "createdAt")
-    @key(fields: "email")
-    @key(fields: "number") {
+  type UserMinAggregateOutputType @key(fields: "id") @key(fields: "email") {
     id: Int
     createdAt: DateTime
     username: String
     password: String
     email: String
     googleId: String
-    number: Decimal
   }
 
-  type UserMaxAggregateOutputType
-    @key(fields: "id")
-    @key(fields: "createdAt")
-    @key(fields: "email")
-    @key(fields: "number") {
+  type UserMaxAggregateOutputType @key(fields: "id") @key(fields: "email") {
     id: Int
     createdAt: DateTime
     username: String
     password: String
     email: String
     googleId: String
-    number: Decimal
   }
 
-  type PostCountOutputType @shareable {
-    categories: Int!
-  }
-
-  type PostCountAggregateOutputType @shareable {
+  type ReviewCountAggregateOutputType @shareable {
     id: Int!
-    user_id: Int!
-    title: Int!
+    product_id: Int!
+    score: Int!
     _all: Int!
   }
 
-  type PostAvgAggregateOutputType @shareable {
+  type ReviewAvgAggregateOutputType @shareable {
     id: Float
-    user_id: Float
+    product_id: Float
+    score: Float
   }
 
-  type PostSumAggregateOutputType @shareable {
+  type ReviewSumAggregateOutputType @shareable {
     id: Int
-    user_id: Int
+    product_id: Int
+    score: Int
   }
 
-  type PostMinAggregateOutputType @key(fields: "id") @key(fields: "user_id") {
+  type ReviewMinAggregateOutputType
+    @key(fields: "id")
+    @key(fields: "product_id") {
     id: Int
-    user_id: Int
-    title: String
+    product_id: Int
+    score: Int
   }
 
-  type PostMaxAggregateOutputType @key(fields: "id") @key(fields: "user_id") {
+  type ReviewMaxAggregateOutputType
+    @key(fields: "id")
+    @key(fields: "product_id") {
     id: Int
-    user_id: Int
-    title: String
+    product_id: Int
+    score: Int
   }
 
-  type CategoryCountOutputType @shareable {
-    posts: Int!
+  type ProductCountOutputType @shareable {
+    review: Int!
   }
 
-  type CategoryCountAggregateOutputType @shareable {
+  type ProductCountAggregateOutputType @shareable {
     id: Int!
-    name: Int!
     _all: Int!
   }
 
-  type CategoryAvgAggregateOutputType @shareable {
+  type ProductAvgAggregateOutputType @shareable {
     id: Float
   }
 
-  type CategorySumAggregateOutputType @shareable {
+  type ProductSumAggregateOutputType @shareable {
     id: Int
   }
 
-  type CategoryMinAggregateOutputType @key(fields: "id") {
+  type ProductMinAggregateOutputType @key(fields: "id") {
     id: Int
-    name: String
   }
 
-  type CategoryMaxAggregateOutputType @key(fields: "id") {
+  type ProductMaxAggregateOutputType @key(fields: "id") {
     id: Int
-    name: String
-  }
-
-  type CategoriesOnPostsCountAggregateOutputType @shareable {
-    postId: Int!
-    categoryId: Int!
-    assignedAt: Int!
-    assignedBy: Int!
-    _all: Int!
-  }
-
-  type CategoriesOnPostsAvgAggregateOutputType @shareable {
-    postId: Float
-    categoryId: Float
-  }
-
-  type CategoriesOnPostsSumAggregateOutputType @shareable {
-    postId: Int
-    categoryId: Int
-  }
-
-  type CategoriesOnPostsMinAggregateOutputType
-    @key(fields: "postId categoryId") {
-    postId: Int
-    categoryId: Int
-    assignedAt: DateTime
-    assignedBy: String
-  }
-
-  type CategoriesOnPostsMaxAggregateOutputType
-    @key(fields: "postId categoryId") {
-    postId: Int
-    categoryId: Int
-    assignedAt: DateTime
-    assignedBy: String
   }
 `;

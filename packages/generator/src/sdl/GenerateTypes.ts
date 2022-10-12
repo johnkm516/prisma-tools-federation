@@ -26,6 +26,10 @@ export class GenerateTypes {
     return this.dmmf.schema;
   }
 
+  get dataModel() {
+    return this.dmmf.datamodel;
+  }
+
   isModel(modelName: string) {
     return (
       !!this.dmmf.datamodel.models.find((model) => model.name === modelName) ||
@@ -145,13 +149,30 @@ export class GenerateTypes {
                 ['Query', 'Mutation'].includes(type.name) ? '' : type.name
               }${this.capital(field.name)}Args`
             : '{}';
-        fields.push(
-          `${
-            field.name
-          }?: Resolver<${parentType}, ${argsType}, ${this.getOutputType(
-            field.outputType,
-          )}${field.isNullable ? ' | null' : ''}>`,
-        );
+        if (!field.name.startsWith(`updateMany`)) {
+          fields.push(
+            `${
+              field.name
+            }?: Resolver<${parentType}, ${argsType}, ${this.getOutputType(
+              field.outputType,
+            )}${field.isNullable ? ' | null' : ''}>`,
+          );
+        } else if (
+          this.dmmf.modelmap?.get(field.name.replace(`updateMany`, ``))
+            ?.generateUpdateMany
+        ) {
+          fields.push(
+            `${
+              field.name
+            }?: Resolver<${parentType}, ${argsType}, ${this.getOutputType(
+              field.outputType,
+            )}${field.isNullable ? ' | null' : ''}>`,
+          );
+        } else {
+          fields.push(
+            `//${field.name} is not generated because model has only unique fields or relations.`,
+          );
+        }
 
         // add findManyCount
         if (field.name.startsWith('findMany')) {
@@ -162,29 +183,35 @@ export class GenerateTypes {
 
         // generate args
         if (argsType !== '{}') {
-          const args: string[] = [`export interface ${argsType} {`];
-          field.args.forEach((arg) => {
-            args.push(
-              `${arg.name}${arg.isRequired ? '' : '?'}: ${this.getOutputType(
-                arg.inputTypes[0],
-                true,
-              )}${field.isNullable ? ' | null' : ''}`,
-            );
-          });
-          if (argsType.startsWith('Aggregate')) {
-            const modelName = field.outputType.type
-              .toString()
-              .replace('Aggregate', '');
-            const output = this.getOutput(field.outputType.type.toString());
-            output?.fields.forEach((field) => {
-              const name = this.capital(field.name.replace('_', ''));
+          const modelName = argsType.split(`UpdateMany`)[1]?.split(`Args`)[0];
+          if (
+            !modelName &&
+            !this.dmmf.modelmap?.get(modelName)?.generateUpdateMany == false
+          ) {
+            const args: string[] = [`export interface ${argsType} {`];
+            field.args.forEach((arg) => {
               args.push(
-                `${field.name}?: Client.Prisma.${modelName}${name}AggregateInputType`,
+                `${arg.name}${arg.isRequired ? '' : '?'}: ${this.getOutputType(
+                  arg.inputTypes[0],
+                  true,
+                )}${field.isNullable ? ' | null' : ''}`,
               );
             });
+            if (argsType.startsWith('Aggregate')) {
+              const modelName = field.outputType.type
+                .toString()
+                .replace('Aggregate', '');
+              const output = this.getOutput(field.outputType.type.toString());
+              output?.fields.forEach((field) => {
+                const name = this.capital(field.name.replace('_', ''));
+                args.push(
+                  `${field.name}?: Client.Prisma.${modelName}${name}AggregateInputType`,
+                );
+              });
+            }
+            args.push('}');
+            argsTypes.push(args.join('\n'));
           }
-          args.push('}');
-          argsTypes.push(args.join('\n'));
         }
       });
       if (this.options.federation) {
