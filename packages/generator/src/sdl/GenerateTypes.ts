@@ -149,17 +149,11 @@ export class GenerateTypes {
                 ['Query', 'Mutation'].includes(type.name) ? '' : type.name
               }${this.capital(field.name)}Args`
             : '{}';
-        if (!field.name.startsWith(`updateMany`)) {
-          fields.push(
-            `${
-              field.name
-            }?: Resolver<${parentType}, ${argsType}, ${this.getOutputType(
-              field.outputType,
-            )}${field.isNullable ? ' | null' : ''}>`,
-          );
-        } else if (
-          this.dmmf.modelmap?.get(field.name.replace(`updateMany`, ``))
-            ?.generateUpdateMany
+        if (
+          !field.name.startsWith(`updateMany`) ||
+          (field.name.startsWith(`updateMany`) &&
+            this.dmmf.modelmap?.get(field.name.replace(`updateMany`, ``))
+              ?.generateUpdateMany)
         ) {
           fields.push(
             `${
@@ -183,10 +177,12 @@ export class GenerateTypes {
 
         // generate args
         if (argsType !== '{}') {
-          const modelName = argsType.split(`UpdateMany`)[1]?.split(`Args`)[0];
           if (
-            !modelName &&
-            !this.dmmf.modelmap?.get(modelName)?.generateUpdateMany == false
+            !argsType.startsWith('UpdateMany') ||
+            (argsType.startsWith('UpdateMany') &&
+              this.dmmf.modelmap?.get(
+                argsType.split(`UpdateMany`)[1]?.split(`Args`)[0],
+              )?.generateUpdateMany)
           ) {
             const args: string[] = [`export interface ${argsType} {`];
             field.args.forEach((arg) => {
@@ -211,6 +207,10 @@ export class GenerateTypes {
             }
             args.push('}');
             argsTypes.push(args.join('\n'));
+          } else {
+            argsTypes.push(
+              `//${argsType} is not generated as the related model contains only unique or relation fields`,
+            );
           }
         }
       });

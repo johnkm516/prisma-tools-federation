@@ -546,6 +546,253 @@ export interface ProductMaxAggregateOutputType {
   id?: Resolver<Client.Prisma.ProductMaxAggregateOutputType, {}, number | null>;
 }
 
+export interface ProductReviewArgs {
+  where?: ReviewWhereInput | null;
+  orderBy?: ReviewOrderByWithRelationInput[] | null;
+  cursor?: ReviewWhereUniqueInput | null;
+  take?: number | null;
+  skip?: number | null;
+  distinct?: ReviewScalarFieldEnum[] | null;
+}
+
+export interface FindFirstUserArgs {
+  where?: UserWhereInput | null;
+  orderBy?: UserOrderByWithRelationInput[] | null;
+  cursor?: UserWhereUniqueInput | null;
+  take?: number | null;
+  skip?: number | null;
+  distinct?: UserScalarFieldEnum[] | null;
+}
+
+export interface FindManyUserArgs {
+  where?: UserWhereInput;
+  orderBy?: UserOrderByWithRelationInput[];
+  cursor?: UserWhereUniqueInput;
+  take?: number;
+  skip?: number;
+  distinct?: UserScalarFieldEnum[];
+}
+
+export interface AggregateUserArgs {
+  where?: UserWhereInput;
+  orderBy?: UserOrderByWithRelationInput[];
+  cursor?: UserWhereUniqueInput;
+  take?: number;
+  skip?: number;
+  _count?: Client.Prisma.UserCountAggregateInputType;
+  _avg?: Client.Prisma.UserAvgAggregateInputType;
+  _sum?: Client.Prisma.UserSumAggregateInputType;
+  _min?: Client.Prisma.UserMinAggregateInputType;
+  _max?: Client.Prisma.UserMaxAggregateInputType;
+}
+
+export interface GroupByUserArgs {
+  where?: UserWhereInput;
+  orderBy?: UserOrderByWithAggregationInput[];
+  by: UserScalarFieldEnum[];
+  having?: UserScalarWhereWithAggregatesInput;
+  take?: number;
+  skip?: number;
+}
+
+export interface FindUniqueUserArgs {
+  where: UserWhereUniqueInput | null;
+}
+
+export interface FindFirstReviewArgs {
+  where?: ReviewWhereInput | null;
+  orderBy?: ReviewOrderByWithRelationInput[] | null;
+  cursor?: ReviewWhereUniqueInput | null;
+  take?: number | null;
+  skip?: number | null;
+  distinct?: ReviewScalarFieldEnum[] | null;
+}
+
+export interface FindManyReviewArgs {
+  where?: ReviewWhereInput;
+  orderBy?: ReviewOrderByWithRelationInput[];
+  cursor?: ReviewWhereUniqueInput;
+  take?: number;
+  skip?: number;
+  distinct?: ReviewScalarFieldEnum[];
+}
+
+export interface AggregateReviewArgs {
+  where?: ReviewWhereInput;
+  orderBy?: ReviewOrderByWithRelationInput[];
+  cursor?: ReviewWhereUniqueInput;
+  take?: number;
+  skip?: number;
+  _count?: Client.Prisma.ReviewCountAggregateInputType;
+  _avg?: Client.Prisma.ReviewAvgAggregateInputType;
+  _sum?: Client.Prisma.ReviewSumAggregateInputType;
+  _min?: Client.Prisma.ReviewMinAggregateInputType;
+  _max?: Client.Prisma.ReviewMaxAggregateInputType;
+}
+
+export interface GroupByReviewArgs {
+  where?: ReviewWhereInput;
+  orderBy?: ReviewOrderByWithAggregationInput[];
+  by: ReviewScalarFieldEnum[];
+  having?: ReviewScalarWhereWithAggregatesInput;
+  take?: number;
+  skip?: number;
+}
+
+export interface FindUniqueReviewArgs {
+  where: ReviewWhereUniqueInput | null;
+}
+
+export interface FindFirstProductArgs {
+  where?: ProductWhereInput | null;
+  orderBy?: ProductOrderByWithRelationInput[] | null;
+  cursor?: ProductWhereUniqueInput | null;
+  take?: number | null;
+  skip?: number | null;
+  distinct?: ProductScalarFieldEnum[] | null;
+}
+
+export interface FindManyProductArgs {
+  where?: ProductWhereInput;
+  orderBy?: ProductOrderByWithRelationInput[];
+  cursor?: ProductWhereUniqueInput;
+  take?: number;
+  skip?: number;
+  distinct?: ProductScalarFieldEnum[];
+}
+
+export interface AggregateProductArgs {
+  where?: ProductWhereInput;
+  orderBy?: ProductOrderByWithRelationInput[];
+  cursor?: ProductWhereUniqueInput;
+  take?: number;
+  skip?: number;
+  _count?: Client.Prisma.ProductCountAggregateInputType;
+  _avg?: Client.Prisma.ProductAvgAggregateInputType;
+  _sum?: Client.Prisma.ProductSumAggregateInputType;
+  _min?: Client.Prisma.ProductMinAggregateInputType;
+  _max?: Client.Prisma.ProductMaxAggregateInputType;
+}
+
+export interface GroupByProductArgs {
+  where?: ProductWhereInput;
+  orderBy?: ProductOrderByWithAggregationInput[];
+  by: ProductScalarFieldEnum[];
+  having?: ProductScalarWhereWithAggregatesInput;
+  take?: number;
+  skip?: number;
+}
+
+export interface FindUniqueProductArgs {
+  where: ProductWhereUniqueInput | null;
+}
+
+export interface CreateOneUserArgs {
+  data: UserCreateInput;
+}
+
+export interface UpsertOneUserArgs {
+  where: UserWhereUniqueInput;
+  create: UserCreateInput;
+  update: UserUpdateInput;
+}
+
+export interface CreateManyUserArgs {
+  data: UserCreateManyInput[];
+  skipDuplicates?: boolean;
+}
+
+export interface DeleteOneUserArgs {
+  where: UserWhereUniqueInput | null;
+}
+
+export interface UpdateOneUserArgs {
+  data: UserUpdateInput | null;
+  where: UserWhereUniqueInput | null;
+}
+
+export interface UpdateManyUserArgs {
+  data: UserUpdateManyMutationInput;
+  where?: UserWhereInput;
+}
+
+export interface DeleteManyUserArgs {
+  where?: UserWhereInput;
+}
+
+export interface CreateOneReviewArgs {
+  data: ReviewCreateInput;
+}
+
+export interface UpsertOneReviewArgs {
+  where: ReviewWhereUniqueInput;
+  create: ReviewCreateInput;
+  update: ReviewUpdateInput;
+}
+
+export interface CreateManyReviewArgs {
+  data: ReviewCreateManyInput[];
+  skipDuplicates?: boolean;
+}
+
+export interface DeleteOneReviewArgs {
+  where: ReviewWhereUniqueInput | null;
+}
+
+export interface UpdateOneReviewArgs {
+  data: ReviewUpdateInput | null;
+  where: ReviewWhereUniqueInput | null;
+}
+
+export interface UpdateManyReviewArgs {
+  data: ReviewUpdateManyMutationInput;
+  where?: ReviewWhereInput;
+}
+
+export interface DeleteManyReviewArgs {
+  where?: ReviewWhereInput;
+}
+
+export interface CreateOneProductArgs {
+  data: ProductCreateInput;
+}
+
+export interface UpsertOneProductArgs {
+  where: ProductWhereUniqueInput;
+  create: ProductCreateInput;
+  update: ProductUpdateInput;
+}
+
+export interface CreateManyProductArgs {
+  data: ProductCreateManyInput[];
+  skipDuplicates?: boolean;
+}
+
+export interface DeleteOneProductArgs {
+  where: ProductWhereUniqueInput | null;
+}
+
+export interface UpdateOneProductArgs {
+  data: ProductUpdateInput | null;
+  where: ProductWhereUniqueInput | null;
+}
+
+//UpdateManyProductArgs is not generated as the related model contains only unique or relation fields
+
+export interface DeleteManyProductArgs {
+  where?: ProductWhereInput;
+}
+
+export interface ExecuteRawArgs {
+  query: string;
+  parameters?: any;
+}
+
+export interface QueryRawArgs {
+  query: string;
+  parameters?: any;
+}
+
 export interface UserWhereInput {
   AND?: UserWhereInput[];
   OR?: UserWhereInput[];
