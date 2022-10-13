@@ -2,39 +2,39 @@ import { Resolvers } from '../../resolversTypes';
 
 const resolvers: Resolvers = {
   Query: {
-    findUniqueReview: (_parent, args, { prisma }) => {
+    Users_findUniqueReview: (_parent, args, { prisma }) => {
       return prisma.review.findUnique(args);
     },
-    findFirstReview: (_parent, args, { prisma }) => {
+    Users_findFirstReview: (_parent, args, { prisma }) => {
       return prisma.review.findFirst(args);
     },
-    findManyReview: (_parent, args, { prisma }) => {
+    Users_findManyReview: (_parent, args, { prisma }) => {
       return prisma.review.findMany(args);
     },
-    findManyReviewCount: (_parent, args, { prisma }) => {
+    Users_findManyReviewCount: (_parent, args, { prisma }) => {
       return prisma.review.count(args);
     },
-    aggregateReview: (_parent, args, { prisma }) => {
+    Users_aggregateReview: (_parent, args, { prisma }) => {
       return prisma.review.aggregate(args);
     },
   },
   Mutation: {
-    createOneReview: (_parent, args, { prisma }) => {
+    Users_createOneReview: (_parent, args, { prisma }) => {
       return prisma.review.create(args);
     },
-    updateOneReview: (_parent, args, { prisma }) => {
+    Users_updateOneReview: (_parent, args, { prisma }) => {
       return prisma.review.update(args);
     },
-    deleteOneReview: async (_parent, args, { prisma }) => {
+    Users_deleteOneReview: async (_parent, args, { prisma }) => {
       return prisma.review.delete(args);
     },
-    upsertOneReview: async (_parent, args, { prisma }) => {
+    Users_upsertOneReview: async (_parent, args, { prisma }) => {
       return prisma.review.upsert(args);
     },
-    deleteManyReview: async (_parent, args, { prisma }) => {
+    Users_deleteManyReview: async (_parent, args, { prisma }) => {
       return prisma.review.deleteMany(args);
     },
-    updateManyReview: (_parent, args, { prisma }) => {
+    Users_updateManyReview: (_parent, args, { prisma }) => {
       return prisma.review.updateMany(args);
     },
   },

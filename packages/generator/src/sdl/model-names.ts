@@ -1,5 +1,5 @@
 export const modelNamesExport = (modelNames: string[], federation?: string) => {
-  let fileContent: string = `import { wrapSchema, RenameTypes } from '@graphql-tools/wrap'\nimport { GraphQLSchema } from 'graphql';\n\nexport const modelNames = [`;
+  let fileContent: string = `import { wrapSchema, RenameTypes, RenameRootFields } from '@graphql-tools/wrap'\nimport { GraphQLSchema } from 'graphql';\n\nexport const modelNames = [`;
   fileContent += modelNames
     .map((model) => {
       return `"${model}"`;
@@ -14,7 +14,7 @@ export const renamedInputTypesSchema = async (schema: GraphQLSchema) => {
     const typeMap = schema.getTypeMap();
     const models: string = modelNames.join("|");
     const inputTypes = Object.keys(typeMap).filter(type => {
-        const inputTypesRegex = new RegExp(\`(\${models})(WhereInput|OrderByWithRelationInput|WhereUniqueInput|OrderByWithAggregationInput|ScalarWhereWithAggregatesInput|CreateInput|UncheckedCreateInput|UpdateInput|UncheckedUpdateInput|CreateManyInput|UpdateManyMutationInput|UncheckedUpdateManyInput|CountOrderByAggregateInput|AvgOrderByAggregateInput|MaxOrderByAggregateInput|MinOrderByAggregateInput|SumOrderByAggregateInput|Create.*?Input|Update.*?Input)\`);
+        const inputTypesRegex = new RegExp(\`(\${models})(WhereInput|OrderByWithRelationInput|WhereUniqueInput|OrderByWithAggregationInput|ScalarWhereWithAggregatesInput|CreateInput|UncheckedCreateInput|UpdateInput|UncheckedUpdateInput|CreateManyInput|UpdateManyMutationInput|UncheckedUpdateManyInput|CountOrderByAggregateInput|AvgOrderByAggregateInput|MaxOrderByAggregateInput|MinOrderByAggregateInput|SumOrderByAggregateInput|Create.*?Input|Update.*?Input|Unchecked.*?Input)\`);
         return type.match(inputTypesRegex)?.input;
     });
 
@@ -23,6 +23,9 @@ export const renamedInputTypesSchema = async (schema: GraphQLSchema) => {
         transforms: [
             new RenameTypes(
                 name => inputTypes.includes(name) ? \`${federation}_\${name}\` : name
+            ),
+            new RenameRootFields(
+              (operation, fieldName) => (operation == "Query" || operation == "Mutation") && (fieldName != "_entities" && fieldName != "_service" && fieldName != "sampleUpload" && fieldName != "sampleUploadMany") ? \`Product_\${fieldName}\` : fieldName
             )
         ]
     });

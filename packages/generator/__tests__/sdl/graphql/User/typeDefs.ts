@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 export default gql`
-  type User @key(fields: "id") @key(fields: "email") {
+  type User @key(fields: "id") @key(fields: "email") @shareable {
     id: Int!
     createdAt: DateTime!
     username: String
@@ -13,8 +13,8 @@ export default gql`
   }
 
   type Query {
-    findUniqueUser(where: UserWhereUniqueInput!): User
-    findFirstUser(
+    Users_findUniqueUser(where: UserWhereUniqueInput!): User
+    Users_findFirstUser(
       where: UserWhereInput
       orderBy: [UserOrderByWithRelationInput]
       cursor: UserWhereUniqueInput
@@ -22,7 +22,7 @@ export default gql`
       skip: Int
       distinct: [UserScalarFieldEnum]
     ): User
-    findManyUser(
+    Users_findManyUser(
       where: UserWhereInput
       orderBy: [UserOrderByWithRelationInput]
       cursor: UserWhereUniqueInput
@@ -30,7 +30,7 @@ export default gql`
       skip: Int
       distinct: [UserScalarFieldEnum]
     ): [User!]
-    findManyUserCount(
+    Users_findManyUserCount(
       where: UserWhereInput
       orderBy: [UserOrderByWithRelationInput]
       cursor: UserWhereUniqueInput
@@ -38,7 +38,7 @@ export default gql`
       skip: Int
       distinct: [UserScalarFieldEnum]
     ): Int!
-    aggregateUser(
+    Users_aggregateUser(
       where: UserWhereInput
       orderBy: [UserOrderByWithRelationInput]
       cursor: UserWhereUniqueInput
@@ -48,16 +48,19 @@ export default gql`
   }
 
   type Mutation {
-    createOneUser(data: UserCreateInput!): User!
-    updateOneUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User!
-    deleteOneUser(where: UserWhereUniqueInput!): User
-    upsertOneUser(
+    Users_createOneUser(data: UserCreateInput!): User!
+    Users_updateOneUser(
+      data: UserUpdateInput!
+      where: UserWhereUniqueInput!
+    ): User!
+    Users_deleteOneUser(where: UserWhereUniqueInput!): User
+    Users_upsertOneUser(
       where: UserWhereUniqueInput!
       create: UserCreateInput!
       update: UserUpdateInput!
     ): User
-    deleteManyUser(where: UserWhereInput): BatchPayload
-    updateManyUser(
+    Users_deleteManyUser(where: UserWhereInput): BatchPayload
+    Users_updateManyUser(
       data: UserUpdateManyMutationInput!
       where: UserWhereInput
     ): BatchPayload

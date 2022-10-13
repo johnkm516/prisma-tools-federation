@@ -57,7 +57,7 @@ export class GenerateSdl extends Generators {
         fileContent += `${modelDocs ? `"""${modelDocs}"""\n` : ''}type ${
           model.name
         } `;
-        fileContent += keyStr + `{`;
+        fileContent += keyStr + ` @shareable {`;
       }
       const excludeFields = this.excludeFields(model.name);
       model.fields.forEach((field) => {

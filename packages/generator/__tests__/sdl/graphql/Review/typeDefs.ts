@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 export default gql`
-  type Review @key(fields: "id") @key(fields: "product_id") {
+  type Review @key(fields: "id") @key(fields: "product_id") @shareable {
     id: Int!
     product: Product!
     product_id: Int!
@@ -9,8 +9,8 @@ export default gql`
   }
 
   type Query {
-    findUniqueReview(where: ReviewWhereUniqueInput!): Review
-    findFirstReview(
+    Users_findUniqueReview(where: ReviewWhereUniqueInput!): Review
+    Users_findFirstReview(
       where: ReviewWhereInput
       orderBy: [ReviewOrderByWithRelationInput]
       cursor: ReviewWhereUniqueInput
@@ -18,7 +18,7 @@ export default gql`
       skip: Int
       distinct: [ReviewScalarFieldEnum]
     ): Review
-    findManyReview(
+    Users_findManyReview(
       where: ReviewWhereInput
       orderBy: [ReviewOrderByWithRelationInput]
       cursor: ReviewWhereUniqueInput
@@ -26,7 +26,7 @@ export default gql`
       skip: Int
       distinct: [ReviewScalarFieldEnum]
     ): [Review!]
-    findManyReviewCount(
+    Users_findManyReviewCount(
       where: ReviewWhereInput
       orderBy: [ReviewOrderByWithRelationInput]
       cursor: ReviewWhereUniqueInput
@@ -34,7 +34,7 @@ export default gql`
       skip: Int
       distinct: [ReviewScalarFieldEnum]
     ): Int!
-    aggregateReview(
+    Users_aggregateReview(
       where: ReviewWhereInput
       orderBy: [ReviewOrderByWithRelationInput]
       cursor: ReviewWhereUniqueInput
@@ -44,19 +44,19 @@ export default gql`
   }
 
   type Mutation {
-    createOneReview(data: ReviewCreateInput!): Review!
-    updateOneReview(
+    Users_createOneReview(data: ReviewCreateInput!): Review!
+    Users_updateOneReview(
       data: ReviewUpdateInput!
       where: ReviewWhereUniqueInput!
     ): Review!
-    deleteOneReview(where: ReviewWhereUniqueInput!): Review
-    upsertOneReview(
+    Users_deleteOneReview(where: ReviewWhereUniqueInput!): Review
+    Users_upsertOneReview(
       where: ReviewWhereUniqueInput!
       create: ReviewCreateInput!
       update: ReviewUpdateInput!
     ): Review
-    deleteManyReview(where: ReviewWhereInput): BatchPayload
-    updateManyReview(
+    Users_deleteManyReview(where: ReviewWhereInput): BatchPayload
+    Users_updateManyReview(
       data: ReviewUpdateManyMutationInput!
       where: ReviewWhereInput
     ): BatchPayload

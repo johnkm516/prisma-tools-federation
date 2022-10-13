@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 export default gql`
-  type Product @key(fields: "id") {
+  type Product @key(fields: "id") @shareable {
     id: Int!
     review(
       where: ReviewWhereInput
@@ -15,8 +15,8 @@ export default gql`
   }
 
   type Query {
-    findUniqueProduct(where: ProductWhereUniqueInput!): Product
-    findFirstProduct(
+    Users_findUniqueProduct(where: ProductWhereUniqueInput!): Product
+    Users_findFirstProduct(
       where: ProductWhereInput
       orderBy: [ProductOrderByWithRelationInput]
       cursor: ProductWhereUniqueInput
@@ -24,7 +24,7 @@ export default gql`
       skip: Int
       distinct: [ProductScalarFieldEnum]
     ): Product
-    findManyProduct(
+    Users_findManyProduct(
       where: ProductWhereInput
       orderBy: [ProductOrderByWithRelationInput]
       cursor: ProductWhereUniqueInput
@@ -32,7 +32,7 @@ export default gql`
       skip: Int
       distinct: [ProductScalarFieldEnum]
     ): [Product!]
-    findManyProductCount(
+    Users_findManyProductCount(
       where: ProductWhereInput
       orderBy: [ProductOrderByWithRelationInput]
       cursor: ProductWhereUniqueInput
@@ -40,7 +40,7 @@ export default gql`
       skip: Int
       distinct: [ProductScalarFieldEnum]
     ): Int!
-    aggregateProduct(
+    Users_aggregateProduct(
       where: ProductWhereInput
       orderBy: [ProductOrderByWithRelationInput]
       cursor: ProductWhereUniqueInput
@@ -50,18 +50,18 @@ export default gql`
   }
 
   type Mutation {
-    createOneProduct(data: ProductCreateInput!): Product!
-    updateOneProduct(
+    Users_createOneProduct(data: ProductCreateInput!): Product!
+    Users_updateOneProduct(
       data: ProductUpdateInput!
       where: ProductWhereUniqueInput!
     ): Product!
-    deleteOneProduct(where: ProductWhereUniqueInput!): Product
-    upsertOneProduct(
+    Users_deleteOneProduct(where: ProductWhereUniqueInput!): Product
+    Users_upsertOneProduct(
       where: ProductWhereUniqueInput!
       create: ProductCreateInput!
       update: ProductUpdateInput!
     ): Product
-    deleteManyProduct(where: ProductWhereInput): BatchPayload
+    Users_deleteManyProduct(where: ProductWhereInput): BatchPayload
     # updateMany for this model cannot exist as this model contains only unique fields or relations.
   }
 `;

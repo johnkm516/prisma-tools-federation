@@ -55,10 +55,10 @@ export default gql`
     googleProfile
   }
 
-  input UserWhereInput {
-    AND: [UserWhereInput!]
-    OR: [UserWhereInput!]
-    NOT: [UserWhereInput!]
+  input Users_UserWhereInput {
+    AND: [Users_UserWhereInput!]
+    OR: [Users_UserWhereInput!]
+    NOT: [Users_UserWhereInput!]
     id: IntFilter
     createdAt: DateTimeFilter
     username: StringNullableFilter
@@ -69,7 +69,7 @@ export default gql`
     googleProfile: JsonNullableFilter
   }
 
-  input UserOrderByWithRelationInput {
+  input Users_UserOrderByWithRelationInput {
     id: SortOrder
     createdAt: SortOrder
     username: SortOrder
@@ -80,14 +80,14 @@ export default gql`
     googleProfile: SortOrder
   }
 
-  input UserWhereUniqueInput {
+  input Users_UserWhereUniqueInput {
     id: Int
     username: String
     email: String
     googleId: String
   }
 
-  input UserOrderByWithAggregationInput {
+  input Users_UserOrderByWithAggregationInput {
     id: SortOrder
     createdAt: SortOrder
     username: SortOrder
@@ -96,17 +96,17 @@ export default gql`
     roles: SortOrder
     googleId: SortOrder
     googleProfile: SortOrder
-    _count: UserCountOrderByAggregateInput
-    _avg: UserAvgOrderByAggregateInput
-    _max: UserMaxOrderByAggregateInput
-    _min: UserMinOrderByAggregateInput
-    _sum: UserSumOrderByAggregateInput
+    _count: Users_UserCountOrderByAggregateInput
+    _avg: Users_UserAvgOrderByAggregateInput
+    _max: Users_UserMaxOrderByAggregateInput
+    _min: Users_UserMinOrderByAggregateInput
+    _sum: Users_UserSumOrderByAggregateInput
   }
 
-  input UserScalarWhereWithAggregatesInput {
-    AND: [UserScalarWhereWithAggregatesInput!]
-    OR: [UserScalarWhereWithAggregatesInput!]
-    NOT: [UserScalarWhereWithAggregatesInput!]
+  input Users_UserScalarWhereWithAggregatesInput {
+    AND: [Users_UserScalarWhereWithAggregatesInput!]
+    OR: [Users_UserScalarWhereWithAggregatesInput!]
+    NOT: [Users_UserScalarWhereWithAggregatesInput!]
     id: IntWithAggregatesFilter
     createdAt: DateTimeWithAggregatesFilter
     username: StringNullableWithAggregatesFilter
@@ -117,82 +117,82 @@ export default gql`
     googleProfile: JsonNullableWithAggregatesFilter
   }
 
-  input ReviewWhereInput {
-    AND: [ReviewWhereInput!]
-    OR: [ReviewWhereInput!]
-    NOT: [ReviewWhereInput!]
+  input Users_ReviewWhereInput {
+    AND: [Users_ReviewWhereInput!]
+    OR: [Users_ReviewWhereInput!]
+    NOT: [Users_ReviewWhereInput!]
     id: IntFilter
-    product: ProductWhereInput
+    product: Users_ProductWhereInput
     product_id: IntFilter
     score: IntFilter
   }
 
-  input ReviewOrderByWithRelationInput {
+  input Users_ReviewOrderByWithRelationInput {
     id: SortOrder
-    product: ProductOrderByWithRelationInput
+    product: Users_ProductOrderByWithRelationInput
     product_id: SortOrder
     score: SortOrder
   }
 
-  input ReviewWhereUniqueInput {
+  input Users_ReviewWhereUniqueInput {
     id: Int
     product_id: Int
   }
 
-  input ReviewOrderByWithAggregationInput {
+  input Users_ReviewOrderByWithAggregationInput {
     id: SortOrder
     product_id: SortOrder
     score: SortOrder
-    _count: ReviewCountOrderByAggregateInput
-    _avg: ReviewAvgOrderByAggregateInput
-    _max: ReviewMaxOrderByAggregateInput
-    _min: ReviewMinOrderByAggregateInput
-    _sum: ReviewSumOrderByAggregateInput
+    _count: Users_ReviewCountOrderByAggregateInput
+    _avg: Users_ReviewAvgOrderByAggregateInput
+    _max: Users_ReviewMaxOrderByAggregateInput
+    _min: Users_ReviewMinOrderByAggregateInput
+    _sum: Users_ReviewSumOrderByAggregateInput
   }
 
-  input ReviewScalarWhereWithAggregatesInput {
-    AND: [ReviewScalarWhereWithAggregatesInput!]
-    OR: [ReviewScalarWhereWithAggregatesInput!]
-    NOT: [ReviewScalarWhereWithAggregatesInput!]
+  input Users_ReviewScalarWhereWithAggregatesInput {
+    AND: [Users_ReviewScalarWhereWithAggregatesInput!]
+    OR: [Users_ReviewScalarWhereWithAggregatesInput!]
+    NOT: [Users_ReviewScalarWhereWithAggregatesInput!]
     id: IntWithAggregatesFilter
     product_id: IntWithAggregatesFilter
     score: IntWithAggregatesFilter
   }
 
-  input ProductWhereInput {
-    AND: [ProductWhereInput!]
-    OR: [ProductWhereInput!]
-    NOT: [ProductWhereInput!]
+  input Users_ProductWhereInput {
+    AND: [Users_ProductWhereInput!]
+    OR: [Users_ProductWhereInput!]
+    NOT: [Users_ProductWhereInput!]
     id: IntFilter
-    review: ReviewListRelationFilter
+    review: Users_ReviewListRelationFilter
   }
 
-  input ProductOrderByWithRelationInput {
+  input Users_ProductOrderByWithRelationInput {
     id: SortOrder
-    review: ReviewOrderByRelationAggregateInput
+    review: Users_ReviewOrderByRelationAggregateInput
   }
 
-  input ProductWhereUniqueInput {
+  input Users_ProductWhereUniqueInput {
     id: Int
   }
 
-  input ProductOrderByWithAggregationInput {
+  input Users_ProductOrderByWithAggregationInput {
     id: SortOrder
-    _count: ProductCountOrderByAggregateInput
-    _avg: ProductAvgOrderByAggregateInput
-    _max: ProductMaxOrderByAggregateInput
-    _min: ProductMinOrderByAggregateInput
-    _sum: ProductSumOrderByAggregateInput
+    _count: Users_ProductCountOrderByAggregateInput
+    _avg: Users_ProductAvgOrderByAggregateInput
+    _max: Users_ProductMaxOrderByAggregateInput
+    _min: Users_ProductMinOrderByAggregateInput
+    _sum: Users_ProductSumOrderByAggregateInput
   }
 
-  input ProductScalarWhereWithAggregatesInput {
-    AND: [ProductScalarWhereWithAggregatesInput!]
-    OR: [ProductScalarWhereWithAggregatesInput!]
-    NOT: [ProductScalarWhereWithAggregatesInput!]
+  input Users_ProductScalarWhereWithAggregatesInput {
+    AND: [Users_ProductScalarWhereWithAggregatesInput!]
+    OR: [Users_ProductScalarWhereWithAggregatesInput!]
+    NOT: [Users_ProductScalarWhereWithAggregatesInput!]
     id: IntWithAggregatesFilter
   }
 
-  input UserCreateInput {
+  input Users_UserCreateInput {
     createdAt: DateTime
     username: String
     password: String
@@ -202,7 +202,7 @@ export default gql`
     googleProfile: Json
   }
 
-  input UserUncheckedCreateInput {
+  input Users_UserUncheckedCreateInput {
     id: Int
     createdAt: DateTime
     username: String
@@ -213,7 +213,7 @@ export default gql`
     googleProfile: Json
   }
 
-  input UserUpdateInput {
+  input Users_UserUpdateInput {
     createdAt: DateTimeFieldUpdateOperationsInput
     username: NullableStringFieldUpdateOperationsInput
     password: NullableStringFieldUpdateOperationsInput
@@ -223,7 +223,7 @@ export default gql`
     googleProfile: Json
   }
 
-  input UserUncheckedUpdateInput {
+  input Users_UserUncheckedUpdateInput {
     id: IntFieldUpdateOperationsInput
     createdAt: DateTimeFieldUpdateOperationsInput
     username: NullableStringFieldUpdateOperationsInput
@@ -234,7 +234,7 @@ export default gql`
     googleProfile: Json
   }
 
-  input UserCreateManyInput {
+  input Users_UserCreateManyInput {
     id: Int
     createdAt: DateTime
     username: String
@@ -245,7 +245,7 @@ export default gql`
     googleProfile: Json
   }
 
-  input UserUpdateManyMutationInput {
+  input Users_UserUpdateManyMutationInput {
     createdAt: DateTimeFieldUpdateOperationsInput
     username: NullableStringFieldUpdateOperationsInput
     password: NullableStringFieldUpdateOperationsInput
@@ -255,7 +255,7 @@ export default gql`
     googleProfile: Json
   }
 
-  input UserUncheckedUpdateManyInput {
+  input Users_UserUncheckedUpdateManyInput {
     id: IntFieldUpdateOperationsInput
     createdAt: DateTimeFieldUpdateOperationsInput
     username: NullableStringFieldUpdateOperationsInput
@@ -266,67 +266,67 @@ export default gql`
     googleProfile: Json
   }
 
-  input ReviewCreateInput {
-    product: ProductCreateNestedOneWithoutReviewInput!
+  input Users_ReviewCreateInput {
+    product: Users_ProductCreateNestedOneWithoutReviewInput!
     score: Int!
   }
 
-  input ReviewUncheckedCreateInput {
+  input Users_ReviewUncheckedCreateInput {
     id: Int
     product_id: Int!
     score: Int!
   }
 
-  input ReviewUpdateInput {
-    product: ProductUpdateOneRequiredWithoutReviewNestedInput
+  input Users_ReviewUpdateInput {
+    product: Users_ProductUpdateOneRequiredWithoutReviewNestedInput
     score: IntFieldUpdateOperationsInput
   }
 
-  input ReviewUncheckedUpdateInput {
+  input Users_ReviewUncheckedUpdateInput {
     id: IntFieldUpdateOperationsInput
     product_id: IntFieldUpdateOperationsInput
     score: IntFieldUpdateOperationsInput
   }
 
-  input ReviewCreateManyInput {
+  input Users_ReviewCreateManyInput {
     id: Int
     product_id: Int!
     score: Int!
   }
 
-  input ReviewUpdateManyMutationInput {
+  input Users_ReviewUpdateManyMutationInput {
     score: IntFieldUpdateOperationsInput
   }
 
-  input ReviewUncheckedUpdateManyInput {
+  input Users_ReviewUncheckedUpdateManyInput {
     id: IntFieldUpdateOperationsInput
     product_id: IntFieldUpdateOperationsInput
     score: IntFieldUpdateOperationsInput
   }
 
-  input ProductCreateInput {
-    review: ReviewCreateNestedManyWithoutProductInput
+  input Users_ProductCreateInput {
+    review: Users_ReviewCreateNestedManyWithoutProductInput
   }
 
-  input ProductUncheckedCreateInput {
+  input Users_ProductUncheckedCreateInput {
     id: Int
-    review: ReviewUncheckedCreateNestedManyWithoutProductInput
+    review: Users_ReviewUncheckedCreateNestedManyWithoutProductInput
   }
 
-  input ProductUpdateInput {
-    review: ReviewUpdateManyWithoutProductNestedInput
+  input Users_ProductUpdateInput {
+    review: Users_ReviewUpdateManyWithoutProductNestedInput
   }
 
-  input ProductUncheckedUpdateInput {
+  input Users_ProductUncheckedUpdateInput {
     id: IntFieldUpdateOperationsInput
-    review: ReviewUncheckedUpdateManyWithoutProductNestedInput
+    review: Users_ReviewUncheckedUpdateManyWithoutProductNestedInput
   }
 
-  input ProductCreateManyInput {
+  input Users_ProductCreateManyInput {
     id: Int
   }
 
-  input ProductUncheckedUpdateManyInput {
+  input Users_ProductUncheckedUpdateManyInput {
     id: IntFieldUpdateOperationsInput
   }
 
@@ -406,7 +406,7 @@ export default gql`
     not: Json
   }
 
-  input UserCountOrderByAggregateInput {
+  input Users_UserCountOrderByAggregateInput {
     id: SortOrder
     createdAt: SortOrder
     username: SortOrder
@@ -417,20 +417,11 @@ export default gql`
     googleProfile: SortOrder
   }
 
-  input UserAvgOrderByAggregateInput {
+  input Users_UserAvgOrderByAggregateInput {
     id: SortOrder
   }
 
-  input UserMaxOrderByAggregateInput {
-    id: SortOrder
-    createdAt: SortOrder
-    username: SortOrder
-    password: SortOrder
-    email: SortOrder
-    googleId: SortOrder
-  }
-
-  input UserMinOrderByAggregateInput {
+  input Users_UserMaxOrderByAggregateInput {
     id: SortOrder
     createdAt: SortOrder
     username: SortOrder
@@ -439,7 +430,16 @@ export default gql`
     googleId: SortOrder
   }
 
-  input UserSumOrderByAggregateInput {
+  input Users_UserMinOrderByAggregateInput {
+    id: SortOrder
+    createdAt: SortOrder
+    username: SortOrder
+    password: SortOrder
+    email: SortOrder
+    googleId: SortOrder
+  }
+
+  input Users_UserSumOrderByAggregateInput {
     id: SortOrder
   }
 
@@ -528,72 +528,72 @@ export default gql`
     _max: NestedJsonNullableFilter
   }
 
-  input ProductRelationFilter {
-    is: ProductWhereInput
-    isNot: ProductWhereInput
+  input Users_ProductRelationFilter {
+    is: Users_ProductWhereInput
+    isNot: Users_ProductWhereInput
   }
 
-  input ReviewCountOrderByAggregateInput {
+  input Users_ReviewCountOrderByAggregateInput {
     id: SortOrder
     product_id: SortOrder
     score: SortOrder
   }
 
-  input ReviewAvgOrderByAggregateInput {
+  input Users_ReviewAvgOrderByAggregateInput {
     id: SortOrder
     product_id: SortOrder
     score: SortOrder
   }
 
-  input ReviewMaxOrderByAggregateInput {
+  input Users_ReviewMaxOrderByAggregateInput {
     id: SortOrder
     product_id: SortOrder
     score: SortOrder
   }
 
-  input ReviewMinOrderByAggregateInput {
+  input Users_ReviewMinOrderByAggregateInput {
     id: SortOrder
     product_id: SortOrder
     score: SortOrder
   }
 
-  input ReviewSumOrderByAggregateInput {
+  input Users_ReviewSumOrderByAggregateInput {
     id: SortOrder
     product_id: SortOrder
     score: SortOrder
   }
 
-  input ReviewListRelationFilter {
-    every: ReviewWhereInput
-    some: ReviewWhereInput
-    none: ReviewWhereInput
+  input Users_ReviewListRelationFilter {
+    every: Users_ReviewWhereInput
+    some: Users_ReviewWhereInput
+    none: Users_ReviewWhereInput
   }
 
-  input ReviewOrderByRelationAggregateInput {
+  input Users_ReviewOrderByRelationAggregateInput {
     _count: SortOrder
   }
 
-  input ProductCountOrderByAggregateInput {
+  input Users_ProductCountOrderByAggregateInput {
     id: SortOrder
   }
 
-  input ProductAvgOrderByAggregateInput {
+  input Users_ProductAvgOrderByAggregateInput {
     id: SortOrder
   }
 
-  input ProductMaxOrderByAggregateInput {
+  input Users_ProductMaxOrderByAggregateInput {
     id: SortOrder
   }
 
-  input ProductMinOrderByAggregateInput {
+  input Users_ProductMinOrderByAggregateInput {
     id: SortOrder
   }
 
-  input ProductSumOrderByAggregateInput {
+  input Users_ProductSumOrderByAggregateInput {
     id: SortOrder
   }
 
-  input UserCreaterolesInput {
+  input Users_UserCreaterolesInput {
     set: [String!]!
   }
 
@@ -609,7 +609,7 @@ export default gql`
     set: String
   }
 
-  input UserUpdaterolesInput {
+  input Users_UserUpdaterolesInput {
     set: [String!]
     push: [String!]
   }
@@ -622,60 +622,60 @@ export default gql`
     divide: Int
   }
 
-  input ProductCreateNestedOneWithoutReviewInput {
-    create: ProductUncheckedCreateWithoutReviewInput
-    connectOrCreate: ProductCreateOrConnectWithoutReviewInput
-    connect: ProductWhereUniqueInput
+  input Users_ProductCreateNestedOneWithoutReviewInput {
+    create: Users_ProductUncheckedCreateWithoutReviewInput
+    connectOrCreate: Users_ProductCreateOrConnectWithoutReviewInput
+    connect: Users_ProductWhereUniqueInput
   }
 
-  input ProductUpdateOneRequiredWithoutReviewNestedInput {
-    create: ProductUncheckedCreateWithoutReviewInput
-    connectOrCreate: ProductCreateOrConnectWithoutReviewInput
-    upsert: ProductUpsertWithoutReviewInput
-    connect: ProductWhereUniqueInput
-    update: ProductUncheckedUpdateWithoutReviewInput
+  input Users_ProductUpdateOneRequiredWithoutReviewNestedInput {
+    create: Users_ProductUncheckedCreateWithoutReviewInput
+    connectOrCreate: Users_ProductCreateOrConnectWithoutReviewInput
+    upsert: Users_ProductUpsertWithoutReviewInput
+    connect: Users_ProductWhereUniqueInput
+    update: Users_ProductUncheckedUpdateWithoutReviewInput
   }
 
-  input ReviewCreateNestedManyWithoutProductInput {
-    create: [ReviewCreateWithoutProductInput!]
-    connectOrCreate: [ReviewCreateOrConnectWithoutProductInput!]
-    createMany: ReviewCreateManyProductInputEnvelope
-    connect: [ReviewWhereUniqueInput!]
+  input Users_ReviewCreateNestedManyWithoutProductInput {
+    create: [Users_ReviewCreateWithoutProductInput!]
+    connectOrCreate: [Users_ReviewCreateOrConnectWithoutProductInput!]
+    createMany: Users_ReviewCreateManyProductInputEnvelope
+    connect: [Users_ReviewWhereUniqueInput!]
   }
 
-  input ReviewUncheckedCreateNestedManyWithoutProductInput {
-    create: [ReviewCreateWithoutProductInput!]
-    connectOrCreate: [ReviewCreateOrConnectWithoutProductInput!]
-    createMany: ReviewCreateManyProductInputEnvelope
-    connect: [ReviewWhereUniqueInput!]
+  input Users_ReviewUncheckedCreateNestedManyWithoutProductInput {
+    create: [Users_ReviewCreateWithoutProductInput!]
+    connectOrCreate: [Users_ReviewCreateOrConnectWithoutProductInput!]
+    createMany: Users_ReviewCreateManyProductInputEnvelope
+    connect: [Users_ReviewWhereUniqueInput!]
   }
 
-  input ReviewUpdateManyWithoutProductNestedInput {
-    create: [ReviewCreateWithoutProductInput!]
-    connectOrCreate: [ReviewCreateOrConnectWithoutProductInput!]
-    upsert: [ReviewUpsertWithWhereUniqueWithoutProductInput!]
-    createMany: ReviewCreateManyProductInputEnvelope
-    set: [ReviewWhereUniqueInput!]
-    disconnect: [ReviewWhereUniqueInput!]
-    delete: [ReviewWhereUniqueInput!]
-    connect: [ReviewWhereUniqueInput!]
-    update: [ReviewUpdateWithWhereUniqueWithoutProductInput!]
-    updateMany: [ReviewUpdateManyWithWhereWithoutProductInput!]
-    deleteMany: [ReviewScalarWhereInput!]
+  input Users_ReviewUpdateManyWithoutProductNestedInput {
+    create: [Users_ReviewCreateWithoutProductInput!]
+    connectOrCreate: [Users_ReviewCreateOrConnectWithoutProductInput!]
+    upsert: [Users_ReviewUpsertWithWhereUniqueWithoutProductInput!]
+    createMany: Users_ReviewCreateManyProductInputEnvelope
+    set: [Users_ReviewWhereUniqueInput!]
+    disconnect: [Users_ReviewWhereUniqueInput!]
+    delete: [Users_ReviewWhereUniqueInput!]
+    connect: [Users_ReviewWhereUniqueInput!]
+    update: [Users_ReviewUpdateWithWhereUniqueWithoutProductInput!]
+    updateMany: [Users_ReviewUpdateManyWithWhereWithoutProductInput!]
+    deleteMany: [Users_ReviewScalarWhereInput!]
   }
 
-  input ReviewUncheckedUpdateManyWithoutProductNestedInput {
-    create: [ReviewCreateWithoutProductInput!]
-    connectOrCreate: [ReviewCreateOrConnectWithoutProductInput!]
-    upsert: [ReviewUpsertWithWhereUniqueWithoutProductInput!]
-    createMany: ReviewCreateManyProductInputEnvelope
-    set: [ReviewWhereUniqueInput!]
-    disconnect: [ReviewWhereUniqueInput!]
-    delete: [ReviewWhereUniqueInput!]
-    connect: [ReviewWhereUniqueInput!]
-    update: [ReviewUpdateWithWhereUniqueWithoutProductInput!]
-    updateMany: [ReviewUpdateManyWithWhereWithoutProductInput!]
-    deleteMany: [ReviewScalarWhereInput!]
+  input Users_ReviewUncheckedUpdateManyWithoutProductNestedInput {
+    create: [Users_ReviewCreateWithoutProductInput!]
+    connectOrCreate: [Users_ReviewCreateOrConnectWithoutProductInput!]
+    upsert: [Users_ReviewUpsertWithWhereUniqueWithoutProductInput!]
+    createMany: Users_ReviewCreateManyProductInputEnvelope
+    set: [Users_ReviewWhereUniqueInput!]
+    disconnect: [Users_ReviewWhereUniqueInput!]
+    delete: [Users_ReviewWhereUniqueInput!]
+    connect: [Users_ReviewWhereUniqueInput!]
+    update: [Users_ReviewUpdateWithWhereUniqueWithoutProductInput!]
+    updateMany: [Users_ReviewUpdateManyWithWhereWithoutProductInput!]
+    deleteMany: [Users_ReviewScalarWhereInput!]
   }
 
   input NestedIntFilter {
@@ -830,83 +830,83 @@ export default gql`
     not: Json
   }
 
-  input ProductUncheckedCreateWithoutReviewInput {
+  input Users_ProductUncheckedCreateWithoutReviewInput {
     id: Int
   }
 
-  input ProductCreateOrConnectWithoutReviewInput {
-    where: ProductWhereUniqueInput!
-    create: ProductUncheckedCreateWithoutReviewInput!
+  input Users_ProductCreateOrConnectWithoutReviewInput {
+    where: Users_ProductWhereUniqueInput!
+    create: Users_ProductUncheckedCreateWithoutReviewInput!
   }
 
-  input ProductUpsertWithoutReviewInput {
-    update: ProductUncheckedUpdateWithoutReviewInput!
-    create: ProductUncheckedCreateWithoutReviewInput!
+  input Users_ProductUpsertWithoutReviewInput {
+    update: Users_ProductUncheckedUpdateWithoutReviewInput!
+    create: Users_ProductUncheckedCreateWithoutReviewInput!
   }
 
-  input ProductUncheckedUpdateWithoutReviewInput {
+  input Users_ProductUncheckedUpdateWithoutReviewInput {
     id: IntFieldUpdateOperationsInput
   }
 
-  input ReviewCreateWithoutProductInput {
+  input Users_ReviewCreateWithoutProductInput {
     score: Int!
   }
 
-  input ReviewUncheckedCreateWithoutProductInput {
+  input Users_ReviewUncheckedCreateWithoutProductInput {
     id: Int
     score: Int!
   }
 
-  input ReviewCreateOrConnectWithoutProductInput {
-    where: ReviewWhereUniqueInput!
-    create: ReviewUncheckedCreateWithoutProductInput!
+  input Users_ReviewCreateOrConnectWithoutProductInput {
+    where: Users_ReviewWhereUniqueInput!
+    create: Users_ReviewUncheckedCreateWithoutProductInput!
   }
 
-  input ReviewCreateManyProductInputEnvelope {
-    data: [ReviewCreateManyProductInput!]!
+  input Users_ReviewCreateManyProductInputEnvelope {
+    data: [Users_ReviewCreateManyProductInput!]!
     skipDuplicates: Boolean
   }
 
-  input ReviewUpsertWithWhereUniqueWithoutProductInput {
-    where: ReviewWhereUniqueInput!
-    update: ReviewUncheckedUpdateWithoutProductInput!
-    create: ReviewUncheckedCreateWithoutProductInput!
+  input Users_ReviewUpsertWithWhereUniqueWithoutProductInput {
+    where: Users_ReviewWhereUniqueInput!
+    update: Users_ReviewUncheckedUpdateWithoutProductInput!
+    create: Users_ReviewUncheckedCreateWithoutProductInput!
   }
 
-  input ReviewUpdateWithWhereUniqueWithoutProductInput {
-    where: ReviewWhereUniqueInput!
-    data: ReviewUncheckedUpdateWithoutProductInput!
+  input Users_ReviewUpdateWithWhereUniqueWithoutProductInput {
+    where: Users_ReviewWhereUniqueInput!
+    data: Users_ReviewUncheckedUpdateWithoutProductInput!
   }
 
-  input ReviewUpdateManyWithWhereWithoutProductInput {
-    where: ReviewScalarWhereInput!
-    data: ReviewUncheckedUpdateManyWithoutReviewInput!
+  input Users_ReviewUpdateManyWithWhereWithoutProductInput {
+    where: Users_ReviewScalarWhereInput!
+    data: Users_ReviewUncheckedUpdateManyWithoutReviewInput!
   }
 
-  input ReviewScalarWhereInput {
-    AND: [ReviewScalarWhereInput!]
-    OR: [ReviewScalarWhereInput!]
-    NOT: [ReviewScalarWhereInput!]
+  input Users_ReviewScalarWhereInput {
+    AND: [Users_ReviewScalarWhereInput!]
+    OR: [Users_ReviewScalarWhereInput!]
+    NOT: [Users_ReviewScalarWhereInput!]
     id: IntFilter
     product_id: IntFilter
     score: IntFilter
   }
 
-  input ReviewCreateManyProductInput {
+  input Users_ReviewCreateManyProductInput {
     id: Int
     score: Int!
   }
 
-  input ReviewUpdateWithoutProductInput {
+  input Users_ReviewUpdateWithoutProductInput {
     score: IntFieldUpdateOperationsInput
   }
 
-  input ReviewUncheckedUpdateWithoutProductInput {
+  input Users_ReviewUncheckedUpdateWithoutProductInput {
     id: IntFieldUpdateOperationsInput
     score: IntFieldUpdateOperationsInput
   }
 
-  input ReviewUncheckedUpdateManyWithoutReviewInput {
+  input Users_ReviewUncheckedUpdateManyWithoutReviewInput {
     id: IntFieldUpdateOperationsInput
     score: IntFieldUpdateOperationsInput
   }
@@ -955,7 +955,10 @@ export default gql`
     id: Int
   }
 
-  type UserMinAggregateOutputType @key(fields: "id") @key(fields: "email") {
+  type UserMinAggregateOutputType
+    @key(fields: "id")
+    @key(fields: "email")
+    @shareable {
     id: Int
     createdAt: DateTime
     username: String
@@ -964,7 +967,10 @@ export default gql`
     googleId: String
   }
 
-  type UserMaxAggregateOutputType @key(fields: "id") @key(fields: "email") {
+  type UserMaxAggregateOutputType
+    @key(fields: "id")
+    @key(fields: "email")
+    @shareable {
     id: Int
     createdAt: DateTime
     username: String
@@ -994,7 +1000,8 @@ export default gql`
 
   type ReviewMinAggregateOutputType
     @key(fields: "id")
-    @key(fields: "product_id") {
+    @key(fields: "product_id")
+    @shareable {
     id: Int
     product_id: Int
     score: Int
@@ -1002,7 +1009,8 @@ export default gql`
 
   type ReviewMaxAggregateOutputType
     @key(fields: "id")
-    @key(fields: "product_id") {
+    @key(fields: "product_id")
+    @shareable {
     id: Int
     product_id: Int
     score: Int
@@ -1025,11 +1033,11 @@ export default gql`
     id: Int
   }
 
-  type ProductMinAggregateOutputType @key(fields: "id") {
+  type ProductMinAggregateOutputType @key(fields: "id") @shareable {
     id: Int
   }
 
-  type ProductMaxAggregateOutputType @key(fields: "id") {
+  type ProductMaxAggregateOutputType @key(fields: "id") @shareable {
     id: Int
   }
 `;

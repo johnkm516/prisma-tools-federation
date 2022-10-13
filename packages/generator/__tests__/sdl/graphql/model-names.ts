@@ -1,4 +1,4 @@
-import { wrapSchema, RenameTypes } from '@graphql-tools/wrap';
+import { wrapSchema, RenameTypes, RenameRootFields } from '@graphql-tools/wrap';
 import { GraphQLSchema } from 'graphql';
 
 export const modelNames = ['User', 'Review', 'Product'];
@@ -10,7 +10,7 @@ export const renamedInputTypesSchema = async (schema: GraphQLSchema) => {
   const models: string = modelNames.join('|');
   const inputTypes = Object.keys(typeMap).filter((type) => {
     const inputTypesRegex = new RegExp(
-      `(${models})(WhereInput|OrderByWithRelationInput|WhereUniqueInput|OrderByWithAggregationInput|ScalarWhereWithAggregatesInput|CreateInput|UncheckedCreateInput|UpdateInput|UncheckedUpdateInput|CreateManyInput|UpdateManyMutationInput|UncheckedUpdateManyInput|CountOrderByAggregateInput|AvgOrderByAggregateInput|MaxOrderByAggregateInput|MinOrderByAggregateInput|SumOrderByAggregateInput|Create.*?Input|Update.*?Input)`,
+      `(${models})(WhereInput|OrderByWithRelationInput|WhereUniqueInput|OrderByWithAggregationInput|ScalarWhereWithAggregatesInput|CreateInput|UncheckedCreateInput|UpdateInput|UncheckedUpdateInput|CreateManyInput|UpdateManyMutationInput|UncheckedUpdateManyInput|CountOrderByAggregateInput|AvgOrderByAggregateInput|MaxOrderByAggregateInput|MinOrderByAggregateInput|SumOrderByAggregateInput|Create.*?Input|Update.*?Input|Unchecked.*?Input)`,
     );
     return type.match(inputTypesRegex)?.input;
   });
@@ -20,6 +20,15 @@ export const renamedInputTypesSchema = async (schema: GraphQLSchema) => {
     transforms: [
       new RenameTypes((name) =>
         inputTypes.includes(name) ? `Users_${name}` : name,
+      ),
+      new RenameRootFields((operation, fieldName) =>
+        (operation == 'Query' || operation == 'Mutation') &&
+        fieldName != '_entities' &&
+        fieldName != '_service' &&
+        fieldName != 'sampleUpload' &&
+        fieldName != 'sampleUploadMany'
+          ? `Product_${fieldName}`
+          : fieldName,
       ),
     ],
   });

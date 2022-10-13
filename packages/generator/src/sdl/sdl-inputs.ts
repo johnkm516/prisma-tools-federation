@@ -112,10 +112,17 @@ type BatchPayload {
     //console.log(readyDmmf.modelOutputTypesMap);
     //console.log(readyDmmf.datamodel);
     //console.log(readyDmmf.schema.outputObjectTypes.prisma.map(p => p.name));
+
     inputObjectTypes.forEach((input) => {
+      const model = readyDmmf.modelmap?.get(
+        readyDmmf.modelInputTypesMap?.get(input.name) ?? ``,
+      );
       if (input.fields.length > 0) {
-        fileContent += `input ${input.name} {
-`;
+        if (options?.federation && model) {
+          fileContent += `input ${options?.federation}_${input.name} {\n`;
+        } else {
+          fileContent += `input ${input.name} {\n`;
+        }
         const inputFields =
           typeof options?.filterInputs === 'function'
             ? options.filterInputs(input)
@@ -130,9 +137,21 @@ type BatchPayload {
               hasEmptyTypeFields(inputType.type as string, schema, options);
 
             if (!hasEmptyType) {
-              fileContent += `  ${field.name}: ${
-                inputType.isList ? `[${inputType.type}!]` : inputType.type
-              }${field.isRequired ? '!' : ''}`;
+              const inputTypeModel = readyDmmf.modelmap?.get(
+                readyDmmf.modelInputTypesMap?.get(inputType.type as string) ??
+                  ``,
+              );
+              if (options?.federation && inputTypeModel) {
+                fileContent += `  ${field.name}: ${
+                  inputType.isList
+                    ? `[${options?.federation}_${inputType.type}!]`
+                    : `${options?.federation}_${inputType.type}`
+                }${field.isRequired ? '!' : ''}`;
+              } else {
+                fileContent += `  ${field.name}: ${
+                  inputType.isList ? `[${inputType.type}!]` : inputType.type
+                }${field.isRequired ? '!' : ''}`;
+              }
               fileContent += `\n`;
             }
           });
@@ -171,7 +190,7 @@ type BatchPayload {
 
                 keyStr += `@key(fields: "` + keys.join(' ') + `") `;
               });
-              fileContent += keyStr + `{\n`;
+              fileContent += keyStr + ` @shareable {\n`;
             }
 
             type.fields

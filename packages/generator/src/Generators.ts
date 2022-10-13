@@ -112,7 +112,7 @@ async function getSchema(schema: string) {
     });
 
     const inputTypeRegex = new RegExp(
-      `(${model.name})(WhereInput|OrderByWithRelationInput|WhereUniqueInput|OrderByWithAggregationInput|ScalarWhereWithAggregatesInput|CreateInput|UncheckedCreateInput|UpdateInput|UncheckedUpdateInput|CreateManyInput|UpdateManyMutationInput|UncheckedUpdateManyInput|CountOrderByAggregateInput|AvgOrderByAggregateInput|MaxOrderByAggregateInput|MinOrderByAggregateInput|SumOrderByAggregateInput|Create.*?Input|Update.*?Input)`,
+      `(${model.name})(WhereInput|OrderByWithRelationInput|WhereUniqueInput|ScalarWhereInput|OrderByWithAggregationInput|ScalarWhereWithAggregatesInput|CreateInput|UncheckedCreateInput|UpdateInput|UncheckedUpdateInput|CreateManyInput|UpdateManyMutationInput|UncheckedUpdateManyInput|CountOrderByAggregateInput|AvgOrderByAggregateInput|MaxOrderByAggregateInput|MinOrderByAggregateInput|SumOrderByAggregateInput|Create.*?Input|Update.*?Input|Unchecked.*?Input|UpsertWithout.*?Input|UpsertWithWhereUniqueWithout.*?Input|UncheckedUpdateWithout.*?Input|UncheckedUpdateManyWithout.*?Input|UncheckedCreateWithout.*?Input|OrderByRelationAggregateInput|ListRelationFilter|RelationFilter)`,
     );
     const inputTypes = document.schema.inputObjectTypes.prisma
       .filter((type) => type.name.match(inputTypeRegex)?.input)

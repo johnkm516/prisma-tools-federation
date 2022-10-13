@@ -53,15 +53,23 @@ export class GenerateTypes {
           options.isList ? '[]' : ''
         }`;
       default:
-        const type = options.type.toString().startsWith('Aggregate')
-          ? `Prisma.Get${options.type
-              .toString()
-              .replace('Aggregate', '')}AggregateType<${options.type}Args>`
-          : options.type.toString() === 'AffectedRowsOutput'
-          ? 'Prisma.BatchPayload'
-          : !this.isModel(options.type.toString()) && !input
-          ? `Prisma.${options.type}`
-          : options.type;
+        const type =
+          options.type.toString().startsWith('Aggregate') &&
+          this.options.federation
+            ? `Prisma.Get${options.type
+                .toString()
+                .replace('Aggregate', '')}AggregateType<${
+                this.options.federation
+              }_${options.type}Args>`
+            : options.type.toString().startsWith('Aggregate')
+            ? `Prisma.Get${options.type
+                .toString()
+                .replace('Aggregate', '')}AggregateType<${options.type}Args>`
+            : options.type.toString() === 'AffectedRowsOutput'
+            ? 'Prisma.BatchPayload'
+            : !this.isModel(options.type.toString()) && !input
+            ? `Prisma.${options.type}`
+            : options.type;
         return `${!input ? 'Client.' : ''}${type}${options.isList ? '[]' : ''}`;
     }
   }
@@ -149,29 +157,45 @@ export class GenerateTypes {
                 ['Query', 'Mutation'].includes(type.name) ? '' : type.name
               }${this.capital(field.name)}Args`
             : '{}';
+        const fieldName =
+          ['Query', 'Mutation'].includes(type.name) && this.options.federation
+            ? `${this.options.federation}_${field.name}`
+            : field.name;
         if (
           !field.name.startsWith(`updateMany`) ||
           (field.name.startsWith(`updateMany`) &&
             this.dmmf.modelmap?.get(field.name.replace(`updateMany`, ``))
               ?.generateUpdateMany)
         ) {
-          fields.push(
-            `${
-              field.name
-            }?: Resolver<${parentType}, ${argsType}, ${this.getOutputType(
-              field.outputType,
-            )}${field.isNullable ? ' | null' : ''}>`,
-          );
+          if (argsType != `{}` && this.options.federation) {
+            fields.push(
+              `${fieldName}?: Resolver<${parentType}, ${
+                this.options.federation
+              }_${argsType}, ${this.getOutputType(field.outputType)}${
+                field.isNullable ? ' | null' : ''
+              }>`,
+            );
+          } else {
+            fields.push(
+              `${fieldName}?: Resolver<${parentType}, ${argsType}, ${this.getOutputType(
+                field.outputType,
+              )}${field.isNullable ? ' | null' : ''}>`,
+            );
+          }
         } else {
           fields.push(
-            `//${field.name} is not generated because model has only unique fields or relations.`,
+            `//${fieldName} is not generated because model has only unique fields or relations.`,
           );
         }
 
         // add findManyCount
-        if (field.name.startsWith('findMany')) {
+        if (field.name.startsWith('findMany') && this.options.federation) {
           fields.push(
-            `${field.name}Count?: Resolver<${parentType}, ${argsType}, number>`,
+            `${fieldName}Count?: Resolver<${parentType}, ${this.options.federation}_${argsType}, number>`,
+          );
+        } else if (field.name.startsWith('findMany')) {
+          fields.push(
+            `${fieldName}Count?: Resolver<${parentType}, ${argsType}, number>`,
           );
         }
 
@@ -184,14 +208,38 @@ export class GenerateTypes {
                 argsType.split(`UpdateMany`)[1]?.split(`Args`)[0],
               )?.generateUpdateMany)
           ) {
-            const args: string[] = [`export interface ${argsType} {`];
-            field.args.forEach((arg) => {
+            const args: string[] = [];
+            if (this.options.federation) {
               args.push(
-                `${arg.name}${arg.isRequired ? '' : '?'}: ${this.getOutputType(
-                  arg.inputTypes[0],
-                  true,
-                )}${field.isNullable ? ' | null' : ''}`,
+                `export interface ${this.options.federation}_${argsType} {`,
               );
+            } else {
+              args.push(`export interface ${argsType} {`);
+            }
+
+            field.args.forEach((arg) => {
+              const outputTypeModel = this.dmmf.modelmap?.get(
+                this.dmmf.modelInputTypesMap?.get(
+                  this.getOutputType(arg.inputTypes[0], true).replace(`[]`, ``),
+                ) ?? ``,
+              );
+              if (this.options.federation && outputTypeModel) {
+                args.push(
+                  `${arg.name}${arg.isRequired ? '' : '?'}: ${
+                    this.options.federation
+                  }_${this.getOutputType(arg.inputTypes[0], true)}${
+                    field.isNullable ? ' | null' : ''
+                  }`,
+                );
+              } else {
+                args.push(
+                  `${arg.name}${
+                    arg.isRequired ? '' : '?'
+                  }: ${this.getOutputType(arg.inputTypes[0], true)}${
+                    field.isNullable ? ' | null' : ''
+                  }`,
+                );
+              }
             });
             if (argsType.startsWith('Aggregate')) {
               const modelName = field.outputType.type
@@ -234,24 +282,64 @@ export class GenerateTypes {
     const inputModel = this.schema.inputObjectTypes.model || [];
     [...this.schema.inputObjectTypes.prisma, ...inputModel].forEach((input) => {
       if (input.fields.length > 0) {
-        const fields: string[] = [`export interface ${input.name} {`];
-        input.fields.forEach((field) => {
-          const inputType = this.getInputType(field);
-          const hasEmptyType =
-            inputType.location === 'inputObjectTypes' &&
-            this.hasEmptyTypeFields(inputType.type as string);
-          if (!hasEmptyType) {
-            fields.push(
-              `${field.name}${
-                field.isRequired ? '' : '?'
-              }: ${this.getOutputType(inputType, true)}${
-                field.isNullable ? ' | null' : ''
-              }`,
+        const fields: string[] = [];
+        const model = this.dmmf.modelmap?.get(
+          this.dmmf.modelInputTypesMap?.get(input.name) ?? ``,
+        );
+        if (this.options.federation && model) {
+          fields.push(
+            `export interface ${this.options.federation}_${input.name} {`,
+          );
+          input.fields.forEach((field) => {
+            const inputType = this.getInputType(field);
+            const outputTypeModel = this.dmmf.modelmap?.get(
+              this.dmmf.modelInputTypesMap?.get(
+                this.getOutputType(inputType, true).replace(`[]`, ``),
+              ) ?? ``,
             );
-          }
-        });
-        fields.push('}');
-        inputTypes.push(fields.join('\n'));
+            const hasEmptyType =
+              inputType.location === 'inputObjectTypes' &&
+              this.hasEmptyTypeFields(inputType.type as string);
+            if (outputTypeModel && !hasEmptyType) {
+              fields.push(
+                `${field.name}${field.isRequired ? '' : '?'}: ${
+                  this.options.federation
+                }_${this.getOutputType(inputType, true)}${
+                  field.isNullable ? ' | null' : ''
+                }`,
+              );
+            } else if (!hasEmptyType) {
+              fields.push(
+                `${field.name}${
+                  field.isRequired ? '' : '?'
+                }: ${this.getOutputType(inputType, true)}${
+                  field.isNullable ? ' | null' : ''
+                }`,
+              );
+            }
+          });
+          fields.push('}');
+          inputTypes.push(fields.join('\n'));
+        } else {
+          fields.push(`export interface ${input.name} {`);
+          input.fields.forEach((field) => {
+            const inputType = this.getInputType(field);
+            const hasEmptyType =
+              inputType.location === 'inputObjectTypes' &&
+              this.hasEmptyTypeFields(inputType.type as string);
+            if (!hasEmptyType) {
+              fields.push(
+                `${field.name}${
+                  field.isRequired ? '' : '?'
+                }: ${this.getOutputType(inputType, true)}${
+                  field.isNullable ? ' | null' : ''
+                }`,
+              );
+            }
+          });
+          fields.push('}');
+          inputTypes.push(fields.join('\n'));
+        }
       }
     });
     this.code.push(inputTypes.join('\n\n'));

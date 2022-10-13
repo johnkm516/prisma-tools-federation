@@ -70,7 +70,11 @@ export interface Review {
 export interface Product {
   [key: string]: Resolver<any, any, any>;
   id?: Resolver<Client.Product, {}, number>;
-  review?: Resolver<Client.Product, ProductReviewArgs, Client.Review[] | null>;
+  review?: Resolver<
+    Client.Product,
+    Users_ProductReviewArgs,
+    Client.Review[] | null
+  >;
   _count?: Resolver<Client.Product, {}, Client.Prisma.ProductCountOutputType>;
 
   __resolveReference?: any;
@@ -78,99 +82,179 @@ export interface Product {
 
 export interface Query {
   [key: string]: Resolver<any, any, any>;
-  findFirstUser?: Resolver<{}, FindFirstUserArgs, Client.User | null>;
-  findManyUser?: Resolver<{}, FindManyUserArgs, Client.User[]>;
-  findManyUserCount?: Resolver<{}, FindManyUserArgs, number>;
-  aggregateUser?: Resolver<
+  Users_findFirstUser?: Resolver<
     {},
-    AggregateUserArgs,
-    Client.Prisma.GetUserAggregateType<AggregateUserArgs>
+    Users_FindFirstUserArgs,
+    Client.User | null
   >;
-  groupByUser?: Resolver<
+  Users_findManyUser?: Resolver<{}, Users_FindManyUserArgs, Client.User[]>;
+  Users_findManyUserCount?: Resolver<{}, Users_FindManyUserArgs, number>;
+  Users_aggregateUser?: Resolver<
     {},
-    GroupByUserArgs,
+    Users_AggregateUserArgs,
+    Client.Prisma.GetUserAggregateType<Users_AggregateUserArgs>
+  >;
+  Users_groupByUser?: Resolver<
+    {},
+    Users_GroupByUserArgs,
     Client.Prisma.UserGroupByOutputType[]
   >;
-  findUniqueUser?: Resolver<{}, FindUniqueUserArgs, Client.User | null>;
-  findFirstReview?: Resolver<{}, FindFirstReviewArgs, Client.Review | null>;
-  findManyReview?: Resolver<{}, FindManyReviewArgs, Client.Review[]>;
-  findManyReviewCount?: Resolver<{}, FindManyReviewArgs, number>;
-  aggregateReview?: Resolver<
+  Users_findUniqueUser?: Resolver<
     {},
-    AggregateReviewArgs,
-    Client.Prisma.GetReviewAggregateType<AggregateReviewArgs>
+    Users_FindUniqueUserArgs,
+    Client.User | null
   >;
-  groupByReview?: Resolver<
+  Users_findFirstReview?: Resolver<
     {},
-    GroupByReviewArgs,
+    Users_FindFirstReviewArgs,
+    Client.Review | null
+  >;
+  Users_findManyReview?: Resolver<
+    {},
+    Users_FindManyReviewArgs,
+    Client.Review[]
+  >;
+  Users_findManyReviewCount?: Resolver<{}, Users_FindManyReviewArgs, number>;
+  Users_aggregateReview?: Resolver<
+    {},
+    Users_AggregateReviewArgs,
+    Client.Prisma.GetReviewAggregateType<Users_AggregateReviewArgs>
+  >;
+  Users_groupByReview?: Resolver<
+    {},
+    Users_GroupByReviewArgs,
     Client.Prisma.ReviewGroupByOutputType[]
   >;
-  findUniqueReview?: Resolver<{}, FindUniqueReviewArgs, Client.Review | null>;
-  findFirstProduct?: Resolver<{}, FindFirstProductArgs, Client.Product | null>;
-  findManyProduct?: Resolver<{}, FindManyProductArgs, Client.Product[]>;
-  findManyProductCount?: Resolver<{}, FindManyProductArgs, number>;
-  aggregateProduct?: Resolver<
+  Users_findUniqueReview?: Resolver<
     {},
-    AggregateProductArgs,
-    Client.Prisma.GetProductAggregateType<AggregateProductArgs>
+    Users_FindUniqueReviewArgs,
+    Client.Review | null
   >;
-  groupByProduct?: Resolver<
+  Users_findFirstProduct?: Resolver<
     {},
-    GroupByProductArgs,
+    Users_FindFirstProductArgs,
+    Client.Product | null
+  >;
+  Users_findManyProduct?: Resolver<
+    {},
+    Users_FindManyProductArgs,
+    Client.Product[]
+  >;
+  Users_findManyProductCount?: Resolver<{}, Users_FindManyProductArgs, number>;
+  Users_aggregateProduct?: Resolver<
+    {},
+    Users_AggregateProductArgs,
+    Client.Prisma.GetProductAggregateType<Users_AggregateProductArgs>
+  >;
+  Users_groupByProduct?: Resolver<
+    {},
+    Users_GroupByProductArgs,
     Client.Prisma.ProductGroupByOutputType[]
   >;
-  findUniqueProduct?: Resolver<
+  Users_findUniqueProduct?: Resolver<
     {},
-    FindUniqueProductArgs,
+    Users_FindUniqueProductArgs,
     Client.Product | null
   >;
 }
 
 export interface Mutation {
   [key: string]: Resolver<any, any, any>;
-  createOneUser?: Resolver<{}, CreateOneUserArgs, Client.User>;
-  upsertOneUser?: Resolver<{}, UpsertOneUserArgs, Client.User>;
-  createManyUser?: Resolver<{}, CreateManyUserArgs, Client.Prisma.BatchPayload>;
-  deleteOneUser?: Resolver<{}, DeleteOneUserArgs, Client.User | null>;
-  updateOneUser?: Resolver<{}, UpdateOneUserArgs, Client.User | null>;
-  updateManyUser?: Resolver<{}, UpdateManyUserArgs, Client.Prisma.BatchPayload>;
-  deleteManyUser?: Resolver<{}, DeleteManyUserArgs, Client.Prisma.BatchPayload>;
-  createOneReview?: Resolver<{}, CreateOneReviewArgs, Client.Review>;
-  upsertOneReview?: Resolver<{}, UpsertOneReviewArgs, Client.Review>;
-  createManyReview?: Resolver<
+  Users_createOneUser?: Resolver<{}, Users_CreateOneUserArgs, Client.User>;
+  Users_upsertOneUser?: Resolver<{}, Users_UpsertOneUserArgs, Client.User>;
+  Users_createManyUser?: Resolver<
     {},
-    CreateManyReviewArgs,
+    Users_CreateManyUserArgs,
     Client.Prisma.BatchPayload
   >;
-  deleteOneReview?: Resolver<{}, DeleteOneReviewArgs, Client.Review | null>;
-  updateOneReview?: Resolver<{}, UpdateOneReviewArgs, Client.Review | null>;
-  updateManyReview?: Resolver<
+  Users_deleteOneUser?: Resolver<
     {},
-    UpdateManyReviewArgs,
+    Users_DeleteOneUserArgs,
+    Client.User | null
+  >;
+  Users_updateOneUser?: Resolver<
+    {},
+    Users_UpdateOneUserArgs,
+    Client.User | null
+  >;
+  Users_updateManyUser?: Resolver<
+    {},
+    Users_UpdateManyUserArgs,
     Client.Prisma.BatchPayload
   >;
-  deleteManyReview?: Resolver<
+  Users_deleteManyUser?: Resolver<
     {},
-    DeleteManyReviewArgs,
+    Users_DeleteManyUserArgs,
     Client.Prisma.BatchPayload
   >;
-  createOneProduct?: Resolver<{}, CreateOneProductArgs, Client.Product>;
-  upsertOneProduct?: Resolver<{}, UpsertOneProductArgs, Client.Product>;
-  createManyProduct?: Resolver<
+  Users_createOneReview?: Resolver<
     {},
-    CreateManyProductArgs,
+    Users_CreateOneReviewArgs,
+    Client.Review
+  >;
+  Users_upsertOneReview?: Resolver<
+    {},
+    Users_UpsertOneReviewArgs,
+    Client.Review
+  >;
+  Users_createManyReview?: Resolver<
+    {},
+    Users_CreateManyReviewArgs,
     Client.Prisma.BatchPayload
   >;
-  deleteOneProduct?: Resolver<{}, DeleteOneProductArgs, Client.Product | null>;
-  updateOneProduct?: Resolver<{}, UpdateOneProductArgs, Client.Product | null>;
-  //updateManyProduct is not generated because model has only unique fields or relations.
-  deleteManyProduct?: Resolver<
+  Users_deleteOneReview?: Resolver<
     {},
-    DeleteManyProductArgs,
+    Users_DeleteOneReviewArgs,
+    Client.Review | null
+  >;
+  Users_updateOneReview?: Resolver<
+    {},
+    Users_UpdateOneReviewArgs,
+    Client.Review | null
+  >;
+  Users_updateManyReview?: Resolver<
+    {},
+    Users_UpdateManyReviewArgs,
     Client.Prisma.BatchPayload
   >;
-  executeRaw?: Resolver<{}, ExecuteRawArgs, any>;
-  queryRaw?: Resolver<{}, QueryRawArgs, any>;
+  Users_deleteManyReview?: Resolver<
+    {},
+    Users_DeleteManyReviewArgs,
+    Client.Prisma.BatchPayload
+  >;
+  Users_createOneProduct?: Resolver<
+    {},
+    Users_CreateOneProductArgs,
+    Client.Product
+  >;
+  Users_upsertOneProduct?: Resolver<
+    {},
+    Users_UpsertOneProductArgs,
+    Client.Product
+  >;
+  Users_createManyProduct?: Resolver<
+    {},
+    Users_CreateManyProductArgs,
+    Client.Prisma.BatchPayload
+  >;
+  Users_deleteOneProduct?: Resolver<
+    {},
+    Users_DeleteOneProductArgs,
+    Client.Product | null
+  >;
+  Users_updateOneProduct?: Resolver<
+    {},
+    Users_UpdateOneProductArgs,
+    Client.Product | null
+  >;
+  //Users_updateManyProduct is not generated because model has only unique fields or relations.
+  Users_deleteManyProduct?: Resolver<
+    {},
+    Users_DeleteManyProductArgs,
+    Client.Prisma.BatchPayload
+  >;
+  Users_executeRaw?: Resolver<{}, Users_ExecuteRawArgs, any>;
+  Users_queryRaw?: Resolver<{}, Users_QueryRawArgs, any>;
 }
 
 export interface AggregateUser {
@@ -546,37 +630,37 @@ export interface ProductMaxAggregateOutputType {
   id?: Resolver<Client.Prisma.ProductMaxAggregateOutputType, {}, number | null>;
 }
 
-export interface ProductReviewArgs {
-  where?: ReviewWhereInput | null;
-  orderBy?: ReviewOrderByWithRelationInput[] | null;
-  cursor?: ReviewWhereUniqueInput | null;
+export interface Users_ProductReviewArgs {
+  where?: Users_ReviewWhereInput | null;
+  orderBy?: Users_ReviewOrderByWithRelationInput[] | null;
+  cursor?: Users_ReviewWhereUniqueInput | null;
   take?: number | null;
   skip?: number | null;
   distinct?: ReviewScalarFieldEnum[] | null;
 }
 
-export interface FindFirstUserArgs {
-  where?: UserWhereInput | null;
-  orderBy?: UserOrderByWithRelationInput[] | null;
-  cursor?: UserWhereUniqueInput | null;
+export interface Users_FindFirstUserArgs {
+  where?: Users_UserWhereInput | null;
+  orderBy?: Users_UserOrderByWithRelationInput[] | null;
+  cursor?: Users_UserWhereUniqueInput | null;
   take?: number | null;
   skip?: number | null;
   distinct?: UserScalarFieldEnum[] | null;
 }
 
-export interface FindManyUserArgs {
-  where?: UserWhereInput;
-  orderBy?: UserOrderByWithRelationInput[];
-  cursor?: UserWhereUniqueInput;
+export interface Users_FindManyUserArgs {
+  where?: Users_UserWhereInput;
+  orderBy?: Users_UserOrderByWithRelationInput[];
+  cursor?: Users_UserWhereUniqueInput;
   take?: number;
   skip?: number;
   distinct?: UserScalarFieldEnum[];
 }
 
-export interface AggregateUserArgs {
-  where?: UserWhereInput;
-  orderBy?: UserOrderByWithRelationInput[];
-  cursor?: UserWhereUniqueInput;
+export interface Users_AggregateUserArgs {
+  where?: Users_UserWhereInput;
+  orderBy?: Users_UserOrderByWithRelationInput[];
+  cursor?: Users_UserWhereUniqueInput;
   take?: number;
   skip?: number;
   _count?: Client.Prisma.UserCountAggregateInputType;
@@ -586,41 +670,41 @@ export interface AggregateUserArgs {
   _max?: Client.Prisma.UserMaxAggregateInputType;
 }
 
-export interface GroupByUserArgs {
-  where?: UserWhereInput;
-  orderBy?: UserOrderByWithAggregationInput[];
+export interface Users_GroupByUserArgs {
+  where?: Users_UserWhereInput;
+  orderBy?: Users_UserOrderByWithAggregationInput[];
   by: UserScalarFieldEnum[];
-  having?: UserScalarWhereWithAggregatesInput;
+  having?: Users_UserScalarWhereWithAggregatesInput;
   take?: number;
   skip?: number;
 }
 
-export interface FindUniqueUserArgs {
-  where: UserWhereUniqueInput | null;
+export interface Users_FindUniqueUserArgs {
+  where: Users_UserWhereUniqueInput | null;
 }
 
-export interface FindFirstReviewArgs {
-  where?: ReviewWhereInput | null;
-  orderBy?: ReviewOrderByWithRelationInput[] | null;
-  cursor?: ReviewWhereUniqueInput | null;
+export interface Users_FindFirstReviewArgs {
+  where?: Users_ReviewWhereInput | null;
+  orderBy?: Users_ReviewOrderByWithRelationInput[] | null;
+  cursor?: Users_ReviewWhereUniqueInput | null;
   take?: number | null;
   skip?: number | null;
   distinct?: ReviewScalarFieldEnum[] | null;
 }
 
-export interface FindManyReviewArgs {
-  where?: ReviewWhereInput;
-  orderBy?: ReviewOrderByWithRelationInput[];
-  cursor?: ReviewWhereUniqueInput;
+export interface Users_FindManyReviewArgs {
+  where?: Users_ReviewWhereInput;
+  orderBy?: Users_ReviewOrderByWithRelationInput[];
+  cursor?: Users_ReviewWhereUniqueInput;
   take?: number;
   skip?: number;
   distinct?: ReviewScalarFieldEnum[];
 }
 
-export interface AggregateReviewArgs {
-  where?: ReviewWhereInput;
-  orderBy?: ReviewOrderByWithRelationInput[];
-  cursor?: ReviewWhereUniqueInput;
+export interface Users_AggregateReviewArgs {
+  where?: Users_ReviewWhereInput;
+  orderBy?: Users_ReviewOrderByWithRelationInput[];
+  cursor?: Users_ReviewWhereUniqueInput;
   take?: number;
   skip?: number;
   _count?: Client.Prisma.ReviewCountAggregateInputType;
@@ -630,41 +714,41 @@ export interface AggregateReviewArgs {
   _max?: Client.Prisma.ReviewMaxAggregateInputType;
 }
 
-export interface GroupByReviewArgs {
-  where?: ReviewWhereInput;
-  orderBy?: ReviewOrderByWithAggregationInput[];
+export interface Users_GroupByReviewArgs {
+  where?: Users_ReviewWhereInput;
+  orderBy?: Users_ReviewOrderByWithAggregationInput[];
   by: ReviewScalarFieldEnum[];
-  having?: ReviewScalarWhereWithAggregatesInput;
+  having?: Users_ReviewScalarWhereWithAggregatesInput;
   take?: number;
   skip?: number;
 }
 
-export interface FindUniqueReviewArgs {
-  where: ReviewWhereUniqueInput | null;
+export interface Users_FindUniqueReviewArgs {
+  where: Users_ReviewWhereUniqueInput | null;
 }
 
-export interface FindFirstProductArgs {
-  where?: ProductWhereInput | null;
-  orderBy?: ProductOrderByWithRelationInput[] | null;
-  cursor?: ProductWhereUniqueInput | null;
+export interface Users_FindFirstProductArgs {
+  where?: Users_ProductWhereInput | null;
+  orderBy?: Users_ProductOrderByWithRelationInput[] | null;
+  cursor?: Users_ProductWhereUniqueInput | null;
   take?: number | null;
   skip?: number | null;
   distinct?: ProductScalarFieldEnum[] | null;
 }
 
-export interface FindManyProductArgs {
-  where?: ProductWhereInput;
-  orderBy?: ProductOrderByWithRelationInput[];
-  cursor?: ProductWhereUniqueInput;
+export interface Users_FindManyProductArgs {
+  where?: Users_ProductWhereInput;
+  orderBy?: Users_ProductOrderByWithRelationInput[];
+  cursor?: Users_ProductWhereUniqueInput;
   take?: number;
   skip?: number;
   distinct?: ProductScalarFieldEnum[];
 }
 
-export interface AggregateProductArgs {
-  where?: ProductWhereInput;
-  orderBy?: ProductOrderByWithRelationInput[];
-  cursor?: ProductWhereUniqueInput;
+export interface Users_AggregateProductArgs {
+  where?: Users_ProductWhereInput;
+  orderBy?: Users_ProductOrderByWithRelationInput[];
+  cursor?: Users_ProductWhereUniqueInput;
   take?: number;
   skip?: number;
   _count?: Client.Prisma.ProductCountAggregateInputType;
@@ -674,129 +758,129 @@ export interface AggregateProductArgs {
   _max?: Client.Prisma.ProductMaxAggregateInputType;
 }
 
-export interface GroupByProductArgs {
-  where?: ProductWhereInput;
-  orderBy?: ProductOrderByWithAggregationInput[];
+export interface Users_GroupByProductArgs {
+  where?: Users_ProductWhereInput;
+  orderBy?: Users_ProductOrderByWithAggregationInput[];
   by: ProductScalarFieldEnum[];
-  having?: ProductScalarWhereWithAggregatesInput;
+  having?: Users_ProductScalarWhereWithAggregatesInput;
   take?: number;
   skip?: number;
 }
 
-export interface FindUniqueProductArgs {
-  where: ProductWhereUniqueInput | null;
+export interface Users_FindUniqueProductArgs {
+  where: Users_ProductWhereUniqueInput | null;
 }
 
-export interface CreateOneUserArgs {
-  data: UserCreateInput;
+export interface Users_CreateOneUserArgs {
+  data: Users_UserCreateInput;
 }
 
-export interface UpsertOneUserArgs {
-  where: UserWhereUniqueInput;
-  create: UserCreateInput;
-  update: UserUpdateInput;
+export interface Users_UpsertOneUserArgs {
+  where: Users_UserWhereUniqueInput;
+  create: Users_UserCreateInput;
+  update: Users_UserUpdateInput;
 }
 
-export interface CreateManyUserArgs {
-  data: UserCreateManyInput[];
+export interface Users_CreateManyUserArgs {
+  data: Users_UserCreateManyInput[];
   skipDuplicates?: boolean;
 }
 
-export interface DeleteOneUserArgs {
-  where: UserWhereUniqueInput | null;
+export interface Users_DeleteOneUserArgs {
+  where: Users_UserWhereUniqueInput | null;
 }
 
-export interface UpdateOneUserArgs {
-  data: UserUpdateInput | null;
-  where: UserWhereUniqueInput | null;
+export interface Users_UpdateOneUserArgs {
+  data: Users_UserUpdateInput | null;
+  where: Users_UserWhereUniqueInput | null;
 }
 
-export interface UpdateManyUserArgs {
-  data: UserUpdateManyMutationInput;
-  where?: UserWhereInput;
+export interface Users_UpdateManyUserArgs {
+  data: Users_UserUpdateManyMutationInput;
+  where?: Users_UserWhereInput;
 }
 
-export interface DeleteManyUserArgs {
-  where?: UserWhereInput;
+export interface Users_DeleteManyUserArgs {
+  where?: Users_UserWhereInput;
 }
 
-export interface CreateOneReviewArgs {
-  data: ReviewCreateInput;
+export interface Users_CreateOneReviewArgs {
+  data: Users_ReviewCreateInput;
 }
 
-export interface UpsertOneReviewArgs {
-  where: ReviewWhereUniqueInput;
-  create: ReviewCreateInput;
-  update: ReviewUpdateInput;
+export interface Users_UpsertOneReviewArgs {
+  where: Users_ReviewWhereUniqueInput;
+  create: Users_ReviewCreateInput;
+  update: Users_ReviewUpdateInput;
 }
 
-export interface CreateManyReviewArgs {
-  data: ReviewCreateManyInput[];
+export interface Users_CreateManyReviewArgs {
+  data: Users_ReviewCreateManyInput[];
   skipDuplicates?: boolean;
 }
 
-export interface DeleteOneReviewArgs {
-  where: ReviewWhereUniqueInput | null;
+export interface Users_DeleteOneReviewArgs {
+  where: Users_ReviewWhereUniqueInput | null;
 }
 
-export interface UpdateOneReviewArgs {
-  data: ReviewUpdateInput | null;
-  where: ReviewWhereUniqueInput | null;
+export interface Users_UpdateOneReviewArgs {
+  data: Users_ReviewUpdateInput | null;
+  where: Users_ReviewWhereUniqueInput | null;
 }
 
-export interface UpdateManyReviewArgs {
-  data: ReviewUpdateManyMutationInput;
-  where?: ReviewWhereInput;
+export interface Users_UpdateManyReviewArgs {
+  data: Users_ReviewUpdateManyMutationInput;
+  where?: Users_ReviewWhereInput;
 }
 
-export interface DeleteManyReviewArgs {
-  where?: ReviewWhereInput;
+export interface Users_DeleteManyReviewArgs {
+  where?: Users_ReviewWhereInput;
 }
 
-export interface CreateOneProductArgs {
-  data: ProductCreateInput;
+export interface Users_CreateOneProductArgs {
+  data: Users_ProductCreateInput;
 }
 
-export interface UpsertOneProductArgs {
-  where: ProductWhereUniqueInput;
-  create: ProductCreateInput;
-  update: ProductUpdateInput;
+export interface Users_UpsertOneProductArgs {
+  where: Users_ProductWhereUniqueInput;
+  create: Users_ProductCreateInput;
+  update: Users_ProductUpdateInput;
 }
 
-export interface CreateManyProductArgs {
-  data: ProductCreateManyInput[];
+export interface Users_CreateManyProductArgs {
+  data: Users_ProductCreateManyInput[];
   skipDuplicates?: boolean;
 }
 
-export interface DeleteOneProductArgs {
-  where: ProductWhereUniqueInput | null;
+export interface Users_DeleteOneProductArgs {
+  where: Users_ProductWhereUniqueInput | null;
 }
 
-export interface UpdateOneProductArgs {
-  data: ProductUpdateInput | null;
-  where: ProductWhereUniqueInput | null;
+export interface Users_UpdateOneProductArgs {
+  data: Users_ProductUpdateInput | null;
+  where: Users_ProductWhereUniqueInput | null;
 }
 
 //UpdateManyProductArgs is not generated as the related model contains only unique or relation fields
 
-export interface DeleteManyProductArgs {
-  where?: ProductWhereInput;
+export interface Users_DeleteManyProductArgs {
+  where?: Users_ProductWhereInput;
 }
 
-export interface ExecuteRawArgs {
+export interface Users_ExecuteRawArgs {
   query: string;
   parameters?: any;
 }
 
-export interface QueryRawArgs {
+export interface Users_QueryRawArgs {
   query: string;
   parameters?: any;
 }
 
-export interface UserWhereInput {
-  AND?: UserWhereInput[];
-  OR?: UserWhereInput[];
-  NOT?: UserWhereInput[];
+export interface Users_UserWhereInput {
+  AND?: Users_UserWhereInput[];
+  OR?: Users_UserWhereInput[];
+  NOT?: Users_UserWhereInput[];
   id?: IntFilter;
   createdAt?: DateTimeFilter;
   username?: StringNullableFilter | null;
@@ -807,7 +891,7 @@ export interface UserWhereInput {
   googleProfile?: JsonNullableFilter;
 }
 
-export interface UserOrderByWithRelationInput {
+export interface Users_UserOrderByWithRelationInput {
   id?: SortOrder;
   createdAt?: SortOrder;
   username?: SortOrder;
@@ -818,14 +902,14 @@ export interface UserOrderByWithRelationInput {
   googleProfile?: SortOrder;
 }
 
-export interface UserWhereUniqueInput {
+export interface Users_UserWhereUniqueInput {
   id?: number;
   username?: string;
   email?: string;
   googleId?: string;
 }
 
-export interface UserOrderByWithAggregationInput {
+export interface Users_UserOrderByWithAggregationInput {
   id?: SortOrder;
   createdAt?: SortOrder;
   username?: SortOrder;
@@ -834,17 +918,17 @@ export interface UserOrderByWithAggregationInput {
   roles?: SortOrder;
   googleId?: SortOrder;
   googleProfile?: SortOrder;
-  _count?: UserCountOrderByAggregateInput;
-  _avg?: UserAvgOrderByAggregateInput;
-  _max?: UserMaxOrderByAggregateInput;
-  _min?: UserMinOrderByAggregateInput;
-  _sum?: UserSumOrderByAggregateInput;
+  _count?: Users_UserCountOrderByAggregateInput;
+  _avg?: Users_UserAvgOrderByAggregateInput;
+  _max?: Users_UserMaxOrderByAggregateInput;
+  _min?: Users_UserMinOrderByAggregateInput;
+  _sum?: Users_UserSumOrderByAggregateInput;
 }
 
-export interface UserScalarWhereWithAggregatesInput {
-  AND?: UserScalarWhereWithAggregatesInput[];
-  OR?: UserScalarWhereWithAggregatesInput[];
-  NOT?: UserScalarWhereWithAggregatesInput[];
+export interface Users_UserScalarWhereWithAggregatesInput {
+  AND?: Users_UserScalarWhereWithAggregatesInput[];
+  OR?: Users_UserScalarWhereWithAggregatesInput[];
+  NOT?: Users_UserScalarWhereWithAggregatesInput[];
   id?: IntWithAggregatesFilter;
   createdAt?: DateTimeWithAggregatesFilter;
   username?: StringNullableWithAggregatesFilter | null;
@@ -855,216 +939,216 @@ export interface UserScalarWhereWithAggregatesInput {
   googleProfile?: JsonNullableWithAggregatesFilter;
 }
 
-export interface ReviewWhereInput {
-  AND?: ReviewWhereInput[];
-  OR?: ReviewWhereInput[];
-  NOT?: ReviewWhereInput[];
+export interface Users_ReviewWhereInput {
+  AND?: Users_ReviewWhereInput[];
+  OR?: Users_ReviewWhereInput[];
+  NOT?: Users_ReviewWhereInput[];
   id?: IntFilter;
-  product?: ProductWhereInput;
+  product?: Users_ProductWhereInput;
   product_id?: IntFilter;
   score?: IntFilter;
 }
 
-export interface ReviewOrderByWithRelationInput {
+export interface Users_ReviewOrderByWithRelationInput {
   id?: SortOrder;
-  product?: ProductOrderByWithRelationInput;
+  product?: Users_ProductOrderByWithRelationInput;
   product_id?: SortOrder;
   score?: SortOrder;
 }
 
-export interface ReviewWhereUniqueInput {
+export interface Users_ReviewWhereUniqueInput {
   id?: number;
   product_id?: number;
 }
 
-export interface ReviewOrderByWithAggregationInput {
+export interface Users_ReviewOrderByWithAggregationInput {
   id?: SortOrder;
   product_id?: SortOrder;
   score?: SortOrder;
-  _count?: ReviewCountOrderByAggregateInput;
-  _avg?: ReviewAvgOrderByAggregateInput;
-  _max?: ReviewMaxOrderByAggregateInput;
-  _min?: ReviewMinOrderByAggregateInput;
-  _sum?: ReviewSumOrderByAggregateInput;
+  _count?: Users_ReviewCountOrderByAggregateInput;
+  _avg?: Users_ReviewAvgOrderByAggregateInput;
+  _max?: Users_ReviewMaxOrderByAggregateInput;
+  _min?: Users_ReviewMinOrderByAggregateInput;
+  _sum?: Users_ReviewSumOrderByAggregateInput;
 }
 
-export interface ReviewScalarWhereWithAggregatesInput {
-  AND?: ReviewScalarWhereWithAggregatesInput[];
-  OR?: ReviewScalarWhereWithAggregatesInput[];
-  NOT?: ReviewScalarWhereWithAggregatesInput[];
+export interface Users_ReviewScalarWhereWithAggregatesInput {
+  AND?: Users_ReviewScalarWhereWithAggregatesInput[];
+  OR?: Users_ReviewScalarWhereWithAggregatesInput[];
+  NOT?: Users_ReviewScalarWhereWithAggregatesInput[];
   id?: IntWithAggregatesFilter;
   product_id?: IntWithAggregatesFilter;
   score?: IntWithAggregatesFilter;
 }
 
-export interface ProductWhereInput {
-  AND?: ProductWhereInput[];
-  OR?: ProductWhereInput[];
-  NOT?: ProductWhereInput[];
+export interface Users_ProductWhereInput {
+  AND?: Users_ProductWhereInput[];
+  OR?: Users_ProductWhereInput[];
+  NOT?: Users_ProductWhereInput[];
   id?: IntFilter;
-  review?: ReviewListRelationFilter;
+  review?: Users_ReviewListRelationFilter;
 }
 
-export interface ProductOrderByWithRelationInput {
+export interface Users_ProductOrderByWithRelationInput {
   id?: SortOrder;
-  review?: ReviewOrderByRelationAggregateInput;
+  review?: Users_ReviewOrderByRelationAggregateInput;
 }
 
-export interface ProductWhereUniqueInput {
+export interface Users_ProductWhereUniqueInput {
   id?: number;
 }
 
-export interface ProductOrderByWithAggregationInput {
+export interface Users_ProductOrderByWithAggregationInput {
   id?: SortOrder;
-  _count?: ProductCountOrderByAggregateInput;
-  _avg?: ProductAvgOrderByAggregateInput;
-  _max?: ProductMaxOrderByAggregateInput;
-  _min?: ProductMinOrderByAggregateInput;
-  _sum?: ProductSumOrderByAggregateInput;
+  _count?: Users_ProductCountOrderByAggregateInput;
+  _avg?: Users_ProductAvgOrderByAggregateInput;
+  _max?: Users_ProductMaxOrderByAggregateInput;
+  _min?: Users_ProductMinOrderByAggregateInput;
+  _sum?: Users_ProductSumOrderByAggregateInput;
 }
 
-export interface ProductScalarWhereWithAggregatesInput {
-  AND?: ProductScalarWhereWithAggregatesInput[];
-  OR?: ProductScalarWhereWithAggregatesInput[];
-  NOT?: ProductScalarWhereWithAggregatesInput[];
+export interface Users_ProductScalarWhereWithAggregatesInput {
+  AND?: Users_ProductScalarWhereWithAggregatesInput[];
+  OR?: Users_ProductScalarWhereWithAggregatesInput[];
+  NOT?: Users_ProductScalarWhereWithAggregatesInput[];
   id?: IntWithAggregatesFilter;
 }
 
-export interface UserCreateInput {
+export interface Users_UserCreateInput {
   createdAt?: Date;
   username?: string | null;
   password?: string | null;
   email: string;
-  roles?: UserCreaterolesInput;
+  roles?: Users_UserCreaterolesInput;
   googleId?: string | null;
   googleProfile?: NullableJsonNullValueInput;
 }
 
-export interface UserUncheckedCreateInput {
+export interface Users_UserUncheckedCreateInput {
   id?: number;
   createdAt?: Date;
   username?: string | null;
   password?: string | null;
   email: string;
-  roles?: UserCreaterolesInput;
+  roles?: Users_UserCreaterolesInput;
   googleId?: string | null;
   googleProfile?: NullableJsonNullValueInput;
 }
 
-export interface UserUpdateInput {
+export interface Users_UserUpdateInput {
   createdAt?: DateTimeFieldUpdateOperationsInput;
   username?: NullableStringFieldUpdateOperationsInput | null;
   password?: NullableStringFieldUpdateOperationsInput | null;
   email?: StringFieldUpdateOperationsInput;
-  roles?: UserUpdaterolesInput;
+  roles?: Users_UserUpdaterolesInput;
   googleId?: NullableStringFieldUpdateOperationsInput | null;
   googleProfile?: NullableJsonNullValueInput;
 }
 
-export interface UserUncheckedUpdateInput {
+export interface Users_UserUncheckedUpdateInput {
   id?: IntFieldUpdateOperationsInput;
   createdAt?: DateTimeFieldUpdateOperationsInput;
   username?: NullableStringFieldUpdateOperationsInput | null;
   password?: NullableStringFieldUpdateOperationsInput | null;
   email?: StringFieldUpdateOperationsInput;
-  roles?: UserUpdaterolesInput;
+  roles?: Users_UserUpdaterolesInput;
   googleId?: NullableStringFieldUpdateOperationsInput | null;
   googleProfile?: NullableJsonNullValueInput;
 }
 
-export interface UserCreateManyInput {
+export interface Users_UserCreateManyInput {
   id?: number;
   createdAt?: Date;
   username?: string | null;
   password?: string | null;
   email: string;
-  roles?: UserCreaterolesInput;
+  roles?: Users_UserCreaterolesInput;
   googleId?: string | null;
   googleProfile?: NullableJsonNullValueInput;
 }
 
-export interface UserUpdateManyMutationInput {
+export interface Users_UserUpdateManyMutationInput {
   createdAt?: DateTimeFieldUpdateOperationsInput;
   username?: NullableStringFieldUpdateOperationsInput | null;
   password?: NullableStringFieldUpdateOperationsInput | null;
   email?: StringFieldUpdateOperationsInput;
-  roles?: UserUpdaterolesInput;
+  roles?: Users_UserUpdaterolesInput;
   googleId?: NullableStringFieldUpdateOperationsInput | null;
   googleProfile?: NullableJsonNullValueInput;
 }
 
-export interface UserUncheckedUpdateManyInput {
+export interface Users_UserUncheckedUpdateManyInput {
   id?: IntFieldUpdateOperationsInput;
   createdAt?: DateTimeFieldUpdateOperationsInput;
   username?: NullableStringFieldUpdateOperationsInput | null;
   password?: NullableStringFieldUpdateOperationsInput | null;
   email?: StringFieldUpdateOperationsInput;
-  roles?: UserUpdaterolesInput;
+  roles?: Users_UserUpdaterolesInput;
   googleId?: NullableStringFieldUpdateOperationsInput | null;
   googleProfile?: NullableJsonNullValueInput;
 }
 
-export interface ReviewCreateInput {
-  product: ProductCreateNestedOneWithoutReviewInput;
+export interface Users_ReviewCreateInput {
+  product: Users_ProductCreateNestedOneWithoutReviewInput;
   score: number;
 }
 
-export interface ReviewUncheckedCreateInput {
+export interface Users_ReviewUncheckedCreateInput {
   id?: number;
   product_id: number;
   score: number;
 }
 
-export interface ReviewUpdateInput {
-  product?: ProductUpdateOneRequiredWithoutReviewNestedInput;
+export interface Users_ReviewUpdateInput {
+  product?: Users_ProductUpdateOneRequiredWithoutReviewNestedInput;
   score?: IntFieldUpdateOperationsInput;
 }
 
-export interface ReviewUncheckedUpdateInput {
+export interface Users_ReviewUncheckedUpdateInput {
   id?: IntFieldUpdateOperationsInput;
   product_id?: IntFieldUpdateOperationsInput;
   score?: IntFieldUpdateOperationsInput;
 }
 
-export interface ReviewCreateManyInput {
+export interface Users_ReviewCreateManyInput {
   id?: number;
   product_id: number;
   score: number;
 }
 
-export interface ReviewUpdateManyMutationInput {
+export interface Users_ReviewUpdateManyMutationInput {
   score?: IntFieldUpdateOperationsInput;
 }
 
-export interface ReviewUncheckedUpdateManyInput {
+export interface Users_ReviewUncheckedUpdateManyInput {
   id?: IntFieldUpdateOperationsInput;
   product_id?: IntFieldUpdateOperationsInput;
   score?: IntFieldUpdateOperationsInput;
 }
 
-export interface ProductCreateInput {
-  review?: ReviewCreateNestedManyWithoutProductInput;
+export interface Users_ProductCreateInput {
+  review?: Users_ReviewCreateNestedManyWithoutProductInput;
 }
 
-export interface ProductUncheckedCreateInput {
+export interface Users_ProductUncheckedCreateInput {
   id?: number;
-  review?: ReviewUncheckedCreateNestedManyWithoutProductInput;
+  review?: Users_ReviewUncheckedCreateNestedManyWithoutProductInput;
 }
 
-export interface ProductUpdateInput {
-  review?: ReviewUpdateManyWithoutProductNestedInput;
+export interface Users_ProductUpdateInput {
+  review?: Users_ReviewUpdateManyWithoutProductNestedInput;
 }
 
-export interface ProductUncheckedUpdateInput {
+export interface Users_ProductUncheckedUpdateInput {
   id?: IntFieldUpdateOperationsInput;
-  review?: ReviewUncheckedUpdateManyWithoutProductNestedInput;
+  review?: Users_ReviewUncheckedUpdateManyWithoutProductNestedInput;
 }
 
-export interface ProductCreateManyInput {
+export interface Users_ProductCreateManyInput {
   id?: number;
 }
 
-export interface ProductUncheckedUpdateManyInput {
+export interface Users_ProductUncheckedUpdateManyInput {
   id?: IntFieldUpdateOperationsInput;
 }
 
@@ -1144,7 +1228,7 @@ export interface JsonNullableFilter {
   not?: any;
 }
 
-export interface UserCountOrderByAggregateInput {
+export interface Users_UserCountOrderByAggregateInput {
   id?: SortOrder;
   createdAt?: SortOrder;
   username?: SortOrder;
@@ -1155,20 +1239,11 @@ export interface UserCountOrderByAggregateInput {
   googleProfile?: SortOrder;
 }
 
-export interface UserAvgOrderByAggregateInput {
+export interface Users_UserAvgOrderByAggregateInput {
   id?: SortOrder;
 }
 
-export interface UserMaxOrderByAggregateInput {
-  id?: SortOrder;
-  createdAt?: SortOrder;
-  username?: SortOrder;
-  password?: SortOrder;
-  email?: SortOrder;
-  googleId?: SortOrder;
-}
-
-export interface UserMinOrderByAggregateInput {
+export interface Users_UserMaxOrderByAggregateInput {
   id?: SortOrder;
   createdAt?: SortOrder;
   username?: SortOrder;
@@ -1177,7 +1252,16 @@ export interface UserMinOrderByAggregateInput {
   googleId?: SortOrder;
 }
 
-export interface UserSumOrderByAggregateInput {
+export interface Users_UserMinOrderByAggregateInput {
+  id?: SortOrder;
+  createdAt?: SortOrder;
+  username?: SortOrder;
+  password?: SortOrder;
+  email?: SortOrder;
+  googleId?: SortOrder;
+}
+
+export interface Users_UserSumOrderByAggregateInput {
   id?: SortOrder;
 }
 
@@ -1266,72 +1350,72 @@ export interface JsonNullableWithAggregatesFilter {
   _max?: NestedJsonNullableFilter;
 }
 
-export interface ProductRelationFilter {
-  is?: ProductWhereInput;
-  isNot?: ProductWhereInput;
+export interface Users_ProductRelationFilter {
+  is?: Users_ProductWhereInput;
+  isNot?: Users_ProductWhereInput;
 }
 
-export interface ReviewCountOrderByAggregateInput {
+export interface Users_ReviewCountOrderByAggregateInput {
   id?: SortOrder;
   product_id?: SortOrder;
   score?: SortOrder;
 }
 
-export interface ReviewAvgOrderByAggregateInput {
+export interface Users_ReviewAvgOrderByAggregateInput {
   id?: SortOrder;
   product_id?: SortOrder;
   score?: SortOrder;
 }
 
-export interface ReviewMaxOrderByAggregateInput {
+export interface Users_ReviewMaxOrderByAggregateInput {
   id?: SortOrder;
   product_id?: SortOrder;
   score?: SortOrder;
 }
 
-export interface ReviewMinOrderByAggregateInput {
+export interface Users_ReviewMinOrderByAggregateInput {
   id?: SortOrder;
   product_id?: SortOrder;
   score?: SortOrder;
 }
 
-export interface ReviewSumOrderByAggregateInput {
+export interface Users_ReviewSumOrderByAggregateInput {
   id?: SortOrder;
   product_id?: SortOrder;
   score?: SortOrder;
 }
 
-export interface ReviewListRelationFilter {
-  every?: ReviewWhereInput;
-  some?: ReviewWhereInput;
-  none?: ReviewWhereInput;
+export interface Users_ReviewListRelationFilter {
+  every?: Users_ReviewWhereInput;
+  some?: Users_ReviewWhereInput;
+  none?: Users_ReviewWhereInput;
 }
 
-export interface ReviewOrderByRelationAggregateInput {
+export interface Users_ReviewOrderByRelationAggregateInput {
   _count?: SortOrder;
 }
 
-export interface ProductCountOrderByAggregateInput {
+export interface Users_ProductCountOrderByAggregateInput {
   id?: SortOrder;
 }
 
-export interface ProductAvgOrderByAggregateInput {
+export interface Users_ProductAvgOrderByAggregateInput {
   id?: SortOrder;
 }
 
-export interface ProductMaxOrderByAggregateInput {
+export interface Users_ProductMaxOrderByAggregateInput {
   id?: SortOrder;
 }
 
-export interface ProductMinOrderByAggregateInput {
+export interface Users_ProductMinOrderByAggregateInput {
   id?: SortOrder;
 }
 
-export interface ProductSumOrderByAggregateInput {
+export interface Users_ProductSumOrderByAggregateInput {
   id?: SortOrder;
 }
 
-export interface UserCreaterolesInput {
+export interface Users_UserCreaterolesInput {
   set: string[];
 }
 
@@ -1347,7 +1431,7 @@ export interface StringFieldUpdateOperationsInput {
   set?: string;
 }
 
-export interface UserUpdaterolesInput {
+export interface Users_UserUpdaterolesInput {
   set?: string[];
   push?: string;
 }
@@ -1360,60 +1444,60 @@ export interface IntFieldUpdateOperationsInput {
   divide?: number;
 }
 
-export interface ProductCreateNestedOneWithoutReviewInput {
-  create?: ProductUncheckedCreateWithoutReviewInput;
-  connectOrCreate?: ProductCreateOrConnectWithoutReviewInput;
-  connect?: ProductWhereUniqueInput;
+export interface Users_ProductCreateNestedOneWithoutReviewInput {
+  create?: Users_ProductUncheckedCreateWithoutReviewInput;
+  connectOrCreate?: Users_ProductCreateOrConnectWithoutReviewInput;
+  connect?: Users_ProductWhereUniqueInput;
 }
 
-export interface ProductUpdateOneRequiredWithoutReviewNestedInput {
-  create?: ProductUncheckedCreateWithoutReviewInput;
-  connectOrCreate?: ProductCreateOrConnectWithoutReviewInput;
-  upsert?: ProductUpsertWithoutReviewInput;
-  connect?: ProductWhereUniqueInput;
-  update?: ProductUncheckedUpdateWithoutReviewInput;
+export interface Users_ProductUpdateOneRequiredWithoutReviewNestedInput {
+  create?: Users_ProductUncheckedCreateWithoutReviewInput;
+  connectOrCreate?: Users_ProductCreateOrConnectWithoutReviewInput;
+  upsert?: Users_ProductUpsertWithoutReviewInput;
+  connect?: Users_ProductWhereUniqueInput;
+  update?: Users_ProductUncheckedUpdateWithoutReviewInput;
 }
 
-export interface ReviewCreateNestedManyWithoutProductInput {
-  create?: ReviewCreateWithoutProductInput[];
-  connectOrCreate?: ReviewCreateOrConnectWithoutProductInput[];
-  createMany?: ReviewCreateManyProductInputEnvelope;
-  connect?: ReviewWhereUniqueInput[];
+export interface Users_ReviewCreateNestedManyWithoutProductInput {
+  create?: Users_ReviewCreateWithoutProductInput[];
+  connectOrCreate?: Users_ReviewCreateOrConnectWithoutProductInput[];
+  createMany?: Users_ReviewCreateManyProductInputEnvelope;
+  connect?: Users_ReviewWhereUniqueInput[];
 }
 
-export interface ReviewUncheckedCreateNestedManyWithoutProductInput {
-  create?: ReviewCreateWithoutProductInput[];
-  connectOrCreate?: ReviewCreateOrConnectWithoutProductInput[];
-  createMany?: ReviewCreateManyProductInputEnvelope;
-  connect?: ReviewWhereUniqueInput[];
+export interface Users_ReviewUncheckedCreateNestedManyWithoutProductInput {
+  create?: Users_ReviewCreateWithoutProductInput[];
+  connectOrCreate?: Users_ReviewCreateOrConnectWithoutProductInput[];
+  createMany?: Users_ReviewCreateManyProductInputEnvelope;
+  connect?: Users_ReviewWhereUniqueInput[];
 }
 
-export interface ReviewUpdateManyWithoutProductNestedInput {
-  create?: ReviewCreateWithoutProductInput[];
-  connectOrCreate?: ReviewCreateOrConnectWithoutProductInput[];
-  upsert?: ReviewUpsertWithWhereUniqueWithoutProductInput[];
-  createMany?: ReviewCreateManyProductInputEnvelope;
-  set?: ReviewWhereUniqueInput[];
-  disconnect?: ReviewWhereUniqueInput[];
-  delete?: ReviewWhereUniqueInput[];
-  connect?: ReviewWhereUniqueInput[];
-  update?: ReviewUpdateWithWhereUniqueWithoutProductInput[];
-  updateMany?: ReviewUpdateManyWithWhereWithoutProductInput[];
-  deleteMany?: ReviewScalarWhereInput[];
+export interface Users_ReviewUpdateManyWithoutProductNestedInput {
+  create?: Users_ReviewCreateWithoutProductInput[];
+  connectOrCreate?: Users_ReviewCreateOrConnectWithoutProductInput[];
+  upsert?: Users_ReviewUpsertWithWhereUniqueWithoutProductInput[];
+  createMany?: Users_ReviewCreateManyProductInputEnvelope;
+  set?: Users_ReviewWhereUniqueInput[];
+  disconnect?: Users_ReviewWhereUniqueInput[];
+  delete?: Users_ReviewWhereUniqueInput[];
+  connect?: Users_ReviewWhereUniqueInput[];
+  update?: Users_ReviewUpdateWithWhereUniqueWithoutProductInput[];
+  updateMany?: Users_ReviewUpdateManyWithWhereWithoutProductInput[];
+  deleteMany?: Users_ReviewScalarWhereInput[];
 }
 
-export interface ReviewUncheckedUpdateManyWithoutProductNestedInput {
-  create?: ReviewCreateWithoutProductInput[];
-  connectOrCreate?: ReviewCreateOrConnectWithoutProductInput[];
-  upsert?: ReviewUpsertWithWhereUniqueWithoutProductInput[];
-  createMany?: ReviewCreateManyProductInputEnvelope;
-  set?: ReviewWhereUniqueInput[];
-  disconnect?: ReviewWhereUniqueInput[];
-  delete?: ReviewWhereUniqueInput[];
-  connect?: ReviewWhereUniqueInput[];
-  update?: ReviewUpdateWithWhereUniqueWithoutProductInput[];
-  updateMany?: ReviewUpdateManyWithWhereWithoutProductInput[];
-  deleteMany?: ReviewScalarWhereInput[];
+export interface Users_ReviewUncheckedUpdateManyWithoutProductNestedInput {
+  create?: Users_ReviewCreateWithoutProductInput[];
+  connectOrCreate?: Users_ReviewCreateOrConnectWithoutProductInput[];
+  upsert?: Users_ReviewUpsertWithWhereUniqueWithoutProductInput[];
+  createMany?: Users_ReviewCreateManyProductInputEnvelope;
+  set?: Users_ReviewWhereUniqueInput[];
+  disconnect?: Users_ReviewWhereUniqueInput[];
+  delete?: Users_ReviewWhereUniqueInput[];
+  connect?: Users_ReviewWhereUniqueInput[];
+  update?: Users_ReviewUpdateWithWhereUniqueWithoutProductInput[];
+  updateMany?: Users_ReviewUpdateManyWithWhereWithoutProductInput[];
+  deleteMany?: Users_ReviewScalarWhereInput[];
 }
 
 export interface NestedIntFilter {
@@ -1568,83 +1652,83 @@ export interface NestedJsonNullableFilter {
   not?: any;
 }
 
-export interface ProductUncheckedCreateWithoutReviewInput {
+export interface Users_ProductUncheckedCreateWithoutReviewInput {
   id?: number;
 }
 
-export interface ProductCreateOrConnectWithoutReviewInput {
-  where: ProductWhereUniqueInput;
-  create: ProductUncheckedCreateWithoutReviewInput;
+export interface Users_ProductCreateOrConnectWithoutReviewInput {
+  where: Users_ProductWhereUniqueInput;
+  create: Users_ProductUncheckedCreateWithoutReviewInput;
 }
 
-export interface ProductUpsertWithoutReviewInput {
-  update: ProductUncheckedUpdateWithoutReviewInput;
-  create: ProductUncheckedCreateWithoutReviewInput;
+export interface Users_ProductUpsertWithoutReviewInput {
+  update: Users_ProductUncheckedUpdateWithoutReviewInput;
+  create: Users_ProductUncheckedCreateWithoutReviewInput;
 }
 
-export interface ProductUncheckedUpdateWithoutReviewInput {
+export interface Users_ProductUncheckedUpdateWithoutReviewInput {
   id?: IntFieldUpdateOperationsInput;
 }
 
-export interface ReviewCreateWithoutProductInput {
+export interface Users_ReviewCreateWithoutProductInput {
   score: number;
 }
 
-export interface ReviewUncheckedCreateWithoutProductInput {
+export interface Users_ReviewUncheckedCreateWithoutProductInput {
   id?: number;
   score: number;
 }
 
-export interface ReviewCreateOrConnectWithoutProductInput {
-  where: ReviewWhereUniqueInput;
-  create: ReviewUncheckedCreateWithoutProductInput;
+export interface Users_ReviewCreateOrConnectWithoutProductInput {
+  where: Users_ReviewWhereUniqueInput;
+  create: Users_ReviewUncheckedCreateWithoutProductInput;
 }
 
-export interface ReviewCreateManyProductInputEnvelope {
-  data: ReviewCreateManyProductInput[];
+export interface Users_ReviewCreateManyProductInputEnvelope {
+  data: Users_ReviewCreateManyProductInput[];
   skipDuplicates?: boolean;
 }
 
-export interface ReviewUpsertWithWhereUniqueWithoutProductInput {
-  where: ReviewWhereUniqueInput;
-  update: ReviewUncheckedUpdateWithoutProductInput;
-  create: ReviewUncheckedCreateWithoutProductInput;
+export interface Users_ReviewUpsertWithWhereUniqueWithoutProductInput {
+  where: Users_ReviewWhereUniqueInput;
+  update: Users_ReviewUncheckedUpdateWithoutProductInput;
+  create: Users_ReviewUncheckedCreateWithoutProductInput;
 }
 
-export interface ReviewUpdateWithWhereUniqueWithoutProductInput {
-  where: ReviewWhereUniqueInput;
-  data: ReviewUncheckedUpdateWithoutProductInput;
+export interface Users_ReviewUpdateWithWhereUniqueWithoutProductInput {
+  where: Users_ReviewWhereUniqueInput;
+  data: Users_ReviewUncheckedUpdateWithoutProductInput;
 }
 
-export interface ReviewUpdateManyWithWhereWithoutProductInput {
-  where: ReviewScalarWhereInput;
-  data: ReviewUncheckedUpdateManyWithoutReviewInput;
+export interface Users_ReviewUpdateManyWithWhereWithoutProductInput {
+  where: Users_ReviewScalarWhereInput;
+  data: Users_ReviewUncheckedUpdateManyWithoutReviewInput;
 }
 
-export interface ReviewScalarWhereInput {
-  AND?: ReviewScalarWhereInput[];
-  OR?: ReviewScalarWhereInput[];
-  NOT?: ReviewScalarWhereInput[];
+export interface Users_ReviewScalarWhereInput {
+  AND?: Users_ReviewScalarWhereInput[];
+  OR?: Users_ReviewScalarWhereInput[];
+  NOT?: Users_ReviewScalarWhereInput[];
   id?: IntFilter;
   product_id?: IntFilter;
   score?: IntFilter;
 }
 
-export interface ReviewCreateManyProductInput {
+export interface Users_ReviewCreateManyProductInput {
   id?: number;
   score: number;
 }
 
-export interface ReviewUpdateWithoutProductInput {
+export interface Users_ReviewUpdateWithoutProductInput {
   score?: IntFieldUpdateOperationsInput;
 }
 
-export interface ReviewUncheckedUpdateWithoutProductInput {
+export interface Users_ReviewUncheckedUpdateWithoutProductInput {
   id?: IntFieldUpdateOperationsInput;
   score?: IntFieldUpdateOperationsInput;
 }
 
-export interface ReviewUncheckedUpdateManyWithoutReviewInput {
+export interface Users_ReviewUncheckedUpdateManyWithoutReviewInput {
   id?: IntFieldUpdateOperationsInput;
   score?: IntFieldUpdateOperationsInput;
 }
