@@ -333,7 +333,11 @@ export class Generators {
       .find((type) => type.name === typeName)
       ?.fields.find((field) => field.name === fieldName);
     if (!field) return '';
-    return sdl ? this.getSDLArgs(field.args) : this.getNexusArgs(field.args);
+    if (this.options.federation) {
+      return sdl ? this.getSDLArgs(field.args) : this.getNexusArgs(field.args);
+    } else {
+      return sdl ? this.getSDLArgs(field.args) : this.getNexusArgs(field.args);
+    }
   }
 
   getNexusArgs(args: DMMF.SchemaArg[]) {
@@ -360,6 +364,16 @@ export class Generators {
   getSDLArgs(args: DMMF.SchemaArg[]) {
     const getType = (arg: DMMF.SchemaArg) => {
       let type = `${arg.inputTypes[0].type}`;
+      if (
+        this.options.federation &&
+        this.readyDmmf?.modelmap?.get(
+          this.readyDmmf.modelInputTypesMap?.get(
+            arg.inputTypes[0].type as string,
+          ) ?? ``,
+        )
+      ) {
+        type = `${this.options.federation}_${type}`;
+      }
 
       if (arg.isRequired) {
         type = `${type}!`;

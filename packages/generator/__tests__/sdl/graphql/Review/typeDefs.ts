@@ -9,56 +9,56 @@ export default gql`
   }
 
   type Query {
-    Users_findUniqueReview(where: ReviewWhereUniqueInput!): Review
+    Users_findUniqueReview(where: Users_ReviewWhereUniqueInput!): Review
     Users_findFirstReview(
-      where: ReviewWhereInput
-      orderBy: [ReviewOrderByWithRelationInput]
-      cursor: ReviewWhereUniqueInput
+      where: Users_ReviewWhereInput
+      orderBy: [Users_ReviewOrderByWithRelationInput]
+      cursor: Users_ReviewWhereUniqueInput
       take: Int
       skip: Int
       distinct: [ReviewScalarFieldEnum]
     ): Review
     Users_findManyReview(
-      where: ReviewWhereInput
-      orderBy: [ReviewOrderByWithRelationInput]
-      cursor: ReviewWhereUniqueInput
+      where: Users_ReviewWhereInput
+      orderBy: [Users_ReviewOrderByWithRelationInput]
+      cursor: Users_ReviewWhereUniqueInput
       take: Int
       skip: Int
       distinct: [ReviewScalarFieldEnum]
     ): [Review!]
     Users_findManyReviewCount(
-      where: ReviewWhereInput
-      orderBy: [ReviewOrderByWithRelationInput]
-      cursor: ReviewWhereUniqueInput
+      where: Users_ReviewWhereInput
+      orderBy: [Users_ReviewOrderByWithRelationInput]
+      cursor: Users_ReviewWhereUniqueInput
       take: Int
       skip: Int
       distinct: [ReviewScalarFieldEnum]
     ): Int!
     Users_aggregateReview(
-      where: ReviewWhereInput
-      orderBy: [ReviewOrderByWithRelationInput]
-      cursor: ReviewWhereUniqueInput
+      where: Users_ReviewWhereInput
+      orderBy: [Users_ReviewOrderByWithRelationInput]
+      cursor: Users_ReviewWhereUniqueInput
       take: Int
       skip: Int
     ): AggregateReview
   }
 
   type Mutation {
-    Users_createOneReview(data: ReviewCreateInput!): Review!
+    Users_createOneReview(data: Users_ReviewCreateInput!): Review!
     Users_updateOneReview(
-      data: ReviewUpdateInput!
-      where: ReviewWhereUniqueInput!
+      data: Users_ReviewUpdateInput!
+      where: Users_ReviewWhereUniqueInput!
     ): Review!
-    Users_deleteOneReview(where: ReviewWhereUniqueInput!): Review
+    Users_deleteOneReview(where: Users_ReviewWhereUniqueInput!): Review
     Users_upsertOneReview(
-      where: ReviewWhereUniqueInput!
-      create: ReviewCreateInput!
-      update: ReviewUpdateInput!
+      where: Users_ReviewWhereUniqueInput!
+      create: Users_ReviewCreateInput!
+      update: Users_ReviewUpdateInput!
     ): Review
-    Users_deleteManyReview(where: ReviewWhereInput): BatchPayload
+    Users_deleteManyReview(where: Users_ReviewWhereInput): BatchPayload
     Users_updateManyReview(
-      data: ReviewUpdateManyMutationInput!
-      where: ReviewWhereInput
+      data: Users_ReviewUpdateManyMutationInput!
+      where: Users_ReviewWhereInput
     ): BatchPayload
   }
 `;

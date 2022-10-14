@@ -73,8 +73,18 @@ export class GenerateSdl extends Generators {
           if (field.args.length > 0) {
             fileContent += '(';
             field.args.forEach((arg) => {
-              fileContent += `${arg.name}: ${arg.inputTypes[0].type}
-              `;
+              const inputTypeModel = this.readyDmmf?.modelmap?.get(
+                this.readyDmmf.modelInputTypesMap?.get(
+                  arg.inputTypes[0].type as string,
+                ) ?? ``,
+              );
+              if (inputTypeModel && this.options.federation) {
+                fileContent += `${arg.name}: ${this.options.federation}_${arg.inputTypes[0].type}
+                `;
+              } else {
+                fileContent += `${arg.name}: ${arg.inputTypes[0].type}
+                `;
+              }
             });
             fileContent += ')';
           }
