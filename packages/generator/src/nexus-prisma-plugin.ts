@@ -12,6 +12,7 @@ export class GenerateNexusPrismaPlugin extends Generators {
     this.mkdir(this.options.output);
     await this.createModels();
     await this.createIndex();
+    return this.dmmf();
   }
 
   private async createModels() {

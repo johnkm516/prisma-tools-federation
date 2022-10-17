@@ -19,6 +19,7 @@ export class GenerateSdl extends Generators {
       const code = generateTypes.run();
       writeFileSync(this.output('../resolversTypes.ts'), this.formation(code));
     }
+    return this.dmmf();
   }
 
   private resolversPath = this.output(this.withExtension('resolvers'));

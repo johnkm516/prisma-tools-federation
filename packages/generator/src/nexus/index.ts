@@ -17,6 +17,7 @@ export class GenerateNexus extends Generators {
   async run() {
     await this.createModels();
     this.createIndex();
+    return this.dmmf();
   }
 
   private async createModels() {

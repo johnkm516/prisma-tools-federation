@@ -12,6 +12,7 @@ export class GenerateModules extends Generators {
   async run() {
     await this.createModules();
     this.createApp();
+    return this.dmmf();
   }
 
   private indexPath = this.output('application.ts');

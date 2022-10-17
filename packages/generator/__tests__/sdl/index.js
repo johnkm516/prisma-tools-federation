@@ -18,7 +18,6 @@ async function main() {
     );
     
     await generator.run();
-    
   } catch (error) {
     console.log(error);
   }
