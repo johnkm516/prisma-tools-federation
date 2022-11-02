@@ -950,17 +950,11 @@ export default gql`
     _all: Int!
   }
 
-  type UserAvgAggregateOutputType
-    @key(fields: "id")
-    @key(fields: "email")
-    @shareable {
+  type UserAvgAggregateOutputType @key(fields: "id") @shareable {
     id: Float
   }
 
-  type UserSumAggregateOutputType
-    @key(fields: "id")
-    @key(fields: "email")
-    @shareable {
+  type UserSumAggregateOutputType @key(fields: "id") @shareable {
     id: Int
   }
 
@@ -1034,7 +1028,7 @@ export default gql`
     score: Int
   }
 
-  type ProductCountOutputType @key(fields: "id") @shareable {
+  type ProductCountOutputType @shareable {
     review: Int!
   }
 

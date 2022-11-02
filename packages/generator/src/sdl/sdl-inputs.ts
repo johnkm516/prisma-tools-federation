@@ -95,10 +95,9 @@ type BatchPayload @shareable {
     enums.forEach((item) => {
       fileContent += `enum ${item.name} {`;
       item.values.forEach((item2) => {
-        fileContent += `
-        ${item2}`;
+        fileContent += `  ${item2}`;
       });
-      fileContent += `}
+      fileContent += `\n}
   
 `;
     });
@@ -177,6 +176,25 @@ type BatchPayload @shareable {
             fileContent += `type ${type.name} `;
             if (type.name === `Aggregate` + model.name) {
               fileContent += `@shareable {\n`;
+            } else if (
+              type.name === model.name + `CountAggregateOutputType` ||
+              type.name === model.name + `AvgAggregateOutputType` ||
+              type.name === model.name + `SumAggregateOutputType` ||
+              type.name === model.name + `MinAggregateOutputType` ||
+              type.name === model.name + `MaxAggregateOutputType` ||
+              type.name === model.name + `CountOutputType`
+            ) {
+              let keyStr = ``;
+              model?.keyFields?.forEach((keys) => {
+                if (
+                  keys.every((key) =>
+                    type.fields.map((field) => field.name).includes(key),
+                  )
+                ) {
+                  keyStr += `@key(fields: "` + keys.join(' ') + `") `;
+                }
+              });
+              fileContent += keyStr + ` @shareable {\n`;
             } else {
               let keyStr = ``;
               model?.keyFields?.forEach((keys) => {
