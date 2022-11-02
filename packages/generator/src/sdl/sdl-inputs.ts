@@ -84,7 +84,7 @@ async function generateInputsString(
   let fileContent = `
 scalar DateTime
 
-type BatchPayload {
+type BatchPayload @shareable {
   count: Int!
 }
 `;
@@ -175,13 +175,7 @@ type BatchPayload {
 
           if (model) {
             fileContent += `type ${type.name} `;
-            if (
-              type.name === `Aggregate` + model.name ||
-              type.name === model.name + `CountOutputType` ||
-              type.name === model.name + `AvgAggregateOutputType` ||
-              type.name === model.name + `SumAggregateOutputType` ||
-              type.name === model.name + `CountAggregateOutputType`
-            ) {
+            if (type.name === `Aggregate` + model.name) {
               fileContent += `@shareable {\n`;
             } else {
               let keyStr = ``;
@@ -201,6 +195,12 @@ type BatchPayload {
                     ? `[${field.outputType.type}!]`
                     : field.outputType.type
                 }${!field.isNullable ? '!' : ''}`;
+
+                /*
+                if (field.name == '_all') {
+                  fileContent += ' @shareable'
+                }
+                */
 
                 const modelField: Field | undefined = model.fields.find(
                   (f) => (f.name = field.name),

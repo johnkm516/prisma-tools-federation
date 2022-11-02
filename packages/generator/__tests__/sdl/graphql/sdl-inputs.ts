@@ -3,7 +3,7 @@ import gql from 'graphql-tag';
 export default gql`
   scalar DateTime
 
-  type BatchPayload {
+  type BatchPayload @shareable {
     count: Int!
   }
   enum JsonNullValueFilter {
@@ -935,7 +935,10 @@ export default gql`
     _max: ProductMaxAggregateOutputType
   }
 
-  type UserCountAggregateOutputType @shareable {
+  type UserCountAggregateOutputType
+    @key(fields: "id")
+    @key(fields: "email")
+    @shareable {
     id: Int!
     createdAt: Int!
     username: Int!
@@ -947,11 +950,17 @@ export default gql`
     _all: Int!
   }
 
-  type UserAvgAggregateOutputType @shareable {
+  type UserAvgAggregateOutputType
+    @key(fields: "id")
+    @key(fields: "email")
+    @shareable {
     id: Float
   }
 
-  type UserSumAggregateOutputType @shareable {
+  type UserSumAggregateOutputType
+    @key(fields: "id")
+    @key(fields: "email")
+    @shareable {
     id: Int
   }
 
@@ -979,20 +988,29 @@ export default gql`
     googleId: String
   }
 
-  type ReviewCountAggregateOutputType @shareable {
+  type ReviewCountAggregateOutputType
+    @key(fields: "id")
+    @key(fields: "product_id")
+    @shareable {
     id: Int!
     product_id: Int!
     score: Int!
     _all: Int!
   }
 
-  type ReviewAvgAggregateOutputType @shareable {
+  type ReviewAvgAggregateOutputType
+    @key(fields: "id")
+    @key(fields: "product_id")
+    @shareable {
     id: Float
     product_id: Float
     score: Float
   }
 
-  type ReviewSumAggregateOutputType @shareable {
+  type ReviewSumAggregateOutputType
+    @key(fields: "id")
+    @key(fields: "product_id")
+    @shareable {
     id: Int
     product_id: Int
     score: Int
@@ -1016,20 +1034,20 @@ export default gql`
     score: Int
   }
 
-  type ProductCountOutputType @shareable {
+  type ProductCountOutputType @key(fields: "id") @shareable {
     review: Int!
   }
 
-  type ProductCountAggregateOutputType @shareable {
+  type ProductCountAggregateOutputType @key(fields: "id") @shareable {
     id: Int!
     _all: Int!
   }
 
-  type ProductAvgAggregateOutputType @shareable {
+  type ProductAvgAggregateOutputType @key(fields: "id") @shareable {
     id: Float
   }
 
-  type ProductSumAggregateOutputType @shareable {
+  type ProductSumAggregateOutputType @key(fields: "id") @shareable {
     id: Int
   }
 
