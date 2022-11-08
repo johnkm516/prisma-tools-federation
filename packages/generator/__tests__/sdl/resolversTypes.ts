@@ -11,6 +11,18 @@ type Resolver<T extends {}, A extends {}, R extends any> = (
   info: GraphQLResolveInfo,
 ) => Promise<R>;
 
+// cause typescript not to expand types and preserve names
+type NoExpand<T> = T extends unknown ? T : never;
+
+// this type assumes the passed object is entirely optional
+type AtLeast<O extends object, K extends string> = NoExpand<
+  O extends unknown
+    ?
+        | (K extends keyof O ? { [P in K]: O[P] } & O : O)
+        | ({ [P in keyof O as P extends K ? K : never]-?: O[P] } & O)
+    : never
+>;
+
 export interface Resolvers {
   [key: string]: { [key: string]: Resolver<any, any, any> };
   User?: User;
@@ -902,12 +914,22 @@ export interface Users_UserOrderByWithRelationInput {
   googleProfile?: SortOrder;
 }
 
-export interface Users_UserWhereUniqueInput {
-  id?: number;
-  username?: string;
-  email?: string;
-  googleId?: string;
-}
+export type Users_UserWhereUniqueInput = AtLeast<
+  {
+    id?: number;
+    username?: string;
+    email?: string;
+    googleId?: string;
+    AND?: Users_UserWhereInput[];
+    OR?: Users_UserWhereInput[];
+    NOT?: Users_UserWhereInput[];
+    createdAt?: DateTimeFilter;
+    password?: StringNullableFilter | null;
+    roles?: StringNullableListFilter;
+    googleProfile?: JsonNullableFilter;
+  },
+  'id' | 'email'
+>;
 
 export interface Users_UserOrderByWithAggregationInput {
   id?: SortOrder;
@@ -956,10 +978,18 @@ export interface Users_ReviewOrderByWithRelationInput {
   score?: SortOrder;
 }
 
-export interface Users_ReviewWhereUniqueInput {
-  id?: number;
-  product_id?: number;
-}
+export type Users_ReviewWhereUniqueInput = AtLeast<
+  {
+    id?: number;
+    product_id?: number;
+    AND?: Users_ReviewWhereInput[];
+    OR?: Users_ReviewWhereInput[];
+    NOT?: Users_ReviewWhereInput[];
+    product?: Users_ProductWhereInput;
+    score?: IntFilter;
+  },
+  'id' | 'product_id'
+>;
 
 export interface Users_ReviewOrderByWithAggregationInput {
   id?: SortOrder;
@@ -994,9 +1024,16 @@ export interface Users_ProductOrderByWithRelationInput {
   review?: Users_ReviewOrderByRelationAggregateInput;
 }
 
-export interface Users_ProductWhereUniqueInput {
-  id?: number;
-}
+export type Users_ProductWhereUniqueInput = AtLeast<
+  {
+    id?: number;
+    AND?: Users_ProductWhereInput[];
+    OR?: Users_ProductWhereInput[];
+    NOT?: Users_ProductWhereInput[];
+    review?: Users_ReviewListRelationFilter;
+  },
+  'id'
+>;
 
 export interface Users_ProductOrderByWithAggregationInput {
   id?: SortOrder;
@@ -1100,7 +1137,6 @@ export interface Users_ReviewUncheckedCreateInput {
 }
 
 export interface Users_ReviewUpdateInput {
-  product?: Users_ProductUpdateOneRequiredWithoutReviewNestedInput;
   score?: IntFieldUpdateOperationsInput;
 }
 
@@ -1455,7 +1491,6 @@ export interface Users_ProductUpdateOneRequiredWithoutReviewNestedInput {
   connectOrCreate?: Users_ProductCreateOrConnectWithoutReviewInput;
   upsert?: Users_ProductUpsertWithoutReviewInput;
   connect?: Users_ProductWhereUniqueInput;
-  update?: Users_ProductUncheckedUpdateWithoutReviewInput;
 }
 
 export interface Users_ReviewCreateNestedManyWithoutProductInput {
@@ -1664,6 +1699,12 @@ export interface Users_ProductCreateOrConnectWithoutReviewInput {
 export interface Users_ProductUpsertWithoutReviewInput {
   update: Users_ProductUncheckedUpdateWithoutReviewInput;
   create: Users_ProductUncheckedCreateWithoutReviewInput;
+  where?: Users_ProductWhereInput;
+}
+
+export interface Users_ProductUpdateToOneWithWhereWithoutReviewInput {
+  where?: Users_ProductWhereInput;
+  data: Users_ProductUncheckedUpdateWithoutReviewInput;
 }
 
 export interface Users_ProductUncheckedUpdateWithoutReviewInput {

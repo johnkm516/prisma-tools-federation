@@ -8,6 +8,14 @@ export class GenerateTypes {
     `import { Context } from './context'`,
     `import { GraphQLResolveInfo } from 'graphql';`,
     `type Resolver<T extends {}, A extends {}, R extends any> = (parent: T,args: A, context: Context, info: GraphQLResolveInfo) => Promise<R>;`,
+    `// cause typescript not to expand types and preserve names
+    type NoExpand<T> = T extends unknown ? T : never;`,
+    `// this type assumes the passed object is entirely optional
+    type AtLeast<O extends object, K extends string> = NoExpand<
+      O extends unknown
+      ? | (K extends keyof O ? { [P in K]: O[P] } & O : O)
+        | {[P in keyof O as P extends K ? K : never]-?: O[P]} & O
+      : never>;`,
   ];
   scalar: { [key: string]: any } = {
     Int: 'number',
@@ -287,9 +295,15 @@ export class GenerateTypes {
           this.dmmf.modelInputTypesMap?.get(input.name) ?? ``,
         );
         if (this.options.federation && model) {
-          fields.push(
-            `export interface ${this.options.federation}_${input.name} {`,
-          );
+          if (input.name === `${model.name}WhereUniqueInput`) {
+            fields.push(
+              `export type ${this.options.federation}_${input.name} = AtLeast<{`,
+            );
+          } else {
+            fields.push(
+              `export interface ${this.options.federation}_${input.name} {`,
+            );
+          }
           input.fields.forEach((field) => {
             const inputType = this.getInputType(field);
             const outputTypeModel = this.dmmf.modelmap?.get(
@@ -318,7 +332,21 @@ export class GenerateTypes {
               );
             }
           });
-          fields.push('}');
+          if (input.name === `${model.name}WhereUniqueInput`) {
+            let uniques = [...new Set(model.keyFields?.flat())];
+            fields.push('}, ');
+            fields.push(
+              uniques
+                .map((unique) => {
+                  return `'${unique}'`;
+                })
+                .join(' | '),
+            );
+            fields.push('>');
+          } else {
+            fields.push('}');
+          }
+
           inputTypes.push(fields.join('\n'));
         } else {
           fields.push(`export interface ${input.name} {`);

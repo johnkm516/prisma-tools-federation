@@ -85,6 +85,13 @@ export default gql`
     username: String
     email: String
     googleId: String
+    AND: [Users_UserWhereInput!]
+    OR: [Users_UserWhereInput!]
+    NOT: [Users_UserWhereInput!]
+    createdAt: DateTimeFilter
+    password: StringNullableFilter
+    roles: StringNullableListFilter
+    googleProfile: JsonNullableFilter
   }
 
   input Users_UserOrderByWithAggregationInput {
@@ -137,6 +144,11 @@ export default gql`
   input Users_ReviewWhereUniqueInput {
     id: Int
     product_id: Int
+    AND: [Users_ReviewWhereInput!]
+    OR: [Users_ReviewWhereInput!]
+    NOT: [Users_ReviewWhereInput!]
+    product: Users_ProductWhereInput
+    score: IntFilter
   }
 
   input Users_ReviewOrderByWithAggregationInput {
@@ -174,6 +186,10 @@ export default gql`
 
   input Users_ProductWhereUniqueInput {
     id: Int
+    AND: [Users_ProductWhereInput!]
+    OR: [Users_ProductWhereInput!]
+    NOT: [Users_ProductWhereInput!]
+    review: Users_ReviewListRelationFilter
   }
 
   input Users_ProductOrderByWithAggregationInput {
@@ -278,7 +294,6 @@ export default gql`
   }
 
   input Users_ReviewUpdateInput {
-    product: Users_ProductUpdateOneRequiredWithoutReviewNestedInput
     score: IntFieldUpdateOperationsInput
   }
 
@@ -633,7 +648,6 @@ export default gql`
     connectOrCreate: Users_ProductCreateOrConnectWithoutReviewInput
     upsert: Users_ProductUpsertWithoutReviewInput
     connect: Users_ProductWhereUniqueInput
-    update: Users_ProductUncheckedUpdateWithoutReviewInput
   }
 
   input Users_ReviewCreateNestedManyWithoutProductInput {
@@ -842,6 +856,12 @@ export default gql`
   input Users_ProductUpsertWithoutReviewInput {
     update: Users_ProductUncheckedUpdateWithoutReviewInput!
     create: Users_ProductUncheckedCreateWithoutReviewInput!
+    where: Users_ProductWhereInput
+  }
+
+  input Users_ProductUpdateToOneWithWhereWithoutReviewInput {
+    where: Users_ProductWhereInput
+    data: Users_ProductUncheckedUpdateWithoutReviewInput!
   }
 
   input Users_ProductUncheckedUpdateWithoutReviewInput {
