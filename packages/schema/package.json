@@ -1,6 +1,6 @@
 {
   "name": "@paljs/schema",
-  "version": "4.1.0",
+  "version": "5.0.1",
   "main": "dist/index.cjs",
   "module": "dist/index.esm.mjs",
   "types": "dist/index.d.ts",
@@ -26,10 +26,10 @@
   "dependencies": {
     "@paljs/display": "^4.0.0",
     "@paljs/types": "^5.0.1",
-    "@prisma/internals": "^4.5.0"
+    "@prisma/internals": "^4.6.0"
   },
   "devDependencies": {
-    "typescript": "4.5.5"
+    "typescript": "4.8.4"
   },
   "files": [
     "dist"

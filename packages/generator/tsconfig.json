@@ -2,8 +2,8 @@
   "include": ["src", "types"],
   "compilerOptions": {
     "module": "CommonJS",
-    "lib": ["dom", "ES2022"],
-    "target": "ES2022",
+    "lib": ["dom", "ES2021"],
+    "target": "ES2021",
     "importHelpers": true,
     "declaration": true,
     "sourceMap": true,
