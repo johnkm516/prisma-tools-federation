@@ -53,6 +53,22 @@ export async function createQueriesAndMutations(
     },`;
   }
 
+  if (!exclude.includes('findUniqueOrThrow')) {
+    if (generator.options.federation) {
+      operations.queries.type += `\n${generator.options.federation}_`;
+      operations.queries.resolver += `\n${generator.options.federation}_`;
+    } else {
+      operations.queries.type += `\n`;
+      operations.queries.resolver += `\n`;
+    }
+    operations.queries.type += `findUnique${name}OrThrow(${await args(
+      'findUnique',
+    )}): ${modelName}`;
+    operations.queries.resolver += `findUnique${name}OrThrow: (_parent, args, {${prismaName}}) => {
+      return ${prismaName}.${model}.findUnique(args)
+    },`;
+  }
+
   if (!exclude.includes('findFirst')) {
     if (generator.options.federation) {
       operations.queries.type += `\n${generator.options.federation}_`;
@@ -65,6 +81,22 @@ export async function createQueriesAndMutations(
       'findFirst',
     )}): ${modelName}`;
     operations.queries.resolver += `findFirst${name}: (_parent, args, {${prismaName}}) => {
+      return ${prismaName}.${model}.findFirst(args)
+    },`;
+  }
+
+  if (!exclude.includes('findFirstOrThrow')) {
+    if (generator.options.federation) {
+      operations.queries.type += `\n${generator.options.federation}_`;
+      operations.queries.resolver += `\n${generator.options.federation}_`;
+    } else {
+      operations.queries.type += `\n`;
+      operations.queries.resolver += `\n`;
+    }
+    operations.queries.type += `findFirst${name}OrThrow(${await args(
+      'findFirst',
+    )}): ${modelName}`;
+    operations.queries.resolver += `findFirst${name}OrThrow: (_parent, args, {${prismaName}}) => {
       return ${prismaName}.${model}.findFirst(args)
     },`;
   }

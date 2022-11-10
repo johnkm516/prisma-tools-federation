@@ -334,6 +334,7 @@ export class GenerateTypes {
           });
           if (input.name === `${model.name}WhereUniqueInput`) {
             let uniques = [...new Set(model.keyFields?.flat())];
+            console.log(model.keyFields);
             fields.push('}, ');
             fields.push(
               uniques

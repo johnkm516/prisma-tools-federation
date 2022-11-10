@@ -99,6 +99,11 @@ export interface Query {
     Users_FindFirstUserArgs,
     Client.User | null
   >;
+  Users_findFirstUserOrThrow?: Resolver<
+    {},
+    Users_FindFirstUserOrThrowArgs,
+    Client.User | null
+  >;
   Users_findManyUser?: Resolver<{}, Users_FindManyUserArgs, Client.User[]>;
   Users_findManyUserCount?: Resolver<{}, Users_FindManyUserArgs, number>;
   Users_aggregateUser?: Resolver<
@@ -116,9 +121,19 @@ export interface Query {
     Users_FindUniqueUserArgs,
     Client.User | null
   >;
+  Users_findUniqueUserOrThrow?: Resolver<
+    {},
+    Users_FindUniqueUserOrThrowArgs,
+    Client.User | null
+  >;
   Users_findFirstReview?: Resolver<
     {},
     Users_FindFirstReviewArgs,
+    Client.Review | null
+  >;
+  Users_findFirstReviewOrThrow?: Resolver<
+    {},
+    Users_FindFirstReviewOrThrowArgs,
     Client.Review | null
   >;
   Users_findManyReview?: Resolver<
@@ -142,9 +157,19 @@ export interface Query {
     Users_FindUniqueReviewArgs,
     Client.Review | null
   >;
+  Users_findUniqueReviewOrThrow?: Resolver<
+    {},
+    Users_FindUniqueReviewOrThrowArgs,
+    Client.Review | null
+  >;
   Users_findFirstProduct?: Resolver<
     {},
     Users_FindFirstProductArgs,
+    Client.Product | null
+  >;
+  Users_findFirstProductOrThrow?: Resolver<
+    {},
+    Users_FindFirstProductOrThrowArgs,
     Client.Product | null
   >;
   Users_findManyProduct?: Resolver<
@@ -166,6 +191,11 @@ export interface Query {
   Users_findUniqueProduct?: Resolver<
     {},
     Users_FindUniqueProductArgs,
+    Client.Product | null
+  >;
+  Users_findUniqueProductOrThrow?: Resolver<
+    {},
+    Users_FindUniqueProductOrThrowArgs,
     Client.Product | null
   >;
 }
@@ -660,6 +690,15 @@ export interface Users_FindFirstUserArgs {
   distinct?: UserScalarFieldEnum[] | null;
 }
 
+export interface Users_FindFirstUserOrThrowArgs {
+  where?: Users_UserWhereInput | null;
+  orderBy?: Users_UserOrderByWithRelationInput[] | null;
+  cursor?: Users_UserWhereUniqueInput | null;
+  take?: number | null;
+  skip?: number | null;
+  distinct?: UserScalarFieldEnum[] | null;
+}
+
 export interface Users_FindManyUserArgs {
   where?: Users_UserWhereInput;
   orderBy?: Users_UserOrderByWithRelationInput[];
@@ -695,7 +734,20 @@ export interface Users_FindUniqueUserArgs {
   where: Users_UserWhereUniqueInput | null;
 }
 
+export interface Users_FindUniqueUserOrThrowArgs {
+  where: Users_UserWhereUniqueInput | null;
+}
+
 export interface Users_FindFirstReviewArgs {
+  where?: Users_ReviewWhereInput | null;
+  orderBy?: Users_ReviewOrderByWithRelationInput[] | null;
+  cursor?: Users_ReviewWhereUniqueInput | null;
+  take?: number | null;
+  skip?: number | null;
+  distinct?: ReviewScalarFieldEnum[] | null;
+}
+
+export interface Users_FindFirstReviewOrThrowArgs {
   where?: Users_ReviewWhereInput | null;
   orderBy?: Users_ReviewOrderByWithRelationInput[] | null;
   cursor?: Users_ReviewWhereUniqueInput | null;
@@ -739,7 +791,20 @@ export interface Users_FindUniqueReviewArgs {
   where: Users_ReviewWhereUniqueInput | null;
 }
 
+export interface Users_FindUniqueReviewOrThrowArgs {
+  where: Users_ReviewWhereUniqueInput | null;
+}
+
 export interface Users_FindFirstProductArgs {
+  where?: Users_ProductWhereInput | null;
+  orderBy?: Users_ProductOrderByWithRelationInput[] | null;
+  cursor?: Users_ProductWhereUniqueInput | null;
+  take?: number | null;
+  skip?: number | null;
+  distinct?: ProductScalarFieldEnum[] | null;
+}
+
+export interface Users_FindFirstProductOrThrowArgs {
   where?: Users_ProductWhereInput | null;
   orderBy?: Users_ProductOrderByWithRelationInput[] | null;
   cursor?: Users_ProductWhereUniqueInput | null;
@@ -780,6 +845,10 @@ export interface Users_GroupByProductArgs {
 }
 
 export interface Users_FindUniqueProductArgs {
+  where: Users_ProductWhereUniqueInput | null;
+}
+
+export interface Users_FindUniqueProductOrThrowArgs {
   where: Users_ProductWhereUniqueInput | null;
 }
 

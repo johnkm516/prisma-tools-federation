@@ -10,7 +10,16 @@ export default gql`
 
   type Query {
     Users_findUniqueReview(where: Users_ReviewWhereUniqueInput!): Review
+    Users_findUniqueReviewOrThrow(where: Users_ReviewWhereUniqueInput!): Review
     Users_findFirstReview(
+      where: Users_ReviewWhereInput
+      orderBy: [Users_ReviewOrderByWithRelationInput]
+      cursor: Users_ReviewWhereUniqueInput
+      take: Int
+      skip: Int
+      distinct: [ReviewScalarFieldEnum]
+    ): Review
+    Users_findFirstReviewOrThrow(
       where: Users_ReviewWhereInput
       orderBy: [Users_ReviewOrderByWithRelationInput]
       cursor: Users_ReviewWhereUniqueInput

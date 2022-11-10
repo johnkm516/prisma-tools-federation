@@ -1,8 +1,8 @@
 {
   "name": "@paljs/plugins",
-  "version": "4.1.0",
-  "main": "dist/index.js",
-  "module": "dist/plugins.esm.js",
+  "version": "5.0.1",
+  "main": "dist/index.cjs",
+  "module": "dist/index.esm.mjs",
   "types": "dist/index.d.ts",
   "repository": {
     "type": "git",
@@ -21,7 +21,7 @@
     "prepare": "tsdx build"
   },
   "dependencies": {
-    "@paljs/types": "^5.0.0",
+    "@paljs/types": "^5.0.1",
     "graphql-fields": "2.0.3",
     "graphql-tag": "2.12.6"
   },
@@ -29,9 +29,9 @@
     "access": "public"
   },
   "devDependencies": {
-    "@prisma/client": "^3.13.0",
-    "graphql": "^15.7.2",
-    "typescript": "4.5.5"
+    "@prisma/client": "^4.6.0",
+    "graphql": "^16.6.0",
+    "typescript": "4.8.4"
   },
   "files": [
     "dist"

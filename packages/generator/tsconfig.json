@@ -2,8 +2,8 @@
   "include": ["src", "types"],
   "compilerOptions": {
     "module": "CommonJS",
-    "lib": ["dom", "ES2021"],
-    "target": "ES2021",
+    "lib": ["dom", "esnext"],
+    "target": "esnext",
     "importHelpers": true,
     "declaration": true,
     "sourceMap": true,

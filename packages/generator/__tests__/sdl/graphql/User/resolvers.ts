@@ -5,7 +5,13 @@ const resolvers: Resolvers = {
     Users_findUniqueUser: (_parent, args, { prisma }) => {
       return prisma.user.findUnique(args);
     },
+    Users_findUniqueUserOrThrow: (_parent, args, { prisma }) => {
+      return prisma.user.findUnique(args);
+    },
     Users_findFirstUser: (_parent, args, { prisma }) => {
+      return prisma.user.findFirst(args);
+    },
+    Users_findFirstUserOrThrow: (_parent, args, { prisma }) => {
       return prisma.user.findFirst(args);
     },
     Users_findManyUser: (_parent, args, { prisma }) => {

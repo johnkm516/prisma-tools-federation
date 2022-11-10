@@ -520,7 +520,7 @@ export class Generators {
   ) {
     return format(text, {
       singleQuote: true,
-      semi: false,
+      semi: true,
       trailingComma: 'all',
       parser,
     });

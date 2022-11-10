@@ -16,7 +16,18 @@ export default gql`
 
   type Query {
     Users_findUniqueProduct(where: Users_ProductWhereUniqueInput!): Product
+    Users_findUniqueProductOrThrow(
+      where: Users_ProductWhereUniqueInput!
+    ): Product
     Users_findFirstProduct(
+      where: Users_ProductWhereInput
+      orderBy: [Users_ProductOrderByWithRelationInput]
+      cursor: Users_ProductWhereUniqueInput
+      take: Int
+      skip: Int
+      distinct: [ProductScalarFieldEnum]
+    ): Product
+    Users_findFirstProductOrThrow(
       where: Users_ProductWhereInput
       orderBy: [Users_ProductOrderByWithRelationInput]
       cursor: Users_ProductWhereUniqueInput

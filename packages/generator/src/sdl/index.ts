@@ -64,7 +64,6 @@ export class GenerateSdl extends Generators {
       model.fields.forEach((field) => {
         if (!excludeFields.includes(field.name)) {
           const dataField = this.dataField(field.name, dataModel);
-          //console.log(dataField);
           const fieldDocs = this.filterDocs(dataField?.documentation);
           if (this.shouldOmit(fieldDocs)) {
             return;

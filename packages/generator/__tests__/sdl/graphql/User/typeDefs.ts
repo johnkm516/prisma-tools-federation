@@ -14,7 +14,16 @@ export default gql`
 
   type Query {
     Users_findUniqueUser(where: Users_UserWhereUniqueInput!): User
+    Users_findUniqueUserOrThrow(where: Users_UserWhereUniqueInput!): User
     Users_findFirstUser(
+      where: Users_UserWhereInput
+      orderBy: [Users_UserOrderByWithRelationInput]
+      cursor: Users_UserWhereUniqueInput
+      take: Int
+      skip: Int
+      distinct: [UserScalarFieldEnum]
+    ): User
+    Users_findFirstUserOrThrow(
       where: Users_UserWhereInput
       orderBy: [Users_UserOrderByWithRelationInput]
       cursor: Users_UserWhereUniqueInput

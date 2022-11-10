@@ -5,7 +5,13 @@ const resolvers: Resolvers = {
     Users_findUniqueProduct: (_parent, args, { prisma }) => {
       return prisma.product.findUnique(args);
     },
+    Users_findUniqueProductOrThrow: (_parent, args, { prisma }) => {
+      return prisma.product.findUnique(args);
+    },
     Users_findFirstProduct: (_parent, args, { prisma }) => {
+      return prisma.product.findFirst(args);
+    },
+    Users_findFirstProductOrThrow: (_parent, args, { prisma }) => {
       return prisma.product.findFirst(args);
     },
     Users_findManyProduct: (_parent, args, { prisma }) => {
