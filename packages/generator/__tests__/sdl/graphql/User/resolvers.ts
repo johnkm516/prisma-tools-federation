@@ -6,13 +6,13 @@ const resolvers: Resolvers = {
       return prisma.user.findUnique(args);
     },
     Users_findUniqueUserOrThrow: (_parent, args, { prisma }) => {
-      return prisma.user.findUnique(args);
+      return prisma.user.findUniqueOrThrow(args);
     },
     Users_findFirstUser: (_parent, args, { prisma }) => {
       return prisma.user.findFirst(args);
     },
     Users_findFirstUserOrThrow: (_parent, args, { prisma }) => {
-      return prisma.user.findFirst(args);
+      return prisma.user.findFirstOrThrow(args);
     },
     Users_findManyUser: (_parent, args, { prisma }) => {
       return prisma.user.findMany(args);

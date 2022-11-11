@@ -65,7 +65,7 @@ export async function createQueriesAndMutations(
       'findUnique',
     )}): ${modelName}`;
     operations.queries.resolver += `findUnique${name}OrThrow: (_parent, args, {${prismaName}}) => {
-      return ${prismaName}.${model}.findUnique(args)
+      return ${prismaName}.${model}.findUniqueOrThrow(args)
     },`;
   }
 
@@ -97,7 +97,7 @@ export async function createQueriesAndMutations(
       'findFirst',
     )}): ${modelName}`;
     operations.queries.resolver += `findFirst${name}OrThrow: (_parent, args, {${prismaName}}) => {
-      return ${prismaName}.${model}.findFirst(args)
+      return ${prismaName}.${model}.findFirstOrThrow(args)
     },`;
   }
 

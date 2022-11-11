@@ -6,13 +6,13 @@ const resolvers: Resolvers = {
       return prisma.review.findUnique(args);
     },
     Users_findUniqueReviewOrThrow: (_parent, args, { prisma }) => {
-      return prisma.review.findUnique(args);
+      return prisma.review.findUniqueOrThrow(args);
     },
     Users_findFirstReview: (_parent, args, { prisma }) => {
       return prisma.review.findFirst(args);
     },
     Users_findFirstReviewOrThrow: (_parent, args, { prisma }) => {
-      return prisma.review.findFirst(args);
+      return prisma.review.findFirstOrThrow(args);
     },
     Users_findManyReview: (_parent, args, { prisma }) => {
       return prisma.review.findMany(args);
