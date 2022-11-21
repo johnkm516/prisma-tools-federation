@@ -23,7 +23,11 @@ const resolvers: Resolvers = {
     Users_aggregateReview: (_parent, args, { prisma }) => {
       return prisma.review.aggregate(args);
     },
+    //eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    //@ts-ignore
     Users_groupByReview: (_parent, args, { prisma }) => {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      //@ts-ignore
       return prisma.review.groupBy(args);
     },
   },

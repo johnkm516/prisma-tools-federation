@@ -150,6 +150,9 @@ export async function createQueriesAndMutations(
   }
 
   if (!exclude.includes('groupBy')) {
+    operations.queries.resolver += `
+    //eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    //@ts-ignore`;
     if (generator.options.federation) {
       operations.queries.type += `\n${generator.options.federation}_`;
       operations.queries.resolver += `\n${generator.options.federation}_`;
@@ -159,8 +162,10 @@ export async function createQueriesAndMutations(
     }
     operations.queries.type += `groupBy${name}(${await args(
       'groupBy',
-    )}): groupBy${name}`;
+    )}): ${name}GroupByOutputType`;
     operations.queries.resolver += `groupBy${name}: (_parent, args, {${prismaName}}) => {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      //@ts-ignore
       return ${prismaName}.${model}.groupBy(args)
     },`;
   }

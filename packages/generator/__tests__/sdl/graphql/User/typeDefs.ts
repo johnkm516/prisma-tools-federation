@@ -61,7 +61,7 @@ export default gql`
       having: Users_UserScalarWhereWithAggregatesInput
       take: Int
       skip: Int
-    ): groupByUser
+    ): UserGroupByOutputType
   }
 
   type Mutation {

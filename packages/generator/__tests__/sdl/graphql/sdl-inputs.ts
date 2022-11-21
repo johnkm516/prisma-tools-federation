@@ -1023,6 +1023,25 @@ export default gql`
     _max: UserMaxAggregateOutputType
   }
 
+  type UserGroupByOutputType
+    @key(fields: "id")
+    @key(fields: "email")
+    @shareable {
+    id: Int!
+    createdAt: DateTime!
+    username: String
+    password: String
+    email: String!
+    roles: [String!]
+    googleId: String
+    googleProfile: Json
+    _count: UserCountAggregateOutputType
+    _avg: UserAvgAggregateOutputType
+    _sum: UserSumAggregateOutputType
+    _min: UserMinAggregateOutputType
+    _max: UserMaxAggregateOutputType
+  }
+
   type AggregateReview @shareable {
     _count: ReviewCountAggregateOutputType
     _avg: ReviewAvgAggregateOutputType
@@ -1031,7 +1050,31 @@ export default gql`
     _max: ReviewMaxAggregateOutputType
   }
 
+  type ReviewGroupByOutputType
+    @key(fields: "id")
+    @key(fields: "product_id")
+    @shareable {
+    id: Int!
+    product_id: Int!
+    score: Int!
+    _count: ReviewCountAggregateOutputType
+    _avg: ReviewAvgAggregateOutputType
+    _sum: ReviewSumAggregateOutputType
+    _min: ReviewMinAggregateOutputType
+    _max: ReviewMaxAggregateOutputType
+  }
+
   type AggregateProduct @shareable {
+    _count: ProductCountAggregateOutputType
+    _avg: ProductAvgAggregateOutputType
+    _sum: ProductSumAggregateOutputType
+    _min: ProductMinAggregateOutputType
+    _max: ProductMaxAggregateOutputType
+  }
+
+  type ProductGroupByOutputType @key(fields: "id") @shareable {
+    id: Int!
+    price: Float!
     _count: ProductCountAggregateOutputType
     _avg: ProductAvgAggregateOutputType
     _sum: ProductSumAggregateOutputType

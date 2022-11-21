@@ -164,7 +164,8 @@ type BatchPayload @shareable {
       .filter(
         (type) =>
           type.name.includes('Aggregate') ||
-          type.name.endsWith('CountOutputType'),
+          type.name.endsWith('CountOutputType') ||
+          type.name.endsWith('GroupByOutputType'),
       )
       .forEach((type) => {
         if (options?.federation) {
@@ -182,7 +183,8 @@ type BatchPayload @shareable {
               type.name === model.name + `SumAggregateOutputType` ||
               type.name === model.name + `MinAggregateOutputType` ||
               type.name === model.name + `MaxAggregateOutputType` ||
-              type.name === model.name + `CountOutputType`
+              type.name === model.name + `CountOutputType` ||
+              type.name === model.name + `GroupByOutputType`
             ) {
               let keyStr = ``;
               model?.keyFields?.forEach((keys) => {
