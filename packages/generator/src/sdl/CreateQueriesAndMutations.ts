@@ -149,6 +149,22 @@ export async function createQueriesAndMutations(
     },`;
   }
 
+  if (!exclude.includes('groupBy')) {
+    if (generator.options.federation) {
+      operations.queries.type += `\n${generator.options.federation}_`;
+      operations.queries.resolver += `\n${generator.options.federation}_`;
+    } else {
+      operations.queries.type += `\n`;
+      operations.queries.resolver += `\n`;
+    }
+    operations.queries.type += `groupBy${name}(${await args(
+      'groupBy',
+    )}): groupBy${name}`;
+    operations.queries.resolver += `groupBy${name}: (_parent, args, {${prismaName}}) => {
+      return ${prismaName}.${model}.groupBy(args)
+    },`;
+  }
+
   if (!exclude.includes('createOne')) {
     if (generator.options.federation) {
       operations.mutations.type += `\n${generator.options.federation}_`;
@@ -177,6 +193,22 @@ export async function createQueriesAndMutations(
       'updateOne',
     )}): ${modelName}!`;
     operations.mutations.resolver += `updateOne${name}: (_parent, args, {${prismaName}}) => {
+      return ${prismaName}.${model}.update(args)
+    },`;
+  }
+
+  if (!exclude.includes('updateOneSaga')) {
+    if (generator.options.federation) {
+      operations.mutations.type += `\n${generator.options.federation}_`;
+      operations.mutations.resolver += `\n${generator.options.federation}_`;
+    } else {
+      operations.mutations.type += `\n`;
+      operations.mutations.resolver += `\n`;
+    }
+    operations.mutations.type += `updateOne${name}Saga(${await args(
+      'updateOne',
+    )}): ${modelName}!`;
+    operations.mutations.resolver += `updateOne${name}Saga: (_parent, args, {${prismaName}}) => {
       return ${prismaName}.${model}.update(args)
     },`;
   }

@@ -271,10 +271,12 @@ export class Generators {
     'findMany',
     'findCount',
     'aggregate',
+    'groupBy',
   ];
   mutations: Mutation[] = [
     'createOne',
     'updateOne',
+    'updateOneSaga',
     'upsertOne',
     'deleteOne',
     'updateMany',
