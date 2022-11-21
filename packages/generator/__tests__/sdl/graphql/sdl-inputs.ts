@@ -19,6 +19,7 @@ export default gql`
 
   enum ProductScalarFieldEnum {
     id
+    price
   }
 
   enum QueryMode {
@@ -176,11 +177,13 @@ export default gql`
     OR: [Users_ProductWhereInput!]
     NOT: [Users_ProductWhereInput!]
     id: IntFilter
+    price: FloatFilter
     review: Users_ReviewListRelationFilter
   }
 
   input Users_ProductOrderByWithRelationInput {
     id: SortOrder
+    price: SortOrder
     review: Users_ReviewOrderByRelationAggregateInput
   }
 
@@ -189,11 +192,13 @@ export default gql`
     AND: [Users_ProductWhereInput!]
     OR: [Users_ProductWhereInput!]
     NOT: [Users_ProductWhereInput!]
+    price: FloatFilter
     review: Users_ReviewListRelationFilter
   }
 
   input Users_ProductOrderByWithAggregationInput {
     id: SortOrder
+    price: SortOrder
     _count: Users_ProductCountOrderByAggregateInput
     _avg: Users_ProductAvgOrderByAggregateInput
     _max: Users_ProductMaxOrderByAggregateInput
@@ -206,6 +211,7 @@ export default gql`
     OR: [Users_ProductScalarWhereWithAggregatesInput!]
     NOT: [Users_ProductScalarWhereWithAggregatesInput!]
     id: IntWithAggregatesFilter
+    price: FloatWithAggregatesFilter
   }
 
   input Users_UserCreateInput {
@@ -294,6 +300,7 @@ export default gql`
   }
 
   input Users_ReviewUpdateInput {
+    product: Users_ProductUpdateOneRequiredWithoutReviewNestedInput
     score: IntFieldUpdateOperationsInput
   }
 
@@ -320,29 +327,39 @@ export default gql`
   }
 
   input Users_ProductCreateInput {
+    price: Float!
     review: Users_ReviewCreateNestedManyWithoutProductInput
   }
 
   input Users_ProductUncheckedCreateInput {
     id: Int
+    price: Float!
     review: Users_ReviewUncheckedCreateNestedManyWithoutProductInput
   }
 
   input Users_ProductUpdateInput {
+    price: FloatFieldUpdateOperationsInput
     review: Users_ReviewUpdateManyWithoutProductNestedInput
   }
 
   input Users_ProductUncheckedUpdateInput {
     id: IntFieldUpdateOperationsInput
+    price: FloatFieldUpdateOperationsInput
     review: Users_ReviewUncheckedUpdateManyWithoutProductNestedInput
   }
 
   input Users_ProductCreateManyInput {
     id: Int
+    price: Float!
+  }
+
+  input Users_ProductUpdateManyMutationInput {
+    price: FloatFieldUpdateOperationsInput
   }
 
   input Users_ProductUncheckedUpdateManyInput {
     id: IntFieldUpdateOperationsInput
+    price: FloatFieldUpdateOperationsInput
   }
 
   input IntFilter {
@@ -578,6 +595,17 @@ export default gql`
     score: SortOrder
   }
 
+  input FloatFilter {
+    equals: Float
+    in: [Float!]
+    notIn: [Float!]
+    lt: Float
+    lte: Float
+    gt: Float
+    gte: Float
+    not: NestedFloatFilter
+  }
+
   input Users_ReviewListRelationFilter {
     every: Users_ReviewWhereInput
     some: Users_ReviewWhereInput
@@ -590,22 +618,43 @@ export default gql`
 
   input Users_ProductCountOrderByAggregateInput {
     id: SortOrder
+    price: SortOrder
   }
 
   input Users_ProductAvgOrderByAggregateInput {
     id: SortOrder
+    price: SortOrder
   }
 
   input Users_ProductMaxOrderByAggregateInput {
     id: SortOrder
+    price: SortOrder
   }
 
   input Users_ProductMinOrderByAggregateInput {
     id: SortOrder
+    price: SortOrder
   }
 
   input Users_ProductSumOrderByAggregateInput {
     id: SortOrder
+    price: SortOrder
+  }
+
+  input FloatWithAggregatesFilter {
+    equals: Float
+    in: [Float!]
+    notIn: [Float!]
+    lt: Float
+    lte: Float
+    gt: Float
+    gte: Float
+    not: NestedFloatWithAggregatesFilter
+    _count: NestedIntFilter
+    _avg: NestedFloatFilter
+    _sum: NestedFloatFilter
+    _min: NestedFloatFilter
+    _max: NestedFloatFilter
   }
 
   input Users_UserCreaterolesInput {
@@ -648,6 +697,7 @@ export default gql`
     connectOrCreate: Users_ProductCreateOrConnectWithoutReviewInput
     upsert: Users_ProductUpsertWithoutReviewInput
     connect: Users_ProductWhereUniqueInput
+    update: Users_ProductUpdateWithoutReviewInput
   }
 
   input Users_ReviewCreateNestedManyWithoutProductInput {
@@ -662,6 +712,14 @@ export default gql`
     connectOrCreate: [Users_ReviewCreateOrConnectWithoutProductInput!]
     createMany: Users_ReviewCreateManyProductInputEnvelope
     connect: [Users_ReviewWhereUniqueInput!]
+  }
+
+  input FloatFieldUpdateOperationsInput {
+    set: Float
+    increment: Float
+    decrement: Float
+    multiply: Float
+    divide: Float
   }
 
   input Users_ReviewUpdateManyWithoutProductNestedInput {
@@ -844,8 +902,29 @@ export default gql`
     not: Json
   }
 
+  input NestedFloatWithAggregatesFilter {
+    equals: Float
+    in: [Float!]
+    notIn: [Float!]
+    lt: Float
+    lte: Float
+    gt: Float
+    gte: Float
+    not: NestedFloatWithAggregatesFilter
+    _count: NestedIntFilter
+    _avg: NestedFloatFilter
+    _sum: NestedFloatFilter
+    _min: NestedFloatFilter
+    _max: NestedFloatFilter
+  }
+
+  input Users_ProductCreateWithoutReviewInput {
+    price: Float!
+  }
+
   input Users_ProductUncheckedCreateWithoutReviewInput {
     id: Int
+    price: Float!
   }
 
   input Users_ProductCreateOrConnectWithoutReviewInput {
@@ -864,8 +943,13 @@ export default gql`
     data: Users_ProductUncheckedUpdateWithoutReviewInput!
   }
 
+  input Users_ProductUpdateWithoutReviewInput {
+    price: FloatFieldUpdateOperationsInput
+  }
+
   input Users_ProductUncheckedUpdateWithoutReviewInput {
     id: IntFieldUpdateOperationsInput
+    price: FloatFieldUpdateOperationsInput
   }
 
   input Users_ReviewCreateWithoutProductInput {
@@ -1054,22 +1138,27 @@ export default gql`
 
   type ProductCountAggregateOutputType @key(fields: "id") @shareable {
     id: Int!
+    price: Int!
     _all: Int!
   }
 
   type ProductAvgAggregateOutputType @key(fields: "id") @shareable {
     id: Float
+    price: Float
   }
 
   type ProductSumAggregateOutputType @key(fields: "id") @shareable {
     id: Int
+    price: Float
   }
 
   type ProductMinAggregateOutputType @key(fields: "id") @shareable {
     id: Int
+    price: Float
   }
 
   type ProductMaxAggregateOutputType @key(fields: "id") @shareable {
     id: Int
+    price: Float
   }
 `;

@@ -23,12 +23,18 @@ const resolvers: Resolvers = {
     Users_aggregateProduct: (_parent, args, { prisma }) => {
       return prisma.product.aggregate(args);
     },
+    Users_groupByProduct: (_parent, args, { prisma }) => {
+      return prisma.product.groupBy(args);
+    },
   },
   Mutation: {
     Users_createOneProduct: (_parent, args, { prisma }) => {
       return prisma.product.create(args);
     },
     Users_updateOneProduct: (_parent, args, { prisma }) => {
+      return prisma.product.update(args);
+    },
+    Users_updateOneProductSaga: (_parent, args, { prisma }) => {
       return prisma.product.update(args);
     },
     Users_deleteOneProduct: async (_parent, args, { prisma }) => {
@@ -40,7 +46,9 @@ const resolvers: Resolvers = {
     Users_deleteManyProduct: async (_parent, args, { prisma }) => {
       return prisma.product.deleteMany(args);
     },
-    //updateMany for this model cannot exist as this model contains only unique fields or relations.
+    Users_updateManyProduct: (_parent, args, { prisma }) => {
+      return prisma.product.updateMany(args);
+    },
   },
   Product: {
     __resolveReference(reference, { prisma }) {

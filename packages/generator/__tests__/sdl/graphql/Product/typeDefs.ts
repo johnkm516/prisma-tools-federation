@@ -3,6 +3,7 @@ import gql from 'graphql-tag';
 export default gql`
   type Product @key(fields: "id") @shareable {
     id: Int!
+    price: Float!
     review(
       where: Users_ReviewWhereInput
       orderBy: Users_ReviewOrderByWithRelationInput
@@ -58,11 +59,23 @@ export default gql`
       take: Int
       skip: Int
     ): AggregateProduct
+    Users_groupByProduct(
+      where: Users_ProductWhereInput
+      orderBy: [Users_ProductOrderByWithAggregationInput]
+      by: [ProductScalarFieldEnum!]
+      having: Users_ProductScalarWhereWithAggregatesInput
+      take: Int
+      skip: Int
+    ): groupByProduct
   }
 
   type Mutation {
     Users_createOneProduct(data: Users_ProductCreateInput!): Product!
     Users_updateOneProduct(
+      data: Users_ProductUpdateInput!
+      where: Users_ProductWhereUniqueInput!
+    ): Product!
+    Users_updateOneProductSaga(
       data: Users_ProductUpdateInput!
       where: Users_ProductWhereUniqueInput!
     ): Product!
@@ -73,6 +86,9 @@ export default gql`
       update: Users_ProductUpdateInput!
     ): Product
     Users_deleteManyProduct(where: Users_ProductWhereInput): BatchPayload
-    # updateMany for this model cannot exist as this model contains only unique fields or relations.
+    Users_updateManyProduct(
+      data: Users_ProductUpdateManyMutationInput!
+      where: Users_ProductWhereInput
+    ): BatchPayload
   }
 `;

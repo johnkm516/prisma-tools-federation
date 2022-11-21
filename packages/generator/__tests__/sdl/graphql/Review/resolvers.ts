@@ -23,12 +23,18 @@ const resolvers: Resolvers = {
     Users_aggregateReview: (_parent, args, { prisma }) => {
       return prisma.review.aggregate(args);
     },
+    Users_groupByReview: (_parent, args, { prisma }) => {
+      return prisma.review.groupBy(args);
+    },
   },
   Mutation: {
     Users_createOneReview: (_parent, args, { prisma }) => {
       return prisma.review.create(args);
     },
     Users_updateOneReview: (_parent, args, { prisma }) => {
+      return prisma.review.update(args);
+    },
+    Users_updateOneReviewSaga: (_parent, args, { prisma }) => {
       return prisma.review.update(args);
     },
     Users_deleteOneReview: async (_parent, args, { prisma }) => {

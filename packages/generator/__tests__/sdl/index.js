@@ -16,8 +16,13 @@ async function main() {
         federation: "Users"
       },
     );
+    let dmmf = await generator.run();
     
-    await generator.run();
+    //console.log(dmmf);
+    //console.table(dmmf.schema.inputObjectTypes.prisma);
+    //console.log(dmmf.schema.outputObjectTypes.prisma);
+    //console.log(dmmf.mappings.modelOperations);
+    
   } catch (error) {
     console.log(error);
   }

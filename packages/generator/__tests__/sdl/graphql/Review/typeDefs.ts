@@ -50,11 +50,23 @@ export default gql`
       take: Int
       skip: Int
     ): AggregateReview
+    Users_groupByReview(
+      where: Users_ReviewWhereInput
+      orderBy: [Users_ReviewOrderByWithAggregationInput]
+      by: [ReviewScalarFieldEnum!]
+      having: Users_ReviewScalarWhereWithAggregatesInput
+      take: Int
+      skip: Int
+    ): groupByReview
   }
 
   type Mutation {
     Users_createOneReview(data: Users_ReviewCreateInput!): Review!
     Users_updateOneReview(
+      data: Users_ReviewUpdateInput!
+      where: Users_ReviewWhereUniqueInput!
+    ): Review!
+    Users_updateOneReviewSaga(
       data: Users_ReviewUpdateInput!
       where: Users_ReviewWhereUniqueInput!
     ): Review!

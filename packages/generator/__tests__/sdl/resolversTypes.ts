@@ -82,6 +82,7 @@ export interface Review {
 export interface Product {
   [key: string]: Resolver<any, any, any>;
   id?: Resolver<Client.Product, {}, number>;
+  price?: Resolver<Client.Product, {}, number>;
   review?: Resolver<
     Client.Product,
     Users_ProductReviewArgs,
@@ -289,7 +290,11 @@ export interface Mutation {
     Users_UpdateOneProductArgs,
     Client.Product | null
   >;
-  //Users_updateManyProduct is not generated because model has only unique fields or relations.
+  Users_updateManyProduct?: Resolver<
+    {},
+    Users_UpdateManyProductArgs,
+    Client.Prisma.BatchPayload
+  >;
   Users_deleteManyProduct?: Resolver<
     {},
     Users_DeleteManyProductArgs,
@@ -458,6 +463,7 @@ export interface AggregateProduct {
 export interface ProductGroupByOutputType {
   [key: string]: Resolver<any, any, any>;
   id?: Resolver<Client.Prisma.ProductGroupByOutputType, {}, number>;
+  price?: Resolver<Client.Prisma.ProductGroupByOutputType, {}, number>;
   _count?: Resolver<
     Client.Prisma.ProductGroupByOutputType,
     {},
@@ -649,27 +655,48 @@ export interface ProductCountOutputType {
 export interface ProductCountAggregateOutputType {
   [key: string]: Resolver<any, any, any>;
   id?: Resolver<Client.Prisma.ProductCountAggregateOutputType, {}, number>;
+  price?: Resolver<Client.Prisma.ProductCountAggregateOutputType, {}, number>;
   _all?: Resolver<Client.Prisma.ProductCountAggregateOutputType, {}, number>;
 }
 
 export interface ProductAvgAggregateOutputType {
   [key: string]: Resolver<any, any, any>;
   id?: Resolver<Client.Prisma.ProductAvgAggregateOutputType, {}, number | null>;
+  price?: Resolver<
+    Client.Prisma.ProductAvgAggregateOutputType,
+    {},
+    number | null
+  >;
 }
 
 export interface ProductSumAggregateOutputType {
   [key: string]: Resolver<any, any, any>;
   id?: Resolver<Client.Prisma.ProductSumAggregateOutputType, {}, number | null>;
+  price?: Resolver<
+    Client.Prisma.ProductSumAggregateOutputType,
+    {},
+    number | null
+  >;
 }
 
 export interface ProductMinAggregateOutputType {
   [key: string]: Resolver<any, any, any>;
   id?: Resolver<Client.Prisma.ProductMinAggregateOutputType, {}, number | null>;
+  price?: Resolver<
+    Client.Prisma.ProductMinAggregateOutputType,
+    {},
+    number | null
+  >;
 }
 
 export interface ProductMaxAggregateOutputType {
   [key: string]: Resolver<any, any, any>;
   id?: Resolver<Client.Prisma.ProductMaxAggregateOutputType, {}, number | null>;
+  price?: Resolver<
+    Client.Prisma.ProductMaxAggregateOutputType,
+    {},
+    number | null
+  >;
 }
 
 export interface Users_ProductReviewArgs {
@@ -942,7 +969,10 @@ export interface Users_UpdateOneProductArgs {
   where: Users_ProductWhereUniqueInput | null;
 }
 
-//UpdateManyProductArgs is not generated as the related model contains only unique or relation fields
+export interface Users_UpdateManyProductArgs {
+  data: Users_ProductUpdateManyMutationInput;
+  where?: Users_ProductWhereInput;
+}
 
 export interface Users_DeleteManyProductArgs {
   where?: Users_ProductWhereInput;
@@ -1085,11 +1115,13 @@ export interface Users_ProductWhereInput {
   OR?: Users_ProductWhereInput[];
   NOT?: Users_ProductWhereInput[];
   id?: IntFilter;
+  price?: FloatFilter;
   review?: Users_ReviewListRelationFilter;
 }
 
 export interface Users_ProductOrderByWithRelationInput {
   id?: SortOrder;
+  price?: SortOrder;
   review?: Users_ReviewOrderByRelationAggregateInput;
 }
 
@@ -1099,6 +1131,7 @@ export type Users_ProductWhereUniqueInput = AtLeast<
     AND?: Users_ProductWhereInput[];
     OR?: Users_ProductWhereInput[];
     NOT?: Users_ProductWhereInput[];
+    price?: FloatFilter;
     review?: Users_ReviewListRelationFilter;
   },
   'id'
@@ -1106,6 +1139,7 @@ export type Users_ProductWhereUniqueInput = AtLeast<
 
 export interface Users_ProductOrderByWithAggregationInput {
   id?: SortOrder;
+  price?: SortOrder;
   _count?: Users_ProductCountOrderByAggregateInput;
   _avg?: Users_ProductAvgOrderByAggregateInput;
   _max?: Users_ProductMaxOrderByAggregateInput;
@@ -1118,6 +1152,7 @@ export interface Users_ProductScalarWhereWithAggregatesInput {
   OR?: Users_ProductScalarWhereWithAggregatesInput[];
   NOT?: Users_ProductScalarWhereWithAggregatesInput[];
   id?: IntWithAggregatesFilter;
+  price?: FloatWithAggregatesFilter;
 }
 
 export interface Users_UserCreateInput {
@@ -1206,6 +1241,7 @@ export interface Users_ReviewUncheckedCreateInput {
 }
 
 export interface Users_ReviewUpdateInput {
+  product?: Users_ProductUpdateOneRequiredWithoutReviewNestedInput;
   score?: IntFieldUpdateOperationsInput;
 }
 
@@ -1232,29 +1268,39 @@ export interface Users_ReviewUncheckedUpdateManyInput {
 }
 
 export interface Users_ProductCreateInput {
+  price: number;
   review?: Users_ReviewCreateNestedManyWithoutProductInput;
 }
 
 export interface Users_ProductUncheckedCreateInput {
   id?: number;
+  price: number;
   review?: Users_ReviewUncheckedCreateNestedManyWithoutProductInput;
 }
 
 export interface Users_ProductUpdateInput {
+  price?: FloatFieldUpdateOperationsInput;
   review?: Users_ReviewUpdateManyWithoutProductNestedInput;
 }
 
 export interface Users_ProductUncheckedUpdateInput {
   id?: IntFieldUpdateOperationsInput;
+  price?: FloatFieldUpdateOperationsInput;
   review?: Users_ReviewUncheckedUpdateManyWithoutProductNestedInput;
 }
 
 export interface Users_ProductCreateManyInput {
   id?: number;
+  price: number;
+}
+
+export interface Users_ProductUpdateManyMutationInput {
+  price?: FloatFieldUpdateOperationsInput;
 }
 
 export interface Users_ProductUncheckedUpdateManyInput {
   id?: IntFieldUpdateOperationsInput;
+  price?: FloatFieldUpdateOperationsInput;
 }
 
 export interface IntFilter {
@@ -1490,6 +1536,17 @@ export interface Users_ReviewSumOrderByAggregateInput {
   score?: SortOrder;
 }
 
+export interface FloatFilter {
+  equals?: number;
+  in?: number[];
+  notIn?: number[];
+  lt?: number;
+  lte?: number;
+  gt?: number;
+  gte?: number;
+  not?: NestedFloatFilter;
+}
+
 export interface Users_ReviewListRelationFilter {
   every?: Users_ReviewWhereInput;
   some?: Users_ReviewWhereInput;
@@ -1502,22 +1559,43 @@ export interface Users_ReviewOrderByRelationAggregateInput {
 
 export interface Users_ProductCountOrderByAggregateInput {
   id?: SortOrder;
+  price?: SortOrder;
 }
 
 export interface Users_ProductAvgOrderByAggregateInput {
   id?: SortOrder;
+  price?: SortOrder;
 }
 
 export interface Users_ProductMaxOrderByAggregateInput {
   id?: SortOrder;
+  price?: SortOrder;
 }
 
 export interface Users_ProductMinOrderByAggregateInput {
   id?: SortOrder;
+  price?: SortOrder;
 }
 
 export interface Users_ProductSumOrderByAggregateInput {
   id?: SortOrder;
+  price?: SortOrder;
+}
+
+export interface FloatWithAggregatesFilter {
+  equals?: number;
+  in?: number[];
+  notIn?: number[];
+  lt?: number;
+  lte?: number;
+  gt?: number;
+  gte?: number;
+  not?: NestedFloatWithAggregatesFilter;
+  _count?: NestedIntFilter;
+  _avg?: NestedFloatFilter;
+  _sum?: NestedFloatFilter;
+  _min?: NestedFloatFilter;
+  _max?: NestedFloatFilter;
 }
 
 export interface Users_UserCreaterolesInput {
@@ -1560,6 +1638,7 @@ export interface Users_ProductUpdateOneRequiredWithoutReviewNestedInput {
   connectOrCreate?: Users_ProductCreateOrConnectWithoutReviewInput;
   upsert?: Users_ProductUpsertWithoutReviewInput;
   connect?: Users_ProductWhereUniqueInput;
+  update?: Users_ProductUpdateWithoutReviewInput;
 }
 
 export interface Users_ReviewCreateNestedManyWithoutProductInput {
@@ -1574,6 +1653,14 @@ export interface Users_ReviewUncheckedCreateNestedManyWithoutProductInput {
   connectOrCreate?: Users_ReviewCreateOrConnectWithoutProductInput[];
   createMany?: Users_ReviewCreateManyProductInputEnvelope;
   connect?: Users_ReviewWhereUniqueInput[];
+}
+
+export interface FloatFieldUpdateOperationsInput {
+  set?: number;
+  increment?: number;
+  decrement?: number;
+  multiply?: number;
+  divide?: number;
 }
 
 export interface Users_ReviewUpdateManyWithoutProductNestedInput {
@@ -1756,8 +1843,29 @@ export interface NestedJsonNullableFilter {
   not?: any;
 }
 
+export interface NestedFloatWithAggregatesFilter {
+  equals?: number;
+  in?: number[];
+  notIn?: number[];
+  lt?: number;
+  lte?: number;
+  gt?: number;
+  gte?: number;
+  not?: NestedFloatWithAggregatesFilter;
+  _count?: NestedIntFilter;
+  _avg?: NestedFloatFilter;
+  _sum?: NestedFloatFilter;
+  _min?: NestedFloatFilter;
+  _max?: NestedFloatFilter;
+}
+
+export interface Users_ProductCreateWithoutReviewInput {
+  price: number;
+}
+
 export interface Users_ProductUncheckedCreateWithoutReviewInput {
   id?: number;
+  price: number;
 }
 
 export interface Users_ProductCreateOrConnectWithoutReviewInput {
@@ -1776,8 +1884,13 @@ export interface Users_ProductUpdateToOneWithWhereWithoutReviewInput {
   data: Users_ProductUncheckedUpdateWithoutReviewInput;
 }
 
+export interface Users_ProductUpdateWithoutReviewInput {
+  price?: FloatFieldUpdateOperationsInput;
+}
+
 export interface Users_ProductUncheckedUpdateWithoutReviewInput {
   id?: IntFieldUpdateOperationsInput;
+  price?: FloatFieldUpdateOperationsInput;
 }
 
 export interface Users_ReviewCreateWithoutProductInput {
@@ -1854,6 +1967,7 @@ export enum NullableJsonNullValueInput {
 }
 export enum ProductScalarFieldEnum {
   id = 'id',
+  price = 'price',
 }
 export enum QueryMode {
   default = 'default',

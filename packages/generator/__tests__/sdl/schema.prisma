@@ -29,6 +29,7 @@ model Review {
 
 model Product {
   id  Int @id @default(autoincrement())
+  price   Float
   review Review[]
 }
 

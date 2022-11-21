@@ -23,12 +23,18 @@ const resolvers: Resolvers = {
     Users_aggregateUser: (_parent, args, { prisma }) => {
       return prisma.user.aggregate(args);
     },
+    Users_groupByUser: (_parent, args, { prisma }) => {
+      return prisma.user.groupBy(args);
+    },
   },
   Mutation: {
     Users_createOneUser: (_parent, args, { prisma }) => {
       return prisma.user.create(args);
     },
     Users_updateOneUser: (_parent, args, { prisma }) => {
+      return prisma.user.update(args);
+    },
+    Users_updateOneUserSaga: (_parent, args, { prisma }) => {
       return prisma.user.update(args);
     },
     Users_deleteOneUser: async (_parent, args, { prisma }) => {
