@@ -159,11 +159,22 @@ export async function createQueriesAndMutations(
     }
     operations.queries.type += `groupBy${name}(${await args(
       'groupBy',
-    )}): [${name}GroupByOutputType]`;
+    )}): [${name}GroupByOutputType`;
     operations.queries.resolver += `groupBy${name}: (_parent, args, {${prismaName}}) => {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      //@ts-ignore
-      return ${prismaName}.${model}.groupBy(args)
+      try {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        //@ts-ignore
+        let result = await (${prismaName}.${model}.groupBy(args));
+        return result;
+      } catch(e) {
+        if (e.toString().includes("Argument by is missing")) {
+          throw new GraphQLError(\`Argument 'by' is missing\`, {
+            extensions: {
+              code: 'BAD_USER_INPUT',
+            },
+          });
+        }
+      }
     },`;
   }
 
