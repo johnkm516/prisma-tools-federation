@@ -57,7 +57,7 @@ export default gql`
       having: Users_ReviewScalarWhereWithAggregatesInput
       take: Int
       skip: Int
-    ): ReviewGroupByOutputType
+    ): [ReviewGroupByOutputType]
   }
 
   type Mutation {

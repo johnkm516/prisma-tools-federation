@@ -66,7 +66,7 @@ export default gql`
       having: Users_ProductScalarWhereWithAggregatesInput
       take: Int
       skip: Int
-    ): ProductGroupByOutputType
+    ): [ProductGroupByOutputType]
   }
 
   type Mutation {

@@ -23,6 +23,10 @@ type AtLeast<O extends object, K extends string> = NoExpand<
     : never
 >;
 
+export type GroupByError =
+  | `Error: Field "${any}" used in "having" needs to be provided in "by".`
+  | [Error, 'Field ', any, ' in "having" needs to be provided in "by"'];
+
 export interface Resolvers {
   [key: string]: { [key: string]: Resolver<any, any, any> };
   User?: User;
@@ -112,10 +116,11 @@ export interface Query {
     Users_AggregateUserArgs,
     Client.Prisma.GetUserAggregateType<Users_AggregateUserArgs>
   >;
+  //Users_groupByUser is not generated because model has only unique fields or relations.
   Users_groupByUser?: Resolver<
     {},
-    Users_GroupByUserArgs,
-    Client.Prisma.UserGroupByOutputType[]
+    any,
+    Client.Prisma.GetUserGroupByPayload<Users_GroupByUserArgs> | GroupByError
   >;
   Users_findUniqueUser?: Resolver<
     {},
@@ -148,10 +153,12 @@ export interface Query {
     Users_AggregateReviewArgs,
     Client.Prisma.GetReviewAggregateType<Users_AggregateReviewArgs>
   >;
+  //Users_groupByReview is not generated because model has only unique fields or relations.
   Users_groupByReview?: Resolver<
     {},
-    Users_GroupByReviewArgs,
-    Client.Prisma.ReviewGroupByOutputType[]
+    any,
+    | Client.Prisma.GetReviewGroupByPayload<Users_GroupByReviewArgs>
+    | GroupByError
   >;
   Users_findUniqueReview?: Resolver<
     {},
@@ -184,10 +191,12 @@ export interface Query {
     Users_AggregateProductArgs,
     Client.Prisma.GetProductAggregateType<Users_AggregateProductArgs>
   >;
+  //Users_groupByProduct is not generated because model has only unique fields or relations.
   Users_groupByProduct?: Resolver<
     {},
-    Users_GroupByProductArgs,
-    Client.Prisma.ProductGroupByOutputType[]
+    any,
+    | Client.Prisma.GetProductGroupByPayload<Users_GroupByProductArgs>
+    | GroupByError
   >;
   Users_findUniqueProduct?: Resolver<
     {},

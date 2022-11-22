@@ -16,7 +16,9 @@ export class GenerateTypes {
       ? | (K extends keyof O ? { [P in K]: O[P] } & O : O)
         | {[P in keyof O as P extends K ? K : never]-?: O[P]} & O
       : never>;`,
+    `export type GroupByError = \`Error: Field "\${any}" used in "having" needs to be provided in "by".\` | [Error, "Field ", any, " in \\"having\\" needs to be provided in \\"by\\""] `,
   ];
+
   scalar: { [key: string]: any } = {
     Int: 'number',
     Float: 'number',
@@ -170,10 +172,11 @@ export class GenerateTypes {
             ? `${this.options.federation}_${field.name}`
             : field.name;
         if (
-          !field.name.startsWith(`updateMany`) ||
-          (field.name.startsWith(`updateMany`) &&
-            this.dmmf.modelmap?.get(field.name.replace(`updateMany`, ``))
-              ?.generateUpdateMany)
+          (!field.name.startsWith(`updateMany`) ||
+            (field.name.startsWith(`updateMany`) &&
+              this.dmmf.modelmap?.get(field.name.replace(`updateMany`, ``))
+                ?.generateUpdateMany)) &&
+          !field.name.startsWith(`groupBy`)
         ) {
           if (argsType != `{}` && this.options.federation) {
             fields.push(
@@ -204,6 +207,22 @@ export class GenerateTypes {
         } else if (field.name.startsWith('findMany')) {
           fields.push(
             `${fieldName}Count?: Resolver<${parentType}, ${argsType}, number>`,
+          );
+        }
+
+        // add groupBy
+        if (field.name.startsWith('groupBy') && this.options.federation) {
+          let modelName = fieldName.replace(
+            `${this.options.federation}_groupBy`,
+            '',
+          );
+          fields.push(
+            `${fieldName}?: Resolver<${parentType}, any, Client.Prisma.Get${modelName}GroupByPayload<${this.options.federation}_GroupBy${modelName}Args> | GroupByError>;`,
+          );
+        } else if (field.name.startsWith('groupBy')) {
+          let modelName = fieldName.replace('groupBy', '');
+          fields.push(
+            `${fieldName}?: Resolver<${parentType}, any, Client.Prisma.Get${modelName}GroupByPayload<GroupBy${modelName}Args> | GroupByError>;`,
           );
         }
 

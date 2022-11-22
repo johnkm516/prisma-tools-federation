@@ -23,8 +23,6 @@ const resolvers: Resolvers = {
     Users_aggregateUser: (_parent, args, { prisma }) => {
       return prisma.user.aggregate(args);
     },
-    //eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    //@ts-ignore
     Users_groupByUser: (_parent, args, { prisma }) => {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       //@ts-ignore
