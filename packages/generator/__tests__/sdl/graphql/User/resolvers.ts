@@ -24,11 +24,11 @@ const resolvers: Resolvers = {
     Users_aggregateUser: (_parent, args, { prisma }) => {
       return prisma.user.aggregate(args);
     },
-    Users_groupByUser: (_parent, args, { prisma }) => {
+    Users_groupByUser: async (_parent, args, { prisma }) => {
       try {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         //@ts-ignore
-        let result = await(prisma.user.groupBy(args));
+        let result = await prisma.user.groupBy(args);
         return result;
       } catch (e) {
         if (e.toString().includes('Argument by is missing')) {

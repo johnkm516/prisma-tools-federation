@@ -160,7 +160,7 @@ export async function createQueriesAndMutations(
     operations.queries.type += `groupBy${name}(${await args(
       'groupBy',
     )}): [${name}GroupByOutputType]`;
-    operations.queries.resolver += `groupBy${name}: (_parent, args, {${prismaName}}) => {
+    operations.queries.resolver += `groupBy${name}: async (_parent, args, {${prismaName}}) => {
       try {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         //@ts-ignore
