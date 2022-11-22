@@ -178,6 +178,7 @@ export class GenerateSdl extends Generators {
         `;
       } else {
         resolvers = `import { Resolvers } from '../../resolversTypes';
+      import { GraphQLError } from 'graphql/error';
       
       const resolvers: Resolvers = {
         ${resolvers}

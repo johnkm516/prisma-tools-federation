@@ -1,4 +1,5 @@
 import { Resolvers } from '../../resolversTypes';
+import { GraphQLError } from 'graphql/error';
 
 const resolvers: Resolvers = {
   Query: {
@@ -24,9 +25,20 @@ const resolvers: Resolvers = {
       return prisma.user.aggregate(args);
     },
     Users_groupByUser: (_parent, args, { prisma }) => {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      //@ts-ignore
-      return prisma.user.groupBy(args);
+      try {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        //@ts-ignore
+        let result = await(prisma.user.groupBy(args));
+        return result;
+      } catch (e) {
+        if (e.toString().includes('Argument by is missing')) {
+          throw new GraphQLError(`Argument 'by' is missing`, {
+            extensions: {
+              code: 'BAD_USER_INPUT',
+            },
+          });
+        }
+      }
     },
   },
   Mutation: {
