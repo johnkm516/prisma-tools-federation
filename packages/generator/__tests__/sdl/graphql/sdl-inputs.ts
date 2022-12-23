@@ -1204,4 +1204,127 @@ export default gql`
     id: Int
     price: Float
   }
+
+  input Users_createOneUserInput {
+    data: Users_UserCreateInput
+  }
+
+  input Users_upsertOneUserInput {
+    where: Users_UserWhereUniqueInput
+    create: Users_UserCreateInput
+    update: Users_UserUpdateInput
+  }
+
+  input Users_createManyUserInput {
+    data: [Users_UserCreateManyInput]
+    skipDuplicates: Users_Boolean
+  }
+
+  input Users_deleteOneUserInput {
+    where: Users_UserWhereUniqueInput
+  }
+
+  input Users_updateOneUserInput {
+    data: Users_UserUpdateInput
+    where: Users_UserWhereUniqueInput
+  }
+
+  input Users_updateManyUserInput {
+    data: Users_UserUpdateManyMutationInput
+    where: Users_UserWhereInput
+  }
+
+  input Users_deleteManyUserInput {
+    where: Users_UserWhereInput
+  }
+
+  input Users_createOneReviewInput {
+    data: Users_ReviewCreateInput
+  }
+
+  input Users_upsertOneReviewInput {
+    where: Users_ReviewWhereUniqueInput
+    create: Users_ReviewCreateInput
+    update: Users_ReviewUpdateInput
+  }
+
+  input Users_createManyReviewInput {
+    data: [Users_ReviewCreateManyInput]
+    skipDuplicates: Users_Boolean
+  }
+
+  input Users_deleteOneReviewInput {
+    where: Users_ReviewWhereUniqueInput
+  }
+
+  input Users_updateOneReviewInput {
+    data: Users_ReviewUpdateInput
+    where: Users_ReviewWhereUniqueInput
+  }
+
+  input Users_updateManyReviewInput {
+    data: Users_ReviewUpdateManyMutationInput
+    where: Users_ReviewWhereInput
+  }
+
+  input Users_deleteManyReviewInput {
+    where: Users_ReviewWhereInput
+  }
+
+  input Users_createOneProductInput {
+    data: Users_ProductCreateInput
+  }
+
+  input Users_upsertOneProductInput {
+    where: Users_ProductWhereUniqueInput
+    create: Users_ProductCreateInput
+    update: Users_ProductUpdateInput
+  }
+
+  input Users_createManyProductInput {
+    data: [Users_ProductCreateManyInput]
+    skipDuplicates: Users_Boolean
+  }
+
+  input Users_deleteOneProductInput {
+    where: Users_ProductWhereUniqueInput
+  }
+
+  input Users_updateOneProductInput {
+    data: Users_ProductUpdateInput
+    where: Users_ProductWhereUniqueInput
+  }
+
+  input Users_updateManyProductInput {
+    data: Users_ProductUpdateManyMutationInput
+    where: Users_ProductWhereInput
+  }
+
+  input Users_deleteManyProductInput {
+    where: Users_ProductWhereInput
+  }
+
+  input Users_transactionalMutationInput {
+    Users_createOneUser: Users_createOneUserInput
+    Users_upsertOneUser: Users_upsertOneUserInput
+    Users_createManyUser: Users_createManyUserInput
+    Users_deleteOneUser: Users_deleteOneUserInput
+    Users_updateOneUser: Users_updateOneUserInput
+    Users_updateManyUser: Users_updateManyUserInput
+    Users_deleteManyUser: Users_deleteManyUserInput
+    Users_createOneReview: Users_createOneReviewInput
+    Users_upsertOneReview: Users_upsertOneReviewInput
+    Users_createManyReview: Users_createManyReviewInput
+    Users_deleteOneReview: Users_deleteOneReviewInput
+    Users_updateOneReview: Users_updateOneReviewInput
+    Users_updateManyReview: Users_updateManyReviewInput
+    Users_deleteManyReview: Users_deleteManyReviewInput
+    Users_createOneProduct: Users_createOneProductInput
+    Users_upsertOneProduct: Users_upsertOneProductInput
+    Users_createManyProduct: Users_createManyProductInput
+    Users_deleteOneProduct: Users_deleteOneProductInput
+    Users_updateOneProduct: Users_updateOneProductInput
+    Users_updateManyProduct: Users_updateManyProductInput
+    Users_deleteManyProduct: Users_deleteManyProductInput
+  }
 `;

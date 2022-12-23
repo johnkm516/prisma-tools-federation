@@ -16,6 +16,7 @@ export interface SDLInputOptions {
   excludeFields?: string[];
   filterInputs?: (input: DMMF.InputType) => DMMF.SchemaArg[];
   doNotUseFieldUpdateOperationsInput?: boolean;
+  includeTransactionalBatchMutation?: boolean;
   federation?: string;
 }
 
@@ -247,6 +248,55 @@ type BatchPayload @shareable {
           fileContent += `}\n\n`;
         }
       });
+
+    console.log(options?.includeTransactionalBatchMutation);
+    if (options?.includeTransactionalBatchMutation) {
+      const Mutation = schema?.outputObjectTypes.prisma.find(
+        (outputType) => outputType.name === 'Mutation',
+      );
+      const TransactionalBatchInput: string[] = [];
+      const MutationsArgsInputs: string[] = [];
+      if (Mutation) {
+        Mutation.fields.forEach((field) => {
+          if (field.name != 'executeRaw' && field.name != 'queryRaw') {
+            TransactionalBatchInput.push(
+              options?.federation
+                ? `  ${options.federation}_${field.name}: ${options.federation}_${field.name}Input`
+                : ` ${field.name}: ${field.name}Input`,
+            );
+            MutationsArgsInputs.push(
+              options?.federation
+                ? `input ${options.federation}_${field.name}Input {`
+                : `input ${field.name}Input {`,
+            );
+            field.args.forEach((args) => {
+              let line = '';
+              line += ` ${args.name}: `;
+              if (options?.federation) {
+                line += args.inputTypes[0].isList
+                  ? `[${options?.federation}_${args.inputTypes[0].type}]`
+                  : `${options?.federation}_${args.inputTypes[0].type}`;
+              } else {
+                line += args.inputTypes[0].isList
+                  ? `[${args.inputTypes[0].type}]`
+                  : `${args.inputTypes[0].type}`;
+              }
+              MutationsArgsInputs.push(line);
+            });
+
+            MutationsArgsInputs.push(`}\n`);
+          }
+        });
+      }
+      MutationsArgsInputs.push(
+        options?.federation
+          ? `input ${options.federation}_transactionalMutationInput {`
+          : `input transactionalMutationInput {`,
+      );
+      MutationsArgsInputs.push(TransactionalBatchInput.join('\n'));
+      MutationsArgsInputs.push(`}\n`);
+      fileContent += MutationsArgsInputs.join(`\n`);
+    }
   }
   return fileContent;
 }

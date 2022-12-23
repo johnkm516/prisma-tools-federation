@@ -250,12 +250,15 @@ export class GenerateSdl extends Generators {
   }
 
   private async getSDLInputs(readyDmmf: Document): Promise<string> {
+    console.log(this.includeTransactionalBatchMutationOption());
     return (this.inputsString = await sdlInputsString(
       {
         dmmfOptions: { datamodelPath: this.schemaPath },
         doNotUseFieldUpdateOperationsInput:
           this.options.doNotUseFieldUpdateOperationsInput,
         federation: this.federatedOption(),
+        includeTransactionalBatchMutation:
+          this.includeTransactionalBatchMutationOption(),
       },
       readyDmmf,
     ));

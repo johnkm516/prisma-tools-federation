@@ -134,12 +134,6 @@ async function getSchema(schema: string) {
     return result;
   });
 
-  if (modelMap.has('TransactionalBatchMutation')) {
-    throw new Error(
-      'TransactionalBatchMutation is a reserved model name! Please remove or rename TransactionalBatchMutation in the Prisma Schema.',
-    );
-  }
-
   document.datamodel.models = models;
   document.modelmap = modelMap;
   document.modelInputTypesMap = modelInputTypesMap;
@@ -304,6 +298,14 @@ export class Generators {
   protected async dmmf(): Promise<Document> {
     if (!this.readyDmmf) {
       this.readyDmmf = await getSchema(this.schemaString);
+      if (
+        this.options.federation &&
+        this.readyDmmf.modelmap?.has('TransactionalBatchMutation')
+      ) {
+        throw new Error(
+          'TransactionalBatchMutation is a reserved model name! Please remove or rename TransactionalBatchMutation in the Prisma Schema.',
+        );
+      }
       return this.readyDmmf;
     } else {
       return this.readyDmmf;
@@ -438,6 +440,10 @@ export class Generators {
 
   protected federatedOption() {
     return this.options.federation;
+  }
+
+  protected includeTransactionalBatchMutationOption() {
+    return this.options.includeTransactionalBatchMutation;
   }
 
   protected excludedOperations(model: string) {

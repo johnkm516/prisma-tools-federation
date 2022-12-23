@@ -13,7 +13,8 @@ async function main() {
       },
       { 
         output: join(process.cwd(), './graphql'),
-        federation: "Users"
+        federation: "Users",
+        includeTransactionalBatchMutation: true,
       },
     );
     let dmmf = await generator.run();
