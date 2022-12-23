@@ -134,6 +134,12 @@ async function getSchema(schema: string) {
     return result;
   });
 
+  if (modelMap.has('TransactionalBatchMutation')) {
+    throw new Error(
+      'TransactionalBatchMutation is a reserved model name! Please remove or rename TransactionalBatchMutation in the Prisma Schema.',
+    );
+  }
+
   document.datamodel.models = models;
   document.modelmap = modelMap;
   document.modelInputTypesMap = modelInputTypesMap;

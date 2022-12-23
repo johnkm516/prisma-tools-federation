@@ -218,9 +218,9 @@ export async function createQueriesAndMutations(
       operations.mutations.type += `\n`;
       operations.mutations.resolver += `\n`;
     }
-    operations.mutations.type += `updateOne${name}Saga(${await args(
-      'updateOne',
-    )}): ${modelName}!`;
+    let updateArgsName = await args('updateOne');
+    updateArgsName = updateArgsName.replaceAll('Input', 'SagaInput');
+    operations.mutations.type += `updateOne${name}Saga(${updateArgsName}): ${modelName}!`;
     operations.mutations.resolver += `updateOne${name}Saga: (_parent, args, {${prismaName}}) => {
       return ${prismaName}.${model}.update(args)
     },`;

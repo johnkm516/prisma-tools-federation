@@ -79,6 +79,7 @@ export interface Options {
   models?: string[];
   output: string;
   federation?: string;
+  includeTransactionalBatchMutation?: boolean;
   javaScript?: boolean;
   excludeFields: string[];
   excludeModels: { name: string; queries?: boolean; mutations?: boolean }[];
@@ -97,14 +98,16 @@ export type Query =
   | 'findFirst'
   | 'findMany'
   | 'findCount'
-  | 'aggregate';
+  | 'aggregate'
+  | 'groupBy';
 export type Mutation =
   | 'createOne'
   | 'updateOne'
   | 'upsertOne'
   | 'deleteOne'
   | 'updateMany'
-  | 'deleteMany';
+  | 'deleteMany'
+  | 'updateOneSaga';
 
 export type QueriesAndMutations = Query | Mutation;
 

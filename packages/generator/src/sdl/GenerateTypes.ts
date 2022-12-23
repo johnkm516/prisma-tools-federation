@@ -193,6 +193,35 @@ export class GenerateTypes {
               )}${field.isNullable ? ' | null' : ''}>`,
             );
           }
+
+          if (field.name.startsWith('updateOne')) {
+            if (this.options.federation) {
+              fields.push(
+                `${fieldName + 'Saga'}?: Resolver<${parentType}, ${
+                  this.options.federation
+                }_${argsType.replace('Args', 'SagaArgs')}, ${this.getOutputType(
+                  field.outputType,
+                )}${
+                  field.isNullable
+                    ? '& { SagaEventID: string } | null'
+                    : '& { SagaEventID: string }'
+                }>`,
+              );
+            } else {
+              fields.push(
+                `${
+                  fieldName + 'Saga'
+                }?: Resolver<${parentType}, ${argsType.replace(
+                  'Args',
+                  'SagaArgs',
+                )}, ${this.getOutputType(field.outputType)}${
+                  field.isNullable
+                    ? '& { SagaEventID: string } | null'
+                    : '& { SagaEventID: string }'
+                }>`,
+              );
+            }
+          }
         } else {
           fields.push(
             `//${fieldName} is not generated because model has only unique fields or relations.`,
@@ -200,7 +229,11 @@ export class GenerateTypes {
         }
 
         // add findManyCount
-        if (field.name.startsWith('findMany') && this.options.federation) {
+        if (
+          type.name === 'Query' &&
+          field.name.startsWith('findMany') &&
+          this.options.federation
+        ) {
           fields.push(
             `${fieldName}Count?: Resolver<${parentType}, ${this.options.federation}_${argsType}, number>`,
           );
@@ -211,7 +244,11 @@ export class GenerateTypes {
         }
 
         // add groupBy
-        if (field.name.startsWith('groupBy') && this.options.federation) {
+        if (
+          type.name === 'Query' &&
+          field.name.startsWith('groupBy') &&
+          this.options.federation
+        ) {
           let modelName = fieldName.replace(
             `${this.options.federation}_groupBy`,
             '',
@@ -281,6 +318,48 @@ export class GenerateTypes {
               });
             }
             args.push('}');
+
+            //Args type for updateOneSaga
+            if (argsType.startsWith('UpdateOne')) {
+              if (this.options.federation) {
+                args.push(
+                  `
+                  export interface ${
+                    this.options.federation
+                  }_${argsType.replace('Args', 'SagaArgs')} {`,
+                );
+
+                field.args.forEach((arg) => {
+                  args.push(
+                    `${arg.name}${arg.isRequired ? '' : '?'}: ${
+                      this.options.federation
+                    }_${this.getOutputType(arg.inputTypes[0], true).replace(
+                      'UpdateInput',
+                      'UpdateSagaInput',
+                    )}${field.isNullable ? ' | null' : ''}`,
+                  );
+                });
+
+                args.push('}');
+              } else {
+                args.push(`
+                export interface ${argsType.replace('Args', 'SagaArgs')} {`);
+
+                field.args.forEach((arg) => {
+                  args.push(
+                    `${arg.name}${
+                      arg.isRequired ? '' : '?'
+                    }: ${this.getOutputType(arg.inputTypes[0], true).replace(
+                      'UpdateInput',
+                      'UpdateSagaInput',
+                    )}
+                      ${field.isNullable ? ' | null' : ''}`,
+                  );
+                });
+
+                args.push('}');
+              }
+            }
             argsTypes.push(args.join('\n'));
           } else {
             argsTypes.push(
@@ -294,6 +373,7 @@ export class GenerateTypes {
           fields.push(`\n\n__resolveReference?: any`);
         }
       }
+
       fields.push('}');
       resolversTypes.push(fields.join('\n'));
     });
@@ -367,6 +447,49 @@ export class GenerateTypes {
           }
 
           inputTypes.push(fields.join('\n'));
+
+          if (input.name === `${model.name}UpdateInput`) {
+            if (this.options.federation) {
+              fields.push(
+                `export interface ${this.options.federation}_${input.name} {`,
+              );
+            } else {
+              fields.push(
+                `export interface ${this.options.federation}_${input.name} {`,
+              );
+            }
+
+            input.fields.forEach((field) => {
+              const inputType = this.getInputType(field);
+              const outputTypeModel = this.dmmf.modelmap?.get(
+                this.dmmf.modelInputTypesMap?.get(
+                  this.getOutputType(inputType, true).replace(`[]`, ``),
+                ) ?? ``,
+              );
+              const hasEmptyType =
+                inputType.location === 'inputObjectTypes' &&
+                this.hasEmptyTypeFields(inputType.type as string);
+              if (outputTypeModel && !hasEmptyType) {
+                fields.push(
+                  `${field.name}${field.isRequired ? '' : '?'}: ${
+                    this.options.federation
+                  }_${this.getOutputType(inputType, true)}${
+                    field.isNullable ? ' | null' : ''
+                  }`,
+                );
+              } else if (!hasEmptyType) {
+                fields.push(
+                  `${field.name}${
+                    field.isRequired ? '' : '?'
+                  }: ${this.getOutputType(inputType, true)}${
+                    field.isNullable ? ' | null' : ''
+                  }`,
+                );
+              }
+            });
+
+            fields.push('}');
+          }
         } else {
           fields.push(`export interface ${input.name} {`);
           input.fields.forEach((field) => {
