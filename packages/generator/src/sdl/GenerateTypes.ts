@@ -263,6 +263,18 @@ export class GenerateTypes {
           );
         }
 
+        if (
+          this.options.includeTransactionalBatchMutation &&
+          type.name === 'Mutation' &&
+          field.name === type.fields[type.fields.length - 1].name
+        ) {
+          fields.push(
+            this.options.federation
+              ? `${this.options.federation}_transactionalBatchMutation?: Resolver<{}, ${this.options.federation}_TransactionalBatchMutationArgs, any>;`
+              : `transactionalBatchMutation?: Resolver<{}, TransactionalBatchMutationArgs, any>;`,
+          );
+        }
+
         // generate args
         if (argsType !== '{}') {
           if (
@@ -559,8 +571,8 @@ export class GenerateTypes {
         );
         TransactionalBatchInput.push(
           this.options.federation
-            ? `  mutation: ${this.options.federation}_TransactionalMutationInput[];`
-            : ` mutation: TransactionalMutationInput[];`,
+            ? `  mutations: ${this.options.federation}_TransactionalMutationInput[];`
+            : ` mutations: TransactionalMutationInput[];`,
         );
         TransactionalBatchInput.push(`}\n`);
       }

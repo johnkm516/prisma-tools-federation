@@ -326,6 +326,11 @@ export interface Mutation {
   >;
   Users_executeRaw?: Resolver<{}, Users_ExecuteRawArgs, any>;
   Users_queryRaw?: Resolver<{}, Users_QueryRawArgs, any>;
+  Users_transactionalBatchMutation?: Resolver<
+    {},
+    Users_TransactionalBatchMutationArgs,
+    any
+  >;
 }
 
 export interface AggregateUser {
@@ -2063,5 +2068,5 @@ export interface Users_TransactionalMutationInput {
 }
 
 export interface Users_TransactionalBatchMutationArgs {
-  mutation: Users_TransactionalMutationInput[];
+  mutations: Users_TransactionalMutationInput[];
 }

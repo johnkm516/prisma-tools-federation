@@ -163,11 +163,9 @@ export class GenerateSdl extends Generators {
       resolvers += `return prisma.${model.name.toLowerCase()}.findUnique({ where: { [field]: value } });`;
       resolvers += `\t}\n}\n`;
     }
+
     this.createResolvers(resolvers, model.name);
     this.createTypes(typeContent, model.name);
-    if (this.options.includeTransactionalBatchMutation) {
-      this.createExtendedResolvers();
-    }
   }
 
   private createResolvers(resolvers: string, model: string) {
@@ -234,6 +232,17 @@ export class GenerateSdl extends Generators {
   }
 
   private createMaster() {
+    if (this.options.includeTransactionalBatchMutation) {
+      this.createExtendedResolvers();
+      this.resolversExport.push('TransactionalBatchMutation');
+      this.resolversIndex = `${this.getImport(
+        this.isJS
+          ? `{ TransactionalBatchMutation }`
+          : 'TransactionalBatchMutation',
+        `./extended-resolvers`,
+      )}\n${this.resolversIndex}`;
+    }
+
     writeFileSync(
       this.resolversPath,
       this.formation(replaceExports(this.resolversExport, this.resolversIndex)),
