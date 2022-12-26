@@ -52,11 +52,7 @@ export interface SchemaModel extends Omit<Model, 'documentation' | 'map'> {
 
 export type Schema = { models: SchemaModel[]; enums: Enums[] };
 
-export type GeneratorsType =
-  | 'nexus'
-  | 'sdl'
-  | 'graphql-modules'
-  | 'nexus-plugin-prisma';
+export type GeneratorsType = 'sdl' | 'graphql-modules' | 'nexus-plugin-prisma';
 
 export interface Config {
   schema?: string;

@@ -31,12 +31,18 @@ export class GenerateSdl extends Generators {
   private typeDefsPath = this.output(this.withExtension('typeDefs'));
   private typeDefsIndex = existsSync(this.typeDefsPath)
     ? readFileSync(this.typeDefsPath, { encoding: 'utf-8' })
-    : defaultTypeFile(this.isJS);
+    : defaultTypeFile(
+        this.isJS,
+        this.options.includeTransactionalBatchMutation,
+      );
   private typeDefsExport: string[] = getCurrentExport(this.typeDefsIndex);
 
   private SDLInputsPath = this.output(this.withExtension('sdl-inputs'));
   private resolversExtensionPath = this.output(
     this.withExtension('extended-resolvers'),
+  );
+  private typeDefsExtensionPath = this.output(
+    this.withExtension('extended-typeDefs'),
   );
   private inputsString: string = '';
 
@@ -234,13 +240,18 @@ export class GenerateSdl extends Generators {
   private createMaster() {
     if (this.options.includeTransactionalBatchMutation) {
       this.createExtendedResolvers();
-      this.resolversExport.push('TransactionalBatchMutation');
-      this.resolversIndex = `${this.getImport(
-        this.isJS
-          ? `{ TransactionalBatchMutation }`
-          : 'TransactionalBatchMutation',
-        `./extended-resolvers`,
-      )}\n${this.resolversIndex}`;
+      this.createExtendedTypeDefs();
+      if (
+        !this.resolversExport.find((n) => n === 'TransactionalBatchMutation')
+      ) {
+        this.resolversExport.push('TransactionalBatchMutation');
+        this.resolversIndex = `${this.getImport(
+          this.isJS
+            ? `{ TransactionalBatchMutation }`
+            : 'TransactionalBatchMutation',
+          `./extended-resolvers`,
+        )}\n${this.resolversIndex}`;
+      }
     }
 
     writeFileSync(
@@ -269,6 +280,15 @@ export class GenerateSdl extends Generators {
       this.resolversExtensionPath,
       this.formation(
         defaultResolverExtensionFile(this.options.federation, this.isJS),
+      ),
+    );
+  }
+
+  private createExtendedTypeDefs() {
+    writeFileSync(
+      this.typeDefsExtensionPath,
+      this.formation(
+        defaultTypeDefsExtensionFile(this.options.federation, this.isJS),
       ),
     );
   }
@@ -317,7 +337,10 @@ const defaultResolverFile = (isJs?: boolean) =>
     
     module.exports = {resolvers};`
     : `export default [];`;
-const defaultTypeFile = (isJs?: boolean) =>
+const defaultTypeFile = (
+  isJs?: boolean,
+  includeTransactionalBatchMutation?: boolean,
+) =>
   isJs
     ? `const { mergeTypeDefs } = require('@graphql-tools/merge');
 const { sdlInputs } = require('@paljs/plugins');
@@ -326,9 +349,33 @@ const typeDefs = mergeTypeDefs([SDLInputs]);
 
 module.exports = {typeDefs};`
     : `import { mergeTypeDefs } from '@graphql-tools/merge';
-import SDLInputs from './sdl-inputs';;
+import SDLInputs from './sdl-inputs';
 
-export default mergeTypeDefs([SDLInputs]);`;
+${
+  includeTransactionalBatchMutation
+    ? `import typeDefsExtensions from './extended-typeDefs'`
+    : ``
+}
+
+export default mergeTypeDefs([SDLInputs${
+        includeTransactionalBatchMutation ? `, typeDefsExtensions` : ``
+      }]);`;
+
+const defaultTypeDefsExtensionFile = (federation?: string, isJs?: boolean) =>
+  isJs
+    ? ``
+    : `import gql from 'graphql-tag';
+  
+  export default gql\`
+  type Mutation {
+    ${
+      federation ? federation + '_' : ''
+    }transactionalBatchMutation(mutations: [${
+        federation ? federation + '_' : ''
+      }transactionalMutationInput]): Boolean!
+  }
+  \`;
+  `;
 
 const defaultResolverExtensionFile = (federation?: string, isJs?: boolean) =>
   isJs
