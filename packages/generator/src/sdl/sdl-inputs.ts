@@ -272,7 +272,10 @@ type BatchPayload @shareable {
             field.args.forEach((args) => {
               let line = '';
               line += ` ${args.name}: `;
-              if (options?.federation) {
+              if (
+                args.inputTypes[0].type !== 'Boolean' &&
+                options?.federation
+              ) {
                 line += args.inputTypes[0].isList
                   ? `[${options?.federation}_${args.inputTypes[0].type}]`
                   : `${options?.federation}_${args.inputTypes[0].type}`;

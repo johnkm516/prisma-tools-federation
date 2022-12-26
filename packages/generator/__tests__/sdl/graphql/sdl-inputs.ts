@@ -1217,7 +1217,7 @@ export default gql`
 
   input Users_createManyUserInput {
     data: [Users_UserCreateManyInput]
-    skipDuplicates: Users_Boolean
+    skipDuplicates: Boolean
   }
 
   input Users_deleteOneUserInput {
@@ -1250,7 +1250,7 @@ export default gql`
 
   input Users_createManyReviewInput {
     data: [Users_ReviewCreateManyInput]
-    skipDuplicates: Users_Boolean
+    skipDuplicates: Boolean
   }
 
   input Users_deleteOneReviewInput {
@@ -1283,7 +1283,7 @@ export default gql`
 
   input Users_createManyProductInput {
     data: [Users_ProductCreateManyInput]
-    skipDuplicates: Users_Boolean
+    skipDuplicates: Boolean
   }
 
   input Users_deleteOneProductInput {
