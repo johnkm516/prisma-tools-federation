@@ -229,11 +229,6 @@ export interface Mutation {
     Users_UpdateOneUserArgs,
     Client.User | null
   >;
-  Users_updateOneUserSaga?: Resolver<
-    {},
-    Users_UpdateOneUserSagaArgs,
-    (Client.User & { SagaEventID: string }) | null
-  >;
   Users_updateManyUser?: Resolver<
     {},
     Users_UpdateManyUserArgs,
@@ -269,11 +264,6 @@ export interface Mutation {
     Users_UpdateOneReviewArgs,
     Client.Review | null
   >;
-  Users_updateOneReviewSaga?: Resolver<
-    {},
-    Users_UpdateOneReviewSagaArgs,
-    (Client.Review & { SagaEventID: string }) | null
-  >;
   Users_updateManyReview?: Resolver<
     {},
     Users_UpdateManyReviewArgs,
@@ -308,11 +298,6 @@ export interface Mutation {
     {},
     Users_UpdateOneProductArgs,
     Client.Product | null
-  >;
-  Users_updateOneProductSaga?: Resolver<
-    {},
-    Users_UpdateOneProductSagaArgs,
-    (Client.Product & { SagaEventID: string }) | null
   >;
   Users_updateManyProduct?: Resolver<
     {},
@@ -932,11 +917,6 @@ export interface Users_UpdateOneUserArgs {
   where: Users_UserWhereUniqueInput | null;
 }
 
-export interface Users_UpdateOneUserSagaArgs {
-  data: Users_UserUpdateSagaInput | null;
-  where: Users_UserWhereUniqueInput | null;
-}
-
 export interface Users_UpdateManyUserArgs {
   data: Users_UserUpdateManyMutationInput;
   where?: Users_UserWhereInput;
@@ -970,11 +950,6 @@ export interface Users_UpdateOneReviewArgs {
   where: Users_ReviewWhereUniqueInput | null;
 }
 
-export interface Users_UpdateOneReviewSagaArgs {
-  data: Users_ReviewUpdateSagaInput | null;
-  where: Users_ReviewWhereUniqueInput | null;
-}
-
 export interface Users_UpdateManyReviewArgs {
   data: Users_ReviewUpdateManyMutationInput;
   where?: Users_ReviewWhereInput;
@@ -1005,11 +980,6 @@ export interface Users_DeleteOneProductArgs {
 
 export interface Users_UpdateOneProductArgs {
   data: Users_ProductUpdateInput | null;
-  where: Users_ProductWhereUniqueInput | null;
-}
-
-export interface Users_UpdateOneProductSagaArgs {
-  data: Users_ProductUpdateSagaInput | null;
   where: Users_ProductWhereUniqueInput | null;
 }
 

@@ -70,10 +70,6 @@ export default gql`
       data: Users_UserUpdateInput!
       where: Users_UserWhereUniqueInput!
     ): User!
-    Users_updateOneUserSaga(
-      data: Users_UserUpdateSagaInput!
-      where: Users_UserWhereUniqueSagaInput!
-    ): User!
     Users_deleteOneUser(where: Users_UserWhereUniqueInput!): User
     Users_upsertOneUser(
       where: Users_UserWhereUniqueInput!

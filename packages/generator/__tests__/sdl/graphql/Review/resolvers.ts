@@ -48,9 +48,6 @@ const resolvers: Resolvers = {
     Users_updateOneReview: (_parent, args, { prisma }) => {
       return prisma.review.update(args);
     },
-    Users_updateOneReviewSaga: (_parent, args, { prisma }) => {
-      return prisma.review.update(args);
-    },
     Users_deleteOneReview: async (_parent, args, { prisma }) => {
       return prisma.review.delete(args);
     },

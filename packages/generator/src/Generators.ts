@@ -276,7 +276,6 @@ export class Generators {
   mutations: Mutation[] = [
     'createOne',
     'updateOne',
-    'updateOneSaga',
     'upsertOne',
     'deleteOne',
     'updateMany',

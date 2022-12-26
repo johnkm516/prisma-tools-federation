@@ -193,35 +193,6 @@ export class GenerateTypes {
               )}${field.isNullable ? ' | null' : ''}>`,
             );
           }
-
-          if (field.name.startsWith('updateOne')) {
-            if (this.options.federation) {
-              fields.push(
-                `${fieldName + 'Saga'}?: Resolver<${parentType}, ${
-                  this.options.federation
-                }_${argsType.replace('Args', 'SagaArgs')}, ${this.getOutputType(
-                  field.outputType,
-                )}${
-                  field.isNullable
-                    ? '& { SagaEventID: string } | null'
-                    : '& { SagaEventID: string }'
-                }>`,
-              );
-            } else {
-              fields.push(
-                `${
-                  fieldName + 'Saga'
-                }?: Resolver<${parentType}, ${argsType.replace(
-                  'Args',
-                  'SagaArgs',
-                )}, ${this.getOutputType(field.outputType)}${
-                  field.isNullable
-                    ? '& { SagaEventID: string } | null'
-                    : '& { SagaEventID: string }'
-                }>`,
-              );
-            }
-          }
         } else {
           fields.push(
             `//${fieldName} is not generated because model has only unique fields or relations.`,
@@ -330,48 +301,6 @@ export class GenerateTypes {
               });
             }
             args.push('}');
-
-            //Args type for updateOneSaga
-            if (argsType.startsWith('UpdateOne')) {
-              if (this.options.federation) {
-                args.push(
-                  `
-                  export interface ${
-                    this.options.federation
-                  }_${argsType.replace('Args', 'SagaArgs')} {`,
-                );
-
-                field.args.forEach((arg) => {
-                  args.push(
-                    `${arg.name}${arg.isRequired ? '' : '?'}: ${
-                      this.options.federation
-                    }_${this.getOutputType(arg.inputTypes[0], true).replace(
-                      'UpdateInput',
-                      'UpdateSagaInput',
-                    )}${field.isNullable ? ' | null' : ''}`,
-                  );
-                });
-
-                args.push('}');
-              } else {
-                args.push(`
-                export interface ${argsType.replace('Args', 'SagaArgs')} {`);
-
-                field.args.forEach((arg) => {
-                  args.push(
-                    `${arg.name}${
-                      arg.isRequired ? '' : '?'
-                    }: ${this.getOutputType(arg.inputTypes[0], true).replace(
-                      'UpdateInput',
-                      'UpdateSagaInput',
-                    )}
-                      ${field.isNullable ? ' | null' : ''}`,
-                  );
-                });
-
-                args.push('}');
-              }
-            }
             argsTypes.push(args.join('\n'));
           } else {
             argsTypes.push(

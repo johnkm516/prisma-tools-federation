@@ -75,10 +75,6 @@ export default gql`
       data: Users_ProductUpdateInput!
       where: Users_ProductWhereUniqueInput!
     ): Product!
-    Users_updateOneProductSaga(
-      data: Users_ProductUpdateSagaInput!
-      where: Users_ProductWhereUniqueSagaInput!
-    ): Product!
     Users_deleteOneProduct(where: Users_ProductWhereUniqueInput!): Product
     Users_upsertOneProduct(
       where: Users_ProductWhereUniqueInput!

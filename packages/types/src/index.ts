@@ -108,8 +108,7 @@ export type Mutation =
   | 'upsertOne'
   | 'deleteOne'
   | 'updateMany'
-  | 'deleteMany'
-  | 'updateOneSaga';
+  | 'deleteMany';
 
 export type QueriesAndMutations = Query | Mutation;
 

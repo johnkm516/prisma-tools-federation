@@ -66,10 +66,6 @@ export default gql`
       data: Users_ReviewUpdateInput!
       where: Users_ReviewWhereUniqueInput!
     ): Review!
-    Users_updateOneReviewSaga(
-      data: Users_ReviewUpdateSagaInput!
-      where: Users_ReviewWhereUniqueSagaInput!
-    ): Review!
     Users_deleteOneReview(where: Users_ReviewWhereUniqueInput!): Review
     Users_upsertOneReview(
       where: Users_ReviewWhereUniqueInput!

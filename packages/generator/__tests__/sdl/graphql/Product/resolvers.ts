@@ -48,9 +48,6 @@ const resolvers: Resolvers = {
     Users_updateOneProduct: (_parent, args, { prisma }) => {
       return prisma.product.update(args);
     },
-    Users_updateOneProductSaga: (_parent, args, { prisma }) => {
-      return prisma.product.update(args);
-    },
     Users_deleteOneProduct: async (_parent, args, { prisma }) => {
       return prisma.product.delete(args);
     },

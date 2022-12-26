@@ -210,22 +210,6 @@ export async function createQueriesAndMutations(
     },`;
   }
 
-  if (!exclude.includes('updateOneSaga')) {
-    if (generator.options.federation) {
-      operations.mutations.type += `\n${generator.options.federation}_`;
-      operations.mutations.resolver += `\n${generator.options.federation}_`;
-    } else {
-      operations.mutations.type += `\n`;
-      operations.mutations.resolver += `\n`;
-    }
-    let updateArgsName = await args('updateOne');
-    updateArgsName = updateArgsName.replaceAll('Input', 'SagaInput');
-    operations.mutations.type += `updateOne${name}Saga(${updateArgsName}): ${modelName}!`;
-    operations.mutations.resolver += `updateOne${name}Saga: (_parent, args, {${prismaName}}) => {
-      return ${prismaName}.${model}.update(args)
-    },`;
-  }
-
   if (!exclude.includes('deleteOne')) {
     if (generator.options.federation) {
       operations.mutations.type += `\n${generator.options.federation}_`;
