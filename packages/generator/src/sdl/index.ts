@@ -33,7 +33,7 @@ export class GenerateSdl extends Generators {
     ? readFileSync(this.typeDefsPath, { encoding: 'utf-8' })
     : defaultTypeFile(
         this.isJS,
-        this.options.includeTransactionalBatchMutation,
+        this.includeTransactionalBatchMutationOption(),
       );
   private typeDefsExport: string[] = getCurrentExport(this.typeDefsIndex);
 
