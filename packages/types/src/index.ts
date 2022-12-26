@@ -95,7 +95,9 @@ export interface Options {
 
 export type Query =
   | 'findUnique'
+  | 'findUniqueOrThrow'
   | 'findFirst'
+  | 'findFirstOrThrow'
   | 'findMany'
   | 'findCount'
   | 'aggregate'

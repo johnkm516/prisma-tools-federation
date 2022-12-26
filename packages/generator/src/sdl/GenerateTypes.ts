@@ -527,6 +527,46 @@ export class GenerateTypes {
     });
     this.code.push(enumsTypes.join('\n'));
 
+    // generate TransactionalBatchMutation
+    if (this.options.includeTransactionalBatchMutation) {
+      const TransactionalBatchInput: string[] = [];
+      const Mutation = this.schema.outputObjectTypes.prisma.find(
+        (type) => type.name === 'Mutation',
+      );
+      if (Mutation) {
+        TransactionalBatchInput.push(
+          this.options.federation
+            ? `export interface ${this.options.federation}_TransactionalMutationInput {`
+            : `export interface TransactionalMutationInput {`,
+        );
+        Mutation.fields.forEach((field) => {
+          const fieldname =
+            field.name.charAt(0).toUpperCase() + field.name.slice(1);
+          if (field.name != 'executeRaw' && field.name != 'queryRaw') {
+            TransactionalBatchInput.push(
+              this.options?.federation
+                ? `  ${this.options.federation}_${fieldname}: ${this.options.federation}_${fieldname}Args;`
+                : ` ${fieldname}: ${fieldname}Args;`,
+            );
+          }
+        });
+        TransactionalBatchInput.push(`}\n`);
+
+        TransactionalBatchInput.push(
+          this.options.federation
+            ? `export interface ${this.options.federation}_TransactionalBatchMutationArgs {`
+            : `export interface TransactionalMutationArgs {`,
+        );
+        TransactionalBatchInput.push(
+          this.options.federation
+            ? `  mutation: ${this.options.federation}_TransactionalMutationInput[];`
+            : ` mutation: TransactionalMutationInput[];`,
+        );
+        TransactionalBatchInput.push(`}\n`);
+      }
+      this.code.push(TransactionalBatchInput.join('\n'));
+    }
+
     return this.code.join('\n\n');
   }
 }

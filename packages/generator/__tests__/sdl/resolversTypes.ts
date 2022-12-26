@@ -2037,3 +2037,31 @@ export enum UserScalarFieldEnum {
   googleId = 'googleId',
   googleProfile = 'googleProfile',
 }
+
+export interface Users_TransactionalMutationInput {
+  Users_CreateOneUser: Users_CreateOneUserArgs;
+  Users_UpsertOneUser: Users_UpsertOneUserArgs;
+  Users_CreateManyUser: Users_CreateManyUserArgs;
+  Users_DeleteOneUser: Users_DeleteOneUserArgs;
+  Users_UpdateOneUser: Users_UpdateOneUserArgs;
+  Users_UpdateManyUser: Users_UpdateManyUserArgs;
+  Users_DeleteManyUser: Users_DeleteManyUserArgs;
+  Users_CreateOneReview: Users_CreateOneReviewArgs;
+  Users_UpsertOneReview: Users_UpsertOneReviewArgs;
+  Users_CreateManyReview: Users_CreateManyReviewArgs;
+  Users_DeleteOneReview: Users_DeleteOneReviewArgs;
+  Users_UpdateOneReview: Users_UpdateOneReviewArgs;
+  Users_UpdateManyReview: Users_UpdateManyReviewArgs;
+  Users_DeleteManyReview: Users_DeleteManyReviewArgs;
+  Users_CreateOneProduct: Users_CreateOneProductArgs;
+  Users_UpsertOneProduct: Users_UpsertOneProductArgs;
+  Users_CreateManyProduct: Users_CreateManyProductArgs;
+  Users_DeleteOneProduct: Users_DeleteOneProductArgs;
+  Users_UpdateOneProduct: Users_UpdateOneProductArgs;
+  Users_UpdateManyProduct: Users_UpdateManyProductArgs;
+  Users_DeleteManyProduct: Users_DeleteManyProductArgs;
+}
+
+export interface Users_TransactionalBatchMutationArgs {
+  mutation: Users_TransactionalMutationInput[];
+}
