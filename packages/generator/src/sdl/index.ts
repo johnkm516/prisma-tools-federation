@@ -372,7 +372,7 @@ const defaultTypeDefsExtensionFile = (federation?: string, isJs?: boolean) =>
       federation ? federation + '_' : ''
     }transactionalBatchMutation(mutations: [${
         federation ? federation + '_' : ''
-      }transactionalMutationInput]): Boolean!
+      }transactionalMutationInput]): TransactionSucceeded!
   }
   \`;
   `;
