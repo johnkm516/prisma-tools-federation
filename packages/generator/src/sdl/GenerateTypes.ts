@@ -504,6 +504,12 @@ export class GenerateTypes {
             : ` mutations: TransactionalMutationInput[];`,
         );
         TransactionalBatchInput.push(`}\n`);
+
+        TransactionalBatchInput.push(
+          `export interface TransactionSucceeded {
+          transactionSucceeded: boolean
+        }\n`,
+        );
       }
       this.code.push(TransactionalBatchInput.join('\n'));
     }

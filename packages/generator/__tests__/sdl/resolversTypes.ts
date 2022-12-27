@@ -2040,3 +2040,7 @@ export interface Users_TransactionalMutationInput {
 export interface Users_TransactionalBatchMutationArgs {
   mutations: Users_TransactionalMutationInput[];
 }
+
+export interface TransactionSucceeded {
+  transactionSucceeded: boolean;
+}

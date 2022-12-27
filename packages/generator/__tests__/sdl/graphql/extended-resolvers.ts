@@ -75,11 +75,10 @@ const resolvers: Resolvers = {
             }
           }
         }
-
         return mutationTasks;
       });
       //return prisma.user.create(args);
-      return { transactionSucceeded: false };
+      return { transactionSucceeded: true };
     },
   },
 };

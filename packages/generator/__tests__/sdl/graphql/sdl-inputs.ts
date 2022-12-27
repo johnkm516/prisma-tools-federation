@@ -1205,6 +1205,10 @@ export default gql`
     price: Float
   }
 
+  type TransactionSucceeded @shareable {
+    transactionSucceeded: Boolean!
+  }
+
   input Users_createOneUserInput {
     data: Users_UserCreateInput
   }

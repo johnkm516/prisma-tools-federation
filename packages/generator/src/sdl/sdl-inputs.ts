@@ -298,6 +298,12 @@ type BatchPayload @shareable {
       );
       MutationsArgsInputs.push(TransactionalBatchInput.join('\n'));
       MutationsArgsInputs.push(`}\n`);
+
+      fileContent += `type TransactionSucceeded ${
+        options?.federation ? `@shareable` : ``
+      } {
+  transactionSucceeded: Boolean!
+}\n\n`;
       fileContent += MutationsArgsInputs.join(`\n`);
     }
   }
