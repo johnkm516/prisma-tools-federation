@@ -1,13 +1,14 @@
-datasource db {
-  provider = "postgresql"
-  url      = "DATABASE_URL"
-}
-
 generator client {
-  provider        = "prisma-client-js"
+  provider = "prisma-client-js"
+  output   = "../../../../node_modules/.prisma/Auth-client"
   previewFeatures = ["extendedWhereUnique"]
 }
 
+datasource db {
+  provider = "postgresql"
+  // DB URL is automatically replaced from localhost to docker image name in production
+  url      = env("AUTH_SOURCE_URL")
+}
 
 model User {
   id            Int      @id @default(autoincrement())
@@ -15,22 +16,37 @@ model User {
   username      String?  @unique
   password      String?
   email         String   @unique
-  roles         String[] 
+  roles         String[]
   googleId      String?  @unique
   googleProfile Json?
+  lastName      String?
+  firstName     String?
+  profile       Profile?
+  teams         UsersOnTeams[]
 }
 
-model Review {
-  id         Int     @id @default(autoincrement())
-  product    Product  @relation(fields: [product_id], references: [id])
-  product_id  Int    @unique
-  score Int
+model Profile {
+  userId            Int  @unique  @id
+  user              User @relation(fields: [userId], references: [id])
+  location          String?
+  joiningDate       DateTime?
+  designation       String?
+  profileImg        String?
+  designationIcon   String?
+  coverImg          String?
 }
 
-model Product {
-  id  Int @id @default(autoincrement())
-  price   Float
-  review Review[]
+model UsersOnTeams {
+  team          Team    @relation(fields: [teamName], references: [teamName])
+  teamName      String
+  user          User    @relation(fields: [userId], references: [id])
+  userId        Int     
+  assignedAt    DateTime @default(now())
+
+  @@id([teamName, userId])
 }
 
-
+model Team {
+  teamName      String  @unique @id
+  users         UsersOnTeams[]
+}

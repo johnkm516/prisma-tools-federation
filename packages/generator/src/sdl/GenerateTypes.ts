@@ -373,15 +373,8 @@ export class GenerateTypes {
             }
           });
           if (input.name === `${model.name}WhereUniqueInput`) {
-            let uniques = [...new Set(model.keyFields?.flat())];
             fields.push('}, ');
-            fields.push(
-              uniques
-                .map((unique) => {
-                  return `'${unique}'`;
-                })
-                .join(' | '),
-            );
+            fields.push(input.constraints.fields!.join(' | '));
             fields.push('>');
           } else {
             fields.push('}');

@@ -10,6 +10,18 @@ export default gql`
     roles: [String!]!
     googleId: String
     googleProfile: Json
+    lastName: String
+    firstName: String
+    profile: Profile
+    teams(
+      where: Users_UsersOnTeamsWhereInput
+      orderBy: Users_UsersOnTeamsOrderByWithRelationInput
+      cursor: Users_UsersOnTeamsWhereUniqueInput
+      take: Int
+      skip: Int
+      distinct: UsersOnTeamsScalarFieldEnum
+    ): [UsersOnTeams!]!
+    _count: UserCountOutputType!
   }
 
   type Query {

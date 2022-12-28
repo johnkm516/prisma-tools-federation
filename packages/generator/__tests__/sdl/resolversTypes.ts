@@ -30,33 +30,40 @@ export type GroupByError =
 export interface Resolvers {
   [key: string]: { [key: string]: Resolver<any, any, any> };
   User?: User;
-  Review?: Review;
-  Product?: Product;
+  Profile?: Profile;
+  UsersOnTeams?: UsersOnTeams;
+  Team?: Team;
   Query?: Query;
   Mutation?: Mutation;
   AggregateUser?: AggregateUser;
   UserGroupByOutputType?: UserGroupByOutputType;
-  AggregateReview?: AggregateReview;
-  ReviewGroupByOutputType?: ReviewGroupByOutputType;
-  AggregateProduct?: AggregateProduct;
-  ProductGroupByOutputType?: ProductGroupByOutputType;
+  AggregateProfile?: AggregateProfile;
+  ProfileGroupByOutputType?: ProfileGroupByOutputType;
+  AggregateUsersOnTeams?: AggregateUsersOnTeams;
+  UsersOnTeamsGroupByOutputType?: UsersOnTeamsGroupByOutputType;
+  AggregateTeam?: AggregateTeam;
+  TeamGroupByOutputType?: TeamGroupByOutputType;
   AffectedRowsOutput?: AffectedRowsOutput;
+  UserCountOutputType?: UserCountOutputType;
   UserCountAggregateOutputType?: UserCountAggregateOutputType;
   UserAvgAggregateOutputType?: UserAvgAggregateOutputType;
   UserSumAggregateOutputType?: UserSumAggregateOutputType;
   UserMinAggregateOutputType?: UserMinAggregateOutputType;
   UserMaxAggregateOutputType?: UserMaxAggregateOutputType;
-  ReviewCountAggregateOutputType?: ReviewCountAggregateOutputType;
-  ReviewAvgAggregateOutputType?: ReviewAvgAggregateOutputType;
-  ReviewSumAggregateOutputType?: ReviewSumAggregateOutputType;
-  ReviewMinAggregateOutputType?: ReviewMinAggregateOutputType;
-  ReviewMaxAggregateOutputType?: ReviewMaxAggregateOutputType;
-  ProductCountOutputType?: ProductCountOutputType;
-  ProductCountAggregateOutputType?: ProductCountAggregateOutputType;
-  ProductAvgAggregateOutputType?: ProductAvgAggregateOutputType;
-  ProductSumAggregateOutputType?: ProductSumAggregateOutputType;
-  ProductMinAggregateOutputType?: ProductMinAggregateOutputType;
-  ProductMaxAggregateOutputType?: ProductMaxAggregateOutputType;
+  ProfileCountAggregateOutputType?: ProfileCountAggregateOutputType;
+  ProfileAvgAggregateOutputType?: ProfileAvgAggregateOutputType;
+  ProfileSumAggregateOutputType?: ProfileSumAggregateOutputType;
+  ProfileMinAggregateOutputType?: ProfileMinAggregateOutputType;
+  ProfileMaxAggregateOutputType?: ProfileMaxAggregateOutputType;
+  UsersOnTeamsCountAggregateOutputType?: UsersOnTeamsCountAggregateOutputType;
+  UsersOnTeamsAvgAggregateOutputType?: UsersOnTeamsAvgAggregateOutputType;
+  UsersOnTeamsSumAggregateOutputType?: UsersOnTeamsSumAggregateOutputType;
+  UsersOnTeamsMinAggregateOutputType?: UsersOnTeamsMinAggregateOutputType;
+  UsersOnTeamsMaxAggregateOutputType?: UsersOnTeamsMaxAggregateOutputType;
+  TeamCountOutputType?: TeamCountOutputType;
+  TeamCountAggregateOutputType?: TeamCountAggregateOutputType;
+  TeamMinAggregateOutputType?: TeamMinAggregateOutputType;
+  TeamMaxAggregateOutputType?: TeamMaxAggregateOutputType;
 }
 
 export interface User {
@@ -69,30 +76,53 @@ export interface User {
   roles?: Resolver<Client.User, {}, string[] | null>;
   googleId?: Resolver<Client.User, {}, string | null>;
   googleProfile?: Resolver<Client.User, {}, any | null>;
-
-  __resolveReference?: any;
-}
-
-export interface Review {
-  [key: string]: Resolver<any, any, any>;
-  id?: Resolver<Client.Review, {}, number>;
-  product?: Resolver<Client.Review, {}, Client.Product>;
-  product_id?: Resolver<Client.Review, {}, number>;
-  score?: Resolver<Client.Review, {}, number>;
-
-  __resolveReference?: any;
-}
-
-export interface Product {
-  [key: string]: Resolver<any, any, any>;
-  id?: Resolver<Client.Product, {}, number>;
-  price?: Resolver<Client.Product, {}, number>;
-  review?: Resolver<
-    Client.Product,
-    Users_ProductReviewArgs,
-    Client.Review[] | null
+  lastName?: Resolver<Client.User, {}, string | null>;
+  firstName?: Resolver<Client.User, {}, string | null>;
+  profile?: Resolver<Client.User, {}, Client.Profile | null>;
+  teams?: Resolver<
+    Client.User,
+    Users_UserTeamsArgs,
+    Client.UsersOnTeams[] | null
   >;
-  _count?: Resolver<Client.Product, {}, Client.Prisma.ProductCountOutputType>;
+  _count?: Resolver<Client.User, {}, Client.Prisma.UserCountOutputType>;
+
+  __resolveReference?: any;
+}
+
+export interface Profile {
+  [key: string]: Resolver<any, any, any>;
+  userId?: Resolver<Client.Profile, {}, number>;
+  user?: Resolver<Client.Profile, {}, Client.User>;
+  location?: Resolver<Client.Profile, {}, string | null>;
+  joiningDate?: Resolver<Client.Profile, {}, Date | null>;
+  designation?: Resolver<Client.Profile, {}, string | null>;
+  profileImg?: Resolver<Client.Profile, {}, string | null>;
+  designationIcon?: Resolver<Client.Profile, {}, string | null>;
+  coverImg?: Resolver<Client.Profile, {}, string | null>;
+
+  __resolveReference?: any;
+}
+
+export interface UsersOnTeams {
+  [key: string]: Resolver<any, any, any>;
+  team?: Resolver<Client.UsersOnTeams, {}, Client.Team>;
+  teamName?: Resolver<Client.UsersOnTeams, {}, string>;
+  user?: Resolver<Client.UsersOnTeams, {}, Client.User>;
+  userId?: Resolver<Client.UsersOnTeams, {}, number>;
+  assignedAt?: Resolver<Client.UsersOnTeams, {}, Date>;
+
+  __resolveReference?: any;
+}
+
+export interface Team {
+  [key: string]: Resolver<any, any, any>;
+  teamName?: Resolver<Client.Team, {}, string>;
+  users?: Resolver<
+    Client.Team,
+    Users_TeamUsersArgs,
+    Client.UsersOnTeams[] | null
+  >;
+  _count?: Resolver<Client.Team, {}, Client.Prisma.TeamCountOutputType>;
 
   __resolveReference?: any;
 }
@@ -132,81 +162,118 @@ export interface Query {
     Users_FindUniqueUserOrThrowArgs,
     Client.User | null
   >;
-  Users_findFirstReview?: Resolver<
+  Users_findFirstProfile?: Resolver<
     {},
-    Users_FindFirstReviewArgs,
-    Client.Review | null
+    Users_FindFirstProfileArgs,
+    Client.Profile | null
   >;
-  Users_findFirstReviewOrThrow?: Resolver<
+  Users_findFirstProfileOrThrow?: Resolver<
     {},
-    Users_FindFirstReviewOrThrowArgs,
-    Client.Review | null
+    Users_FindFirstProfileOrThrowArgs,
+    Client.Profile | null
   >;
-  Users_findManyReview?: Resolver<
+  Users_findManyProfile?: Resolver<
     {},
-    Users_FindManyReviewArgs,
-    Client.Review[]
+    Users_FindManyProfileArgs,
+    Client.Profile[]
   >;
-  Users_findManyReviewCount?: Resolver<{}, Users_FindManyReviewArgs, number>;
-  Users_aggregateReview?: Resolver<
+  Users_findManyProfileCount?: Resolver<{}, Users_FindManyProfileArgs, number>;
+  Users_aggregateProfile?: Resolver<
     {},
-    Users_AggregateReviewArgs,
-    Client.Prisma.GetReviewAggregateType<Users_AggregateReviewArgs>
+    Users_AggregateProfileArgs,
+    Client.Prisma.GetProfileAggregateType<Users_AggregateProfileArgs>
   >;
-  //Users_groupByReview is not generated because model has only unique fields or relations.
-  Users_groupByReview?: Resolver<
+  //Users_groupByProfile is not generated because model has only unique fields or relations.
+  Users_groupByProfile?: Resolver<
     {},
     any,
-    | Client.Prisma.GetReviewGroupByPayload<Users_GroupByReviewArgs>
+    | Client.Prisma.GetProfileGroupByPayload<Users_GroupByProfileArgs>
     | GroupByError
   >;
-  Users_findUniqueReview?: Resolver<
+  Users_findUniqueProfile?: Resolver<
     {},
-    Users_FindUniqueReviewArgs,
-    Client.Review | null
+    Users_FindUniqueProfileArgs,
+    Client.Profile | null
   >;
-  Users_findUniqueReviewOrThrow?: Resolver<
+  Users_findUniqueProfileOrThrow?: Resolver<
     {},
-    Users_FindUniqueReviewOrThrowArgs,
-    Client.Review | null
+    Users_FindUniqueProfileOrThrowArgs,
+    Client.Profile | null
   >;
-  Users_findFirstProduct?: Resolver<
+  Users_findFirstUsersOnTeams?: Resolver<
     {},
-    Users_FindFirstProductArgs,
-    Client.Product | null
+    Users_FindFirstUsersOnTeamsArgs,
+    Client.UsersOnTeams | null
   >;
-  Users_findFirstProductOrThrow?: Resolver<
+  Users_findFirstUsersOnTeamsOrThrow?: Resolver<
     {},
-    Users_FindFirstProductOrThrowArgs,
-    Client.Product | null
+    Users_FindFirstUsersOnTeamsOrThrowArgs,
+    Client.UsersOnTeams | null
   >;
-  Users_findManyProduct?: Resolver<
+  Users_findManyUsersOnTeams?: Resolver<
     {},
-    Users_FindManyProductArgs,
-    Client.Product[]
+    Users_FindManyUsersOnTeamsArgs,
+    Client.UsersOnTeams[]
   >;
-  Users_findManyProductCount?: Resolver<{}, Users_FindManyProductArgs, number>;
-  Users_aggregateProduct?: Resolver<
+  Users_findManyUsersOnTeamsCount?: Resolver<
     {},
-    Users_AggregateProductArgs,
-    Client.Prisma.GetProductAggregateType<Users_AggregateProductArgs>
+    Users_FindManyUsersOnTeamsArgs,
+    number
   >;
-  //Users_groupByProduct is not generated because model has only unique fields or relations.
-  Users_groupByProduct?: Resolver<
+  Users_aggregateUsersOnTeams?: Resolver<
+    {},
+    Users_AggregateUsersOnTeamsArgs,
+    Client.Prisma.GetUsersOnTeamsAggregateType<Users_AggregateUsersOnTeamsArgs>
+  >;
+  //Users_groupByUsersOnTeams is not generated because model has only unique fields or relations.
+  Users_groupByUsersOnTeams?: Resolver<
     {},
     any,
-    | Client.Prisma.GetProductGroupByPayload<Users_GroupByProductArgs>
+    | Client.Prisma.GetUsersOnTeamsGroupByPayload<Users_GroupByUsersOnTeamsArgs>
     | GroupByError
   >;
-  Users_findUniqueProduct?: Resolver<
+  Users_findUniqueUsersOnTeams?: Resolver<
     {},
-    Users_FindUniqueProductArgs,
-    Client.Product | null
+    Users_FindUniqueUsersOnTeamsArgs,
+    Client.UsersOnTeams | null
   >;
-  Users_findUniqueProductOrThrow?: Resolver<
+  Users_findUniqueUsersOnTeamsOrThrow?: Resolver<
     {},
-    Users_FindUniqueProductOrThrowArgs,
-    Client.Product | null
+    Users_FindUniqueUsersOnTeamsOrThrowArgs,
+    Client.UsersOnTeams | null
+  >;
+  Users_findFirstTeam?: Resolver<
+    {},
+    Users_FindFirstTeamArgs,
+    Client.Team | null
+  >;
+  Users_findFirstTeamOrThrow?: Resolver<
+    {},
+    Users_FindFirstTeamOrThrowArgs,
+    Client.Team | null
+  >;
+  Users_findManyTeam?: Resolver<{}, Users_FindManyTeamArgs, Client.Team[]>;
+  Users_findManyTeamCount?: Resolver<{}, Users_FindManyTeamArgs, number>;
+  Users_aggregateTeam?: Resolver<
+    {},
+    Users_AggregateTeamArgs,
+    Client.Prisma.GetTeamAggregateType<Users_AggregateTeamArgs>
+  >;
+  //Users_groupByTeam is not generated because model has only unique fields or relations.
+  Users_groupByTeam?: Resolver<
+    {},
+    any,
+    Client.Prisma.GetTeamGroupByPayload<Users_GroupByTeamArgs> | GroupByError
+  >;
+  Users_findUniqueTeam?: Resolver<
+    {},
+    Users_FindUniqueTeamArgs,
+    Client.Team | null
+  >;
+  Users_findUniqueTeamOrThrow?: Resolver<
+    {},
+    Users_FindUniqueTeamOrThrowArgs,
+    Client.Team | null
   >;
 }
 
@@ -239,74 +306,97 @@ export interface Mutation {
     Users_DeleteManyUserArgs,
     Client.Prisma.BatchPayload
   >;
-  Users_createOneReview?: Resolver<
+  Users_createOneProfile?: Resolver<
     {},
-    Users_CreateOneReviewArgs,
-    Client.Review
+    Users_CreateOneProfileArgs,
+    Client.Profile
   >;
-  Users_upsertOneReview?: Resolver<
+  Users_upsertOneProfile?: Resolver<
     {},
-    Users_UpsertOneReviewArgs,
-    Client.Review
+    Users_UpsertOneProfileArgs,
+    Client.Profile
   >;
-  Users_createManyReview?: Resolver<
+  Users_createManyProfile?: Resolver<
     {},
-    Users_CreateManyReviewArgs,
+    Users_CreateManyProfileArgs,
     Client.Prisma.BatchPayload
   >;
-  Users_deleteOneReview?: Resolver<
+  Users_deleteOneProfile?: Resolver<
     {},
-    Users_DeleteOneReviewArgs,
-    Client.Review | null
+    Users_DeleteOneProfileArgs,
+    Client.Profile | null
   >;
-  Users_updateOneReview?: Resolver<
+  Users_updateOneProfile?: Resolver<
     {},
-    Users_UpdateOneReviewArgs,
-    Client.Review | null
+    Users_UpdateOneProfileArgs,
+    Client.Profile | null
   >;
-  Users_updateManyReview?: Resolver<
+  Users_updateManyProfile?: Resolver<
     {},
-    Users_UpdateManyReviewArgs,
+    Users_UpdateManyProfileArgs,
     Client.Prisma.BatchPayload
   >;
-  Users_deleteManyReview?: Resolver<
+  Users_deleteManyProfile?: Resolver<
     {},
-    Users_DeleteManyReviewArgs,
+    Users_DeleteManyProfileArgs,
     Client.Prisma.BatchPayload
   >;
-  Users_createOneProduct?: Resolver<
+  Users_createOneUsersOnTeams?: Resolver<
     {},
-    Users_CreateOneProductArgs,
-    Client.Product
+    Users_CreateOneUsersOnTeamsArgs,
+    Client.UsersOnTeams
   >;
-  Users_upsertOneProduct?: Resolver<
+  Users_upsertOneUsersOnTeams?: Resolver<
     {},
-    Users_UpsertOneProductArgs,
-    Client.Product
+    Users_UpsertOneUsersOnTeamsArgs,
+    Client.UsersOnTeams
   >;
-  Users_createManyProduct?: Resolver<
+  Users_createManyUsersOnTeams?: Resolver<
     {},
-    Users_CreateManyProductArgs,
+    Users_CreateManyUsersOnTeamsArgs,
     Client.Prisma.BatchPayload
   >;
-  Users_deleteOneProduct?: Resolver<
+  Users_deleteOneUsersOnTeams?: Resolver<
     {},
-    Users_DeleteOneProductArgs,
-    Client.Product | null
+    Users_DeleteOneUsersOnTeamsArgs,
+    Client.UsersOnTeams | null
   >;
-  Users_updateOneProduct?: Resolver<
+  Users_updateOneUsersOnTeams?: Resolver<
     {},
-    Users_UpdateOneProductArgs,
-    Client.Product | null
+    Users_UpdateOneUsersOnTeamsArgs,
+    Client.UsersOnTeams | null
   >;
-  Users_updateManyProduct?: Resolver<
+  Users_updateManyUsersOnTeams?: Resolver<
     {},
-    Users_UpdateManyProductArgs,
+    Users_UpdateManyUsersOnTeamsArgs,
     Client.Prisma.BatchPayload
   >;
-  Users_deleteManyProduct?: Resolver<
+  Users_deleteManyUsersOnTeams?: Resolver<
     {},
-    Users_DeleteManyProductArgs,
+    Users_DeleteManyUsersOnTeamsArgs,
+    Client.Prisma.BatchPayload
+  >;
+  Users_createOneTeam?: Resolver<{}, Users_CreateOneTeamArgs, Client.Team>;
+  Users_upsertOneTeam?: Resolver<{}, Users_UpsertOneTeamArgs, Client.Team>;
+  Users_createManyTeam?: Resolver<
+    {},
+    Users_CreateManyTeamArgs,
+    Client.Prisma.BatchPayload
+  >;
+  Users_deleteOneTeam?: Resolver<
+    {},
+    Users_DeleteOneTeamArgs,
+    Client.Team | null
+  >;
+  Users_updateOneTeam?: Resolver<
+    {},
+    Users_UpdateOneTeamArgs,
+    Client.Team | null
+  >;
+  //Users_updateManyTeam is not generated because model has only unique fields or relations.
+  Users_deleteManyTeam?: Resolver<
+    {},
+    Users_DeleteManyTeamArgs,
     Client.Prisma.BatchPayload
   >;
   Users_executeRaw?: Resolver<{}, Users_ExecuteRawArgs, any>;
@@ -357,6 +447,8 @@ export interface UserGroupByOutputType {
   roles?: Resolver<Client.Prisma.UserGroupByOutputType, {}, string[] | null>;
   googleId?: Resolver<Client.Prisma.UserGroupByOutputType, {}, string | null>;
   googleProfile?: Resolver<Client.Prisma.UserGroupByOutputType, {}, any | null>;
+  lastName?: Resolver<Client.Prisma.UserGroupByOutputType, {}, string | null>;
+  firstName?: Resolver<Client.Prisma.UserGroupByOutputType, {}, string | null>;
   _count?: Resolver<
     Client.Prisma.UserGroupByOutputType,
     {},
@@ -384,130 +476,203 @@ export interface UserGroupByOutputType {
   >;
 }
 
-export interface AggregateReview {
+export interface AggregateProfile {
   [key: string]: Resolver<any, any, any>;
   _count?: Resolver<
-    Client.Prisma.AggregateReview,
+    Client.Prisma.AggregateProfile,
     {},
-    Client.Prisma.ReviewCountAggregateOutputType | null
+    Client.Prisma.ProfileCountAggregateOutputType | null
   >;
   _avg?: Resolver<
-    Client.Prisma.AggregateReview,
+    Client.Prisma.AggregateProfile,
     {},
-    Client.Prisma.ReviewAvgAggregateOutputType | null
+    Client.Prisma.ProfileAvgAggregateOutputType | null
   >;
   _sum?: Resolver<
-    Client.Prisma.AggregateReview,
+    Client.Prisma.AggregateProfile,
     {},
-    Client.Prisma.ReviewSumAggregateOutputType | null
+    Client.Prisma.ProfileSumAggregateOutputType | null
   >;
   _min?: Resolver<
-    Client.Prisma.AggregateReview,
+    Client.Prisma.AggregateProfile,
     {},
-    Client.Prisma.ReviewMinAggregateOutputType | null
+    Client.Prisma.ProfileMinAggregateOutputType | null
   >;
   _max?: Resolver<
-    Client.Prisma.AggregateReview,
+    Client.Prisma.AggregateProfile,
     {},
-    Client.Prisma.ReviewMaxAggregateOutputType | null
+    Client.Prisma.ProfileMaxAggregateOutputType | null
   >;
 }
 
-export interface ReviewGroupByOutputType {
+export interface ProfileGroupByOutputType {
   [key: string]: Resolver<any, any, any>;
-  id?: Resolver<Client.Prisma.ReviewGroupByOutputType, {}, number>;
-  product_id?: Resolver<Client.Prisma.ReviewGroupByOutputType, {}, number>;
-  score?: Resolver<Client.Prisma.ReviewGroupByOutputType, {}, number>;
-  _count?: Resolver<
-    Client.Prisma.ReviewGroupByOutputType,
+  userId?: Resolver<Client.Prisma.ProfileGroupByOutputType, {}, number>;
+  location?: Resolver<
+    Client.Prisma.ProfileGroupByOutputType,
     {},
-    Client.Prisma.ReviewCountAggregateOutputType | null
+    string | null
+  >;
+  joiningDate?: Resolver<
+    Client.Prisma.ProfileGroupByOutputType,
+    {},
+    Date | null
+  >;
+  designation?: Resolver<
+    Client.Prisma.ProfileGroupByOutputType,
+    {},
+    string | null
+  >;
+  profileImg?: Resolver<
+    Client.Prisma.ProfileGroupByOutputType,
+    {},
+    string | null
+  >;
+  designationIcon?: Resolver<
+    Client.Prisma.ProfileGroupByOutputType,
+    {},
+    string | null
+  >;
+  coverImg?: Resolver<
+    Client.Prisma.ProfileGroupByOutputType,
+    {},
+    string | null
+  >;
+  _count?: Resolver<
+    Client.Prisma.ProfileGroupByOutputType,
+    {},
+    Client.Prisma.ProfileCountAggregateOutputType | null
   >;
   _avg?: Resolver<
-    Client.Prisma.ReviewGroupByOutputType,
+    Client.Prisma.ProfileGroupByOutputType,
     {},
-    Client.Prisma.ReviewAvgAggregateOutputType | null
+    Client.Prisma.ProfileAvgAggregateOutputType | null
   >;
   _sum?: Resolver<
-    Client.Prisma.ReviewGroupByOutputType,
+    Client.Prisma.ProfileGroupByOutputType,
     {},
-    Client.Prisma.ReviewSumAggregateOutputType | null
+    Client.Prisma.ProfileSumAggregateOutputType | null
   >;
   _min?: Resolver<
-    Client.Prisma.ReviewGroupByOutputType,
+    Client.Prisma.ProfileGroupByOutputType,
     {},
-    Client.Prisma.ReviewMinAggregateOutputType | null
+    Client.Prisma.ProfileMinAggregateOutputType | null
   >;
   _max?: Resolver<
-    Client.Prisma.ReviewGroupByOutputType,
+    Client.Prisma.ProfileGroupByOutputType,
     {},
-    Client.Prisma.ReviewMaxAggregateOutputType | null
+    Client.Prisma.ProfileMaxAggregateOutputType | null
   >;
 }
 
-export interface AggregateProduct {
+export interface AggregateUsersOnTeams {
   [key: string]: Resolver<any, any, any>;
   _count?: Resolver<
-    Client.Prisma.AggregateProduct,
+    Client.Prisma.AggregateUsersOnTeams,
     {},
-    Client.Prisma.ProductCountAggregateOutputType | null
+    Client.Prisma.UsersOnTeamsCountAggregateOutputType | null
   >;
   _avg?: Resolver<
-    Client.Prisma.AggregateProduct,
+    Client.Prisma.AggregateUsersOnTeams,
     {},
-    Client.Prisma.ProductAvgAggregateOutputType | null
+    Client.Prisma.UsersOnTeamsAvgAggregateOutputType | null
   >;
   _sum?: Resolver<
-    Client.Prisma.AggregateProduct,
+    Client.Prisma.AggregateUsersOnTeams,
     {},
-    Client.Prisma.ProductSumAggregateOutputType | null
+    Client.Prisma.UsersOnTeamsSumAggregateOutputType | null
   >;
   _min?: Resolver<
-    Client.Prisma.AggregateProduct,
+    Client.Prisma.AggregateUsersOnTeams,
     {},
-    Client.Prisma.ProductMinAggregateOutputType | null
+    Client.Prisma.UsersOnTeamsMinAggregateOutputType | null
   >;
   _max?: Resolver<
-    Client.Prisma.AggregateProduct,
+    Client.Prisma.AggregateUsersOnTeams,
     {},
-    Client.Prisma.ProductMaxAggregateOutputType | null
+    Client.Prisma.UsersOnTeamsMaxAggregateOutputType | null
   >;
 }
 
-export interface ProductGroupByOutputType {
+export interface UsersOnTeamsGroupByOutputType {
   [key: string]: Resolver<any, any, any>;
-  id?: Resolver<Client.Prisma.ProductGroupByOutputType, {}, number>;
-  price?: Resolver<Client.Prisma.ProductGroupByOutputType, {}, number>;
+  teamName?: Resolver<Client.Prisma.UsersOnTeamsGroupByOutputType, {}, string>;
+  userId?: Resolver<Client.Prisma.UsersOnTeamsGroupByOutputType, {}, number>;
+  assignedAt?: Resolver<Client.Prisma.UsersOnTeamsGroupByOutputType, {}, Date>;
   _count?: Resolver<
-    Client.Prisma.ProductGroupByOutputType,
+    Client.Prisma.UsersOnTeamsGroupByOutputType,
     {},
-    Client.Prisma.ProductCountAggregateOutputType | null
+    Client.Prisma.UsersOnTeamsCountAggregateOutputType | null
   >;
   _avg?: Resolver<
-    Client.Prisma.ProductGroupByOutputType,
+    Client.Prisma.UsersOnTeamsGroupByOutputType,
     {},
-    Client.Prisma.ProductAvgAggregateOutputType | null
+    Client.Prisma.UsersOnTeamsAvgAggregateOutputType | null
   >;
   _sum?: Resolver<
-    Client.Prisma.ProductGroupByOutputType,
+    Client.Prisma.UsersOnTeamsGroupByOutputType,
     {},
-    Client.Prisma.ProductSumAggregateOutputType | null
+    Client.Prisma.UsersOnTeamsSumAggregateOutputType | null
   >;
   _min?: Resolver<
-    Client.Prisma.ProductGroupByOutputType,
+    Client.Prisma.UsersOnTeamsGroupByOutputType,
     {},
-    Client.Prisma.ProductMinAggregateOutputType | null
+    Client.Prisma.UsersOnTeamsMinAggregateOutputType | null
   >;
   _max?: Resolver<
-    Client.Prisma.ProductGroupByOutputType,
+    Client.Prisma.UsersOnTeamsGroupByOutputType,
     {},
-    Client.Prisma.ProductMaxAggregateOutputType | null
+    Client.Prisma.UsersOnTeamsMaxAggregateOutputType | null
+  >;
+}
+
+export interface AggregateTeam {
+  [key: string]: Resolver<any, any, any>;
+  _count?: Resolver<
+    Client.Prisma.AggregateTeam,
+    {},
+    Client.Prisma.TeamCountAggregateOutputType | null
+  >;
+  _min?: Resolver<
+    Client.Prisma.AggregateTeam,
+    {},
+    Client.Prisma.TeamMinAggregateOutputType | null
+  >;
+  _max?: Resolver<
+    Client.Prisma.AggregateTeam,
+    {},
+    Client.Prisma.TeamMaxAggregateOutputType | null
+  >;
+}
+
+export interface TeamGroupByOutputType {
+  [key: string]: Resolver<any, any, any>;
+  teamName?: Resolver<Client.Prisma.TeamGroupByOutputType, {}, string>;
+  _count?: Resolver<
+    Client.Prisma.TeamGroupByOutputType,
+    {},
+    Client.Prisma.TeamCountAggregateOutputType | null
+  >;
+  _min?: Resolver<
+    Client.Prisma.TeamGroupByOutputType,
+    {},
+    Client.Prisma.TeamMinAggregateOutputType | null
+  >;
+  _max?: Resolver<
+    Client.Prisma.TeamGroupByOutputType,
+    {},
+    Client.Prisma.TeamMaxAggregateOutputType | null
   >;
 }
 
 export interface AffectedRowsOutput {
   [key: string]: Resolver<any, any, any>;
   count?: Resolver<Client.Prisma.BatchPayload, {}, number>;
+}
+
+export interface UserCountOutputType {
+  [key: string]: Resolver<any, any, any>;
+  teams?: Resolver<Client.Prisma.UserCountOutputType, {}, number>;
 }
 
 export interface UserCountAggregateOutputType {
@@ -524,6 +689,8 @@ export interface UserCountAggregateOutputType {
     {},
     number
   >;
+  lastName?: Resolver<Client.Prisma.UserCountAggregateOutputType, {}, number>;
+  firstName?: Resolver<Client.Prisma.UserCountAggregateOutputType, {}, number>;
   _all?: Resolver<Client.Prisma.UserCountAggregateOutputType, {}, number>;
 }
 
@@ -561,6 +728,16 @@ export interface UserMinAggregateOutputType {
     {},
     string | null
   >;
+  lastName?: Resolver<
+    Client.Prisma.UserMinAggregateOutputType,
+    {},
+    string | null
+  >;
+  firstName?: Resolver<
+    Client.Prisma.UserMinAggregateOutputType,
+    {},
+    string | null
+  >;
 }
 
 export interface UserMaxAggregateOutputType {
@@ -587,139 +764,275 @@ export interface UserMaxAggregateOutputType {
     {},
     string | null
   >;
+  lastName?: Resolver<
+    Client.Prisma.UserMaxAggregateOutputType,
+    {},
+    string | null
+  >;
+  firstName?: Resolver<
+    Client.Prisma.UserMaxAggregateOutputType,
+    {},
+    string | null
+  >;
 }
 
-export interface ReviewCountAggregateOutputType {
+export interface ProfileCountAggregateOutputType {
   [key: string]: Resolver<any, any, any>;
-  id?: Resolver<Client.Prisma.ReviewCountAggregateOutputType, {}, number>;
-  product_id?: Resolver<
-    Client.Prisma.ReviewCountAggregateOutputType,
+  userId?: Resolver<Client.Prisma.ProfileCountAggregateOutputType, {}, number>;
+  location?: Resolver<
+    Client.Prisma.ProfileCountAggregateOutputType,
     {},
     number
   >;
-  score?: Resolver<Client.Prisma.ReviewCountAggregateOutputType, {}, number>;
-  _all?: Resolver<Client.Prisma.ReviewCountAggregateOutputType, {}, number>;
+  joiningDate?: Resolver<
+    Client.Prisma.ProfileCountAggregateOutputType,
+    {},
+    number
+  >;
+  designation?: Resolver<
+    Client.Prisma.ProfileCountAggregateOutputType,
+    {},
+    number
+  >;
+  profileImg?: Resolver<
+    Client.Prisma.ProfileCountAggregateOutputType,
+    {},
+    number
+  >;
+  designationIcon?: Resolver<
+    Client.Prisma.ProfileCountAggregateOutputType,
+    {},
+    number
+  >;
+  coverImg?: Resolver<
+    Client.Prisma.ProfileCountAggregateOutputType,
+    {},
+    number
+  >;
+  _all?: Resolver<Client.Prisma.ProfileCountAggregateOutputType, {}, number>;
 }
 
-export interface ReviewAvgAggregateOutputType {
+export interface ProfileAvgAggregateOutputType {
   [key: string]: Resolver<any, any, any>;
-  id?: Resolver<Client.Prisma.ReviewAvgAggregateOutputType, {}, number | null>;
-  product_id?: Resolver<
-    Client.Prisma.ReviewAvgAggregateOutputType,
-    {},
-    number | null
-  >;
-  score?: Resolver<
-    Client.Prisma.ReviewAvgAggregateOutputType,
+  userId?: Resolver<
+    Client.Prisma.ProfileAvgAggregateOutputType,
     {},
     number | null
   >;
 }
 
-export interface ReviewSumAggregateOutputType {
+export interface ProfileSumAggregateOutputType {
   [key: string]: Resolver<any, any, any>;
-  id?: Resolver<Client.Prisma.ReviewSumAggregateOutputType, {}, number | null>;
-  product_id?: Resolver<
-    Client.Prisma.ReviewSumAggregateOutputType,
-    {},
-    number | null
-  >;
-  score?: Resolver<
-    Client.Prisma.ReviewSumAggregateOutputType,
+  userId?: Resolver<
+    Client.Prisma.ProfileSumAggregateOutputType,
     {},
     number | null
   >;
 }
 
-export interface ReviewMinAggregateOutputType {
+export interface ProfileMinAggregateOutputType {
   [key: string]: Resolver<any, any, any>;
-  id?: Resolver<Client.Prisma.ReviewMinAggregateOutputType, {}, number | null>;
-  product_id?: Resolver<
-    Client.Prisma.ReviewMinAggregateOutputType,
+  userId?: Resolver<
+    Client.Prisma.ProfileMinAggregateOutputType,
     {},
     number | null
   >;
-  score?: Resolver<
-    Client.Prisma.ReviewMinAggregateOutputType,
+  location?: Resolver<
+    Client.Prisma.ProfileMinAggregateOutputType,
     {},
-    number | null
+    string | null
+  >;
+  joiningDate?: Resolver<
+    Client.Prisma.ProfileMinAggregateOutputType,
+    {},
+    Date | null
+  >;
+  designation?: Resolver<
+    Client.Prisma.ProfileMinAggregateOutputType,
+    {},
+    string | null
+  >;
+  profileImg?: Resolver<
+    Client.Prisma.ProfileMinAggregateOutputType,
+    {},
+    string | null
+  >;
+  designationIcon?: Resolver<
+    Client.Prisma.ProfileMinAggregateOutputType,
+    {},
+    string | null
+  >;
+  coverImg?: Resolver<
+    Client.Prisma.ProfileMinAggregateOutputType,
+    {},
+    string | null
   >;
 }
 
-export interface ReviewMaxAggregateOutputType {
+export interface ProfileMaxAggregateOutputType {
   [key: string]: Resolver<any, any, any>;
-  id?: Resolver<Client.Prisma.ReviewMaxAggregateOutputType, {}, number | null>;
-  product_id?: Resolver<
-    Client.Prisma.ReviewMaxAggregateOutputType,
+  userId?: Resolver<
+    Client.Prisma.ProfileMaxAggregateOutputType,
     {},
     number | null
   >;
-  score?: Resolver<
-    Client.Prisma.ReviewMaxAggregateOutputType,
+  location?: Resolver<
+    Client.Prisma.ProfileMaxAggregateOutputType,
+    {},
+    string | null
+  >;
+  joiningDate?: Resolver<
+    Client.Prisma.ProfileMaxAggregateOutputType,
+    {},
+    Date | null
+  >;
+  designation?: Resolver<
+    Client.Prisma.ProfileMaxAggregateOutputType,
+    {},
+    string | null
+  >;
+  profileImg?: Resolver<
+    Client.Prisma.ProfileMaxAggregateOutputType,
+    {},
+    string | null
+  >;
+  designationIcon?: Resolver<
+    Client.Prisma.ProfileMaxAggregateOutputType,
+    {},
+    string | null
+  >;
+  coverImg?: Resolver<
+    Client.Prisma.ProfileMaxAggregateOutputType,
+    {},
+    string | null
+  >;
+}
+
+export interface UsersOnTeamsCountAggregateOutputType {
+  [key: string]: Resolver<any, any, any>;
+  teamName?: Resolver<
+    Client.Prisma.UsersOnTeamsCountAggregateOutputType,
+    {},
+    number
+  >;
+  userId?: Resolver<
+    Client.Prisma.UsersOnTeamsCountAggregateOutputType,
+    {},
+    number
+  >;
+  assignedAt?: Resolver<
+    Client.Prisma.UsersOnTeamsCountAggregateOutputType,
+    {},
+    number
+  >;
+  _all?: Resolver<
+    Client.Prisma.UsersOnTeamsCountAggregateOutputType,
+    {},
+    number
+  >;
+}
+
+export interface UsersOnTeamsAvgAggregateOutputType {
+  [key: string]: Resolver<any, any, any>;
+  userId?: Resolver<
+    Client.Prisma.UsersOnTeamsAvgAggregateOutputType,
     {},
     number | null
   >;
 }
 
-export interface ProductCountOutputType {
+export interface UsersOnTeamsSumAggregateOutputType {
   [key: string]: Resolver<any, any, any>;
-  review?: Resolver<Client.Prisma.ProductCountOutputType, {}, number>;
-}
-
-export interface ProductCountAggregateOutputType {
-  [key: string]: Resolver<any, any, any>;
-  id?: Resolver<Client.Prisma.ProductCountAggregateOutputType, {}, number>;
-  price?: Resolver<Client.Prisma.ProductCountAggregateOutputType, {}, number>;
-  _all?: Resolver<Client.Prisma.ProductCountAggregateOutputType, {}, number>;
-}
-
-export interface ProductAvgAggregateOutputType {
-  [key: string]: Resolver<any, any, any>;
-  id?: Resolver<Client.Prisma.ProductAvgAggregateOutputType, {}, number | null>;
-  price?: Resolver<
-    Client.Prisma.ProductAvgAggregateOutputType,
+  userId?: Resolver<
+    Client.Prisma.UsersOnTeamsSumAggregateOutputType,
     {},
     number | null
   >;
 }
 
-export interface ProductSumAggregateOutputType {
+export interface UsersOnTeamsMinAggregateOutputType {
   [key: string]: Resolver<any, any, any>;
-  id?: Resolver<Client.Prisma.ProductSumAggregateOutputType, {}, number | null>;
-  price?: Resolver<
-    Client.Prisma.ProductSumAggregateOutputType,
+  teamName?: Resolver<
+    Client.Prisma.UsersOnTeamsMinAggregateOutputType,
+    {},
+    string | null
+  >;
+  userId?: Resolver<
+    Client.Prisma.UsersOnTeamsMinAggregateOutputType,
     {},
     number | null
   >;
-}
-
-export interface ProductMinAggregateOutputType {
-  [key: string]: Resolver<any, any, any>;
-  id?: Resolver<Client.Prisma.ProductMinAggregateOutputType, {}, number | null>;
-  price?: Resolver<
-    Client.Prisma.ProductMinAggregateOutputType,
+  assignedAt?: Resolver<
+    Client.Prisma.UsersOnTeamsMinAggregateOutputType,
     {},
-    number | null
+    Date | null
   >;
 }
 
-export interface ProductMaxAggregateOutputType {
+export interface UsersOnTeamsMaxAggregateOutputType {
   [key: string]: Resolver<any, any, any>;
-  id?: Resolver<Client.Prisma.ProductMaxAggregateOutputType, {}, number | null>;
-  price?: Resolver<
-    Client.Prisma.ProductMaxAggregateOutputType,
+  teamName?: Resolver<
+    Client.Prisma.UsersOnTeamsMaxAggregateOutputType,
+    {},
+    string | null
+  >;
+  userId?: Resolver<
+    Client.Prisma.UsersOnTeamsMaxAggregateOutputType,
     {},
     number | null
   >;
+  assignedAt?: Resolver<
+    Client.Prisma.UsersOnTeamsMaxAggregateOutputType,
+    {},
+    Date | null
+  >;
 }
 
-export interface Users_ProductReviewArgs {
-  where?: Users_ReviewWhereInput | null;
-  orderBy?: Users_ReviewOrderByWithRelationInput[] | null;
-  cursor?: Users_ReviewWhereUniqueInput | null;
+export interface TeamCountOutputType {
+  [key: string]: Resolver<any, any, any>;
+  users?: Resolver<Client.Prisma.TeamCountOutputType, {}, number>;
+}
+
+export interface TeamCountAggregateOutputType {
+  [key: string]: Resolver<any, any, any>;
+  teamName?: Resolver<Client.Prisma.TeamCountAggregateOutputType, {}, number>;
+  _all?: Resolver<Client.Prisma.TeamCountAggregateOutputType, {}, number>;
+}
+
+export interface TeamMinAggregateOutputType {
+  [key: string]: Resolver<any, any, any>;
+  teamName?: Resolver<
+    Client.Prisma.TeamMinAggregateOutputType,
+    {},
+    string | null
+  >;
+}
+
+export interface TeamMaxAggregateOutputType {
+  [key: string]: Resolver<any, any, any>;
+  teamName?: Resolver<
+    Client.Prisma.TeamMaxAggregateOutputType,
+    {},
+    string | null
+  >;
+}
+
+export interface Users_UserTeamsArgs {
+  where?: Users_UsersOnTeamsWhereInput | null;
+  orderBy?: Users_UsersOnTeamsOrderByWithRelationInput[] | null;
+  cursor?: Users_UsersOnTeamsWhereUniqueInput | null;
   take?: number | null;
   skip?: number | null;
-  distinct?: ReviewScalarFieldEnum[] | null;
+  distinct?: UsersOnTeamsScalarFieldEnum[] | null;
+}
+
+export interface Users_TeamUsersArgs {
+  where?: Users_UsersOnTeamsWhereInput | null;
+  orderBy?: Users_UsersOnTeamsOrderByWithRelationInput[] | null;
+  cursor?: Users_UsersOnTeamsWhereUniqueInput | null;
+  take?: number | null;
+  skip?: number | null;
+  distinct?: UsersOnTeamsScalarFieldEnum[] | null;
 }
 
 export interface Users_FindFirstUserArgs {
@@ -779,118 +1092,173 @@ export interface Users_FindUniqueUserOrThrowArgs {
   where: Users_UserWhereUniqueInput | null;
 }
 
-export interface Users_FindFirstReviewArgs {
-  where?: Users_ReviewWhereInput | null;
-  orderBy?: Users_ReviewOrderByWithRelationInput[] | null;
-  cursor?: Users_ReviewWhereUniqueInput | null;
+export interface Users_FindFirstProfileArgs {
+  where?: Users_ProfileWhereInput | null;
+  orderBy?: Users_ProfileOrderByWithRelationInput[] | null;
+  cursor?: Users_ProfileWhereUniqueInput | null;
   take?: number | null;
   skip?: number | null;
-  distinct?: ReviewScalarFieldEnum[] | null;
+  distinct?: ProfileScalarFieldEnum[] | null;
 }
 
-export interface Users_FindFirstReviewOrThrowArgs {
-  where?: Users_ReviewWhereInput | null;
-  orderBy?: Users_ReviewOrderByWithRelationInput[] | null;
-  cursor?: Users_ReviewWhereUniqueInput | null;
+export interface Users_FindFirstProfileOrThrowArgs {
+  where?: Users_ProfileWhereInput | null;
+  orderBy?: Users_ProfileOrderByWithRelationInput[] | null;
+  cursor?: Users_ProfileWhereUniqueInput | null;
   take?: number | null;
   skip?: number | null;
-  distinct?: ReviewScalarFieldEnum[] | null;
+  distinct?: ProfileScalarFieldEnum[] | null;
 }
 
-export interface Users_FindManyReviewArgs {
-  where?: Users_ReviewWhereInput;
-  orderBy?: Users_ReviewOrderByWithRelationInput[];
-  cursor?: Users_ReviewWhereUniqueInput;
+export interface Users_FindManyProfileArgs {
+  where?: Users_ProfileWhereInput;
+  orderBy?: Users_ProfileOrderByWithRelationInput[];
+  cursor?: Users_ProfileWhereUniqueInput;
   take?: number;
   skip?: number;
-  distinct?: ReviewScalarFieldEnum[];
+  distinct?: ProfileScalarFieldEnum[];
 }
 
-export interface Users_AggregateReviewArgs {
-  where?: Users_ReviewWhereInput;
-  orderBy?: Users_ReviewOrderByWithRelationInput[];
-  cursor?: Users_ReviewWhereUniqueInput;
+export interface Users_AggregateProfileArgs {
+  where?: Users_ProfileWhereInput;
+  orderBy?: Users_ProfileOrderByWithRelationInput[];
+  cursor?: Users_ProfileWhereUniqueInput;
   take?: number;
   skip?: number;
-  _count?: Client.Prisma.ReviewCountAggregateInputType;
-  _avg?: Client.Prisma.ReviewAvgAggregateInputType;
-  _sum?: Client.Prisma.ReviewSumAggregateInputType;
-  _min?: Client.Prisma.ReviewMinAggregateInputType;
-  _max?: Client.Prisma.ReviewMaxAggregateInputType;
+  _count?: Client.Prisma.ProfileCountAggregateInputType;
+  _avg?: Client.Prisma.ProfileAvgAggregateInputType;
+  _sum?: Client.Prisma.ProfileSumAggregateInputType;
+  _min?: Client.Prisma.ProfileMinAggregateInputType;
+  _max?: Client.Prisma.ProfileMaxAggregateInputType;
 }
 
-export interface Users_GroupByReviewArgs {
-  where?: Users_ReviewWhereInput;
-  orderBy?: Users_ReviewOrderByWithAggregationInput[];
-  by: ReviewScalarFieldEnum[];
-  having?: Users_ReviewScalarWhereWithAggregatesInput;
+export interface Users_GroupByProfileArgs {
+  where?: Users_ProfileWhereInput;
+  orderBy?: Users_ProfileOrderByWithAggregationInput[];
+  by: ProfileScalarFieldEnum[];
+  having?: Users_ProfileScalarWhereWithAggregatesInput;
   take?: number;
   skip?: number;
 }
 
-export interface Users_FindUniqueReviewArgs {
-  where: Users_ReviewWhereUniqueInput | null;
+export interface Users_FindUniqueProfileArgs {
+  where: Users_ProfileWhereUniqueInput | null;
 }
 
-export interface Users_FindUniqueReviewOrThrowArgs {
-  where: Users_ReviewWhereUniqueInput | null;
+export interface Users_FindUniqueProfileOrThrowArgs {
+  where: Users_ProfileWhereUniqueInput | null;
 }
 
-export interface Users_FindFirstProductArgs {
-  where?: Users_ProductWhereInput | null;
-  orderBy?: Users_ProductOrderByWithRelationInput[] | null;
-  cursor?: Users_ProductWhereUniqueInput | null;
+export interface Users_FindFirstUsersOnTeamsArgs {
+  where?: Users_UsersOnTeamsWhereInput | null;
+  orderBy?: Users_UsersOnTeamsOrderByWithRelationInput[] | null;
+  cursor?: Users_UsersOnTeamsWhereUniqueInput | null;
   take?: number | null;
   skip?: number | null;
-  distinct?: ProductScalarFieldEnum[] | null;
+  distinct?: UsersOnTeamsScalarFieldEnum[] | null;
 }
 
-export interface Users_FindFirstProductOrThrowArgs {
-  where?: Users_ProductWhereInput | null;
-  orderBy?: Users_ProductOrderByWithRelationInput[] | null;
-  cursor?: Users_ProductWhereUniqueInput | null;
+export interface Users_FindFirstUsersOnTeamsOrThrowArgs {
+  where?: Users_UsersOnTeamsWhereInput | null;
+  orderBy?: Users_UsersOnTeamsOrderByWithRelationInput[] | null;
+  cursor?: Users_UsersOnTeamsWhereUniqueInput | null;
   take?: number | null;
   skip?: number | null;
-  distinct?: ProductScalarFieldEnum[] | null;
+  distinct?: UsersOnTeamsScalarFieldEnum[] | null;
 }
 
-export interface Users_FindManyProductArgs {
-  where?: Users_ProductWhereInput;
-  orderBy?: Users_ProductOrderByWithRelationInput[];
-  cursor?: Users_ProductWhereUniqueInput;
+export interface Users_FindManyUsersOnTeamsArgs {
+  where?: Users_UsersOnTeamsWhereInput;
+  orderBy?: Users_UsersOnTeamsOrderByWithRelationInput[];
+  cursor?: Users_UsersOnTeamsWhereUniqueInput;
   take?: number;
   skip?: number;
-  distinct?: ProductScalarFieldEnum[];
+  distinct?: UsersOnTeamsScalarFieldEnum[];
 }
 
-export interface Users_AggregateProductArgs {
-  where?: Users_ProductWhereInput;
-  orderBy?: Users_ProductOrderByWithRelationInput[];
-  cursor?: Users_ProductWhereUniqueInput;
+export interface Users_AggregateUsersOnTeamsArgs {
+  where?: Users_UsersOnTeamsWhereInput;
+  orderBy?: Users_UsersOnTeamsOrderByWithRelationInput[];
+  cursor?: Users_UsersOnTeamsWhereUniqueInput;
   take?: number;
   skip?: number;
-  _count?: Client.Prisma.ProductCountAggregateInputType;
-  _avg?: Client.Prisma.ProductAvgAggregateInputType;
-  _sum?: Client.Prisma.ProductSumAggregateInputType;
-  _min?: Client.Prisma.ProductMinAggregateInputType;
-  _max?: Client.Prisma.ProductMaxAggregateInputType;
+  _count?: Client.Prisma.UsersOnTeamsCountAggregateInputType;
+  _avg?: Client.Prisma.UsersOnTeamsAvgAggregateInputType;
+  _sum?: Client.Prisma.UsersOnTeamsSumAggregateInputType;
+  _min?: Client.Prisma.UsersOnTeamsMinAggregateInputType;
+  _max?: Client.Prisma.UsersOnTeamsMaxAggregateInputType;
 }
 
-export interface Users_GroupByProductArgs {
-  where?: Users_ProductWhereInput;
-  orderBy?: Users_ProductOrderByWithAggregationInput[];
-  by: ProductScalarFieldEnum[];
-  having?: Users_ProductScalarWhereWithAggregatesInput;
+export interface Users_GroupByUsersOnTeamsArgs {
+  where?: Users_UsersOnTeamsWhereInput;
+  orderBy?: Users_UsersOnTeamsOrderByWithAggregationInput[];
+  by: UsersOnTeamsScalarFieldEnum[];
+  having?: Users_UsersOnTeamsScalarWhereWithAggregatesInput;
   take?: number;
   skip?: number;
 }
 
-export interface Users_FindUniqueProductArgs {
-  where: Users_ProductWhereUniqueInput | null;
+export interface Users_FindUniqueUsersOnTeamsArgs {
+  where: Users_UsersOnTeamsWhereUniqueInput | null;
 }
 
-export interface Users_FindUniqueProductOrThrowArgs {
-  where: Users_ProductWhereUniqueInput | null;
+export interface Users_FindUniqueUsersOnTeamsOrThrowArgs {
+  where: Users_UsersOnTeamsWhereUniqueInput | null;
+}
+
+export interface Users_FindFirstTeamArgs {
+  where?: Users_TeamWhereInput | null;
+  orderBy?: Users_TeamOrderByWithRelationInput[] | null;
+  cursor?: Users_TeamWhereUniqueInput | null;
+  take?: number | null;
+  skip?: number | null;
+  distinct?: TeamScalarFieldEnum[] | null;
+}
+
+export interface Users_FindFirstTeamOrThrowArgs {
+  where?: Users_TeamWhereInput | null;
+  orderBy?: Users_TeamOrderByWithRelationInput[] | null;
+  cursor?: Users_TeamWhereUniqueInput | null;
+  take?: number | null;
+  skip?: number | null;
+  distinct?: TeamScalarFieldEnum[] | null;
+}
+
+export interface Users_FindManyTeamArgs {
+  where?: Users_TeamWhereInput;
+  orderBy?: Users_TeamOrderByWithRelationInput[];
+  cursor?: Users_TeamWhereUniqueInput;
+  take?: number;
+  skip?: number;
+  distinct?: TeamScalarFieldEnum[];
+}
+
+export interface Users_AggregateTeamArgs {
+  where?: Users_TeamWhereInput;
+  orderBy?: Users_TeamOrderByWithRelationInput[];
+  cursor?: Users_TeamWhereUniqueInput;
+  take?: number;
+  skip?: number;
+  _count?: Client.Prisma.TeamCountAggregateInputType;
+  _min?: Client.Prisma.TeamMinAggregateInputType;
+  _max?: Client.Prisma.TeamMaxAggregateInputType;
+}
+
+export interface Users_GroupByTeamArgs {
+  where?: Users_TeamWhereInput;
+  orderBy?: Users_TeamOrderByWithAggregationInput[];
+  by: TeamScalarFieldEnum[];
+  having?: Users_TeamScalarWhereWithAggregatesInput;
+  take?: number;
+  skip?: number;
+}
+
+export interface Users_FindUniqueTeamArgs {
+  where: Users_TeamWhereUniqueInput | null;
+}
+
+export interface Users_FindUniqueTeamOrThrowArgs {
+  where: Users_TeamWhereUniqueInput | null;
 }
 
 export interface Users_CreateOneUserArgs {
@@ -926,70 +1294,100 @@ export interface Users_DeleteManyUserArgs {
   where?: Users_UserWhereInput;
 }
 
-export interface Users_CreateOneReviewArgs {
-  data: Users_ReviewCreateInput;
+export interface Users_CreateOneProfileArgs {
+  data: Users_ProfileCreateInput;
 }
 
-export interface Users_UpsertOneReviewArgs {
-  where: Users_ReviewWhereUniqueInput;
-  create: Users_ReviewCreateInput;
-  update: Users_ReviewUpdateInput;
+export interface Users_UpsertOneProfileArgs {
+  where: Users_ProfileWhereUniqueInput;
+  create: Users_ProfileCreateInput;
+  update: Users_ProfileUpdateInput;
 }
 
-export interface Users_CreateManyReviewArgs {
-  data: Users_ReviewCreateManyInput[];
+export interface Users_CreateManyProfileArgs {
+  data: Users_ProfileCreateManyInput[];
   skipDuplicates?: boolean;
 }
 
-export interface Users_DeleteOneReviewArgs {
-  where: Users_ReviewWhereUniqueInput | null;
+export interface Users_DeleteOneProfileArgs {
+  where: Users_ProfileWhereUniqueInput | null;
 }
 
-export interface Users_UpdateOneReviewArgs {
-  data: Users_ReviewUpdateInput | null;
-  where: Users_ReviewWhereUniqueInput | null;
+export interface Users_UpdateOneProfileArgs {
+  data: Users_ProfileUpdateInput | null;
+  where: Users_ProfileWhereUniqueInput | null;
 }
 
-export interface Users_UpdateManyReviewArgs {
-  data: Users_ReviewUpdateManyMutationInput;
-  where?: Users_ReviewWhereInput;
+export interface Users_UpdateManyProfileArgs {
+  data: Users_ProfileUpdateManyMutationInput;
+  where?: Users_ProfileWhereInput;
 }
 
-export interface Users_DeleteManyReviewArgs {
-  where?: Users_ReviewWhereInput;
+export interface Users_DeleteManyProfileArgs {
+  where?: Users_ProfileWhereInput;
 }
 
-export interface Users_CreateOneProductArgs {
-  data: Users_ProductCreateInput;
+export interface Users_CreateOneUsersOnTeamsArgs {
+  data: Users_UsersOnTeamsCreateInput;
 }
 
-export interface Users_UpsertOneProductArgs {
-  where: Users_ProductWhereUniqueInput;
-  create: Users_ProductCreateInput;
-  update: Users_ProductUpdateInput;
+export interface Users_UpsertOneUsersOnTeamsArgs {
+  where: Users_UsersOnTeamsWhereUniqueInput;
+  create: Users_UsersOnTeamsCreateInput;
+  update: Users_UsersOnTeamsUpdateInput;
 }
 
-export interface Users_CreateManyProductArgs {
-  data: Users_ProductCreateManyInput[];
+export interface Users_CreateManyUsersOnTeamsArgs {
+  data: Users_UsersOnTeamsCreateManyInput[];
   skipDuplicates?: boolean;
 }
 
-export interface Users_DeleteOneProductArgs {
-  where: Users_ProductWhereUniqueInput | null;
+export interface Users_DeleteOneUsersOnTeamsArgs {
+  where: Users_UsersOnTeamsWhereUniqueInput | null;
 }
 
-export interface Users_UpdateOneProductArgs {
-  data: Users_ProductUpdateInput | null;
-  where: Users_ProductWhereUniqueInput | null;
+export interface Users_UpdateOneUsersOnTeamsArgs {
+  data: Users_UsersOnTeamsUpdateInput | null;
+  where: Users_UsersOnTeamsWhereUniqueInput | null;
 }
 
-export interface Users_UpdateManyProductArgs {
-  data: Users_ProductUpdateManyMutationInput;
-  where?: Users_ProductWhereInput;
+export interface Users_UpdateManyUsersOnTeamsArgs {
+  data: Users_UsersOnTeamsUpdateManyMutationInput;
+  where?: Users_UsersOnTeamsWhereInput;
 }
 
-export interface Users_DeleteManyProductArgs {
-  where?: Users_ProductWhereInput;
+export interface Users_DeleteManyUsersOnTeamsArgs {
+  where?: Users_UsersOnTeamsWhereInput;
+}
+
+export interface Users_CreateOneTeamArgs {
+  data: Users_TeamCreateInput;
+}
+
+export interface Users_UpsertOneTeamArgs {
+  where: Users_TeamWhereUniqueInput;
+  create: Users_TeamCreateInput;
+  update: Users_TeamUpdateInput;
+}
+
+export interface Users_CreateManyTeamArgs {
+  data: Users_TeamCreateManyInput[];
+  skipDuplicates?: boolean;
+}
+
+export interface Users_DeleteOneTeamArgs {
+  where: Users_TeamWhereUniqueInput | null;
+}
+
+export interface Users_UpdateOneTeamArgs {
+  data: Users_TeamUpdateInput | null;
+  where: Users_TeamWhereUniqueInput | null;
+}
+
+//UpdateManyTeamArgs is not generated as the related model contains only unique or relation fields
+
+export interface Users_DeleteManyTeamArgs {
+  where?: Users_TeamWhereInput;
 }
 
 export interface Users_ExecuteRawArgs {
@@ -1014,6 +1412,10 @@ export interface Users_UserWhereInput {
   roles?: StringNullableListFilter;
   googleId?: StringNullableFilter | null;
   googleProfile?: JsonNullableFilter;
+  lastName?: StringNullableFilter | null;
+  firstName?: StringNullableFilter | null;
+  profile?: Users_ProfileWhereInput | null;
+  teams?: Users_UsersOnTeamsListRelationFilter;
 }
 
 export interface Users_UserOrderByWithRelationInput {
@@ -1025,6 +1427,10 @@ export interface Users_UserOrderByWithRelationInput {
   roles?: SortOrder;
   googleId?: SortOrder;
   googleProfile?: SortOrder;
+  lastName?: SortOrder;
+  firstName?: SortOrder;
+  profile?: Users_ProfileOrderByWithRelationInput;
+  teams?: Users_UsersOnTeamsOrderByRelationAggregateInput;
 }
 
 export type Users_UserWhereUniqueInput = AtLeast<
@@ -1040,8 +1446,12 @@ export type Users_UserWhereUniqueInput = AtLeast<
     password?: StringNullableFilter | null;
     roles?: StringNullableListFilter;
     googleProfile?: JsonNullableFilter;
+    lastName?: StringNullableFilter | null;
+    firstName?: StringNullableFilter | null;
+    profile?: Users_ProfileWhereInput | null;
+    teams?: Users_UsersOnTeamsListRelationFilter;
   },
-  'id' | 'email'
+  id | username | email | googleId
 >;
 
 export interface Users_UserOrderByWithAggregationInput {
@@ -1053,6 +1463,8 @@ export interface Users_UserOrderByWithAggregationInput {
   roles?: SortOrder;
   googleId?: SortOrder;
   googleProfile?: SortOrder;
+  lastName?: SortOrder;
+  firstName?: SortOrder;
   _count?: Users_UserCountOrderByAggregateInput;
   _avg?: Users_UserAvgOrderByAggregateInput;
   _max?: Users_UserMaxOrderByAggregateInput;
@@ -1072,101 +1484,170 @@ export interface Users_UserScalarWhereWithAggregatesInput {
   roles?: StringNullableListFilter;
   googleId?: StringNullableWithAggregatesFilter | null;
   googleProfile?: JsonNullableWithAggregatesFilter;
+  lastName?: StringNullableWithAggregatesFilter | null;
+  firstName?: StringNullableWithAggregatesFilter | null;
 }
 
-export interface Users_ReviewWhereInput {
-  AND?: Users_ReviewWhereInput[];
-  OR?: Users_ReviewWhereInput[];
-  NOT?: Users_ReviewWhereInput[];
-  id?: IntFilter;
-  product?: Users_ProductWhereInput;
-  product_id?: IntFilter;
-  score?: IntFilter;
+export interface Users_ProfileWhereInput {
+  AND?: Users_ProfileWhereInput[];
+  OR?: Users_ProfileWhereInput[];
+  NOT?: Users_ProfileWhereInput[];
+  userId?: IntFilter;
+  user?: Users_UserWhereInput;
+  location?: StringNullableFilter | null;
+  joiningDate?: DateTimeNullableFilter | null;
+  designation?: StringNullableFilter | null;
+  profileImg?: StringNullableFilter | null;
+  designationIcon?: StringNullableFilter | null;
+  coverImg?: StringNullableFilter | null;
 }
 
-export interface Users_ReviewOrderByWithRelationInput {
-  id?: SortOrder;
-  product?: Users_ProductOrderByWithRelationInput;
-  product_id?: SortOrder;
-  score?: SortOrder;
+export interface Users_ProfileOrderByWithRelationInput {
+  userId?: SortOrder;
+  user?: Users_UserOrderByWithRelationInput;
+  location?: SortOrder;
+  joiningDate?: SortOrder;
+  designation?: SortOrder;
+  profileImg?: SortOrder;
+  designationIcon?: SortOrder;
+  coverImg?: SortOrder;
 }
 
-export type Users_ReviewWhereUniqueInput = AtLeast<
+export type Users_ProfileWhereUniqueInput = AtLeast<
   {
-    id?: number;
-    product_id?: number;
-    AND?: Users_ReviewWhereInput[];
-    OR?: Users_ReviewWhereInput[];
-    NOT?: Users_ReviewWhereInput[];
-    product?: Users_ProductWhereInput;
-    score?: IntFilter;
+    userId?: number;
+    AND?: Users_ProfileWhereInput[];
+    OR?: Users_ProfileWhereInput[];
+    NOT?: Users_ProfileWhereInput[];
+    user?: Users_UserWhereInput;
+    location?: StringNullableFilter | null;
+    joiningDate?: DateTimeNullableFilter | null;
+    designation?: StringNullableFilter | null;
+    profileImg?: StringNullableFilter | null;
+    designationIcon?: StringNullableFilter | null;
+    coverImg?: StringNullableFilter | null;
   },
-  'id' | 'product_id'
+  userId
 >;
 
-export interface Users_ReviewOrderByWithAggregationInput {
-  id?: SortOrder;
-  product_id?: SortOrder;
-  score?: SortOrder;
-  _count?: Users_ReviewCountOrderByAggregateInput;
-  _avg?: Users_ReviewAvgOrderByAggregateInput;
-  _max?: Users_ReviewMaxOrderByAggregateInput;
-  _min?: Users_ReviewMinOrderByAggregateInput;
-  _sum?: Users_ReviewSumOrderByAggregateInput;
+export interface Users_ProfileOrderByWithAggregationInput {
+  userId?: SortOrder;
+  location?: SortOrder;
+  joiningDate?: SortOrder;
+  designation?: SortOrder;
+  profileImg?: SortOrder;
+  designationIcon?: SortOrder;
+  coverImg?: SortOrder;
+  _count?: Users_ProfileCountOrderByAggregateInput;
+  _avg?: Users_ProfileAvgOrderByAggregateInput;
+  _max?: Users_ProfileMaxOrderByAggregateInput;
+  _min?: Users_ProfileMinOrderByAggregateInput;
+  _sum?: Users_ProfileSumOrderByAggregateInput;
 }
 
-export interface Users_ReviewScalarWhereWithAggregatesInput {
-  AND?: Users_ReviewScalarWhereWithAggregatesInput[];
-  OR?: Users_ReviewScalarWhereWithAggregatesInput[];
-  NOT?: Users_ReviewScalarWhereWithAggregatesInput[];
-  id?: IntWithAggregatesFilter;
-  product_id?: IntWithAggregatesFilter;
-  score?: IntWithAggregatesFilter;
+export interface Users_ProfileScalarWhereWithAggregatesInput {
+  AND?: Users_ProfileScalarWhereWithAggregatesInput[];
+  OR?: Users_ProfileScalarWhereWithAggregatesInput[];
+  NOT?: Users_ProfileScalarWhereWithAggregatesInput[];
+  userId?: IntWithAggregatesFilter;
+  location?: StringNullableWithAggregatesFilter | null;
+  joiningDate?: DateTimeNullableWithAggregatesFilter | null;
+  designation?: StringNullableWithAggregatesFilter | null;
+  profileImg?: StringNullableWithAggregatesFilter | null;
+  designationIcon?: StringNullableWithAggregatesFilter | null;
+  coverImg?: StringNullableWithAggregatesFilter | null;
 }
 
-export interface Users_ProductWhereInput {
-  AND?: Users_ProductWhereInput[];
-  OR?: Users_ProductWhereInput[];
-  NOT?: Users_ProductWhereInput[];
-  id?: IntFilter;
-  price?: FloatFilter;
-  review?: Users_ReviewListRelationFilter;
+export interface Users_UsersOnTeamsWhereInput {
+  AND?: Users_UsersOnTeamsWhereInput[];
+  OR?: Users_UsersOnTeamsWhereInput[];
+  NOT?: Users_UsersOnTeamsWhereInput[];
+  team?: Users_TeamWhereInput;
+  teamName?: StringFilter;
+  user?: Users_UserWhereInput;
+  userId?: IntFilter;
+  assignedAt?: DateTimeFilter;
 }
 
-export interface Users_ProductOrderByWithRelationInput {
-  id?: SortOrder;
-  price?: SortOrder;
-  review?: Users_ReviewOrderByRelationAggregateInput;
+export interface Users_UsersOnTeamsOrderByWithRelationInput {
+  team?: Users_TeamOrderByWithRelationInput;
+  teamName?: SortOrder;
+  user?: Users_UserOrderByWithRelationInput;
+  userId?: SortOrder;
+  assignedAt?: SortOrder;
 }
 
-export type Users_ProductWhereUniqueInput = AtLeast<
+export type Users_UsersOnTeamsWhereUniqueInput = AtLeast<
   {
-    id?: number;
-    AND?: Users_ProductWhereInput[];
-    OR?: Users_ProductWhereInput[];
-    NOT?: Users_ProductWhereInput[];
-    price?: FloatFilter;
-    review?: Users_ReviewListRelationFilter;
+    teamName_userId?: UsersOnTeamsTeamNameUserIdCompoundUniqueInput;
+    AND?: Users_UsersOnTeamsWhereInput[];
+    OR?: Users_UsersOnTeamsWhereInput[];
+    NOT?: Users_UsersOnTeamsWhereInput[];
+    team?: Users_TeamWhereInput;
+    teamName?: StringFilter;
+    user?: Users_UserWhereInput;
+    userId?: IntFilter;
+    assignedAt?: DateTimeFilter;
   },
-  'id'
+  teamName_userId
 >;
 
-export interface Users_ProductOrderByWithAggregationInput {
-  id?: SortOrder;
-  price?: SortOrder;
-  _count?: Users_ProductCountOrderByAggregateInput;
-  _avg?: Users_ProductAvgOrderByAggregateInput;
-  _max?: Users_ProductMaxOrderByAggregateInput;
-  _min?: Users_ProductMinOrderByAggregateInput;
-  _sum?: Users_ProductSumOrderByAggregateInput;
+export interface Users_UsersOnTeamsOrderByWithAggregationInput {
+  teamName?: SortOrder;
+  userId?: SortOrder;
+  assignedAt?: SortOrder;
+  _count?: Users_UsersOnTeamsCountOrderByAggregateInput;
+  _avg?: Users_UsersOnTeamsAvgOrderByAggregateInput;
+  _max?: Users_UsersOnTeamsMaxOrderByAggregateInput;
+  _min?: Users_UsersOnTeamsMinOrderByAggregateInput;
+  _sum?: Users_UsersOnTeamsSumOrderByAggregateInput;
 }
 
-export interface Users_ProductScalarWhereWithAggregatesInput {
-  AND?: Users_ProductScalarWhereWithAggregatesInput[];
-  OR?: Users_ProductScalarWhereWithAggregatesInput[];
-  NOT?: Users_ProductScalarWhereWithAggregatesInput[];
-  id?: IntWithAggregatesFilter;
-  price?: FloatWithAggregatesFilter;
+export interface Users_UsersOnTeamsScalarWhereWithAggregatesInput {
+  AND?: Users_UsersOnTeamsScalarWhereWithAggregatesInput[];
+  OR?: Users_UsersOnTeamsScalarWhereWithAggregatesInput[];
+  NOT?: Users_UsersOnTeamsScalarWhereWithAggregatesInput[];
+  teamName?: StringWithAggregatesFilter;
+  userId?: IntWithAggregatesFilter;
+  assignedAt?: DateTimeWithAggregatesFilter;
+}
+
+export interface Users_TeamWhereInput {
+  AND?: Users_TeamWhereInput[];
+  OR?: Users_TeamWhereInput[];
+  NOT?: Users_TeamWhereInput[];
+  teamName?: StringFilter;
+  users?: Users_UsersOnTeamsListRelationFilter;
+}
+
+export interface Users_TeamOrderByWithRelationInput {
+  teamName?: SortOrder;
+  users?: Users_UsersOnTeamsOrderByRelationAggregateInput;
+}
+
+export type Users_TeamWhereUniqueInput = AtLeast<
+  {
+    teamName?: string;
+    AND?: Users_TeamWhereInput[];
+    OR?: Users_TeamWhereInput[];
+    NOT?: Users_TeamWhereInput[];
+    users?: Users_UsersOnTeamsListRelationFilter;
+  },
+  teamName
+>;
+
+export interface Users_TeamOrderByWithAggregationInput {
+  teamName?: SortOrder;
+  _count?: Users_TeamCountOrderByAggregateInput;
+  _max?: Users_TeamMaxOrderByAggregateInput;
+  _min?: Users_TeamMinOrderByAggregateInput;
+}
+
+export interface Users_TeamScalarWhereWithAggregatesInput {
+  AND?: Users_TeamScalarWhereWithAggregatesInput[];
+  OR?: Users_TeamScalarWhereWithAggregatesInput[];
+  NOT?: Users_TeamScalarWhereWithAggregatesInput[];
+  teamName?: StringWithAggregatesFilter;
 }
 
 export interface Users_UserCreateInput {
@@ -1177,6 +1658,10 @@ export interface Users_UserCreateInput {
   roles?: Users_UserCreaterolesInput;
   googleId?: string | null;
   googleProfile?: NullableJsonNullValueInput;
+  lastName?: string | null;
+  firstName?: string | null;
+  profile?: Users_ProfileCreateNestedOneWithoutUserInput;
+  teams?: Users_UsersOnTeamsCreateNestedManyWithoutUserInput;
 }
 
 export interface Users_UserUncheckedCreateInput {
@@ -1188,6 +1673,10 @@ export interface Users_UserUncheckedCreateInput {
   roles?: Users_UserCreaterolesInput;
   googleId?: string | null;
   googleProfile?: NullableJsonNullValueInput;
+  lastName?: string | null;
+  firstName?: string | null;
+  profile?: Users_ProfileUncheckedCreateNestedOneWithoutUserInput;
+  teams?: Users_UsersOnTeamsUncheckedCreateNestedManyWithoutUserInput;
 }
 
 export interface Users_UserUpdateInput {
@@ -1198,6 +1687,10 @@ export interface Users_UserUpdateInput {
   roles?: Users_UserUpdaterolesInput;
   googleId?: NullableStringFieldUpdateOperationsInput | null;
   googleProfile?: NullableJsonNullValueInput;
+  lastName?: NullableStringFieldUpdateOperationsInput | null;
+  firstName?: NullableStringFieldUpdateOperationsInput | null;
+  profile?: Users_ProfileUpdateOneWithoutUserNestedInput;
+  teams?: Users_UsersOnTeamsUpdateManyWithoutUserNestedInput;
 }
 
 export interface Users_UserUncheckedUpdateInput {
@@ -1209,6 +1702,10 @@ export interface Users_UserUncheckedUpdateInput {
   roles?: Users_UserUpdaterolesInput;
   googleId?: NullableStringFieldUpdateOperationsInput | null;
   googleProfile?: NullableJsonNullValueInput;
+  lastName?: NullableStringFieldUpdateOperationsInput | null;
+  firstName?: NullableStringFieldUpdateOperationsInput | null;
+  profile?: Users_ProfileUncheckedUpdateOneWithoutUserNestedInput;
+  teams?: Users_UsersOnTeamsUncheckedUpdateManyWithoutUserNestedInput;
 }
 
 export interface Users_UserCreateManyInput {
@@ -1220,6 +1717,8 @@ export interface Users_UserCreateManyInput {
   roles?: Users_UserCreaterolesInput;
   googleId?: string | null;
   googleProfile?: NullableJsonNullValueInput;
+  lastName?: string | null;
+  firstName?: string | null;
 }
 
 export interface Users_UserUpdateManyMutationInput {
@@ -1230,6 +1729,8 @@ export interface Users_UserUpdateManyMutationInput {
   roles?: Users_UserUpdaterolesInput;
   googleId?: NullableStringFieldUpdateOperationsInput | null;
   googleProfile?: NullableJsonNullValueInput;
+  lastName?: NullableStringFieldUpdateOperationsInput | null;
+  firstName?: NullableStringFieldUpdateOperationsInput | null;
 }
 
 export interface Users_UserUncheckedUpdateManyInput {
@@ -1241,80 +1742,149 @@ export interface Users_UserUncheckedUpdateManyInput {
   roles?: Users_UserUpdaterolesInput;
   googleId?: NullableStringFieldUpdateOperationsInput | null;
   googleProfile?: NullableJsonNullValueInput;
+  lastName?: NullableStringFieldUpdateOperationsInput | null;
+  firstName?: NullableStringFieldUpdateOperationsInput | null;
 }
 
-export interface Users_ReviewCreateInput {
-  product: Users_ProductCreateNestedOneWithoutReviewInput;
-  score: number;
+export interface Users_ProfileCreateInput {
+  user: Users_UserCreateNestedOneWithoutProfileInput;
+  location?: string | null;
+  joiningDate?: Date | null;
+  designation?: string | null;
+  profileImg?: string | null;
+  designationIcon?: string | null;
+  coverImg?: string | null;
 }
 
-export interface Users_ReviewUncheckedCreateInput {
-  id?: number;
-  product_id: number;
-  score: number;
+export interface Users_ProfileUncheckedCreateInput {
+  userId: number;
+  location?: string | null;
+  joiningDate?: Date | null;
+  designation?: string | null;
+  profileImg?: string | null;
+  designationIcon?: string | null;
+  coverImg?: string | null;
 }
 
-export interface Users_ReviewUpdateInput {
-  product?: Users_ProductUpdateOneRequiredWithoutReviewNestedInput;
-  score?: IntFieldUpdateOperationsInput;
+export interface Users_ProfileUpdateInput {
+  user?: Users_UserUpdateOneRequiredWithoutProfileNestedInput;
+  location?: NullableStringFieldUpdateOperationsInput | null;
+  joiningDate?: NullableDateTimeFieldUpdateOperationsInput | null;
+  designation?: NullableStringFieldUpdateOperationsInput | null;
+  profileImg?: NullableStringFieldUpdateOperationsInput | null;
+  designationIcon?: NullableStringFieldUpdateOperationsInput | null;
+  coverImg?: NullableStringFieldUpdateOperationsInput | null;
 }
 
-export interface Users_ReviewUncheckedUpdateInput {
-  id?: IntFieldUpdateOperationsInput;
-  product_id?: IntFieldUpdateOperationsInput;
-  score?: IntFieldUpdateOperationsInput;
+export interface Users_ProfileUncheckedUpdateInput {
+  userId?: IntFieldUpdateOperationsInput;
+  location?: NullableStringFieldUpdateOperationsInput | null;
+  joiningDate?: NullableDateTimeFieldUpdateOperationsInput | null;
+  designation?: NullableStringFieldUpdateOperationsInput | null;
+  profileImg?: NullableStringFieldUpdateOperationsInput | null;
+  designationIcon?: NullableStringFieldUpdateOperationsInput | null;
+  coverImg?: NullableStringFieldUpdateOperationsInput | null;
 }
 
-export interface Users_ReviewCreateManyInput {
-  id?: number;
-  product_id: number;
-  score: number;
+export interface Users_ProfileCreateManyInput {
+  userId: number;
+  location?: string | null;
+  joiningDate?: Date | null;
+  designation?: string | null;
+  profileImg?: string | null;
+  designationIcon?: string | null;
+  coverImg?: string | null;
 }
 
-export interface Users_ReviewUpdateManyMutationInput {
-  score?: IntFieldUpdateOperationsInput;
+export interface Users_ProfileUpdateManyMutationInput {
+  location?: NullableStringFieldUpdateOperationsInput | null;
+  joiningDate?: NullableDateTimeFieldUpdateOperationsInput | null;
+  designation?: NullableStringFieldUpdateOperationsInput | null;
+  profileImg?: NullableStringFieldUpdateOperationsInput | null;
+  designationIcon?: NullableStringFieldUpdateOperationsInput | null;
+  coverImg?: NullableStringFieldUpdateOperationsInput | null;
 }
 
-export interface Users_ReviewUncheckedUpdateManyInput {
-  id?: IntFieldUpdateOperationsInput;
-  product_id?: IntFieldUpdateOperationsInput;
-  score?: IntFieldUpdateOperationsInput;
+export interface Users_ProfileUncheckedUpdateManyInput {
+  userId?: IntFieldUpdateOperationsInput;
+  location?: NullableStringFieldUpdateOperationsInput | null;
+  joiningDate?: NullableDateTimeFieldUpdateOperationsInput | null;
+  designation?: NullableStringFieldUpdateOperationsInput | null;
+  profileImg?: NullableStringFieldUpdateOperationsInput | null;
+  designationIcon?: NullableStringFieldUpdateOperationsInput | null;
+  coverImg?: NullableStringFieldUpdateOperationsInput | null;
 }
 
-export interface Users_ProductCreateInput {
-  price: number;
-  review?: Users_ReviewCreateNestedManyWithoutProductInput;
+export interface Users_UsersOnTeamsCreateInput {
+  team: Users_TeamCreateNestedOneWithoutUsersInput;
+  user: Users_UserCreateNestedOneWithoutTeamsInput;
+  assignedAt?: Date;
 }
 
-export interface Users_ProductUncheckedCreateInput {
-  id?: number;
-  price: number;
-  review?: Users_ReviewUncheckedCreateNestedManyWithoutProductInput;
+export interface Users_UsersOnTeamsUncheckedCreateInput {
+  teamName: string;
+  userId: number;
+  assignedAt?: Date;
 }
 
-export interface Users_ProductUpdateInput {
-  price?: FloatFieldUpdateOperationsInput;
-  review?: Users_ReviewUpdateManyWithoutProductNestedInput;
+export interface Users_UsersOnTeamsUpdateInput {
+  team?: Users_TeamUpdateOneRequiredWithoutUsersNestedInput;
+  user?: Users_UserUpdateOneRequiredWithoutTeamsNestedInput;
+  assignedAt?: DateTimeFieldUpdateOperationsInput;
 }
 
-export interface Users_ProductUncheckedUpdateInput {
-  id?: IntFieldUpdateOperationsInput;
-  price?: FloatFieldUpdateOperationsInput;
-  review?: Users_ReviewUncheckedUpdateManyWithoutProductNestedInput;
+export interface Users_UsersOnTeamsUncheckedUpdateInput {
+  teamName?: StringFieldUpdateOperationsInput;
+  userId?: IntFieldUpdateOperationsInput;
+  assignedAt?: DateTimeFieldUpdateOperationsInput;
 }
 
-export interface Users_ProductCreateManyInput {
-  id?: number;
-  price: number;
+export interface Users_UsersOnTeamsCreateManyInput {
+  teamName: string;
+  userId: number;
+  assignedAt?: Date;
 }
 
-export interface Users_ProductUpdateManyMutationInput {
-  price?: FloatFieldUpdateOperationsInput;
+export interface Users_UsersOnTeamsUpdateManyMutationInput {
+  assignedAt?: DateTimeFieldUpdateOperationsInput;
 }
 
-export interface Users_ProductUncheckedUpdateManyInput {
-  id?: IntFieldUpdateOperationsInput;
-  price?: FloatFieldUpdateOperationsInput;
+export interface Users_UsersOnTeamsUncheckedUpdateManyInput {
+  teamName?: StringFieldUpdateOperationsInput;
+  userId?: IntFieldUpdateOperationsInput;
+  assignedAt?: DateTimeFieldUpdateOperationsInput;
+}
+
+export interface Users_TeamCreateInput {
+  teamName: string;
+  users?: Users_UsersOnTeamsCreateNestedManyWithoutTeamInput;
+}
+
+export interface Users_TeamUncheckedCreateInput {
+  teamName: string;
+  users?: Users_UsersOnTeamsUncheckedCreateNestedManyWithoutTeamInput;
+}
+
+export interface Users_TeamUpdateInput {
+  teamName?: StringFieldUpdateOperationsInput;
+  users?: Users_UsersOnTeamsUpdateManyWithoutTeamNestedInput;
+}
+
+export interface Users_TeamUncheckedUpdateInput {
+  teamName?: StringFieldUpdateOperationsInput;
+  users?: Users_UsersOnTeamsUncheckedUpdateManyWithoutTeamNestedInput;
+}
+
+export interface Users_TeamCreateManyInput {
+  teamName: string;
+}
+
+export interface Users_TeamUpdateManyMutationInput {
+  teamName?: StringFieldUpdateOperationsInput;
+}
+
+export interface Users_TeamUncheckedUpdateManyInput {
+  teamName?: StringFieldUpdateOperationsInput;
 }
 
 export interface IntFilter {
@@ -1393,6 +1963,21 @@ export interface JsonNullableFilter {
   not?: any;
 }
 
+export interface Users_ProfileRelationFilter {
+  is?: Users_ProfileWhereInput | null;
+  isNot?: Users_ProfileWhereInput | null;
+}
+
+export interface Users_UsersOnTeamsListRelationFilter {
+  every?: Users_UsersOnTeamsWhereInput;
+  some?: Users_UsersOnTeamsWhereInput;
+  none?: Users_UsersOnTeamsWhereInput;
+}
+
+export interface Users_UsersOnTeamsOrderByRelationAggregateInput {
+  _count?: SortOrder;
+}
+
 export interface Users_UserCountOrderByAggregateInput {
   id?: SortOrder;
   createdAt?: SortOrder;
@@ -1402,6 +1987,8 @@ export interface Users_UserCountOrderByAggregateInput {
   roles?: SortOrder;
   googleId?: SortOrder;
   googleProfile?: SortOrder;
+  lastName?: SortOrder;
+  firstName?: SortOrder;
 }
 
 export interface Users_UserAvgOrderByAggregateInput {
@@ -1415,6 +2002,8 @@ export interface Users_UserMaxOrderByAggregateInput {
   password?: SortOrder;
   email?: SortOrder;
   googleId?: SortOrder;
+  lastName?: SortOrder;
+  firstName?: SortOrder;
 }
 
 export interface Users_UserMinOrderByAggregateInput {
@@ -1424,6 +2013,8 @@ export interface Users_UserMinOrderByAggregateInput {
   password?: SortOrder;
   email?: SortOrder;
   googleId?: SortOrder;
+  lastName?: SortOrder;
+  firstName?: SortOrder;
 }
 
 export interface Users_UserSumOrderByAggregateInput {
@@ -1515,105 +2106,150 @@ export interface JsonNullableWithAggregatesFilter {
   _max?: NestedJsonNullableFilter;
 }
 
-export interface Users_ProductRelationFilter {
-  is?: Users_ProductWhereInput;
-  isNot?: Users_ProductWhereInput;
+export interface Users_UserRelationFilter {
+  is?: Users_UserWhereInput;
+  isNot?: Users_UserWhereInput;
 }
 
-export interface Users_ReviewCountOrderByAggregateInput {
-  id?: SortOrder;
-  product_id?: SortOrder;
-  score?: SortOrder;
+export interface DateTimeNullableFilter {
+  equals?: Date | null;
+  in?: Date[] | null;
+  notIn?: Date[] | null;
+  lt?: Date;
+  lte?: Date;
+  gt?: Date;
+  gte?: Date;
+  not?: NestedDateTimeNullableFilter | null;
 }
 
-export interface Users_ReviewAvgOrderByAggregateInput {
-  id?: SortOrder;
-  product_id?: SortOrder;
-  score?: SortOrder;
+export interface Users_ProfileCountOrderByAggregateInput {
+  userId?: SortOrder;
+  location?: SortOrder;
+  joiningDate?: SortOrder;
+  designation?: SortOrder;
+  profileImg?: SortOrder;
+  designationIcon?: SortOrder;
+  coverImg?: SortOrder;
 }
 
-export interface Users_ReviewMaxOrderByAggregateInput {
-  id?: SortOrder;
-  product_id?: SortOrder;
-  score?: SortOrder;
+export interface Users_ProfileAvgOrderByAggregateInput {
+  userId?: SortOrder;
 }
 
-export interface Users_ReviewMinOrderByAggregateInput {
-  id?: SortOrder;
-  product_id?: SortOrder;
-  score?: SortOrder;
+export interface Users_ProfileMaxOrderByAggregateInput {
+  userId?: SortOrder;
+  location?: SortOrder;
+  joiningDate?: SortOrder;
+  designation?: SortOrder;
+  profileImg?: SortOrder;
+  designationIcon?: SortOrder;
+  coverImg?: SortOrder;
 }
 
-export interface Users_ReviewSumOrderByAggregateInput {
-  id?: SortOrder;
-  product_id?: SortOrder;
-  score?: SortOrder;
+export interface Users_ProfileMinOrderByAggregateInput {
+  userId?: SortOrder;
+  location?: SortOrder;
+  joiningDate?: SortOrder;
+  designation?: SortOrder;
+  profileImg?: SortOrder;
+  designationIcon?: SortOrder;
+  coverImg?: SortOrder;
 }
 
-export interface FloatFilter {
-  equals?: number;
-  in?: number[];
-  notIn?: number[];
-  lt?: number;
-  lte?: number;
-  gt?: number;
-  gte?: number;
-  not?: NestedFloatFilter;
+export interface Users_ProfileSumOrderByAggregateInput {
+  userId?: SortOrder;
 }
 
-export interface Users_ReviewListRelationFilter {
-  every?: Users_ReviewWhereInput;
-  some?: Users_ReviewWhereInput;
-  none?: Users_ReviewWhereInput;
+export interface DateTimeNullableWithAggregatesFilter {
+  equals?: Date | null;
+  in?: Date[] | null;
+  notIn?: Date[] | null;
+  lt?: Date;
+  lte?: Date;
+  gt?: Date;
+  gte?: Date;
+  not?: NestedDateTimeNullableWithAggregatesFilter | null;
+  _count?: NestedIntNullableFilter;
+  _min?: NestedDateTimeNullableFilter;
+  _max?: NestedDateTimeNullableFilter;
 }
 
-export interface Users_ReviewOrderByRelationAggregateInput {
-  _count?: SortOrder;
+export interface Users_TeamRelationFilter {
+  is?: Users_TeamWhereInput;
+  isNot?: Users_TeamWhereInput;
 }
 
-export interface Users_ProductCountOrderByAggregateInput {
-  id?: SortOrder;
-  price?: SortOrder;
+export interface UsersOnTeamsTeamNameUserIdCompoundUniqueInput {
+  teamName: string;
+  userId: number;
 }
 
-export interface Users_ProductAvgOrderByAggregateInput {
-  id?: SortOrder;
-  price?: SortOrder;
+export interface Users_UsersOnTeamsCountOrderByAggregateInput {
+  teamName?: SortOrder;
+  userId?: SortOrder;
+  assignedAt?: SortOrder;
 }
 
-export interface Users_ProductMaxOrderByAggregateInput {
-  id?: SortOrder;
-  price?: SortOrder;
+export interface Users_UsersOnTeamsAvgOrderByAggregateInput {
+  userId?: SortOrder;
 }
 
-export interface Users_ProductMinOrderByAggregateInput {
-  id?: SortOrder;
-  price?: SortOrder;
+export interface Users_UsersOnTeamsMaxOrderByAggregateInput {
+  teamName?: SortOrder;
+  userId?: SortOrder;
+  assignedAt?: SortOrder;
 }
 
-export interface Users_ProductSumOrderByAggregateInput {
-  id?: SortOrder;
-  price?: SortOrder;
+export interface Users_UsersOnTeamsMinOrderByAggregateInput {
+  teamName?: SortOrder;
+  userId?: SortOrder;
+  assignedAt?: SortOrder;
 }
 
-export interface FloatWithAggregatesFilter {
-  equals?: number;
-  in?: number[];
-  notIn?: number[];
-  lt?: number;
-  lte?: number;
-  gt?: number;
-  gte?: number;
-  not?: NestedFloatWithAggregatesFilter;
-  _count?: NestedIntFilter;
-  _avg?: NestedFloatFilter;
-  _sum?: NestedFloatFilter;
-  _min?: NestedFloatFilter;
-  _max?: NestedFloatFilter;
+export interface Users_UsersOnTeamsSumOrderByAggregateInput {
+  userId?: SortOrder;
+}
+
+export interface Users_TeamCountOrderByAggregateInput {
+  teamName?: SortOrder;
+}
+
+export interface Users_TeamMaxOrderByAggregateInput {
+  teamName?: SortOrder;
+}
+
+export interface Users_TeamMinOrderByAggregateInput {
+  teamName?: SortOrder;
 }
 
 export interface Users_UserCreaterolesInput {
   set: string[];
+}
+
+export interface Users_ProfileCreateNestedOneWithoutUserInput {
+  create?: Users_ProfileUncheckedCreateWithoutUserInput;
+  connectOrCreate?: Users_ProfileCreateOrConnectWithoutUserInput;
+  connect?: Users_ProfileWhereUniqueInput;
+}
+
+export interface Users_UsersOnTeamsCreateNestedManyWithoutUserInput {
+  create?: Users_UsersOnTeamsCreateWithoutUserInput[];
+  connectOrCreate?: Users_UsersOnTeamsCreateOrConnectWithoutUserInput[];
+  createMany?: Users_UsersOnTeamsCreateManyUserInputEnvelope;
+  connect?: Users_UsersOnTeamsWhereUniqueInput[];
+}
+
+export interface Users_ProfileUncheckedCreateNestedOneWithoutUserInput {
+  create?: Users_ProfileUncheckedCreateWithoutUserInput;
+  connectOrCreate?: Users_ProfileCreateOrConnectWithoutUserInput;
+  connect?: Users_ProfileWhereUniqueInput;
+}
+
+export interface Users_UsersOnTeamsUncheckedCreateNestedManyWithoutUserInput {
+  create?: Users_UsersOnTeamsCreateWithoutUserInput[];
+  connectOrCreate?: Users_UsersOnTeamsCreateOrConnectWithoutUserInput[];
+  createMany?: Users_UsersOnTeamsCreateManyUserInputEnvelope;
+  connect?: Users_UsersOnTeamsWhereUniqueInput[];
 }
 
 export interface DateTimeFieldUpdateOperationsInput {
@@ -1633,6 +2269,30 @@ export interface Users_UserUpdaterolesInput {
   push?: string;
 }
 
+export interface Users_ProfileUpdateOneWithoutUserNestedInput {
+  create?: Users_ProfileUncheckedCreateWithoutUserInput;
+  connectOrCreate?: Users_ProfileCreateOrConnectWithoutUserInput;
+  upsert?: Users_ProfileUpsertWithoutUserInput;
+  disconnect?: Users_ProfileWhereInput;
+  delete?: Users_ProfileWhereInput;
+  connect?: Users_ProfileWhereUniqueInput;
+  update?: Users_ProfileUpdateWithoutUserInput;
+}
+
+export interface Users_UsersOnTeamsUpdateManyWithoutUserNestedInput {
+  create?: Users_UsersOnTeamsCreateWithoutUserInput[];
+  connectOrCreate?: Users_UsersOnTeamsCreateOrConnectWithoutUserInput[];
+  upsert?: Users_UsersOnTeamsUpsertWithWhereUniqueWithoutUserInput[];
+  createMany?: Users_UsersOnTeamsCreateManyUserInputEnvelope;
+  set?: Users_UsersOnTeamsWhereUniqueInput[];
+  disconnect?: Users_UsersOnTeamsWhereUniqueInput[];
+  delete?: Users_UsersOnTeamsWhereUniqueInput[];
+  connect?: Users_UsersOnTeamsWhereUniqueInput[];
+  update?: Users_UsersOnTeamsUpdateWithWhereUniqueWithoutUserInput[];
+  updateMany?: Users_UsersOnTeamsUpdateManyWithWhereWithoutUserInput[];
+  deleteMany?: Users_UsersOnTeamsScalarWhereInput[];
+}
+
 export interface IntFieldUpdateOperationsInput {
   set?: number;
   increment?: number;
@@ -1641,68 +2301,116 @@ export interface IntFieldUpdateOperationsInput {
   divide?: number;
 }
 
-export interface Users_ProductCreateNestedOneWithoutReviewInput {
-  create?: Users_ProductUncheckedCreateWithoutReviewInput;
-  connectOrCreate?: Users_ProductCreateOrConnectWithoutReviewInput;
-  connect?: Users_ProductWhereUniqueInput;
+export interface Users_ProfileUncheckedUpdateOneWithoutUserNestedInput {
+  create?: Users_ProfileUncheckedCreateWithoutUserInput;
+  connectOrCreate?: Users_ProfileCreateOrConnectWithoutUserInput;
+  upsert?: Users_ProfileUpsertWithoutUserInput;
+  disconnect?: Users_ProfileWhereInput;
+  delete?: Users_ProfileWhereInput;
+  connect?: Users_ProfileWhereUniqueInput;
+  update?: Users_ProfileUpdateWithoutUserInput;
 }
 
-export interface Users_ProductUpdateOneRequiredWithoutReviewNestedInput {
-  create?: Users_ProductUncheckedCreateWithoutReviewInput;
-  connectOrCreate?: Users_ProductCreateOrConnectWithoutReviewInput;
-  upsert?: Users_ProductUpsertWithoutReviewInput;
-  connect?: Users_ProductWhereUniqueInput;
-  update?: Users_ProductUpdateWithoutReviewInput;
+export interface Users_UsersOnTeamsUncheckedUpdateManyWithoutUserNestedInput {
+  create?: Users_UsersOnTeamsCreateWithoutUserInput[];
+  connectOrCreate?: Users_UsersOnTeamsCreateOrConnectWithoutUserInput[];
+  upsert?: Users_UsersOnTeamsUpsertWithWhereUniqueWithoutUserInput[];
+  createMany?: Users_UsersOnTeamsCreateManyUserInputEnvelope;
+  set?: Users_UsersOnTeamsWhereUniqueInput[];
+  disconnect?: Users_UsersOnTeamsWhereUniqueInput[];
+  delete?: Users_UsersOnTeamsWhereUniqueInput[];
+  connect?: Users_UsersOnTeamsWhereUniqueInput[];
+  update?: Users_UsersOnTeamsUpdateWithWhereUniqueWithoutUserInput[];
+  updateMany?: Users_UsersOnTeamsUpdateManyWithWhereWithoutUserInput[];
+  deleteMany?: Users_UsersOnTeamsScalarWhereInput[];
 }
 
-export interface Users_ReviewCreateNestedManyWithoutProductInput {
-  create?: Users_ReviewCreateWithoutProductInput[];
-  connectOrCreate?: Users_ReviewCreateOrConnectWithoutProductInput[];
-  createMany?: Users_ReviewCreateManyProductInputEnvelope;
-  connect?: Users_ReviewWhereUniqueInput[];
+export interface Users_UserCreateNestedOneWithoutProfileInput {
+  create?: Users_UserUncheckedCreateWithoutProfileInput;
+  connectOrCreate?: Users_UserCreateOrConnectWithoutProfileInput;
+  connect?: Users_UserWhereUniqueInput;
 }
 
-export interface Users_ReviewUncheckedCreateNestedManyWithoutProductInput {
-  create?: Users_ReviewCreateWithoutProductInput[];
-  connectOrCreate?: Users_ReviewCreateOrConnectWithoutProductInput[];
-  createMany?: Users_ReviewCreateManyProductInputEnvelope;
-  connect?: Users_ReviewWhereUniqueInput[];
+export interface Users_UserUpdateOneRequiredWithoutProfileNestedInput {
+  create?: Users_UserUncheckedCreateWithoutProfileInput;
+  connectOrCreate?: Users_UserCreateOrConnectWithoutProfileInput;
+  upsert?: Users_UserUpsertWithoutProfileInput;
+  connect?: Users_UserWhereUniqueInput;
+  update?: Users_UserUpdateWithoutProfileInput;
 }
 
-export interface FloatFieldUpdateOperationsInput {
-  set?: number;
-  increment?: number;
-  decrement?: number;
-  multiply?: number;
-  divide?: number;
+export interface NullableDateTimeFieldUpdateOperationsInput {
+  set?: Date | null;
 }
 
-export interface Users_ReviewUpdateManyWithoutProductNestedInput {
-  create?: Users_ReviewCreateWithoutProductInput[];
-  connectOrCreate?: Users_ReviewCreateOrConnectWithoutProductInput[];
-  upsert?: Users_ReviewUpsertWithWhereUniqueWithoutProductInput[];
-  createMany?: Users_ReviewCreateManyProductInputEnvelope;
-  set?: Users_ReviewWhereUniqueInput[];
-  disconnect?: Users_ReviewWhereUniqueInput[];
-  delete?: Users_ReviewWhereUniqueInput[];
-  connect?: Users_ReviewWhereUniqueInput[];
-  update?: Users_ReviewUpdateWithWhereUniqueWithoutProductInput[];
-  updateMany?: Users_ReviewUpdateManyWithWhereWithoutProductInput[];
-  deleteMany?: Users_ReviewScalarWhereInput[];
+export interface Users_TeamCreateNestedOneWithoutUsersInput {
+  create?: Users_TeamUncheckedCreateWithoutUsersInput;
+  connectOrCreate?: Users_TeamCreateOrConnectWithoutUsersInput;
+  connect?: Users_TeamWhereUniqueInput;
 }
 
-export interface Users_ReviewUncheckedUpdateManyWithoutProductNestedInput {
-  create?: Users_ReviewCreateWithoutProductInput[];
-  connectOrCreate?: Users_ReviewCreateOrConnectWithoutProductInput[];
-  upsert?: Users_ReviewUpsertWithWhereUniqueWithoutProductInput[];
-  createMany?: Users_ReviewCreateManyProductInputEnvelope;
-  set?: Users_ReviewWhereUniqueInput[];
-  disconnect?: Users_ReviewWhereUniqueInput[];
-  delete?: Users_ReviewWhereUniqueInput[];
-  connect?: Users_ReviewWhereUniqueInput[];
-  update?: Users_ReviewUpdateWithWhereUniqueWithoutProductInput[];
-  updateMany?: Users_ReviewUpdateManyWithWhereWithoutProductInput[];
-  deleteMany?: Users_ReviewScalarWhereInput[];
+export interface Users_UserCreateNestedOneWithoutTeamsInput {
+  create?: Users_UserUncheckedCreateWithoutTeamsInput;
+  connectOrCreate?: Users_UserCreateOrConnectWithoutTeamsInput;
+  connect?: Users_UserWhereUniqueInput;
+}
+
+export interface Users_TeamUpdateOneRequiredWithoutUsersNestedInput {
+  create?: Users_TeamUncheckedCreateWithoutUsersInput;
+  connectOrCreate?: Users_TeamCreateOrConnectWithoutUsersInput;
+  upsert?: Users_TeamUpsertWithoutUsersInput;
+  connect?: Users_TeamWhereUniqueInput;
+  update?: Users_TeamUpdateWithoutUsersInput;
+}
+
+export interface Users_UserUpdateOneRequiredWithoutTeamsNestedInput {
+  create?: Users_UserUncheckedCreateWithoutTeamsInput;
+  connectOrCreate?: Users_UserCreateOrConnectWithoutTeamsInput;
+  upsert?: Users_UserUpsertWithoutTeamsInput;
+  connect?: Users_UserWhereUniqueInput;
+  update?: Users_UserUpdateWithoutTeamsInput;
+}
+
+export interface Users_UsersOnTeamsCreateNestedManyWithoutTeamInput {
+  create?: Users_UsersOnTeamsCreateWithoutTeamInput[];
+  connectOrCreate?: Users_UsersOnTeamsCreateOrConnectWithoutTeamInput[];
+  createMany?: Users_UsersOnTeamsCreateManyTeamInputEnvelope;
+  connect?: Users_UsersOnTeamsWhereUniqueInput[];
+}
+
+export interface Users_UsersOnTeamsUncheckedCreateNestedManyWithoutTeamInput {
+  create?: Users_UsersOnTeamsCreateWithoutTeamInput[];
+  connectOrCreate?: Users_UsersOnTeamsCreateOrConnectWithoutTeamInput[];
+  createMany?: Users_UsersOnTeamsCreateManyTeamInputEnvelope;
+  connect?: Users_UsersOnTeamsWhereUniqueInput[];
+}
+
+export interface Users_UsersOnTeamsUpdateManyWithoutTeamNestedInput {
+  create?: Users_UsersOnTeamsCreateWithoutTeamInput[];
+  connectOrCreate?: Users_UsersOnTeamsCreateOrConnectWithoutTeamInput[];
+  upsert?: Users_UsersOnTeamsUpsertWithWhereUniqueWithoutTeamInput[];
+  createMany?: Users_UsersOnTeamsCreateManyTeamInputEnvelope;
+  set?: Users_UsersOnTeamsWhereUniqueInput[];
+  disconnect?: Users_UsersOnTeamsWhereUniqueInput[];
+  delete?: Users_UsersOnTeamsWhereUniqueInput[];
+  connect?: Users_UsersOnTeamsWhereUniqueInput[];
+  update?: Users_UsersOnTeamsUpdateWithWhereUniqueWithoutTeamInput[];
+  updateMany?: Users_UsersOnTeamsUpdateManyWithWhereWithoutTeamInput[];
+  deleteMany?: Users_UsersOnTeamsScalarWhereInput[];
+}
+
+export interface Users_UsersOnTeamsUncheckedUpdateManyWithoutTeamNestedInput {
+  create?: Users_UsersOnTeamsCreateWithoutTeamInput[];
+  connectOrCreate?: Users_UsersOnTeamsCreateOrConnectWithoutTeamInput[];
+  upsert?: Users_UsersOnTeamsUpsertWithWhereUniqueWithoutTeamInput[];
+  createMany?: Users_UsersOnTeamsCreateManyTeamInputEnvelope;
+  set?: Users_UsersOnTeamsWhereUniqueInput[];
+  disconnect?: Users_UsersOnTeamsWhereUniqueInput[];
+  delete?: Users_UsersOnTeamsWhereUniqueInput[];
+  connect?: Users_UsersOnTeamsWhereUniqueInput[];
+  update?: Users_UsersOnTeamsUpdateWithWhereUniqueWithoutTeamInput[];
+  updateMany?: Users_UsersOnTeamsUpdateManyWithWhereWithoutTeamInput[];
+  deleteMany?: Users_UsersOnTeamsScalarWhereInput[];
 }
 
 export interface NestedIntFilter {
@@ -1857,117 +2565,374 @@ export interface NestedJsonNullableFilter {
   not?: any;
 }
 
-export interface NestedFloatWithAggregatesFilter {
-  equals?: number;
-  in?: number[];
-  notIn?: number[];
-  lt?: number;
-  lte?: number;
-  gt?: number;
-  gte?: number;
-  not?: NestedFloatWithAggregatesFilter;
-  _count?: NestedIntFilter;
-  _avg?: NestedFloatFilter;
-  _sum?: NestedFloatFilter;
-  _min?: NestedFloatFilter;
-  _max?: NestedFloatFilter;
+export interface NestedDateTimeNullableFilter {
+  equals?: Date | null;
+  in?: Date[] | null;
+  notIn?: Date[] | null;
+  lt?: Date;
+  lte?: Date;
+  gt?: Date;
+  gte?: Date;
+  not?: NestedDateTimeNullableFilter | null;
 }
 
-export interface Users_ProductCreateWithoutReviewInput {
-  price: number;
+export interface NestedDateTimeNullableWithAggregatesFilter {
+  equals?: Date | null;
+  in?: Date[] | null;
+  notIn?: Date[] | null;
+  lt?: Date;
+  lte?: Date;
+  gt?: Date;
+  gte?: Date;
+  not?: NestedDateTimeNullableWithAggregatesFilter | null;
+  _count?: NestedIntNullableFilter;
+  _min?: NestedDateTimeNullableFilter;
+  _max?: NestedDateTimeNullableFilter;
 }
 
-export interface Users_ProductUncheckedCreateWithoutReviewInput {
-  id?: number;
-  price: number;
+export interface Users_ProfileCreateWithoutUserInput {
+  location?: string | null;
+  joiningDate?: Date | null;
+  designation?: string | null;
+  profileImg?: string | null;
+  designationIcon?: string | null;
+  coverImg?: string | null;
 }
 
-export interface Users_ProductCreateOrConnectWithoutReviewInput {
-  where: Users_ProductWhereUniqueInput;
-  create: Users_ProductUncheckedCreateWithoutReviewInput;
+export interface Users_ProfileUncheckedCreateWithoutUserInput {
+  location?: string | null;
+  joiningDate?: Date | null;
+  designation?: string | null;
+  profileImg?: string | null;
+  designationIcon?: string | null;
+  coverImg?: string | null;
 }
 
-export interface Users_ProductUpsertWithoutReviewInput {
-  update: Users_ProductUncheckedUpdateWithoutReviewInput;
-  create: Users_ProductUncheckedCreateWithoutReviewInput;
-  where?: Users_ProductWhereInput;
+export interface Users_ProfileCreateOrConnectWithoutUserInput {
+  where: Users_ProfileWhereUniqueInput;
+  create: Users_ProfileUncheckedCreateWithoutUserInput;
 }
 
-export interface Users_ProductUpdateToOneWithWhereWithoutReviewInput {
-  where?: Users_ProductWhereInput;
-  data: Users_ProductUncheckedUpdateWithoutReviewInput;
+export interface Users_UsersOnTeamsCreateWithoutUserInput {
+  team: Users_TeamCreateNestedOneWithoutUsersInput;
+  assignedAt?: Date;
 }
 
-export interface Users_ProductUpdateWithoutReviewInput {
-  price?: FloatFieldUpdateOperationsInput;
+export interface Users_UsersOnTeamsUncheckedCreateWithoutUserInput {
+  teamName: string;
+  assignedAt?: Date;
 }
 
-export interface Users_ProductUncheckedUpdateWithoutReviewInput {
-  id?: IntFieldUpdateOperationsInput;
-  price?: FloatFieldUpdateOperationsInput;
+export interface Users_UsersOnTeamsCreateOrConnectWithoutUserInput {
+  where: Users_UsersOnTeamsWhereUniqueInput;
+  create: Users_UsersOnTeamsUncheckedCreateWithoutUserInput;
 }
 
-export interface Users_ReviewCreateWithoutProductInput {
-  score: number;
-}
-
-export interface Users_ReviewUncheckedCreateWithoutProductInput {
-  id?: number;
-  score: number;
-}
-
-export interface Users_ReviewCreateOrConnectWithoutProductInput {
-  where: Users_ReviewWhereUniqueInput;
-  create: Users_ReviewUncheckedCreateWithoutProductInput;
-}
-
-export interface Users_ReviewCreateManyProductInputEnvelope {
-  data: Users_ReviewCreateManyProductInput[];
+export interface Users_UsersOnTeamsCreateManyUserInputEnvelope {
+  data: Users_UsersOnTeamsCreateManyUserInput[];
   skipDuplicates?: boolean;
 }
 
-export interface Users_ReviewUpsertWithWhereUniqueWithoutProductInput {
-  where: Users_ReviewWhereUniqueInput;
-  update: Users_ReviewUncheckedUpdateWithoutProductInput;
-  create: Users_ReviewUncheckedCreateWithoutProductInput;
+export interface Users_ProfileUpsertWithoutUserInput {
+  update: Users_ProfileUncheckedUpdateWithoutUserInput;
+  create: Users_ProfileUncheckedCreateWithoutUserInput;
+  where?: Users_ProfileWhereInput;
 }
 
-export interface Users_ReviewUpdateWithWhereUniqueWithoutProductInput {
-  where: Users_ReviewWhereUniqueInput;
-  data: Users_ReviewUncheckedUpdateWithoutProductInput;
+export interface Users_ProfileUpdateToOneWithWhereWithoutUserInput {
+  where?: Users_ProfileWhereInput;
+  data: Users_ProfileUncheckedUpdateWithoutUserInput;
 }
 
-export interface Users_ReviewUpdateManyWithWhereWithoutProductInput {
-  where: Users_ReviewScalarWhereInput;
-  data: Users_ReviewUncheckedUpdateManyWithoutReviewInput;
+export interface Users_ProfileUpdateWithoutUserInput {
+  location?: NullableStringFieldUpdateOperationsInput | null;
+  joiningDate?: NullableDateTimeFieldUpdateOperationsInput | null;
+  designation?: NullableStringFieldUpdateOperationsInput | null;
+  profileImg?: NullableStringFieldUpdateOperationsInput | null;
+  designationIcon?: NullableStringFieldUpdateOperationsInput | null;
+  coverImg?: NullableStringFieldUpdateOperationsInput | null;
 }
 
-export interface Users_ReviewScalarWhereInput {
-  AND?: Users_ReviewScalarWhereInput[];
-  OR?: Users_ReviewScalarWhereInput[];
-  NOT?: Users_ReviewScalarWhereInput[];
-  id?: IntFilter;
-  product_id?: IntFilter;
-  score?: IntFilter;
+export interface Users_ProfileUncheckedUpdateWithoutUserInput {
+  location?: NullableStringFieldUpdateOperationsInput | null;
+  joiningDate?: NullableDateTimeFieldUpdateOperationsInput | null;
+  designation?: NullableStringFieldUpdateOperationsInput | null;
+  profileImg?: NullableStringFieldUpdateOperationsInput | null;
+  designationIcon?: NullableStringFieldUpdateOperationsInput | null;
+  coverImg?: NullableStringFieldUpdateOperationsInput | null;
 }
 
-export interface Users_ReviewCreateManyProductInput {
+export interface Users_UsersOnTeamsUpsertWithWhereUniqueWithoutUserInput {
+  where: Users_UsersOnTeamsWhereUniqueInput;
+  update: Users_UsersOnTeamsUncheckedUpdateWithoutUserInput;
+  create: Users_UsersOnTeamsUncheckedCreateWithoutUserInput;
+}
+
+export interface Users_UsersOnTeamsUpdateWithWhereUniqueWithoutUserInput {
+  where: Users_UsersOnTeamsWhereUniqueInput;
+  data: Users_UsersOnTeamsUncheckedUpdateWithoutUserInput;
+}
+
+export interface Users_UsersOnTeamsUpdateManyWithWhereWithoutUserInput {
+  where: Users_UsersOnTeamsScalarWhereInput;
+  data: Users_UsersOnTeamsUncheckedUpdateManyWithoutTeamsInput;
+}
+
+export interface Users_UsersOnTeamsScalarWhereInput {
+  AND?: Users_UsersOnTeamsScalarWhereInput[];
+  OR?: Users_UsersOnTeamsScalarWhereInput[];
+  NOT?: Users_UsersOnTeamsScalarWhereInput[];
+  teamName?: StringFilter;
+  userId?: IntFilter;
+  assignedAt?: DateTimeFilter;
+}
+
+export interface Users_UserCreateWithoutProfileInput {
+  createdAt?: Date;
+  username?: string | null;
+  password?: string | null;
+  email: string;
+  roles?: Users_UserCreaterolesInput;
+  googleId?: string | null;
+  googleProfile?: NullableJsonNullValueInput;
+  lastName?: string | null;
+  firstName?: string | null;
+  teams?: Users_UsersOnTeamsCreateNestedManyWithoutUserInput;
+}
+
+export interface Users_UserUncheckedCreateWithoutProfileInput {
   id?: number;
-  score: number;
+  createdAt?: Date;
+  username?: string | null;
+  password?: string | null;
+  email: string;
+  roles?: Users_UserCreaterolesInput;
+  googleId?: string | null;
+  googleProfile?: NullableJsonNullValueInput;
+  lastName?: string | null;
+  firstName?: string | null;
+  teams?: Users_UsersOnTeamsUncheckedCreateNestedManyWithoutUserInput;
 }
 
-export interface Users_ReviewUpdateWithoutProductInput {
-  score?: IntFieldUpdateOperationsInput;
+export interface Users_UserCreateOrConnectWithoutProfileInput {
+  where: Users_UserWhereUniqueInput;
+  create: Users_UserUncheckedCreateWithoutProfileInput;
 }
 
-export interface Users_ReviewUncheckedUpdateWithoutProductInput {
+export interface Users_UserUpsertWithoutProfileInput {
+  update: Users_UserUncheckedUpdateWithoutProfileInput;
+  create: Users_UserUncheckedCreateWithoutProfileInput;
+  where?: Users_UserWhereInput;
+}
+
+export interface Users_UserUpdateToOneWithWhereWithoutProfileInput {
+  where?: Users_UserWhereInput;
+  data: Users_UserUncheckedUpdateWithoutProfileInput;
+}
+
+export interface Users_UserUpdateWithoutProfileInput {
+  createdAt?: DateTimeFieldUpdateOperationsInput;
+  username?: NullableStringFieldUpdateOperationsInput | null;
+  password?: NullableStringFieldUpdateOperationsInput | null;
+  email?: StringFieldUpdateOperationsInput;
+  roles?: Users_UserUpdaterolesInput;
+  googleId?: NullableStringFieldUpdateOperationsInput | null;
+  googleProfile?: NullableJsonNullValueInput;
+  lastName?: NullableStringFieldUpdateOperationsInput | null;
+  firstName?: NullableStringFieldUpdateOperationsInput | null;
+  teams?: Users_UsersOnTeamsUpdateManyWithoutUserNestedInput;
+}
+
+export interface Users_UserUncheckedUpdateWithoutProfileInput {
   id?: IntFieldUpdateOperationsInput;
-  score?: IntFieldUpdateOperationsInput;
+  createdAt?: DateTimeFieldUpdateOperationsInput;
+  username?: NullableStringFieldUpdateOperationsInput | null;
+  password?: NullableStringFieldUpdateOperationsInput | null;
+  email?: StringFieldUpdateOperationsInput;
+  roles?: Users_UserUpdaterolesInput;
+  googleId?: NullableStringFieldUpdateOperationsInput | null;
+  googleProfile?: NullableJsonNullValueInput;
+  lastName?: NullableStringFieldUpdateOperationsInput | null;
+  firstName?: NullableStringFieldUpdateOperationsInput | null;
+  teams?: Users_UsersOnTeamsUncheckedUpdateManyWithoutUserNestedInput;
 }
 
-export interface Users_ReviewUncheckedUpdateManyWithoutReviewInput {
+export interface Users_TeamCreateWithoutUsersInput {
+  teamName: string;
+}
+
+export interface Users_TeamUncheckedCreateWithoutUsersInput {
+  teamName: string;
+}
+
+export interface Users_TeamCreateOrConnectWithoutUsersInput {
+  where: Users_TeamWhereUniqueInput;
+  create: Users_TeamUncheckedCreateWithoutUsersInput;
+}
+
+export interface Users_UserCreateWithoutTeamsInput {
+  createdAt?: Date;
+  username?: string | null;
+  password?: string | null;
+  email: string;
+  roles?: Users_UserCreaterolesInput;
+  googleId?: string | null;
+  googleProfile?: NullableJsonNullValueInput;
+  lastName?: string | null;
+  firstName?: string | null;
+  profile?: Users_ProfileCreateNestedOneWithoutUserInput;
+}
+
+export interface Users_UserUncheckedCreateWithoutTeamsInput {
+  id?: number;
+  createdAt?: Date;
+  username?: string | null;
+  password?: string | null;
+  email: string;
+  roles?: Users_UserCreaterolesInput;
+  googleId?: string | null;
+  googleProfile?: NullableJsonNullValueInput;
+  lastName?: string | null;
+  firstName?: string | null;
+  profile?: Users_ProfileUncheckedCreateNestedOneWithoutUserInput;
+}
+
+export interface Users_UserCreateOrConnectWithoutTeamsInput {
+  where: Users_UserWhereUniqueInput;
+  create: Users_UserUncheckedCreateWithoutTeamsInput;
+}
+
+export interface Users_TeamUpsertWithoutUsersInput {
+  update: Users_TeamUncheckedUpdateWithoutUsersInput;
+  create: Users_TeamUncheckedCreateWithoutUsersInput;
+  where?: Users_TeamWhereInput;
+}
+
+export interface Users_TeamUpdateToOneWithWhereWithoutUsersInput {
+  where?: Users_TeamWhereInput;
+  data: Users_TeamUncheckedUpdateWithoutUsersInput;
+}
+
+export interface Users_TeamUpdateWithoutUsersInput {
+  teamName?: StringFieldUpdateOperationsInput;
+}
+
+export interface Users_TeamUncheckedUpdateWithoutUsersInput {
+  teamName?: StringFieldUpdateOperationsInput;
+}
+
+export interface Users_UserUpsertWithoutTeamsInput {
+  update: Users_UserUncheckedUpdateWithoutTeamsInput;
+  create: Users_UserUncheckedCreateWithoutTeamsInput;
+  where?: Users_UserWhereInput;
+}
+
+export interface Users_UserUpdateToOneWithWhereWithoutTeamsInput {
+  where?: Users_UserWhereInput;
+  data: Users_UserUncheckedUpdateWithoutTeamsInput;
+}
+
+export interface Users_UserUpdateWithoutTeamsInput {
+  createdAt?: DateTimeFieldUpdateOperationsInput;
+  username?: NullableStringFieldUpdateOperationsInput | null;
+  password?: NullableStringFieldUpdateOperationsInput | null;
+  email?: StringFieldUpdateOperationsInput;
+  roles?: Users_UserUpdaterolesInput;
+  googleId?: NullableStringFieldUpdateOperationsInput | null;
+  googleProfile?: NullableJsonNullValueInput;
+  lastName?: NullableStringFieldUpdateOperationsInput | null;
+  firstName?: NullableStringFieldUpdateOperationsInput | null;
+  profile?: Users_ProfileUpdateOneWithoutUserNestedInput;
+}
+
+export interface Users_UserUncheckedUpdateWithoutTeamsInput {
   id?: IntFieldUpdateOperationsInput;
-  score?: IntFieldUpdateOperationsInput;
+  createdAt?: DateTimeFieldUpdateOperationsInput;
+  username?: NullableStringFieldUpdateOperationsInput | null;
+  password?: NullableStringFieldUpdateOperationsInput | null;
+  email?: StringFieldUpdateOperationsInput;
+  roles?: Users_UserUpdaterolesInput;
+  googleId?: NullableStringFieldUpdateOperationsInput | null;
+  googleProfile?: NullableJsonNullValueInput;
+  lastName?: NullableStringFieldUpdateOperationsInput | null;
+  firstName?: NullableStringFieldUpdateOperationsInput | null;
+  profile?: Users_ProfileUncheckedUpdateOneWithoutUserNestedInput;
+}
+
+export interface Users_UsersOnTeamsCreateWithoutTeamInput {
+  user: Users_UserCreateNestedOneWithoutTeamsInput;
+  assignedAt?: Date;
+}
+
+export interface Users_UsersOnTeamsUncheckedCreateWithoutTeamInput {
+  userId: number;
+  assignedAt?: Date;
+}
+
+export interface Users_UsersOnTeamsCreateOrConnectWithoutTeamInput {
+  where: Users_UsersOnTeamsWhereUniqueInput;
+  create: Users_UsersOnTeamsUncheckedCreateWithoutTeamInput;
+}
+
+export interface Users_UsersOnTeamsCreateManyTeamInputEnvelope {
+  data: Users_UsersOnTeamsCreateManyTeamInput[];
+  skipDuplicates?: boolean;
+}
+
+export interface Users_UsersOnTeamsUpsertWithWhereUniqueWithoutTeamInput {
+  where: Users_UsersOnTeamsWhereUniqueInput;
+  update: Users_UsersOnTeamsUncheckedUpdateWithoutTeamInput;
+  create: Users_UsersOnTeamsUncheckedCreateWithoutTeamInput;
+}
+
+export interface Users_UsersOnTeamsUpdateWithWhereUniqueWithoutTeamInput {
+  where: Users_UsersOnTeamsWhereUniqueInput;
+  data: Users_UsersOnTeamsUncheckedUpdateWithoutTeamInput;
+}
+
+export interface Users_UsersOnTeamsUpdateManyWithWhereWithoutTeamInput {
+  where: Users_UsersOnTeamsScalarWhereInput;
+  data: Users_UsersOnTeamsUncheckedUpdateManyWithoutUsersInput;
+}
+
+export interface Users_UsersOnTeamsCreateManyUserInput {
+  teamName: string;
+  assignedAt?: Date;
+}
+
+export interface Users_UsersOnTeamsUpdateWithoutUserInput {
+  team?: Users_TeamUpdateOneRequiredWithoutUsersNestedInput;
+  assignedAt?: DateTimeFieldUpdateOperationsInput;
+}
+
+export interface Users_UsersOnTeamsUncheckedUpdateWithoutUserInput {
+  teamName?: StringFieldUpdateOperationsInput;
+  assignedAt?: DateTimeFieldUpdateOperationsInput;
+}
+
+export interface Users_UsersOnTeamsUncheckedUpdateManyWithoutTeamsInput {
+  teamName?: StringFieldUpdateOperationsInput;
+  assignedAt?: DateTimeFieldUpdateOperationsInput;
+}
+
+export interface Users_UsersOnTeamsCreateManyTeamInput {
+  userId: number;
+  assignedAt?: Date;
+}
+
+export interface Users_UsersOnTeamsUpdateWithoutTeamInput {
+  user?: Users_UserUpdateOneRequiredWithoutTeamsNestedInput;
+  assignedAt?: DateTimeFieldUpdateOperationsInput;
+}
+
+export interface Users_UsersOnTeamsUncheckedUpdateWithoutTeamInput {
+  userId?: IntFieldUpdateOperationsInput;
+  assignedAt?: DateTimeFieldUpdateOperationsInput;
+}
+
+export interface Users_UsersOnTeamsUncheckedUpdateManyWithoutUsersInput {
+  userId?: IntFieldUpdateOperationsInput;
+  assignedAt?: DateTimeFieldUpdateOperationsInput;
 }
 
 export enum JsonNullValueFilter {
@@ -1979,22 +2944,25 @@ export enum NullableJsonNullValueInput {
   DbNull = 'DbNull',
   JsonNull = 'JsonNull',
 }
-export enum ProductScalarFieldEnum {
-  id = 'id',
-  price = 'price',
+export enum ProfileScalarFieldEnum {
+  userId = 'userId',
+  location = 'location',
+  joiningDate = 'joiningDate',
+  designation = 'designation',
+  profileImg = 'profileImg',
+  designationIcon = 'designationIcon',
+  coverImg = 'coverImg',
 }
 export enum QueryMode {
   default = 'default',
   insensitive = 'insensitive',
 }
-export enum ReviewScalarFieldEnum {
-  id = 'id',
-  product_id = 'product_id',
-  score = 'score',
-}
 export enum SortOrder {
   asc = 'asc',
   desc = 'desc',
+}
+export enum TeamScalarFieldEnum {
+  teamName = 'teamName',
 }
 export enum TransactionIsolationLevel {
   ReadUncommitted = 'ReadUncommitted',
@@ -2011,6 +2979,13 @@ export enum UserScalarFieldEnum {
   roles = 'roles',
   googleId = 'googleId',
   googleProfile = 'googleProfile',
+  lastName = 'lastName',
+  firstName = 'firstName',
+}
+export enum UsersOnTeamsScalarFieldEnum {
+  teamName = 'teamName',
+  userId = 'userId',
+  assignedAt = 'assignedAt',
 }
 
 export interface Users_TransactionalMutationInput {
@@ -2021,20 +2996,27 @@ export interface Users_TransactionalMutationInput {
   Users_UpdateOneUser: Users_UpdateOneUserArgs;
   Users_UpdateManyUser: Users_UpdateManyUserArgs;
   Users_DeleteManyUser: Users_DeleteManyUserArgs;
-  Users_CreateOneReview: Users_CreateOneReviewArgs;
-  Users_UpsertOneReview: Users_UpsertOneReviewArgs;
-  Users_CreateManyReview: Users_CreateManyReviewArgs;
-  Users_DeleteOneReview: Users_DeleteOneReviewArgs;
-  Users_UpdateOneReview: Users_UpdateOneReviewArgs;
-  Users_UpdateManyReview: Users_UpdateManyReviewArgs;
-  Users_DeleteManyReview: Users_DeleteManyReviewArgs;
-  Users_CreateOneProduct: Users_CreateOneProductArgs;
-  Users_UpsertOneProduct: Users_UpsertOneProductArgs;
-  Users_CreateManyProduct: Users_CreateManyProductArgs;
-  Users_DeleteOneProduct: Users_DeleteOneProductArgs;
-  Users_UpdateOneProduct: Users_UpdateOneProductArgs;
-  Users_UpdateManyProduct: Users_UpdateManyProductArgs;
-  Users_DeleteManyProduct: Users_DeleteManyProductArgs;
+  Users_CreateOneProfile: Users_CreateOneProfileArgs;
+  Users_UpsertOneProfile: Users_UpsertOneProfileArgs;
+  Users_CreateManyProfile: Users_CreateManyProfileArgs;
+  Users_DeleteOneProfile: Users_DeleteOneProfileArgs;
+  Users_UpdateOneProfile: Users_UpdateOneProfileArgs;
+  Users_UpdateManyProfile: Users_UpdateManyProfileArgs;
+  Users_DeleteManyProfile: Users_DeleteManyProfileArgs;
+  Users_CreateOneUsersOnTeams: Users_CreateOneUsersOnTeamsArgs;
+  Users_UpsertOneUsersOnTeams: Users_UpsertOneUsersOnTeamsArgs;
+  Users_CreateManyUsersOnTeams: Users_CreateManyUsersOnTeamsArgs;
+  Users_DeleteOneUsersOnTeams: Users_DeleteOneUsersOnTeamsArgs;
+  Users_UpdateOneUsersOnTeams: Users_UpdateOneUsersOnTeamsArgs;
+  Users_UpdateManyUsersOnTeams: Users_UpdateManyUsersOnTeamsArgs;
+  Users_DeleteManyUsersOnTeams: Users_DeleteManyUsersOnTeamsArgs;
+  Users_CreateOneTeam: Users_CreateOneTeamArgs;
+  Users_UpsertOneTeam: Users_UpsertOneTeamArgs;
+  Users_CreateManyTeam: Users_CreateManyTeamArgs;
+  Users_DeleteOneTeam: Users_DeleteOneTeamArgs;
+  Users_UpdateOneTeam: Users_UpdateOneTeamArgs;
+  Users_UpdateManyTeam: Users_UpdateManyTeamArgs;
+  Users_DeleteManyTeam: Users_DeleteManyTeamArgs;
 }
 
 export interface Users_TransactionalBatchMutationArgs {

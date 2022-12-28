@@ -1,3 +1,6 @@
+import Team from './Team/typeDefs';
+import UsersOnTeams from './UsersOnTeams/typeDefs';
+import Profile from './Profile/typeDefs';
 import Product from './Product/typeDefs';
 import Review from './Review/typeDefs';
 import User from './User/typeDefs';
@@ -12,4 +15,8 @@ export default mergeTypeDefs([
   User,
   Review,
   Product,
+  ,
+  Profile,
+  UsersOnTeams,
+  Team,
 ]);

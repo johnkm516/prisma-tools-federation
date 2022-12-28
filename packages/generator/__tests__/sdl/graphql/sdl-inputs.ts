@@ -17,9 +17,14 @@ export default gql`
     JsonNull
   }
 
-  enum ProductScalarFieldEnum {
-    id
-    price
+  enum ProfileScalarFieldEnum {
+    userId
+    location
+    joiningDate
+    designation
+    profileImg
+    designationIcon
+    coverImg
   }
 
   enum QueryMode {
@@ -27,15 +32,13 @@ export default gql`
     insensitive
   }
 
-  enum ReviewScalarFieldEnum {
-    id
-    product_id
-    score
-  }
-
   enum SortOrder {
     asc
     desc
+  }
+
+  enum TeamScalarFieldEnum {
+    teamName
   }
 
   enum TransactionIsolationLevel {
@@ -54,6 +57,14 @@ export default gql`
     roles
     googleId
     googleProfile
+    lastName
+    firstName
+  }
+
+  enum UsersOnTeamsScalarFieldEnum {
+    teamName
+    userId
+    assignedAt
   }
 
   input Users_UserWhereInput {
@@ -68,6 +79,10 @@ export default gql`
     roles: StringNullableListFilter
     googleId: StringNullableFilter
     googleProfile: JsonNullableFilter
+    lastName: StringNullableFilter
+    firstName: StringNullableFilter
+    profile: Users_ProfileWhereInput
+    teams: Users_UsersOnTeamsListRelationFilter
   }
 
   input Users_UserOrderByWithRelationInput {
@@ -79,6 +94,10 @@ export default gql`
     roles: SortOrder
     googleId: SortOrder
     googleProfile: SortOrder
+    lastName: SortOrder
+    firstName: SortOrder
+    profile: Users_ProfileOrderByWithRelationInput
+    teams: Users_UsersOnTeamsOrderByRelationAggregateInput
   }
 
   input Users_UserWhereUniqueInput {
@@ -93,6 +112,10 @@ export default gql`
     password: StringNullableFilter
     roles: StringNullableListFilter
     googleProfile: JsonNullableFilter
+    lastName: StringNullableFilter
+    firstName: StringNullableFilter
+    profile: Users_ProfileWhereInput
+    teams: Users_UsersOnTeamsListRelationFilter
   }
 
   input Users_UserOrderByWithAggregationInput {
@@ -104,6 +127,8 @@ export default gql`
     roles: SortOrder
     googleId: SortOrder
     googleProfile: SortOrder
+    lastName: SortOrder
+    firstName: SortOrder
     _count: Users_UserCountOrderByAggregateInput
     _avg: Users_UserAvgOrderByAggregateInput
     _max: Users_UserMaxOrderByAggregateInput
@@ -123,95 +148,161 @@ export default gql`
     roles: StringNullableListFilter
     googleId: StringNullableWithAggregatesFilter
     googleProfile: JsonNullableWithAggregatesFilter
+    lastName: StringNullableWithAggregatesFilter
+    firstName: StringNullableWithAggregatesFilter
   }
 
-  input Users_ReviewWhereInput {
-    AND: [Users_ReviewWhereInput!]
-    OR: [Users_ReviewWhereInput!]
-    NOT: [Users_ReviewWhereInput!]
-    id: IntFilter
-    product: Users_ProductWhereInput
-    product_id: IntFilter
-    score: IntFilter
+  input Users_ProfileWhereInput {
+    AND: [Users_ProfileWhereInput!]
+    OR: [Users_ProfileWhereInput!]
+    NOT: [Users_ProfileWhereInput!]
+    userId: IntFilter
+    user: Users_UserWhereInput
+    location: StringNullableFilter
+    joiningDate: DateTimeNullableFilter
+    designation: StringNullableFilter
+    profileImg: StringNullableFilter
+    designationIcon: StringNullableFilter
+    coverImg: StringNullableFilter
   }
 
-  input Users_ReviewOrderByWithRelationInput {
-    id: SortOrder
-    product: Users_ProductOrderByWithRelationInput
-    product_id: SortOrder
-    score: SortOrder
+  input Users_ProfileOrderByWithRelationInput {
+    userId: SortOrder
+    user: Users_UserOrderByWithRelationInput
+    location: SortOrder
+    joiningDate: SortOrder
+    designation: SortOrder
+    profileImg: SortOrder
+    designationIcon: SortOrder
+    coverImg: SortOrder
   }
 
-  input Users_ReviewWhereUniqueInput {
-    id: Int
-    product_id: Int
-    AND: [Users_ReviewWhereInput!]
-    OR: [Users_ReviewWhereInput!]
-    NOT: [Users_ReviewWhereInput!]
-    product: Users_ProductWhereInput
-    score: IntFilter
+  input Users_ProfileWhereUniqueInput {
+    userId: Int
+    AND: [Users_ProfileWhereInput!]
+    OR: [Users_ProfileWhereInput!]
+    NOT: [Users_ProfileWhereInput!]
+    user: Users_UserWhereInput
+    location: StringNullableFilter
+    joiningDate: DateTimeNullableFilter
+    designation: StringNullableFilter
+    profileImg: StringNullableFilter
+    designationIcon: StringNullableFilter
+    coverImg: StringNullableFilter
   }
 
-  input Users_ReviewOrderByWithAggregationInput {
-    id: SortOrder
-    product_id: SortOrder
-    score: SortOrder
-    _count: Users_ReviewCountOrderByAggregateInput
-    _avg: Users_ReviewAvgOrderByAggregateInput
-    _max: Users_ReviewMaxOrderByAggregateInput
-    _min: Users_ReviewMinOrderByAggregateInput
-    _sum: Users_ReviewSumOrderByAggregateInput
+  input Users_ProfileOrderByWithAggregationInput {
+    userId: SortOrder
+    location: SortOrder
+    joiningDate: SortOrder
+    designation: SortOrder
+    profileImg: SortOrder
+    designationIcon: SortOrder
+    coverImg: SortOrder
+    _count: Users_ProfileCountOrderByAggregateInput
+    _avg: Users_ProfileAvgOrderByAggregateInput
+    _max: Users_ProfileMaxOrderByAggregateInput
+    _min: Users_ProfileMinOrderByAggregateInput
+    _sum: Users_ProfileSumOrderByAggregateInput
   }
 
-  input Users_ReviewScalarWhereWithAggregatesInput {
-    AND: [Users_ReviewScalarWhereWithAggregatesInput!]
-    OR: [Users_ReviewScalarWhereWithAggregatesInput!]
-    NOT: [Users_ReviewScalarWhereWithAggregatesInput!]
-    id: IntWithAggregatesFilter
-    product_id: IntWithAggregatesFilter
-    score: IntWithAggregatesFilter
+  input Users_ProfileScalarWhereWithAggregatesInput {
+    AND: [Users_ProfileScalarWhereWithAggregatesInput!]
+    OR: [Users_ProfileScalarWhereWithAggregatesInput!]
+    NOT: [Users_ProfileScalarWhereWithAggregatesInput!]
+    userId: IntWithAggregatesFilter
+    location: StringNullableWithAggregatesFilter
+    joiningDate: DateTimeNullableWithAggregatesFilter
+    designation: StringNullableWithAggregatesFilter
+    profileImg: StringNullableWithAggregatesFilter
+    designationIcon: StringNullableWithAggregatesFilter
+    coverImg: StringNullableWithAggregatesFilter
   }
 
-  input Users_ProductWhereInput {
-    AND: [Users_ProductWhereInput!]
-    OR: [Users_ProductWhereInput!]
-    NOT: [Users_ProductWhereInput!]
-    id: IntFilter
-    price: FloatFilter
-    review: Users_ReviewListRelationFilter
+  input Users_UsersOnTeamsWhereInput {
+    AND: [Users_UsersOnTeamsWhereInput!]
+    OR: [Users_UsersOnTeamsWhereInput!]
+    NOT: [Users_UsersOnTeamsWhereInput!]
+    team: Users_TeamWhereInput
+    teamName: StringFilter
+    user: Users_UserWhereInput
+    userId: IntFilter
+    assignedAt: DateTimeFilter
   }
 
-  input Users_ProductOrderByWithRelationInput {
-    id: SortOrder
-    price: SortOrder
-    review: Users_ReviewOrderByRelationAggregateInput
+  input Users_UsersOnTeamsOrderByWithRelationInput {
+    team: Users_TeamOrderByWithRelationInput
+    teamName: SortOrder
+    user: Users_UserOrderByWithRelationInput
+    userId: SortOrder
+    assignedAt: SortOrder
   }
 
-  input Users_ProductWhereUniqueInput {
-    id: Int
-    AND: [Users_ProductWhereInput!]
-    OR: [Users_ProductWhereInput!]
-    NOT: [Users_ProductWhereInput!]
-    price: FloatFilter
-    review: Users_ReviewListRelationFilter
+  input Users_UsersOnTeamsWhereUniqueInput {
+    teamName_userId: UsersOnTeamsTeamNameUserIdCompoundUniqueInput
+    AND: [Users_UsersOnTeamsWhereInput!]
+    OR: [Users_UsersOnTeamsWhereInput!]
+    NOT: [Users_UsersOnTeamsWhereInput!]
+    team: Users_TeamWhereInput
+    teamName: StringFilter
+    user: Users_UserWhereInput
+    userId: IntFilter
+    assignedAt: DateTimeFilter
   }
 
-  input Users_ProductOrderByWithAggregationInput {
-    id: SortOrder
-    price: SortOrder
-    _count: Users_ProductCountOrderByAggregateInput
-    _avg: Users_ProductAvgOrderByAggregateInput
-    _max: Users_ProductMaxOrderByAggregateInput
-    _min: Users_ProductMinOrderByAggregateInput
-    _sum: Users_ProductSumOrderByAggregateInput
+  input Users_UsersOnTeamsOrderByWithAggregationInput {
+    teamName: SortOrder
+    userId: SortOrder
+    assignedAt: SortOrder
+    _count: Users_UsersOnTeamsCountOrderByAggregateInput
+    _avg: Users_UsersOnTeamsAvgOrderByAggregateInput
+    _max: Users_UsersOnTeamsMaxOrderByAggregateInput
+    _min: Users_UsersOnTeamsMinOrderByAggregateInput
+    _sum: Users_UsersOnTeamsSumOrderByAggregateInput
   }
 
-  input Users_ProductScalarWhereWithAggregatesInput {
-    AND: [Users_ProductScalarWhereWithAggregatesInput!]
-    OR: [Users_ProductScalarWhereWithAggregatesInput!]
-    NOT: [Users_ProductScalarWhereWithAggregatesInput!]
-    id: IntWithAggregatesFilter
-    price: FloatWithAggregatesFilter
+  input Users_UsersOnTeamsScalarWhereWithAggregatesInput {
+    AND: [Users_UsersOnTeamsScalarWhereWithAggregatesInput!]
+    OR: [Users_UsersOnTeamsScalarWhereWithAggregatesInput!]
+    NOT: [Users_UsersOnTeamsScalarWhereWithAggregatesInput!]
+    teamName: StringWithAggregatesFilter
+    userId: IntWithAggregatesFilter
+    assignedAt: DateTimeWithAggregatesFilter
+  }
+
+  input Users_TeamWhereInput {
+    AND: [Users_TeamWhereInput!]
+    OR: [Users_TeamWhereInput!]
+    NOT: [Users_TeamWhereInput!]
+    teamName: StringFilter
+    users: Users_UsersOnTeamsListRelationFilter
+  }
+
+  input Users_TeamOrderByWithRelationInput {
+    teamName: SortOrder
+    users: Users_UsersOnTeamsOrderByRelationAggregateInput
+  }
+
+  input Users_TeamWhereUniqueInput {
+    teamName: String
+    AND: [Users_TeamWhereInput!]
+    OR: [Users_TeamWhereInput!]
+    NOT: [Users_TeamWhereInput!]
+    users: Users_UsersOnTeamsListRelationFilter
+  }
+
+  input Users_TeamOrderByWithAggregationInput {
+    teamName: SortOrder
+    _count: Users_TeamCountOrderByAggregateInput
+    _max: Users_TeamMaxOrderByAggregateInput
+    _min: Users_TeamMinOrderByAggregateInput
+  }
+
+  input Users_TeamScalarWhereWithAggregatesInput {
+    AND: [Users_TeamScalarWhereWithAggregatesInput!]
+    OR: [Users_TeamScalarWhereWithAggregatesInput!]
+    NOT: [Users_TeamScalarWhereWithAggregatesInput!]
+    teamName: StringWithAggregatesFilter
   }
 
   input Users_UserCreateInput {
@@ -222,6 +313,10 @@ export default gql`
     roles: [String!]
     googleId: String
     googleProfile: Json
+    lastName: String
+    firstName: String
+    profile: Users_ProfileCreateNestedOneWithoutUserInput
+    teams: Users_UsersOnTeamsCreateNestedManyWithoutUserInput
   }
 
   input Users_UserUncheckedCreateInput {
@@ -233,6 +328,10 @@ export default gql`
     roles: [String!]
     googleId: String
     googleProfile: Json
+    lastName: String
+    firstName: String
+    profile: Users_ProfileUncheckedCreateNestedOneWithoutUserInput
+    teams: Users_UsersOnTeamsUncheckedCreateNestedManyWithoutUserInput
   }
 
   input Users_UserUpdateInput {
@@ -243,6 +342,10 @@ export default gql`
     roles: [String!]
     googleId: NullableStringFieldUpdateOperationsInput
     googleProfile: Json
+    lastName: NullableStringFieldUpdateOperationsInput
+    firstName: NullableStringFieldUpdateOperationsInput
+    profile: Users_ProfileUpdateOneWithoutUserNestedInput
+    teams: Users_UsersOnTeamsUpdateManyWithoutUserNestedInput
   }
 
   input Users_UserUncheckedUpdateInput {
@@ -254,6 +357,10 @@ export default gql`
     roles: [String!]
     googleId: NullableStringFieldUpdateOperationsInput
     googleProfile: Json
+    lastName: NullableStringFieldUpdateOperationsInput
+    firstName: NullableStringFieldUpdateOperationsInput
+    profile: Users_ProfileUncheckedUpdateOneWithoutUserNestedInput
+    teams: Users_UsersOnTeamsUncheckedUpdateManyWithoutUserNestedInput
   }
 
   input Users_UserCreateManyInput {
@@ -265,6 +372,8 @@ export default gql`
     roles: [String!]
     googleId: String
     googleProfile: Json
+    lastName: String
+    firstName: String
   }
 
   input Users_UserUpdateManyMutationInput {
@@ -275,6 +384,8 @@ export default gql`
     roles: [String!]
     googleId: NullableStringFieldUpdateOperationsInput
     googleProfile: Json
+    lastName: NullableStringFieldUpdateOperationsInput
+    firstName: NullableStringFieldUpdateOperationsInput
   }
 
   input Users_UserUncheckedUpdateManyInput {
@@ -286,80 +397,149 @@ export default gql`
     roles: [String!]
     googleId: NullableStringFieldUpdateOperationsInput
     googleProfile: Json
+    lastName: NullableStringFieldUpdateOperationsInput
+    firstName: NullableStringFieldUpdateOperationsInput
   }
 
-  input Users_ReviewCreateInput {
-    product: Users_ProductCreateNestedOneWithoutReviewInput!
-    score: Int!
+  input Users_ProfileCreateInput {
+    user: Users_UserCreateNestedOneWithoutProfileInput!
+    location: String
+    joiningDate: DateTime
+    designation: String
+    profileImg: String
+    designationIcon: String
+    coverImg: String
   }
 
-  input Users_ReviewUncheckedCreateInput {
-    id: Int
-    product_id: Int!
-    score: Int!
+  input Users_ProfileUncheckedCreateInput {
+    userId: Int!
+    location: String
+    joiningDate: DateTime
+    designation: String
+    profileImg: String
+    designationIcon: String
+    coverImg: String
   }
 
-  input Users_ReviewUpdateInput {
-    product: Users_ProductUpdateOneRequiredWithoutReviewNestedInput
-    score: IntFieldUpdateOperationsInput
+  input Users_ProfileUpdateInput {
+    user: Users_UserUpdateOneRequiredWithoutProfileNestedInput
+    location: NullableStringFieldUpdateOperationsInput
+    joiningDate: NullableDateTimeFieldUpdateOperationsInput
+    designation: NullableStringFieldUpdateOperationsInput
+    profileImg: NullableStringFieldUpdateOperationsInput
+    designationIcon: NullableStringFieldUpdateOperationsInput
+    coverImg: NullableStringFieldUpdateOperationsInput
   }
 
-  input Users_ReviewUncheckedUpdateInput {
-    id: IntFieldUpdateOperationsInput
-    product_id: IntFieldUpdateOperationsInput
-    score: IntFieldUpdateOperationsInput
+  input Users_ProfileUncheckedUpdateInput {
+    userId: IntFieldUpdateOperationsInput
+    location: NullableStringFieldUpdateOperationsInput
+    joiningDate: NullableDateTimeFieldUpdateOperationsInput
+    designation: NullableStringFieldUpdateOperationsInput
+    profileImg: NullableStringFieldUpdateOperationsInput
+    designationIcon: NullableStringFieldUpdateOperationsInput
+    coverImg: NullableStringFieldUpdateOperationsInput
   }
 
-  input Users_ReviewCreateManyInput {
-    id: Int
-    product_id: Int!
-    score: Int!
+  input Users_ProfileCreateManyInput {
+    userId: Int!
+    location: String
+    joiningDate: DateTime
+    designation: String
+    profileImg: String
+    designationIcon: String
+    coverImg: String
   }
 
-  input Users_ReviewUpdateManyMutationInput {
-    score: IntFieldUpdateOperationsInput
+  input Users_ProfileUpdateManyMutationInput {
+    location: NullableStringFieldUpdateOperationsInput
+    joiningDate: NullableDateTimeFieldUpdateOperationsInput
+    designation: NullableStringFieldUpdateOperationsInput
+    profileImg: NullableStringFieldUpdateOperationsInput
+    designationIcon: NullableStringFieldUpdateOperationsInput
+    coverImg: NullableStringFieldUpdateOperationsInput
   }
 
-  input Users_ReviewUncheckedUpdateManyInput {
-    id: IntFieldUpdateOperationsInput
-    product_id: IntFieldUpdateOperationsInput
-    score: IntFieldUpdateOperationsInput
+  input Users_ProfileUncheckedUpdateManyInput {
+    userId: IntFieldUpdateOperationsInput
+    location: NullableStringFieldUpdateOperationsInput
+    joiningDate: NullableDateTimeFieldUpdateOperationsInput
+    designation: NullableStringFieldUpdateOperationsInput
+    profileImg: NullableStringFieldUpdateOperationsInput
+    designationIcon: NullableStringFieldUpdateOperationsInput
+    coverImg: NullableStringFieldUpdateOperationsInput
   }
 
-  input Users_ProductCreateInput {
-    price: Float!
-    review: Users_ReviewCreateNestedManyWithoutProductInput
+  input Users_UsersOnTeamsCreateInput {
+    team: Users_TeamCreateNestedOneWithoutUsersInput!
+    user: Users_UserCreateNestedOneWithoutTeamsInput!
+    assignedAt: DateTime
   }
 
-  input Users_ProductUncheckedCreateInput {
-    id: Int
-    price: Float!
-    review: Users_ReviewUncheckedCreateNestedManyWithoutProductInput
+  input Users_UsersOnTeamsUncheckedCreateInput {
+    teamName: String!
+    userId: Int!
+    assignedAt: DateTime
   }
 
-  input Users_ProductUpdateInput {
-    price: FloatFieldUpdateOperationsInput
-    review: Users_ReviewUpdateManyWithoutProductNestedInput
+  input Users_UsersOnTeamsUpdateInput {
+    team: Users_TeamUpdateOneRequiredWithoutUsersNestedInput
+    user: Users_UserUpdateOneRequiredWithoutTeamsNestedInput
+    assignedAt: DateTimeFieldUpdateOperationsInput
   }
 
-  input Users_ProductUncheckedUpdateInput {
-    id: IntFieldUpdateOperationsInput
-    price: FloatFieldUpdateOperationsInput
-    review: Users_ReviewUncheckedUpdateManyWithoutProductNestedInput
+  input Users_UsersOnTeamsUncheckedUpdateInput {
+    teamName: StringFieldUpdateOperationsInput
+    userId: IntFieldUpdateOperationsInput
+    assignedAt: DateTimeFieldUpdateOperationsInput
   }
 
-  input Users_ProductCreateManyInput {
-    id: Int
-    price: Float!
+  input Users_UsersOnTeamsCreateManyInput {
+    teamName: String!
+    userId: Int!
+    assignedAt: DateTime
   }
 
-  input Users_ProductUpdateManyMutationInput {
-    price: FloatFieldUpdateOperationsInput
+  input Users_UsersOnTeamsUpdateManyMutationInput {
+    assignedAt: DateTimeFieldUpdateOperationsInput
   }
 
-  input Users_ProductUncheckedUpdateManyInput {
-    id: IntFieldUpdateOperationsInput
-    price: FloatFieldUpdateOperationsInput
+  input Users_UsersOnTeamsUncheckedUpdateManyInput {
+    teamName: StringFieldUpdateOperationsInput
+    userId: IntFieldUpdateOperationsInput
+    assignedAt: DateTimeFieldUpdateOperationsInput
+  }
+
+  input Users_TeamCreateInput {
+    teamName: String!
+    users: Users_UsersOnTeamsCreateNestedManyWithoutTeamInput
+  }
+
+  input Users_TeamUncheckedCreateInput {
+    teamName: String!
+    users: Users_UsersOnTeamsUncheckedCreateNestedManyWithoutTeamInput
+  }
+
+  input Users_TeamUpdateInput {
+    teamName: StringFieldUpdateOperationsInput
+    users: Users_UsersOnTeamsUpdateManyWithoutTeamNestedInput
+  }
+
+  input Users_TeamUncheckedUpdateInput {
+    teamName: StringFieldUpdateOperationsInput
+    users: Users_UsersOnTeamsUncheckedUpdateManyWithoutTeamNestedInput
+  }
+
+  input Users_TeamCreateManyInput {
+    teamName: String!
+  }
+
+  input Users_TeamUpdateManyMutationInput {
+    teamName: StringFieldUpdateOperationsInput
+  }
+
+  input Users_TeamUncheckedUpdateManyInput {
+    teamName: StringFieldUpdateOperationsInput
   }
 
   input IntFilter {
@@ -438,6 +618,21 @@ export default gql`
     not: Json
   }
 
+  input Users_ProfileRelationFilter {
+    is: Users_ProfileWhereInput
+    isNot: Users_ProfileWhereInput
+  }
+
+  input Users_UsersOnTeamsListRelationFilter {
+    every: Users_UsersOnTeamsWhereInput
+    some: Users_UsersOnTeamsWhereInput
+    none: Users_UsersOnTeamsWhereInput
+  }
+
+  input Users_UsersOnTeamsOrderByRelationAggregateInput {
+    _count: SortOrder
+  }
+
   input Users_UserCountOrderByAggregateInput {
     id: SortOrder
     createdAt: SortOrder
@@ -447,6 +642,8 @@ export default gql`
     roles: SortOrder
     googleId: SortOrder
     googleProfile: SortOrder
+    lastName: SortOrder
+    firstName: SortOrder
   }
 
   input Users_UserAvgOrderByAggregateInput {
@@ -460,6 +657,8 @@ export default gql`
     password: SortOrder
     email: SortOrder
     googleId: SortOrder
+    lastName: SortOrder
+    firstName: SortOrder
   }
 
   input Users_UserMinOrderByAggregateInput {
@@ -469,6 +668,8 @@ export default gql`
     password: SortOrder
     email: SortOrder
     googleId: SortOrder
+    lastName: SortOrder
+    firstName: SortOrder
   }
 
   input Users_UserSumOrderByAggregateInput {
@@ -560,105 +761,150 @@ export default gql`
     _max: NestedJsonNullableFilter
   }
 
-  input Users_ProductRelationFilter {
-    is: Users_ProductWhereInput
-    isNot: Users_ProductWhereInput
+  input Users_UserRelationFilter {
+    is: Users_UserWhereInput
+    isNot: Users_UserWhereInput
   }
 
-  input Users_ReviewCountOrderByAggregateInput {
-    id: SortOrder
-    product_id: SortOrder
-    score: SortOrder
+  input DateTimeNullableFilter {
+    equals: DateTime
+    in: [DateTime!]
+    notIn: [DateTime!]
+    lt: DateTime
+    lte: DateTime
+    gt: DateTime
+    gte: DateTime
+    not: NestedDateTimeNullableFilter
   }
 
-  input Users_ReviewAvgOrderByAggregateInput {
-    id: SortOrder
-    product_id: SortOrder
-    score: SortOrder
+  input Users_ProfileCountOrderByAggregateInput {
+    userId: SortOrder
+    location: SortOrder
+    joiningDate: SortOrder
+    designation: SortOrder
+    profileImg: SortOrder
+    designationIcon: SortOrder
+    coverImg: SortOrder
   }
 
-  input Users_ReviewMaxOrderByAggregateInput {
-    id: SortOrder
-    product_id: SortOrder
-    score: SortOrder
+  input Users_ProfileAvgOrderByAggregateInput {
+    userId: SortOrder
   }
 
-  input Users_ReviewMinOrderByAggregateInput {
-    id: SortOrder
-    product_id: SortOrder
-    score: SortOrder
+  input Users_ProfileMaxOrderByAggregateInput {
+    userId: SortOrder
+    location: SortOrder
+    joiningDate: SortOrder
+    designation: SortOrder
+    profileImg: SortOrder
+    designationIcon: SortOrder
+    coverImg: SortOrder
   }
 
-  input Users_ReviewSumOrderByAggregateInput {
-    id: SortOrder
-    product_id: SortOrder
-    score: SortOrder
+  input Users_ProfileMinOrderByAggregateInput {
+    userId: SortOrder
+    location: SortOrder
+    joiningDate: SortOrder
+    designation: SortOrder
+    profileImg: SortOrder
+    designationIcon: SortOrder
+    coverImg: SortOrder
   }
 
-  input FloatFilter {
-    equals: Float
-    in: [Float!]
-    notIn: [Float!]
-    lt: Float
-    lte: Float
-    gt: Float
-    gte: Float
-    not: NestedFloatFilter
+  input Users_ProfileSumOrderByAggregateInput {
+    userId: SortOrder
   }
 
-  input Users_ReviewListRelationFilter {
-    every: Users_ReviewWhereInput
-    some: Users_ReviewWhereInput
-    none: Users_ReviewWhereInput
+  input DateTimeNullableWithAggregatesFilter {
+    equals: DateTime
+    in: [DateTime!]
+    notIn: [DateTime!]
+    lt: DateTime
+    lte: DateTime
+    gt: DateTime
+    gte: DateTime
+    not: NestedDateTimeNullableWithAggregatesFilter
+    _count: NestedIntNullableFilter
+    _min: NestedDateTimeNullableFilter
+    _max: NestedDateTimeNullableFilter
   }
 
-  input Users_ReviewOrderByRelationAggregateInput {
-    _count: SortOrder
+  input Users_TeamRelationFilter {
+    is: Users_TeamWhereInput
+    isNot: Users_TeamWhereInput
   }
 
-  input Users_ProductCountOrderByAggregateInput {
-    id: SortOrder
-    price: SortOrder
+  input UsersOnTeamsTeamNameUserIdCompoundUniqueInput {
+    teamName: String!
+    userId: Int!
   }
 
-  input Users_ProductAvgOrderByAggregateInput {
-    id: SortOrder
-    price: SortOrder
+  input Users_UsersOnTeamsCountOrderByAggregateInput {
+    teamName: SortOrder
+    userId: SortOrder
+    assignedAt: SortOrder
   }
 
-  input Users_ProductMaxOrderByAggregateInput {
-    id: SortOrder
-    price: SortOrder
+  input Users_UsersOnTeamsAvgOrderByAggregateInput {
+    userId: SortOrder
   }
 
-  input Users_ProductMinOrderByAggregateInput {
-    id: SortOrder
-    price: SortOrder
+  input Users_UsersOnTeamsMaxOrderByAggregateInput {
+    teamName: SortOrder
+    userId: SortOrder
+    assignedAt: SortOrder
   }
 
-  input Users_ProductSumOrderByAggregateInput {
-    id: SortOrder
-    price: SortOrder
+  input Users_UsersOnTeamsMinOrderByAggregateInput {
+    teamName: SortOrder
+    userId: SortOrder
+    assignedAt: SortOrder
   }
 
-  input FloatWithAggregatesFilter {
-    equals: Float
-    in: [Float!]
-    notIn: [Float!]
-    lt: Float
-    lte: Float
-    gt: Float
-    gte: Float
-    not: NestedFloatWithAggregatesFilter
-    _count: NestedIntFilter
-    _avg: NestedFloatFilter
-    _sum: NestedFloatFilter
-    _min: NestedFloatFilter
-    _max: NestedFloatFilter
+  input Users_UsersOnTeamsSumOrderByAggregateInput {
+    userId: SortOrder
+  }
+
+  input Users_TeamCountOrderByAggregateInput {
+    teamName: SortOrder
+  }
+
+  input Users_TeamMaxOrderByAggregateInput {
+    teamName: SortOrder
+  }
+
+  input Users_TeamMinOrderByAggregateInput {
+    teamName: SortOrder
   }
 
   input Users_UserCreaterolesInput {
     set: [String!]!
+  }
+
+  input Users_ProfileCreateNestedOneWithoutUserInput {
+    create: Users_ProfileUncheckedCreateWithoutUserInput
+    connectOrCreate: Users_ProfileCreateOrConnectWithoutUserInput
+    connect: Users_ProfileWhereUniqueInput
+  }
+
+  input Users_UsersOnTeamsCreateNestedManyWithoutUserInput {
+    create: [Users_UsersOnTeamsCreateWithoutUserInput!]
+    connectOrCreate: [Users_UsersOnTeamsCreateOrConnectWithoutUserInput!]
+    createMany: Users_UsersOnTeamsCreateManyUserInputEnvelope
+    connect: [Users_UsersOnTeamsWhereUniqueInput!]
+  }
+
+  input Users_ProfileUncheckedCreateNestedOneWithoutUserInput {
+    create: Users_ProfileUncheckedCreateWithoutUserInput
+    connectOrCreate: Users_ProfileCreateOrConnectWithoutUserInput
+    connect: Users_ProfileWhereUniqueInput
+  }
+
+  input Users_UsersOnTeamsUncheckedCreateNestedManyWithoutUserInput {
+    create: [Users_UsersOnTeamsCreateWithoutUserInput!]
+    connectOrCreate: [Users_UsersOnTeamsCreateOrConnectWithoutUserInput!]
+    createMany: Users_UsersOnTeamsCreateManyUserInputEnvelope
+    connect: [Users_UsersOnTeamsWhereUniqueInput!]
   }
 
   input DateTimeFieldUpdateOperationsInput {
@@ -678,6 +924,30 @@ export default gql`
     push: [String!]
   }
 
+  input Users_ProfileUpdateOneWithoutUserNestedInput {
+    create: Users_ProfileUncheckedCreateWithoutUserInput
+    connectOrCreate: Users_ProfileCreateOrConnectWithoutUserInput
+    upsert: Users_ProfileUpsertWithoutUserInput
+    disconnect: Users_ProfileWhereInput
+    delete: Users_ProfileWhereInput
+    connect: Users_ProfileWhereUniqueInput
+    update: Users_ProfileUpdateWithoutUserInput
+  }
+
+  input Users_UsersOnTeamsUpdateManyWithoutUserNestedInput {
+    create: [Users_UsersOnTeamsCreateWithoutUserInput!]
+    connectOrCreate: [Users_UsersOnTeamsCreateOrConnectWithoutUserInput!]
+    upsert: [Users_UsersOnTeamsUpsertWithWhereUniqueWithoutUserInput!]
+    createMany: Users_UsersOnTeamsCreateManyUserInputEnvelope
+    set: [Users_UsersOnTeamsWhereUniqueInput!]
+    disconnect: [Users_UsersOnTeamsWhereUniqueInput!]
+    delete: [Users_UsersOnTeamsWhereUniqueInput!]
+    connect: [Users_UsersOnTeamsWhereUniqueInput!]
+    update: [Users_UsersOnTeamsUpdateWithWhereUniqueWithoutUserInput!]
+    updateMany: [Users_UsersOnTeamsUpdateManyWithWhereWithoutUserInput!]
+    deleteMany: [Users_UsersOnTeamsScalarWhereInput!]
+  }
+
   input IntFieldUpdateOperationsInput {
     set: Int
     increment: Int
@@ -686,68 +956,116 @@ export default gql`
     divide: Int
   }
 
-  input Users_ProductCreateNestedOneWithoutReviewInput {
-    create: Users_ProductUncheckedCreateWithoutReviewInput
-    connectOrCreate: Users_ProductCreateOrConnectWithoutReviewInput
-    connect: Users_ProductWhereUniqueInput
+  input Users_ProfileUncheckedUpdateOneWithoutUserNestedInput {
+    create: Users_ProfileUncheckedCreateWithoutUserInput
+    connectOrCreate: Users_ProfileCreateOrConnectWithoutUserInput
+    upsert: Users_ProfileUpsertWithoutUserInput
+    disconnect: Users_ProfileWhereInput
+    delete: Users_ProfileWhereInput
+    connect: Users_ProfileWhereUniqueInput
+    update: Users_ProfileUpdateWithoutUserInput
   }
 
-  input Users_ProductUpdateOneRequiredWithoutReviewNestedInput {
-    create: Users_ProductUncheckedCreateWithoutReviewInput
-    connectOrCreate: Users_ProductCreateOrConnectWithoutReviewInput
-    upsert: Users_ProductUpsertWithoutReviewInput
-    connect: Users_ProductWhereUniqueInput
-    update: Users_ProductUpdateWithoutReviewInput
+  input Users_UsersOnTeamsUncheckedUpdateManyWithoutUserNestedInput {
+    create: [Users_UsersOnTeamsCreateWithoutUserInput!]
+    connectOrCreate: [Users_UsersOnTeamsCreateOrConnectWithoutUserInput!]
+    upsert: [Users_UsersOnTeamsUpsertWithWhereUniqueWithoutUserInput!]
+    createMany: Users_UsersOnTeamsCreateManyUserInputEnvelope
+    set: [Users_UsersOnTeamsWhereUniqueInput!]
+    disconnect: [Users_UsersOnTeamsWhereUniqueInput!]
+    delete: [Users_UsersOnTeamsWhereUniqueInput!]
+    connect: [Users_UsersOnTeamsWhereUniqueInput!]
+    update: [Users_UsersOnTeamsUpdateWithWhereUniqueWithoutUserInput!]
+    updateMany: [Users_UsersOnTeamsUpdateManyWithWhereWithoutUserInput!]
+    deleteMany: [Users_UsersOnTeamsScalarWhereInput!]
   }
 
-  input Users_ReviewCreateNestedManyWithoutProductInput {
-    create: [Users_ReviewCreateWithoutProductInput!]
-    connectOrCreate: [Users_ReviewCreateOrConnectWithoutProductInput!]
-    createMany: Users_ReviewCreateManyProductInputEnvelope
-    connect: [Users_ReviewWhereUniqueInput!]
+  input Users_UserCreateNestedOneWithoutProfileInput {
+    create: Users_UserUncheckedCreateWithoutProfileInput
+    connectOrCreate: Users_UserCreateOrConnectWithoutProfileInput
+    connect: Users_UserWhereUniqueInput
   }
 
-  input Users_ReviewUncheckedCreateNestedManyWithoutProductInput {
-    create: [Users_ReviewCreateWithoutProductInput!]
-    connectOrCreate: [Users_ReviewCreateOrConnectWithoutProductInput!]
-    createMany: Users_ReviewCreateManyProductInputEnvelope
-    connect: [Users_ReviewWhereUniqueInput!]
+  input Users_UserUpdateOneRequiredWithoutProfileNestedInput {
+    create: Users_UserUncheckedCreateWithoutProfileInput
+    connectOrCreate: Users_UserCreateOrConnectWithoutProfileInput
+    upsert: Users_UserUpsertWithoutProfileInput
+    connect: Users_UserWhereUniqueInput
+    update: Users_UserUpdateWithoutProfileInput
   }
 
-  input FloatFieldUpdateOperationsInput {
-    set: Float
-    increment: Float
-    decrement: Float
-    multiply: Float
-    divide: Float
+  input NullableDateTimeFieldUpdateOperationsInput {
+    set: DateTime
   }
 
-  input Users_ReviewUpdateManyWithoutProductNestedInput {
-    create: [Users_ReviewCreateWithoutProductInput!]
-    connectOrCreate: [Users_ReviewCreateOrConnectWithoutProductInput!]
-    upsert: [Users_ReviewUpsertWithWhereUniqueWithoutProductInput!]
-    createMany: Users_ReviewCreateManyProductInputEnvelope
-    set: [Users_ReviewWhereUniqueInput!]
-    disconnect: [Users_ReviewWhereUniqueInput!]
-    delete: [Users_ReviewWhereUniqueInput!]
-    connect: [Users_ReviewWhereUniqueInput!]
-    update: [Users_ReviewUpdateWithWhereUniqueWithoutProductInput!]
-    updateMany: [Users_ReviewUpdateManyWithWhereWithoutProductInput!]
-    deleteMany: [Users_ReviewScalarWhereInput!]
+  input Users_TeamCreateNestedOneWithoutUsersInput {
+    create: Users_TeamUncheckedCreateWithoutUsersInput
+    connectOrCreate: Users_TeamCreateOrConnectWithoutUsersInput
+    connect: Users_TeamWhereUniqueInput
   }
 
-  input Users_ReviewUncheckedUpdateManyWithoutProductNestedInput {
-    create: [Users_ReviewCreateWithoutProductInput!]
-    connectOrCreate: [Users_ReviewCreateOrConnectWithoutProductInput!]
-    upsert: [Users_ReviewUpsertWithWhereUniqueWithoutProductInput!]
-    createMany: Users_ReviewCreateManyProductInputEnvelope
-    set: [Users_ReviewWhereUniqueInput!]
-    disconnect: [Users_ReviewWhereUniqueInput!]
-    delete: [Users_ReviewWhereUniqueInput!]
-    connect: [Users_ReviewWhereUniqueInput!]
-    update: [Users_ReviewUpdateWithWhereUniqueWithoutProductInput!]
-    updateMany: [Users_ReviewUpdateManyWithWhereWithoutProductInput!]
-    deleteMany: [Users_ReviewScalarWhereInput!]
+  input Users_UserCreateNestedOneWithoutTeamsInput {
+    create: Users_UserUncheckedCreateWithoutTeamsInput
+    connectOrCreate: Users_UserCreateOrConnectWithoutTeamsInput
+    connect: Users_UserWhereUniqueInput
+  }
+
+  input Users_TeamUpdateOneRequiredWithoutUsersNestedInput {
+    create: Users_TeamUncheckedCreateWithoutUsersInput
+    connectOrCreate: Users_TeamCreateOrConnectWithoutUsersInput
+    upsert: Users_TeamUpsertWithoutUsersInput
+    connect: Users_TeamWhereUniqueInput
+    update: Users_TeamUpdateWithoutUsersInput
+  }
+
+  input Users_UserUpdateOneRequiredWithoutTeamsNestedInput {
+    create: Users_UserUncheckedCreateWithoutTeamsInput
+    connectOrCreate: Users_UserCreateOrConnectWithoutTeamsInput
+    upsert: Users_UserUpsertWithoutTeamsInput
+    connect: Users_UserWhereUniqueInput
+    update: Users_UserUpdateWithoutTeamsInput
+  }
+
+  input Users_UsersOnTeamsCreateNestedManyWithoutTeamInput {
+    create: [Users_UsersOnTeamsCreateWithoutTeamInput!]
+    connectOrCreate: [Users_UsersOnTeamsCreateOrConnectWithoutTeamInput!]
+    createMany: Users_UsersOnTeamsCreateManyTeamInputEnvelope
+    connect: [Users_UsersOnTeamsWhereUniqueInput!]
+  }
+
+  input Users_UsersOnTeamsUncheckedCreateNestedManyWithoutTeamInput {
+    create: [Users_UsersOnTeamsCreateWithoutTeamInput!]
+    connectOrCreate: [Users_UsersOnTeamsCreateOrConnectWithoutTeamInput!]
+    createMany: Users_UsersOnTeamsCreateManyTeamInputEnvelope
+    connect: [Users_UsersOnTeamsWhereUniqueInput!]
+  }
+
+  input Users_UsersOnTeamsUpdateManyWithoutTeamNestedInput {
+    create: [Users_UsersOnTeamsCreateWithoutTeamInput!]
+    connectOrCreate: [Users_UsersOnTeamsCreateOrConnectWithoutTeamInput!]
+    upsert: [Users_UsersOnTeamsUpsertWithWhereUniqueWithoutTeamInput!]
+    createMany: Users_UsersOnTeamsCreateManyTeamInputEnvelope
+    set: [Users_UsersOnTeamsWhereUniqueInput!]
+    disconnect: [Users_UsersOnTeamsWhereUniqueInput!]
+    delete: [Users_UsersOnTeamsWhereUniqueInput!]
+    connect: [Users_UsersOnTeamsWhereUniqueInput!]
+    update: [Users_UsersOnTeamsUpdateWithWhereUniqueWithoutTeamInput!]
+    updateMany: [Users_UsersOnTeamsUpdateManyWithWhereWithoutTeamInput!]
+    deleteMany: [Users_UsersOnTeamsScalarWhereInput!]
+  }
+
+  input Users_UsersOnTeamsUncheckedUpdateManyWithoutTeamNestedInput {
+    create: [Users_UsersOnTeamsCreateWithoutTeamInput!]
+    connectOrCreate: [Users_UsersOnTeamsCreateOrConnectWithoutTeamInput!]
+    upsert: [Users_UsersOnTeamsUpsertWithWhereUniqueWithoutTeamInput!]
+    createMany: Users_UsersOnTeamsCreateManyTeamInputEnvelope
+    set: [Users_UsersOnTeamsWhereUniqueInput!]
+    disconnect: [Users_UsersOnTeamsWhereUniqueInput!]
+    delete: [Users_UsersOnTeamsWhereUniqueInput!]
+    connect: [Users_UsersOnTeamsWhereUniqueInput!]
+    update: [Users_UsersOnTeamsUpdateWithWhereUniqueWithoutTeamInput!]
+    updateMany: [Users_UsersOnTeamsUpdateManyWithWhereWithoutTeamInput!]
+    deleteMany: [Users_UsersOnTeamsScalarWhereInput!]
   }
 
   input NestedIntFilter {
@@ -902,117 +1220,374 @@ export default gql`
     not: Json
   }
 
-  input NestedFloatWithAggregatesFilter {
-    equals: Float
-    in: [Float!]
-    notIn: [Float!]
-    lt: Float
-    lte: Float
-    gt: Float
-    gte: Float
-    not: NestedFloatWithAggregatesFilter
-    _count: NestedIntFilter
-    _avg: NestedFloatFilter
-    _sum: NestedFloatFilter
-    _min: NestedFloatFilter
-    _max: NestedFloatFilter
+  input NestedDateTimeNullableFilter {
+    equals: DateTime
+    in: [DateTime!]
+    notIn: [DateTime!]
+    lt: DateTime
+    lte: DateTime
+    gt: DateTime
+    gte: DateTime
+    not: NestedDateTimeNullableFilter
   }
 
-  input Users_ProductCreateWithoutReviewInput {
-    price: Float!
+  input NestedDateTimeNullableWithAggregatesFilter {
+    equals: DateTime
+    in: [DateTime!]
+    notIn: [DateTime!]
+    lt: DateTime
+    lte: DateTime
+    gt: DateTime
+    gte: DateTime
+    not: NestedDateTimeNullableWithAggregatesFilter
+    _count: NestedIntNullableFilter
+    _min: NestedDateTimeNullableFilter
+    _max: NestedDateTimeNullableFilter
   }
 
-  input Users_ProductUncheckedCreateWithoutReviewInput {
-    id: Int
-    price: Float!
+  input Users_ProfileCreateWithoutUserInput {
+    location: String
+    joiningDate: DateTime
+    designation: String
+    profileImg: String
+    designationIcon: String
+    coverImg: String
   }
 
-  input Users_ProductCreateOrConnectWithoutReviewInput {
-    where: Users_ProductWhereUniqueInput!
-    create: Users_ProductUncheckedCreateWithoutReviewInput!
+  input Users_ProfileUncheckedCreateWithoutUserInput {
+    location: String
+    joiningDate: DateTime
+    designation: String
+    profileImg: String
+    designationIcon: String
+    coverImg: String
   }
 
-  input Users_ProductUpsertWithoutReviewInput {
-    update: Users_ProductUncheckedUpdateWithoutReviewInput!
-    create: Users_ProductUncheckedCreateWithoutReviewInput!
-    where: Users_ProductWhereInput
+  input Users_ProfileCreateOrConnectWithoutUserInput {
+    where: Users_ProfileWhereUniqueInput!
+    create: Users_ProfileUncheckedCreateWithoutUserInput!
   }
 
-  input Users_ProductUpdateToOneWithWhereWithoutReviewInput {
-    where: Users_ProductWhereInput
-    data: Users_ProductUncheckedUpdateWithoutReviewInput!
+  input Users_UsersOnTeamsCreateWithoutUserInput {
+    team: Users_TeamCreateNestedOneWithoutUsersInput!
+    assignedAt: DateTime
   }
 
-  input Users_ProductUpdateWithoutReviewInput {
-    price: FloatFieldUpdateOperationsInput
+  input Users_UsersOnTeamsUncheckedCreateWithoutUserInput {
+    teamName: String!
+    assignedAt: DateTime
   }
 
-  input Users_ProductUncheckedUpdateWithoutReviewInput {
-    id: IntFieldUpdateOperationsInput
-    price: FloatFieldUpdateOperationsInput
+  input Users_UsersOnTeamsCreateOrConnectWithoutUserInput {
+    where: Users_UsersOnTeamsWhereUniqueInput!
+    create: Users_UsersOnTeamsUncheckedCreateWithoutUserInput!
   }
 
-  input Users_ReviewCreateWithoutProductInput {
-    score: Int!
-  }
-
-  input Users_ReviewUncheckedCreateWithoutProductInput {
-    id: Int
-    score: Int!
-  }
-
-  input Users_ReviewCreateOrConnectWithoutProductInput {
-    where: Users_ReviewWhereUniqueInput!
-    create: Users_ReviewUncheckedCreateWithoutProductInput!
-  }
-
-  input Users_ReviewCreateManyProductInputEnvelope {
-    data: [Users_ReviewCreateManyProductInput!]!
+  input Users_UsersOnTeamsCreateManyUserInputEnvelope {
+    data: [Users_UsersOnTeamsCreateManyUserInput!]!
     skipDuplicates: Boolean
   }
 
-  input Users_ReviewUpsertWithWhereUniqueWithoutProductInput {
-    where: Users_ReviewWhereUniqueInput!
-    update: Users_ReviewUncheckedUpdateWithoutProductInput!
-    create: Users_ReviewUncheckedCreateWithoutProductInput!
+  input Users_ProfileUpsertWithoutUserInput {
+    update: Users_ProfileUncheckedUpdateWithoutUserInput!
+    create: Users_ProfileUncheckedCreateWithoutUserInput!
+    where: Users_ProfileWhereInput
   }
 
-  input Users_ReviewUpdateWithWhereUniqueWithoutProductInput {
-    where: Users_ReviewWhereUniqueInput!
-    data: Users_ReviewUncheckedUpdateWithoutProductInput!
+  input Users_ProfileUpdateToOneWithWhereWithoutUserInput {
+    where: Users_ProfileWhereInput
+    data: Users_ProfileUncheckedUpdateWithoutUserInput!
   }
 
-  input Users_ReviewUpdateManyWithWhereWithoutProductInput {
-    where: Users_ReviewScalarWhereInput!
-    data: Users_ReviewUncheckedUpdateManyWithoutReviewInput!
+  input Users_ProfileUpdateWithoutUserInput {
+    location: NullableStringFieldUpdateOperationsInput
+    joiningDate: NullableDateTimeFieldUpdateOperationsInput
+    designation: NullableStringFieldUpdateOperationsInput
+    profileImg: NullableStringFieldUpdateOperationsInput
+    designationIcon: NullableStringFieldUpdateOperationsInput
+    coverImg: NullableStringFieldUpdateOperationsInput
   }
 
-  input Users_ReviewScalarWhereInput {
-    AND: [Users_ReviewScalarWhereInput!]
-    OR: [Users_ReviewScalarWhereInput!]
-    NOT: [Users_ReviewScalarWhereInput!]
-    id: IntFilter
-    product_id: IntFilter
-    score: IntFilter
+  input Users_ProfileUncheckedUpdateWithoutUserInput {
+    location: NullableStringFieldUpdateOperationsInput
+    joiningDate: NullableDateTimeFieldUpdateOperationsInput
+    designation: NullableStringFieldUpdateOperationsInput
+    profileImg: NullableStringFieldUpdateOperationsInput
+    designationIcon: NullableStringFieldUpdateOperationsInput
+    coverImg: NullableStringFieldUpdateOperationsInput
   }
 
-  input Users_ReviewCreateManyProductInput {
+  input Users_UsersOnTeamsUpsertWithWhereUniqueWithoutUserInput {
+    where: Users_UsersOnTeamsWhereUniqueInput!
+    update: Users_UsersOnTeamsUncheckedUpdateWithoutUserInput!
+    create: Users_UsersOnTeamsUncheckedCreateWithoutUserInput!
+  }
+
+  input Users_UsersOnTeamsUpdateWithWhereUniqueWithoutUserInput {
+    where: Users_UsersOnTeamsWhereUniqueInput!
+    data: Users_UsersOnTeamsUncheckedUpdateWithoutUserInput!
+  }
+
+  input Users_UsersOnTeamsUpdateManyWithWhereWithoutUserInput {
+    where: Users_UsersOnTeamsScalarWhereInput!
+    data: Users_UsersOnTeamsUncheckedUpdateManyWithoutTeamsInput!
+  }
+
+  input Users_UsersOnTeamsScalarWhereInput {
+    AND: [Users_UsersOnTeamsScalarWhereInput!]
+    OR: [Users_UsersOnTeamsScalarWhereInput!]
+    NOT: [Users_UsersOnTeamsScalarWhereInput!]
+    teamName: StringFilter
+    userId: IntFilter
+    assignedAt: DateTimeFilter
+  }
+
+  input Users_UserCreateWithoutProfileInput {
+    createdAt: DateTime
+    username: String
+    password: String
+    email: String!
+    roles: [String!]
+    googleId: String
+    googleProfile: Json
+    lastName: String
+    firstName: String
+    teams: Users_UsersOnTeamsCreateNestedManyWithoutUserInput
+  }
+
+  input Users_UserUncheckedCreateWithoutProfileInput {
     id: Int
-    score: Int!
+    createdAt: DateTime
+    username: String
+    password: String
+    email: String!
+    roles: [String!]
+    googleId: String
+    googleProfile: Json
+    lastName: String
+    firstName: String
+    teams: Users_UsersOnTeamsUncheckedCreateNestedManyWithoutUserInput
   }
 
-  input Users_ReviewUpdateWithoutProductInput {
-    score: IntFieldUpdateOperationsInput
+  input Users_UserCreateOrConnectWithoutProfileInput {
+    where: Users_UserWhereUniqueInput!
+    create: Users_UserUncheckedCreateWithoutProfileInput!
   }
 
-  input Users_ReviewUncheckedUpdateWithoutProductInput {
+  input Users_UserUpsertWithoutProfileInput {
+    update: Users_UserUncheckedUpdateWithoutProfileInput!
+    create: Users_UserUncheckedCreateWithoutProfileInput!
+    where: Users_UserWhereInput
+  }
+
+  input Users_UserUpdateToOneWithWhereWithoutProfileInput {
+    where: Users_UserWhereInput
+    data: Users_UserUncheckedUpdateWithoutProfileInput!
+  }
+
+  input Users_UserUpdateWithoutProfileInput {
+    createdAt: DateTimeFieldUpdateOperationsInput
+    username: NullableStringFieldUpdateOperationsInput
+    password: NullableStringFieldUpdateOperationsInput
+    email: StringFieldUpdateOperationsInput
+    roles: [String!]
+    googleId: NullableStringFieldUpdateOperationsInput
+    googleProfile: Json
+    lastName: NullableStringFieldUpdateOperationsInput
+    firstName: NullableStringFieldUpdateOperationsInput
+    teams: Users_UsersOnTeamsUpdateManyWithoutUserNestedInput
+  }
+
+  input Users_UserUncheckedUpdateWithoutProfileInput {
     id: IntFieldUpdateOperationsInput
-    score: IntFieldUpdateOperationsInput
+    createdAt: DateTimeFieldUpdateOperationsInput
+    username: NullableStringFieldUpdateOperationsInput
+    password: NullableStringFieldUpdateOperationsInput
+    email: StringFieldUpdateOperationsInput
+    roles: [String!]
+    googleId: NullableStringFieldUpdateOperationsInput
+    googleProfile: Json
+    lastName: NullableStringFieldUpdateOperationsInput
+    firstName: NullableStringFieldUpdateOperationsInput
+    teams: Users_UsersOnTeamsUncheckedUpdateManyWithoutUserNestedInput
   }
 
-  input Users_ReviewUncheckedUpdateManyWithoutReviewInput {
+  input Users_TeamCreateWithoutUsersInput {
+    teamName: String!
+  }
+
+  input Users_TeamUncheckedCreateWithoutUsersInput {
+    teamName: String!
+  }
+
+  input Users_TeamCreateOrConnectWithoutUsersInput {
+    where: Users_TeamWhereUniqueInput!
+    create: Users_TeamUncheckedCreateWithoutUsersInput!
+  }
+
+  input Users_UserCreateWithoutTeamsInput {
+    createdAt: DateTime
+    username: String
+    password: String
+    email: String!
+    roles: [String!]
+    googleId: String
+    googleProfile: Json
+    lastName: String
+    firstName: String
+    profile: Users_ProfileCreateNestedOneWithoutUserInput
+  }
+
+  input Users_UserUncheckedCreateWithoutTeamsInput {
+    id: Int
+    createdAt: DateTime
+    username: String
+    password: String
+    email: String!
+    roles: [String!]
+    googleId: String
+    googleProfile: Json
+    lastName: String
+    firstName: String
+    profile: Users_ProfileUncheckedCreateNestedOneWithoutUserInput
+  }
+
+  input Users_UserCreateOrConnectWithoutTeamsInput {
+    where: Users_UserWhereUniqueInput!
+    create: Users_UserUncheckedCreateWithoutTeamsInput!
+  }
+
+  input Users_TeamUpsertWithoutUsersInput {
+    update: Users_TeamUncheckedUpdateWithoutUsersInput!
+    create: Users_TeamUncheckedCreateWithoutUsersInput!
+    where: Users_TeamWhereInput
+  }
+
+  input Users_TeamUpdateToOneWithWhereWithoutUsersInput {
+    where: Users_TeamWhereInput
+    data: Users_TeamUncheckedUpdateWithoutUsersInput!
+  }
+
+  input Users_TeamUpdateWithoutUsersInput {
+    teamName: StringFieldUpdateOperationsInput
+  }
+
+  input Users_TeamUncheckedUpdateWithoutUsersInput {
+    teamName: StringFieldUpdateOperationsInput
+  }
+
+  input Users_UserUpsertWithoutTeamsInput {
+    update: Users_UserUncheckedUpdateWithoutTeamsInput!
+    create: Users_UserUncheckedCreateWithoutTeamsInput!
+    where: Users_UserWhereInput
+  }
+
+  input Users_UserUpdateToOneWithWhereWithoutTeamsInput {
+    where: Users_UserWhereInput
+    data: Users_UserUncheckedUpdateWithoutTeamsInput!
+  }
+
+  input Users_UserUpdateWithoutTeamsInput {
+    createdAt: DateTimeFieldUpdateOperationsInput
+    username: NullableStringFieldUpdateOperationsInput
+    password: NullableStringFieldUpdateOperationsInput
+    email: StringFieldUpdateOperationsInput
+    roles: [String!]
+    googleId: NullableStringFieldUpdateOperationsInput
+    googleProfile: Json
+    lastName: NullableStringFieldUpdateOperationsInput
+    firstName: NullableStringFieldUpdateOperationsInput
+    profile: Users_ProfileUpdateOneWithoutUserNestedInput
+  }
+
+  input Users_UserUncheckedUpdateWithoutTeamsInput {
     id: IntFieldUpdateOperationsInput
-    score: IntFieldUpdateOperationsInput
+    createdAt: DateTimeFieldUpdateOperationsInput
+    username: NullableStringFieldUpdateOperationsInput
+    password: NullableStringFieldUpdateOperationsInput
+    email: StringFieldUpdateOperationsInput
+    roles: [String!]
+    googleId: NullableStringFieldUpdateOperationsInput
+    googleProfile: Json
+    lastName: NullableStringFieldUpdateOperationsInput
+    firstName: NullableStringFieldUpdateOperationsInput
+    profile: Users_ProfileUncheckedUpdateOneWithoutUserNestedInput
+  }
+
+  input Users_UsersOnTeamsCreateWithoutTeamInput {
+    user: Users_UserCreateNestedOneWithoutTeamsInput!
+    assignedAt: DateTime
+  }
+
+  input Users_UsersOnTeamsUncheckedCreateWithoutTeamInput {
+    userId: Int!
+    assignedAt: DateTime
+  }
+
+  input Users_UsersOnTeamsCreateOrConnectWithoutTeamInput {
+    where: Users_UsersOnTeamsWhereUniqueInput!
+    create: Users_UsersOnTeamsUncheckedCreateWithoutTeamInput!
+  }
+
+  input Users_UsersOnTeamsCreateManyTeamInputEnvelope {
+    data: [Users_UsersOnTeamsCreateManyTeamInput!]!
+    skipDuplicates: Boolean
+  }
+
+  input Users_UsersOnTeamsUpsertWithWhereUniqueWithoutTeamInput {
+    where: Users_UsersOnTeamsWhereUniqueInput!
+    update: Users_UsersOnTeamsUncheckedUpdateWithoutTeamInput!
+    create: Users_UsersOnTeamsUncheckedCreateWithoutTeamInput!
+  }
+
+  input Users_UsersOnTeamsUpdateWithWhereUniqueWithoutTeamInput {
+    where: Users_UsersOnTeamsWhereUniqueInput!
+    data: Users_UsersOnTeamsUncheckedUpdateWithoutTeamInput!
+  }
+
+  input Users_UsersOnTeamsUpdateManyWithWhereWithoutTeamInput {
+    where: Users_UsersOnTeamsScalarWhereInput!
+    data: Users_UsersOnTeamsUncheckedUpdateManyWithoutUsersInput!
+  }
+
+  input Users_UsersOnTeamsCreateManyUserInput {
+    teamName: String!
+    assignedAt: DateTime
+  }
+
+  input Users_UsersOnTeamsUpdateWithoutUserInput {
+    team: Users_TeamUpdateOneRequiredWithoutUsersNestedInput
+    assignedAt: DateTimeFieldUpdateOperationsInput
+  }
+
+  input Users_UsersOnTeamsUncheckedUpdateWithoutUserInput {
+    teamName: StringFieldUpdateOperationsInput
+    assignedAt: DateTimeFieldUpdateOperationsInput
+  }
+
+  input Users_UsersOnTeamsUncheckedUpdateManyWithoutTeamsInput {
+    teamName: StringFieldUpdateOperationsInput
+    assignedAt: DateTimeFieldUpdateOperationsInput
+  }
+
+  input Users_UsersOnTeamsCreateManyTeamInput {
+    userId: Int!
+    assignedAt: DateTime
+  }
+
+  input Users_UsersOnTeamsUpdateWithoutTeamInput {
+    user: Users_UserUpdateOneRequiredWithoutTeamsNestedInput
+    assignedAt: DateTimeFieldUpdateOperationsInput
+  }
+
+  input Users_UsersOnTeamsUncheckedUpdateWithoutTeamInput {
+    userId: IntFieldUpdateOperationsInput
+    assignedAt: DateTimeFieldUpdateOperationsInput
+  }
+
+  input Users_UsersOnTeamsUncheckedUpdateManyWithoutUsersInput {
+    userId: IntFieldUpdateOperationsInput
+    assignedAt: DateTimeFieldUpdateOperationsInput
   }
 
   type AggregateUser @shareable {
@@ -1035,6 +1610,8 @@ export default gql`
     roles: [String!]
     googleId: String
     googleProfile: Json
+    lastName: String
+    firstName: String
     _count: UserCountAggregateOutputType
     _avg: UserAvgAggregateOutputType
     _sum: UserSumAggregateOutputType
@@ -1042,44 +1619,63 @@ export default gql`
     _max: UserMaxAggregateOutputType
   }
 
-  type AggregateReview @shareable {
-    _count: ReviewCountAggregateOutputType
-    _avg: ReviewAvgAggregateOutputType
-    _sum: ReviewSumAggregateOutputType
-    _min: ReviewMinAggregateOutputType
-    _max: ReviewMaxAggregateOutputType
+  type AggregateProfile @shareable {
+    _count: ProfileCountAggregateOutputType
+    _avg: ProfileAvgAggregateOutputType
+    _sum: ProfileSumAggregateOutputType
+    _min: ProfileMinAggregateOutputType
+    _max: ProfileMaxAggregateOutputType
   }
 
-  type ReviewGroupByOutputType
-    @key(fields: "id")
-    @key(fields: "product_id")
-    @shareable {
-    id: Int!
-    product_id: Int!
-    score: Int!
-    _count: ReviewCountAggregateOutputType
-    _avg: ReviewAvgAggregateOutputType
-    _sum: ReviewSumAggregateOutputType
-    _min: ReviewMinAggregateOutputType
-    _max: ReviewMaxAggregateOutputType
+  type ProfileGroupByOutputType @key(fields: "userId") @shareable {
+    userId: Int!
+    location: String
+    joiningDate: DateTime
+    designation: String
+    profileImg: String
+    designationIcon: String
+    coverImg: String
+    _count: ProfileCountAggregateOutputType
+    _avg: ProfileAvgAggregateOutputType
+    _sum: ProfileSumAggregateOutputType
+    _min: ProfileMinAggregateOutputType
+    _max: ProfileMaxAggregateOutputType
   }
 
-  type AggregateProduct @shareable {
-    _count: ProductCountAggregateOutputType
-    _avg: ProductAvgAggregateOutputType
-    _sum: ProductSumAggregateOutputType
-    _min: ProductMinAggregateOutputType
-    _max: ProductMaxAggregateOutputType
+  type AggregateUsersOnTeams @key(fields: "teamName") @shareable {
+    _count: UsersOnTeamsCountAggregateOutputType
+    _avg: UsersOnTeamsAvgAggregateOutputType
+    _sum: UsersOnTeamsSumAggregateOutputType
+    _min: UsersOnTeamsMinAggregateOutputType
+    _max: UsersOnTeamsMaxAggregateOutputType
   }
 
-  type ProductGroupByOutputType @key(fields: "id") @shareable {
-    id: Int!
-    price: Float!
-    _count: ProductCountAggregateOutputType
-    _avg: ProductAvgAggregateOutputType
-    _sum: ProductSumAggregateOutputType
-    _min: ProductMinAggregateOutputType
-    _max: ProductMaxAggregateOutputType
+  type UsersOnTeamsGroupByOutputType @key(fields: "teamName") @shareable {
+    teamName: String!
+    userId: Int!
+    assignedAt: DateTime!
+    _count: UsersOnTeamsCountAggregateOutputType
+    _avg: UsersOnTeamsAvgAggregateOutputType
+    _sum: UsersOnTeamsSumAggregateOutputType
+    _min: UsersOnTeamsMinAggregateOutputType
+    _max: UsersOnTeamsMaxAggregateOutputType
+  }
+
+  type AggregateTeam @shareable {
+    _count: TeamCountAggregateOutputType
+    _min: TeamMinAggregateOutputType
+    _max: TeamMaxAggregateOutputType
+  }
+
+  type TeamGroupByOutputType @key(fields: "teamName") @shareable {
+    teamName: String!
+    _count: TeamCountAggregateOutputType
+    _min: TeamMinAggregateOutputType
+    _max: TeamMaxAggregateOutputType
+  }
+
+  type UserCountOutputType @shareable {
+    teams: Int!
   }
 
   type UserCountAggregateOutputType
@@ -1094,6 +1690,8 @@ export default gql`
     roles: Int!
     googleId: Int!
     googleProfile: Int!
+    lastName: Int!
+    firstName: Int!
     _all: Int!
   }
 
@@ -1115,6 +1713,8 @@ export default gql`
     password: String
     email: String
     googleId: String
+    lastName: String
+    firstName: String
   }
 
   type UserMaxAggregateOutputType
@@ -1127,82 +1727,93 @@ export default gql`
     password: String
     email: String
     googleId: String
+    lastName: String
+    firstName: String
   }
 
-  type ReviewCountAggregateOutputType
-    @key(fields: "id")
-    @key(fields: "product_id")
-    @shareable {
-    id: Int!
-    product_id: Int!
-    score: Int!
+  type ProfileCountAggregateOutputType @key(fields: "userId") @shareable {
+    userId: Int!
+    location: Int!
+    joiningDate: Int!
+    designation: Int!
+    profileImg: Int!
+    designationIcon: Int!
+    coverImg: Int!
     _all: Int!
   }
 
-  type ReviewAvgAggregateOutputType
-    @key(fields: "id")
-    @key(fields: "product_id")
+  type ProfileAvgAggregateOutputType @key(fields: "userId") @shareable {
+    userId: Float
+  }
+
+  type ProfileSumAggregateOutputType @key(fields: "userId") @shareable {
+    userId: Int
+  }
+
+  type ProfileMinAggregateOutputType @key(fields: "userId") @shareable {
+    userId: Int
+    location: String
+    joiningDate: DateTime
+    designation: String
+    profileImg: String
+    designationIcon: String
+    coverImg: String
+  }
+
+  type ProfileMaxAggregateOutputType @key(fields: "userId") @shareable {
+    userId: Int
+    location: String
+    joiningDate: DateTime
+    designation: String
+    profileImg: String
+    designationIcon: String
+    coverImg: String
+  }
+
+  type UsersOnTeamsCountAggregateOutputType
+    @key(fields: "teamName")
     @shareable {
-    id: Float
-    product_id: Float
-    score: Float
-  }
-
-  type ReviewSumAggregateOutputType
-    @key(fields: "id")
-    @key(fields: "product_id")
-    @shareable {
-    id: Int
-    product_id: Int
-    score: Int
-  }
-
-  type ReviewMinAggregateOutputType
-    @key(fields: "id")
-    @key(fields: "product_id")
-    @shareable {
-    id: Int
-    product_id: Int
-    score: Int
-  }
-
-  type ReviewMaxAggregateOutputType
-    @key(fields: "id")
-    @key(fields: "product_id")
-    @shareable {
-    id: Int
-    product_id: Int
-    score: Int
-  }
-
-  type ProductCountOutputType @shareable {
-    review: Int!
-  }
-
-  type ProductCountAggregateOutputType @key(fields: "id") @shareable {
-    id: Int!
-    price: Int!
+    teamName: Int!
+    userId: Int!
+    assignedAt: Int!
     _all: Int!
   }
 
-  type ProductAvgAggregateOutputType @key(fields: "id") @shareable {
-    id: Float
-    price: Float
+  type UsersOnTeamsAvgAggregateOutputType @key(fields: "teamName") @shareable {
+    userId: Float
   }
 
-  type ProductSumAggregateOutputType @key(fields: "id") @shareable {
-    id: Int
-    price: Float
+  type UsersOnTeamsSumAggregateOutputType @key(fields: "teamName") @shareable {
+    userId: Int
   }
 
-  type ProductMinAggregateOutputType @key(fields: "id") @shareable {
-    id: Int
-    price: Float
+  type UsersOnTeamsMinAggregateOutputType @key(fields: "teamName") @shareable {
+    teamName: String
+    userId: Int
+    assignedAt: DateTime
   }
 
-  type ProductMaxAggregateOutputType @key(fields: "id") @shareable {
-    id: Int
-    price: Float
+  type UsersOnTeamsMaxAggregateOutputType @key(fields: "teamName") @shareable {
+    teamName: String
+    userId: Int
+    assignedAt: DateTime
+  }
+
+  type TeamCountOutputType @shareable {
+    users: Int!
+  }
+
+  type TeamCountAggregateOutputType @key(fields: "teamName") @shareable {
+    teamName: Int!
+    _all: Int!
+  }
+
+  type TeamMinAggregateOutputType @key(fields: "teamName") @shareable {
+    teamName: String
+  }
+
+  type TeamMaxAggregateOutputType @key(fields: "teamName") @shareable {
+    teamName: String
   }
 
   type TransactionSucceeded @shareable {
@@ -1242,70 +1853,103 @@ export default gql`
     where: Users_UserWhereInput
   }
 
-  input Users_createOneReviewInput {
-    data: Users_ReviewCreateInput
+  input Users_createOneProfileInput {
+    data: Users_ProfileCreateInput
   }
 
-  input Users_upsertOneReviewInput {
-    where: Users_ReviewWhereUniqueInput
-    create: Users_ReviewCreateInput
-    update: Users_ReviewUpdateInput
+  input Users_upsertOneProfileInput {
+    where: Users_ProfileWhereUniqueInput
+    create: Users_ProfileCreateInput
+    update: Users_ProfileUpdateInput
   }
 
-  input Users_createManyReviewInput {
-    data: [Users_ReviewCreateManyInput]
+  input Users_createManyProfileInput {
+    data: [Users_ProfileCreateManyInput]
     skipDuplicates: Boolean
   }
 
-  input Users_deleteOneReviewInput {
-    where: Users_ReviewWhereUniqueInput
+  input Users_deleteOneProfileInput {
+    where: Users_ProfileWhereUniqueInput
   }
 
-  input Users_updateOneReviewInput {
-    data: Users_ReviewUpdateInput
-    where: Users_ReviewWhereUniqueInput
+  input Users_updateOneProfileInput {
+    data: Users_ProfileUpdateInput
+    where: Users_ProfileWhereUniqueInput
   }
 
-  input Users_updateManyReviewInput {
-    data: Users_ReviewUpdateManyMutationInput
-    where: Users_ReviewWhereInput
+  input Users_updateManyProfileInput {
+    data: Users_ProfileUpdateManyMutationInput
+    where: Users_ProfileWhereInput
   }
 
-  input Users_deleteManyReviewInput {
-    where: Users_ReviewWhereInput
+  input Users_deleteManyProfileInput {
+    where: Users_ProfileWhereInput
   }
 
-  input Users_createOneProductInput {
-    data: Users_ProductCreateInput
+  input Users_createOneUsersOnTeamsInput {
+    data: Users_UsersOnTeamsCreateInput
   }
 
-  input Users_upsertOneProductInput {
-    where: Users_ProductWhereUniqueInput
-    create: Users_ProductCreateInput
-    update: Users_ProductUpdateInput
+  input Users_upsertOneUsersOnTeamsInput {
+    where: Users_UsersOnTeamsWhereUniqueInput
+    create: Users_UsersOnTeamsCreateInput
+    update: Users_UsersOnTeamsUpdateInput
   }
 
-  input Users_createManyProductInput {
-    data: [Users_ProductCreateManyInput]
+  input Users_createManyUsersOnTeamsInput {
+    data: [Users_UsersOnTeamsCreateManyInput]
     skipDuplicates: Boolean
   }
 
-  input Users_deleteOneProductInput {
-    where: Users_ProductWhereUniqueInput
+  input Users_deleteOneUsersOnTeamsInput {
+    where: Users_UsersOnTeamsWhereUniqueInput
   }
 
-  input Users_updateOneProductInput {
-    data: Users_ProductUpdateInput
-    where: Users_ProductWhereUniqueInput
+  input Users_updateOneUsersOnTeamsInput {
+    data: Users_UsersOnTeamsUpdateInput
+    where: Users_UsersOnTeamsWhereUniqueInput
   }
 
-  input Users_updateManyProductInput {
-    data: Users_ProductUpdateManyMutationInput
-    where: Users_ProductWhereInput
+  input Users_updateManyUsersOnTeamsInput {
+    data: Users_UsersOnTeamsUpdateManyMutationInput
+    where: Users_UsersOnTeamsWhereInput
   }
 
-  input Users_deleteManyProductInput {
-    where: Users_ProductWhereInput
+  input Users_deleteManyUsersOnTeamsInput {
+    where: Users_UsersOnTeamsWhereInput
+  }
+
+  input Users_createOneTeamInput {
+    data: Users_TeamCreateInput
+  }
+
+  input Users_upsertOneTeamInput {
+    where: Users_TeamWhereUniqueInput
+    create: Users_TeamCreateInput
+    update: Users_TeamUpdateInput
+  }
+
+  input Users_createManyTeamInput {
+    data: [Users_TeamCreateManyInput]
+    skipDuplicates: Boolean
+  }
+
+  input Users_deleteOneTeamInput {
+    where: Users_TeamWhereUniqueInput
+  }
+
+  input Users_updateOneTeamInput {
+    data: Users_TeamUpdateInput
+    where: Users_TeamWhereUniqueInput
+  }
+
+  input Users_updateManyTeamInput {
+    data: Users_TeamUpdateManyMutationInput
+    where: Users_TeamWhereInput
+  }
+
+  input Users_deleteManyTeamInput {
+    where: Users_TeamWhereInput
   }
 
   input Users_transactionalMutationInput {
@@ -1316,19 +1960,26 @@ export default gql`
     Users_updateOneUser: Users_updateOneUserInput
     Users_updateManyUser: Users_updateManyUserInput
     Users_deleteManyUser: Users_deleteManyUserInput
-    Users_createOneReview: Users_createOneReviewInput
-    Users_upsertOneReview: Users_upsertOneReviewInput
-    Users_createManyReview: Users_createManyReviewInput
-    Users_deleteOneReview: Users_deleteOneReviewInput
-    Users_updateOneReview: Users_updateOneReviewInput
-    Users_updateManyReview: Users_updateManyReviewInput
-    Users_deleteManyReview: Users_deleteManyReviewInput
-    Users_createOneProduct: Users_createOneProductInput
-    Users_upsertOneProduct: Users_upsertOneProductInput
-    Users_createManyProduct: Users_createManyProductInput
-    Users_deleteOneProduct: Users_deleteOneProductInput
-    Users_updateOneProduct: Users_updateOneProductInput
-    Users_updateManyProduct: Users_updateManyProductInput
-    Users_deleteManyProduct: Users_deleteManyProductInput
+    Users_createOneProfile: Users_createOneProfileInput
+    Users_upsertOneProfile: Users_upsertOneProfileInput
+    Users_createManyProfile: Users_createManyProfileInput
+    Users_deleteOneProfile: Users_deleteOneProfileInput
+    Users_updateOneProfile: Users_updateOneProfileInput
+    Users_updateManyProfile: Users_updateManyProfileInput
+    Users_deleteManyProfile: Users_deleteManyProfileInput
+    Users_createOneUsersOnTeams: Users_createOneUsersOnTeamsInput
+    Users_upsertOneUsersOnTeams: Users_upsertOneUsersOnTeamsInput
+    Users_createManyUsersOnTeams: Users_createManyUsersOnTeamsInput
+    Users_deleteOneUsersOnTeams: Users_deleteOneUsersOnTeamsInput
+    Users_updateOneUsersOnTeams: Users_updateOneUsersOnTeamsInput
+    Users_updateManyUsersOnTeams: Users_updateManyUsersOnTeamsInput
+    Users_deleteManyUsersOnTeams: Users_deleteManyUsersOnTeamsInput
+    Users_createOneTeam: Users_createOneTeamInput
+    Users_upsertOneTeam: Users_upsertOneTeamInput
+    Users_createManyTeam: Users_createManyTeamInput
+    Users_deleteOneTeam: Users_deleteOneTeamInput
+    Users_updateOneTeam: Users_updateOneTeamInput
+    Users_updateManyTeam: Users_updateManyTeamInput
+    Users_deleteManyTeam: Users_deleteManyTeamInput
   }
 `;
