@@ -161,8 +161,6 @@ type BatchPayload @shareable {
       }
     });
 
-    console.log(readyDmmf.modelOutputTypesMap);
-    console.log(readyDmmf.modelmap);
     schema?.outputObjectTypes.prisma
       .filter(
         (type) =>
