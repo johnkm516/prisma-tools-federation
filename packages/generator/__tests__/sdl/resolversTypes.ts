@@ -296,11 +296,7 @@ export interface Mutation {
     Users_UpdateOneUserArgs,
     Client.User | null
   >;
-  Users_updateManyUser?: Resolver<
-    {},
-    Users_UpdateManyUserArgs,
-    Client.Prisma.BatchPayload
-  >;
+  //Users_updateManyUser is not generated because model has only unique fields or relations.
   Users_deleteManyUser?: Resolver<
     {},
     Users_DeleteManyUserArgs,
@@ -331,11 +327,7 @@ export interface Mutation {
     Users_UpdateOneProfileArgs,
     Client.Profile | null
   >;
-  Users_updateManyProfile?: Resolver<
-    {},
-    Users_UpdateManyProfileArgs,
-    Client.Prisma.BatchPayload
-  >;
+  //Users_updateManyProfile is not generated because model has only unique fields or relations.
   Users_deleteManyProfile?: Resolver<
     {},
     Users_DeleteManyProfileArgs,
@@ -366,11 +358,7 @@ export interface Mutation {
     Users_UpdateOneUsersOnTeamsArgs,
     Client.UsersOnTeams | null
   >;
-  Users_updateManyUsersOnTeams?: Resolver<
-    {},
-    Users_UpdateManyUsersOnTeamsArgs,
-    Client.Prisma.BatchPayload
-  >;
+  //Users_updateManyUsersOnTeams is not generated because model has only unique fields or relations.
   Users_deleteManyUsersOnTeams?: Resolver<
     {},
     Users_DeleteManyUsersOnTeamsArgs,
@@ -1451,7 +1439,7 @@ export type Users_UserWhereUniqueInput = AtLeast<
     profile?: Users_ProfileWhereInput | null;
     teams?: Users_UsersOnTeamsListRelationFilter;
   },
-  id | username | email | googleId
+  'id' | 'username' | 'email' | 'googleId'
 >;
 
 export interface Users_UserOrderByWithAggregationInput {
@@ -1527,7 +1515,7 @@ export type Users_ProfileWhereUniqueInput = AtLeast<
     designationIcon?: StringNullableFilter | null;
     coverImg?: StringNullableFilter | null;
   },
-  userId
+  'userId'
 >;
 
 export interface Users_ProfileOrderByWithAggregationInput {
@@ -1589,7 +1577,7 @@ export type Users_UsersOnTeamsWhereUniqueInput = AtLeast<
     userId?: IntFilter;
     assignedAt?: DateTimeFilter;
   },
-  teamName_userId
+  'teamName_userId'
 >;
 
 export interface Users_UsersOnTeamsOrderByWithAggregationInput {
@@ -1633,7 +1621,7 @@ export type Users_TeamWhereUniqueInput = AtLeast<
     NOT?: Users_TeamWhereInput[];
     users?: Users_UsersOnTeamsListRelationFilter;
   },
-  teamName
+  'teamName'
 >;
 
 export interface Users_TeamOrderByWithAggregationInput {
@@ -2994,28 +2982,24 @@ export interface Users_TransactionalMutationInput {
   Users_CreateManyUser: Users_CreateManyUserArgs;
   Users_DeleteOneUser: Users_DeleteOneUserArgs;
   Users_UpdateOneUser: Users_UpdateOneUserArgs;
-  Users_UpdateManyUser: Users_UpdateManyUserArgs;
   Users_DeleteManyUser: Users_DeleteManyUserArgs;
   Users_CreateOneProfile: Users_CreateOneProfileArgs;
   Users_UpsertOneProfile: Users_UpsertOneProfileArgs;
   Users_CreateManyProfile: Users_CreateManyProfileArgs;
   Users_DeleteOneProfile: Users_DeleteOneProfileArgs;
   Users_UpdateOneProfile: Users_UpdateOneProfileArgs;
-  Users_UpdateManyProfile: Users_UpdateManyProfileArgs;
   Users_DeleteManyProfile: Users_DeleteManyProfileArgs;
   Users_CreateOneUsersOnTeams: Users_CreateOneUsersOnTeamsArgs;
   Users_UpsertOneUsersOnTeams: Users_UpsertOneUsersOnTeamsArgs;
   Users_CreateManyUsersOnTeams: Users_CreateManyUsersOnTeamsArgs;
   Users_DeleteOneUsersOnTeams: Users_DeleteOneUsersOnTeamsArgs;
   Users_UpdateOneUsersOnTeams: Users_UpdateOneUsersOnTeamsArgs;
-  Users_UpdateManyUsersOnTeams: Users_UpdateManyUsersOnTeamsArgs;
   Users_DeleteManyUsersOnTeams: Users_DeleteManyUsersOnTeamsArgs;
   Users_CreateOneTeam: Users_CreateOneTeamArgs;
   Users_UpsertOneTeam: Users_UpsertOneTeamArgs;
   Users_CreateManyTeam: Users_CreateManyTeamArgs;
   Users_DeleteOneTeam: Users_DeleteOneTeamArgs;
   Users_UpdateOneTeam: Users_UpdateOneTeamArgs;
-  Users_UpdateManyTeam: Users_UpdateManyTeamArgs;
   Users_DeleteManyTeam: Users_DeleteManyTeamArgs;
 }
 

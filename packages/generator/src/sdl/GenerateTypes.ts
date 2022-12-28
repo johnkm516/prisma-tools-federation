@@ -174,7 +174,7 @@ export class GenerateTypes {
         if (
           (!field.name.startsWith(`updateMany`) ||
             (field.name.startsWith(`updateMany`) &&
-              this.dmmf.modelmap?.get(field.name.replace(`updateMany`, ``))
+              this.dmmf.modelmap?.get(field.outputType.type as string)
                 ?.generateUpdateMany)) &&
           !field.name.startsWith(`groupBy`)
         ) {
@@ -374,7 +374,13 @@ export class GenerateTypes {
           });
           if (input.name === `${model.name}WhereUniqueInput`) {
             fields.push('}, ');
-            fields.push(input.constraints.fields!.join(' | '));
+            fields.push(
+              input.constraints
+                .fields!.map((field) => {
+                  return `'` + field + `'`;
+                })
+                .join(' | '),
+            );
             fields.push('>');
           } else {
             fields.push('}');
@@ -477,6 +483,13 @@ export class GenerateTypes {
           const fieldname =
             field.name.charAt(0).toUpperCase() + field.name.slice(1);
           if (field.name != 'executeRaw' && field.name != 'queryRaw') {
+            if (
+              field.name.startsWith('updateMany') &&
+              !this.dmmf.modelmap?.get(field.outputType.type as string)
+                ?.generateUpdateMany
+            ) {
+              return;
+            }
             TransactionalBatchInput.push(
               this.options?.federation
                 ? `  ${this.options.federation}_${fieldname}: ${this.options.federation}_${fieldname}Args;`
