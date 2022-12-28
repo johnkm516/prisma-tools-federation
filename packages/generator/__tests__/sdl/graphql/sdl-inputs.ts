@@ -1642,7 +1642,7 @@ export default gql`
     _max: ProfileMaxAggregateOutputType
   }
 
-  type AggregateUsersOnTeams @key(fields: "teamName") @shareable {
+  type AggregateUsersOnTeams @shareable {
     _count: UsersOnTeamsCountAggregateOutputType
     _avg: UsersOnTeamsAvgAggregateOutputType
     _sum: UsersOnTeamsSumAggregateOutputType
@@ -1650,7 +1650,9 @@ export default gql`
     _max: UsersOnTeamsMaxAggregateOutputType
   }
 
-  type UsersOnTeamsGroupByOutputType @key(fields: "teamName") @shareable {
+  type UsersOnTeamsGroupByOutputType
+    @key(fields: "teamName userId")
+    @shareable {
     teamName: String!
     userId: Int!
     assignedAt: DateTime!
@@ -1771,7 +1773,7 @@ export default gql`
   }
 
   type UsersOnTeamsCountAggregateOutputType
-    @key(fields: "teamName")
+    @key(fields: "teamName userId")
     @shareable {
     teamName: Int!
     userId: Int!
@@ -1779,21 +1781,25 @@ export default gql`
     _all: Int!
   }
 
-  type UsersOnTeamsAvgAggregateOutputType @key(fields: "teamName") @shareable {
+  type UsersOnTeamsAvgAggregateOutputType @shareable {
     userId: Float
   }
 
-  type UsersOnTeamsSumAggregateOutputType @key(fields: "teamName") @shareable {
+  type UsersOnTeamsSumAggregateOutputType @shareable {
     userId: Int
   }
 
-  type UsersOnTeamsMinAggregateOutputType @key(fields: "teamName") @shareable {
+  type UsersOnTeamsMinAggregateOutputType
+    @key(fields: "teamName userId")
+    @shareable {
     teamName: String
     userId: Int
     assignedAt: DateTime
   }
 
-  type UsersOnTeamsMaxAggregateOutputType @key(fields: "teamName") @shareable {
+  type UsersOnTeamsMaxAggregateOutputType
+    @key(fields: "teamName userId")
+    @shareable {
     teamName: String
     userId: Int
     assignedAt: DateTime

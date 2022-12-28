@@ -161,6 +161,8 @@ type BatchPayload @shareable {
       }
     });
 
+    console.log(readyDmmf.modelOutputTypesMap);
+    console.log(readyDmmf.modelmap);
     schema?.outputObjectTypes.prisma
       .filter(
         (type) =>
@@ -176,7 +178,7 @@ type BatchPayload @shareable {
 
           if (model) {
             fileContent += `type ${type.name} `;
-            if (type.name === `Aggregate` + model.name) {
+            if (type.name.startsWith(`Aggregate`)) {
               fileContent += `@shareable {\n`;
             } else if (
               type.name === model.name + `CountAggregateOutputType` ||
@@ -188,6 +190,7 @@ type BatchPayload @shareable {
               type.name === model.name + `GroupByOutputType`
             ) {
               let keyStr = ``;
+
               model?.keyFields?.forEach((keys) => {
                 if (
                   keys.every((key) =>

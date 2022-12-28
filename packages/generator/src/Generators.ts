@@ -122,7 +122,7 @@ async function getSchema(schema: string) {
     });
 
     const outputTypeRegex = new RegExp(
-      `(${model.name}(GroupByOutputType|CountAggregateOutputType|AvgAggregateOutputType|SumAggregateOutputType|MinAggregateOutputType|MaxAggregateOutputType))|(${model.name})`,
+      `(${model.name}(GroupByOutputType|CountOutputType|CountAggregateOutputType|AvgAggregateOutputType|SumAggregateOutputType|MinAggregateOutputType|MaxAggregateOutputType))|^(Aggregate)(${model.name})$`,
     );
     const outputTypes = document.schema.outputObjectTypes.prisma
       .filter((type) => type.name.match(outputTypeRegex)?.input)
