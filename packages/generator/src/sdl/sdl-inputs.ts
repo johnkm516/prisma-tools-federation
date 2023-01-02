@@ -114,8 +114,11 @@ type BatchPayload @shareable {
     //console.log(readyDmmf.schema.outputObjectTypes.prisma.map(p => p.name));
 
     inputObjectTypes.forEach((input) => {
+      const model = readyDmmf.modelmap?.get(
+        readyDmmf.modelInputTypesMap?.get(input.name) ?? ``,
+      );
       if (input.fields.length > 0) {
-        if (options?.federation) {
+        if (options?.federation && model) {
           fileContent += `input ${options?.federation}_${input.name} {\n`;
         } else {
           fileContent += `input ${input.name} {\n`;
@@ -134,7 +137,11 @@ type BatchPayload @shareable {
               hasEmptyTypeFields(inputType.type as string, schema, options);
 
             if (!hasEmptyType) {
-              if (options?.federation) {
+              const inputTypeModel = readyDmmf.modelmap?.get(
+                readyDmmf.modelInputTypesMap?.get(inputType.type as string) ??
+                  ``,
+              );
+              if (options?.federation && inputTypeModel) {
                 fileContent += `  ${field.name}: ${
                   inputType.isList
                     ? `[${options?.federation}_${inputType.type}!]`

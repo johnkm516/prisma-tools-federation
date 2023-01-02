@@ -96,16 +96,16 @@ export default gql`
     AND: [Users_UserWhereInput!]
     OR: [Users_UserWhereInput!]
     NOT: [Users_UserWhereInput!]
-    id: Users_IntFilter
-    createdAt: Users_DateTimeFilter
-    username: Users_StringNullableFilter
-    password: Users_StringNullableFilter
-    email: Users_StringFilter
-    roles: Users_StringNullableListFilter
-    googleId: Users_StringNullableFilter
-    googleProfile: Users_JsonNullableFilter
-    lastName: Users_StringNullableFilter
-    firstName: Users_StringNullableFilter
+    id: IntFilter
+    createdAt: DateTimeFilter
+    username: StringNullableFilter
+    password: StringNullableFilter
+    email: StringFilter
+    roles: StringNullableListFilter
+    googleId: StringNullableFilter
+    googleProfile: JsonNullableFilter
+    lastName: StringNullableFilter
+    firstName: StringNullableFilter
     profile: Users_ProfileWhereInput
     teams: Users_UsersOnTeamsListRelationFilter
     calendars: Users_CalendarsOnUsersListRelationFilter
@@ -114,16 +114,16 @@ export default gql`
   }
 
   input Users_UserOrderByWithRelationInput {
-    id: Users_SortOrder
-    createdAt: Users_SortOrder
-    username: Users_SortOrder
-    password: Users_SortOrder
-    email: Users_SortOrder
-    roles: Users_SortOrder
-    googleId: Users_SortOrder
-    googleProfile: Users_SortOrder
-    lastName: Users_SortOrder
-    firstName: Users_SortOrder
+    id: SortOrder
+    createdAt: SortOrder
+    username: SortOrder
+    password: SortOrder
+    email: SortOrder
+    roles: SortOrder
+    googleId: SortOrder
+    googleProfile: SortOrder
+    lastName: SortOrder
+    firstName: SortOrder
     profile: Users_ProfileOrderByWithRelationInput
     teams: Users_UsersOnTeamsOrderByRelationAggregateInput
     calendars: Users_CalendarsOnUsersOrderByRelationAggregateInput
@@ -132,19 +132,19 @@ export default gql`
   }
 
   input Users_UserWhereUniqueInput {
-    id: Users_Int
-    username: Users_String
-    email: Users_String
-    googleId: Users_String
+    id: Int
+    username: String
+    email: String
+    googleId: String
     AND: [Users_UserWhereInput!]
     OR: [Users_UserWhereInput!]
     NOT: [Users_UserWhereInput!]
-    createdAt: Users_DateTimeFilter
-    password: Users_StringNullableFilter
-    roles: Users_StringNullableListFilter
-    googleProfile: Users_JsonNullableFilter
-    lastName: Users_StringNullableFilter
-    firstName: Users_StringNullableFilter
+    createdAt: DateTimeFilter
+    password: StringNullableFilter
+    roles: StringNullableListFilter
+    googleProfile: JsonNullableFilter
+    lastName: StringNullableFilter
+    firstName: StringNullableFilter
     profile: Users_ProfileWhereInput
     teams: Users_UsersOnTeamsListRelationFilter
     calendars: Users_CalendarsOnUsersListRelationFilter
@@ -153,16 +153,16 @@ export default gql`
   }
 
   input Users_UserOrderByWithAggregationInput {
-    id: Users_SortOrder
-    createdAt: Users_SortOrder
-    username: Users_SortOrder
-    password: Users_SortOrder
-    email: Users_SortOrder
-    roles: Users_SortOrder
-    googleId: Users_SortOrder
-    googleProfile: Users_SortOrder
-    lastName: Users_SortOrder
-    firstName: Users_SortOrder
+    id: SortOrder
+    createdAt: SortOrder
+    username: SortOrder
+    password: SortOrder
+    email: SortOrder
+    roles: SortOrder
+    googleId: SortOrder
+    googleProfile: SortOrder
+    lastName: SortOrder
+    firstName: SortOrder
     _count: Users_UserCountOrderByAggregateInput
     _avg: Users_UserAvgOrderByAggregateInput
     _max: Users_UserMaxOrderByAggregateInput
@@ -174,77 +174,77 @@ export default gql`
     AND: [Users_UserScalarWhereWithAggregatesInput!]
     OR: [Users_UserScalarWhereWithAggregatesInput!]
     NOT: [Users_UserScalarWhereWithAggregatesInput!]
-    id: Users_IntWithAggregatesFilter
-    createdAt: Users_DateTimeWithAggregatesFilter
-    username: Users_StringNullableWithAggregatesFilter
-    password: Users_StringNullableWithAggregatesFilter
-    email: Users_StringWithAggregatesFilter
-    roles: Users_StringNullableListFilter
-    googleId: Users_StringNullableWithAggregatesFilter
-    googleProfile: Users_JsonNullableWithAggregatesFilter
-    lastName: Users_StringNullableWithAggregatesFilter
-    firstName: Users_StringNullableWithAggregatesFilter
+    id: IntWithAggregatesFilter
+    createdAt: DateTimeWithAggregatesFilter
+    username: StringNullableWithAggregatesFilter
+    password: StringNullableWithAggregatesFilter
+    email: StringWithAggregatesFilter
+    roles: StringNullableListFilter
+    googleId: StringNullableWithAggregatesFilter
+    googleProfile: JsonNullableWithAggregatesFilter
+    lastName: StringNullableWithAggregatesFilter
+    firstName: StringNullableWithAggregatesFilter
   }
 
   input Users_ProfileWhereInput {
     AND: [Users_ProfileWhereInput!]
     OR: [Users_ProfileWhereInput!]
     NOT: [Users_ProfileWhereInput!]
-    userId: Users_IntFilter
+    userId: IntFilter
     user: Users_UserWhereInput
-    location: Users_StringNullableFilter
-    joiningDate: Users_DateTimeNullableFilter
-    businessPhone: Users_StringNullableFilter
-    mobilePhone: Users_StringNullableFilter
-    kakaoTalkId: Users_StringNullableFilter
-    designation: Users_StringNullableFilter
-    profileImg: Users_StringNullableFilter
-    designationIcon: Users_StringNullableFilter
-    coverImg: Users_StringNullableFilter
+    location: StringNullableFilter
+    joiningDate: DateTimeNullableFilter
+    businessPhone: StringNullableFilter
+    mobilePhone: StringNullableFilter
+    kakaoTalkId: StringNullableFilter
+    designation: StringNullableFilter
+    profileImg: StringNullableFilter
+    designationIcon: StringNullableFilter
+    coverImg: StringNullableFilter
   }
 
   input Users_ProfileOrderByWithRelationInput {
-    userId: Users_SortOrder
+    userId: SortOrder
     user: Users_UserOrderByWithRelationInput
-    location: Users_SortOrder
-    joiningDate: Users_SortOrder
-    businessPhone: Users_SortOrder
-    mobilePhone: Users_SortOrder
-    kakaoTalkId: Users_SortOrder
-    designation: Users_SortOrder
-    profileImg: Users_SortOrder
-    designationIcon: Users_SortOrder
-    coverImg: Users_SortOrder
+    location: SortOrder
+    joiningDate: SortOrder
+    businessPhone: SortOrder
+    mobilePhone: SortOrder
+    kakaoTalkId: SortOrder
+    designation: SortOrder
+    profileImg: SortOrder
+    designationIcon: SortOrder
+    coverImg: SortOrder
   }
 
   input Users_ProfileWhereUniqueInput {
-    userId: Users_Int
-    businessPhone: Users_String
-    mobilePhone: Users_String
-    kakaoTalkId: Users_String
+    userId: Int
+    businessPhone: String
+    mobilePhone: String
+    kakaoTalkId: String
     AND: [Users_ProfileWhereInput!]
     OR: [Users_ProfileWhereInput!]
     NOT: [Users_ProfileWhereInput!]
     user: Users_UserWhereInput
-    location: Users_StringNullableFilter
-    joiningDate: Users_DateTimeNullableFilter
-    designation: Users_StringNullableFilter
-    profileImg: Users_StringNullableFilter
-    designationIcon: Users_StringNullableFilter
-    coverImg: Users_StringNullableFilter
+    location: StringNullableFilter
+    joiningDate: DateTimeNullableFilter
+    designation: StringNullableFilter
+    profileImg: StringNullableFilter
+    designationIcon: StringNullableFilter
+    coverImg: StringNullableFilter
   }
 
   input Users_ProfileOrderByWithAggregationInput {
-    userId: Users_SortOrder
-    location: Users_SortOrder
-    joiningDate: Users_SortOrder
-    businessPhone: Users_SortOrder
-    mobilePhone: Users_SortOrder
-    kakaoTalkId: Users_SortOrder
-    designation: Users_SortOrder
-    profileImg: Users_SortOrder
-    designationIcon: Users_SortOrder
-    coverImg: Users_SortOrder
+    userId: SortOrder
+    location: SortOrder
+    joiningDate: SortOrder
+    businessPhone: SortOrder
+    mobilePhone: SortOrder
+    kakaoTalkId: SortOrder
+    designation: SortOrder
+    profileImg: SortOrder
+    designationIcon: SortOrder
+    coverImg: SortOrder
     _count: Users_ProfileCountOrderByAggregateInput
     _avg: Users_ProfileAvgOrderByAggregateInput
     _max: Users_ProfileMaxOrderByAggregateInput
@@ -256,16 +256,16 @@ export default gql`
     AND: [Users_ProfileScalarWhereWithAggregatesInput!]
     OR: [Users_ProfileScalarWhereWithAggregatesInput!]
     NOT: [Users_ProfileScalarWhereWithAggregatesInput!]
-    userId: Users_IntWithAggregatesFilter
-    location: Users_StringNullableWithAggregatesFilter
-    joiningDate: Users_DateTimeNullableWithAggregatesFilter
-    businessPhone: Users_StringNullableWithAggregatesFilter
-    mobilePhone: Users_StringNullableWithAggregatesFilter
-    kakaoTalkId: Users_StringNullableWithAggregatesFilter
-    designation: Users_StringNullableWithAggregatesFilter
-    profileImg: Users_StringNullableWithAggregatesFilter
-    designationIcon: Users_StringNullableWithAggregatesFilter
-    coverImg: Users_StringNullableWithAggregatesFilter
+    userId: IntWithAggregatesFilter
+    location: StringNullableWithAggregatesFilter
+    joiningDate: DateTimeNullableWithAggregatesFilter
+    businessPhone: StringNullableWithAggregatesFilter
+    mobilePhone: StringNullableWithAggregatesFilter
+    kakaoTalkId: StringNullableWithAggregatesFilter
+    designation: StringNullableWithAggregatesFilter
+    profileImg: StringNullableWithAggregatesFilter
+    designationIcon: StringNullableWithAggregatesFilter
+    coverImg: StringNullableWithAggregatesFilter
   }
 
   input Users_UsersOnTeamsWhereInput {
@@ -273,36 +273,36 @@ export default gql`
     OR: [Users_UsersOnTeamsWhereInput!]
     NOT: [Users_UsersOnTeamsWhereInput!]
     team: Users_TeamWhereInput
-    teamName: Users_StringFilter
+    teamName: StringFilter
     user: Users_UserWhereInput
-    userId: Users_IntFilter
-    assignedAt: Users_DateTimeFilter
+    userId: IntFilter
+    assignedAt: DateTimeFilter
   }
 
   input Users_UsersOnTeamsOrderByWithRelationInput {
     team: Users_TeamOrderByWithRelationInput
-    teamName: Users_SortOrder
+    teamName: SortOrder
     user: Users_UserOrderByWithRelationInput
-    userId: Users_SortOrder
-    assignedAt: Users_SortOrder
+    userId: SortOrder
+    assignedAt: SortOrder
   }
 
   input Users_UsersOnTeamsWhereUniqueInput {
-    teamName_userId: Users_UsersOnTeamsTeamNameUserIdCompoundUniqueInput
+    teamName_userId: UsersOnTeamsTeamNameUserIdCompoundUniqueInput
     AND: [Users_UsersOnTeamsWhereInput!]
     OR: [Users_UsersOnTeamsWhereInput!]
     NOT: [Users_UsersOnTeamsWhereInput!]
     team: Users_TeamWhereInput
-    teamName: Users_StringFilter
+    teamName: StringFilter
     user: Users_UserWhereInput
-    userId: Users_IntFilter
-    assignedAt: Users_DateTimeFilter
+    userId: IntFilter
+    assignedAt: DateTimeFilter
   }
 
   input Users_UsersOnTeamsOrderByWithAggregationInput {
-    teamName: Users_SortOrder
-    userId: Users_SortOrder
-    assignedAt: Users_SortOrder
+    teamName: SortOrder
+    userId: SortOrder
+    assignedAt: SortOrder
     _count: Users_UsersOnTeamsCountOrderByAggregateInput
     _avg: Users_UsersOnTeamsAvgOrderByAggregateInput
     _max: Users_UsersOnTeamsMaxOrderByAggregateInput
@@ -314,42 +314,42 @@ export default gql`
     AND: [Users_UsersOnTeamsScalarWhereWithAggregatesInput!]
     OR: [Users_UsersOnTeamsScalarWhereWithAggregatesInput!]
     NOT: [Users_UsersOnTeamsScalarWhereWithAggregatesInput!]
-    teamName: Users_StringWithAggregatesFilter
-    userId: Users_IntWithAggregatesFilter
-    assignedAt: Users_DateTimeWithAggregatesFilter
+    teamName: StringWithAggregatesFilter
+    userId: IntWithAggregatesFilter
+    assignedAt: DateTimeWithAggregatesFilter
   }
 
   input Users_TeamWhereInput {
     AND: [Users_TeamWhereInput!]
     OR: [Users_TeamWhereInput!]
     NOT: [Users_TeamWhereInput!]
-    teamName: Users_StringFilter
+    teamName: StringFilter
     users: Users_UsersOnTeamsListRelationFilter
-    teamType: Users_StringNullableFilter
-    teamIcon: Users_StringNullableFilter
+    teamType: StringNullableFilter
+    teamIcon: StringNullableFilter
   }
 
   input Users_TeamOrderByWithRelationInput {
-    teamName: Users_SortOrder
+    teamName: SortOrder
     users: Users_UsersOnTeamsOrderByRelationAggregateInput
-    teamType: Users_SortOrder
-    teamIcon: Users_SortOrder
+    teamType: SortOrder
+    teamIcon: SortOrder
   }
 
   input Users_TeamWhereUniqueInput {
-    teamName: Users_String
+    teamName: String
     AND: [Users_TeamWhereInput!]
     OR: [Users_TeamWhereInput!]
     NOT: [Users_TeamWhereInput!]
     users: Users_UsersOnTeamsListRelationFilter
-    teamType: Users_StringNullableFilter
-    teamIcon: Users_StringNullableFilter
+    teamType: StringNullableFilter
+    teamIcon: StringNullableFilter
   }
 
   input Users_TeamOrderByWithAggregationInput {
-    teamName: Users_SortOrder
-    teamType: Users_SortOrder
-    teamIcon: Users_SortOrder
+    teamName: SortOrder
+    teamType: SortOrder
+    teamIcon: SortOrder
     _count: Users_TeamCountOrderByAggregateInput
     _max: Users_TeamMaxOrderByAggregateInput
     _min: Users_TeamMinOrderByAggregateInput
@@ -359,58 +359,58 @@ export default gql`
     AND: [Users_TeamScalarWhereWithAggregatesInput!]
     OR: [Users_TeamScalarWhereWithAggregatesInput!]
     NOT: [Users_TeamScalarWhereWithAggregatesInput!]
-    teamName: Users_StringWithAggregatesFilter
-    teamType: Users_StringNullableWithAggregatesFilter
-    teamIcon: Users_StringNullableWithAggregatesFilter
+    teamName: StringWithAggregatesFilter
+    teamType: StringNullableWithAggregatesFilter
+    teamIcon: StringNullableWithAggregatesFilter
   }
 
   input Users_CalendarEventWhereInput {
     AND: [Users_CalendarEventWhereInput!]
     OR: [Users_CalendarEventWhereInput!]
     NOT: [Users_CalendarEventWhereInput!]
-    id: Users_IntFilter
-    url: Users_StringNullableFilter
-    title: Users_StringFilter
-    start: Users_DateTimeFilter
-    end: Users_DateTimeFilter
-    allDay: Users_BoolFilter
-    calendarId: Users_IntFilter
+    id: IntFilter
+    url: StringNullableFilter
+    title: StringFilter
+    start: DateTimeFilter
+    end: DateTimeFilter
+    allDay: BoolFilter
+    calendarId: IntFilter
     calendar: Users_CalendarWhereInput
   }
 
   input Users_CalendarEventOrderByWithRelationInput {
-    id: Users_SortOrder
-    url: Users_SortOrder
-    title: Users_SortOrder
-    start: Users_SortOrder
-    end: Users_SortOrder
-    allDay: Users_SortOrder
-    calendarId: Users_SortOrder
+    id: SortOrder
+    url: SortOrder
+    title: SortOrder
+    start: SortOrder
+    end: SortOrder
+    allDay: SortOrder
+    calendarId: SortOrder
     calendar: Users_CalendarOrderByWithRelationInput
   }
 
   input Users_CalendarEventWhereUniqueInput {
-    id: Users_Int
+    id: Int
     AND: [Users_CalendarEventWhereInput!]
     OR: [Users_CalendarEventWhereInput!]
     NOT: [Users_CalendarEventWhereInput!]
-    url: Users_StringNullableFilter
-    title: Users_StringFilter
-    start: Users_DateTimeFilter
-    end: Users_DateTimeFilter
-    allDay: Users_BoolFilter
-    calendarId: Users_IntFilter
+    url: StringNullableFilter
+    title: StringFilter
+    start: DateTimeFilter
+    end: DateTimeFilter
+    allDay: BoolFilter
+    calendarId: IntFilter
     calendar: Users_CalendarWhereInput
   }
 
   input Users_CalendarEventOrderByWithAggregationInput {
-    id: Users_SortOrder
-    url: Users_SortOrder
-    title: Users_SortOrder
-    start: Users_SortOrder
-    end: Users_SortOrder
-    allDay: Users_SortOrder
-    calendarId: Users_SortOrder
+    id: SortOrder
+    url: SortOrder
+    title: SortOrder
+    start: SortOrder
+    end: SortOrder
+    allDay: SortOrder
+    calendarId: SortOrder
     _count: Users_CalendarEventCountOrderByAggregateInput
     _avg: Users_CalendarEventAvgOrderByAggregateInput
     _max: Users_CalendarEventMaxOrderByAggregateInput
@@ -422,13 +422,13 @@ export default gql`
     AND: [Users_CalendarEventScalarWhereWithAggregatesInput!]
     OR: [Users_CalendarEventScalarWhereWithAggregatesInput!]
     NOT: [Users_CalendarEventScalarWhereWithAggregatesInput!]
-    id: Users_IntWithAggregatesFilter
-    url: Users_StringNullableWithAggregatesFilter
-    title: Users_StringWithAggregatesFilter
-    start: Users_DateTimeWithAggregatesFilter
-    end: Users_DateTimeWithAggregatesFilter
-    allDay: Users_BoolWithAggregatesFilter
-    calendarId: Users_IntWithAggregatesFilter
+    id: IntWithAggregatesFilter
+    url: StringNullableWithAggregatesFilter
+    title: StringWithAggregatesFilter
+    start: DateTimeWithAggregatesFilter
+    end: DateTimeWithAggregatesFilter
+    allDay: BoolWithAggregatesFilter
+    calendarId: IntWithAggregatesFilter
   }
 
   input Users_CalendarsOnUsersWhereInput {
@@ -436,32 +436,32 @@ export default gql`
     OR: [Users_CalendarsOnUsersWhereInput!]
     NOT: [Users_CalendarsOnUsersWhereInput!]
     user: Users_UserWhereInput
-    userId: Users_IntFilter
+    userId: IntFilter
     calendar: Users_CalendarWhereInput
-    calendarId: Users_IntFilter
+    calendarId: IntFilter
   }
 
   input Users_CalendarsOnUsersOrderByWithRelationInput {
     user: Users_UserOrderByWithRelationInput
-    userId: Users_SortOrder
+    userId: SortOrder
     calendar: Users_CalendarOrderByWithRelationInput
-    calendarId: Users_SortOrder
+    calendarId: SortOrder
   }
 
   input Users_CalendarsOnUsersWhereUniqueInput {
-    userId_calendarId: Users_CalendarsOnUsersUserIdCalendarIdCompoundUniqueInput
+    userId_calendarId: CalendarsOnUsersUserIdCalendarIdCompoundUniqueInput
     AND: [Users_CalendarsOnUsersWhereInput!]
     OR: [Users_CalendarsOnUsersWhereInput!]
     NOT: [Users_CalendarsOnUsersWhereInput!]
     user: Users_UserWhereInput
-    userId: Users_IntFilter
+    userId: IntFilter
     calendar: Users_CalendarWhereInput
-    calendarId: Users_IntFilter
+    calendarId: IntFilter
   }
 
   input Users_CalendarsOnUsersOrderByWithAggregationInput {
-    userId: Users_SortOrder
-    calendarId: Users_SortOrder
+    userId: SortOrder
+    calendarId: SortOrder
     _count: Users_CalendarsOnUsersCountOrderByAggregateInput
     _avg: Users_CalendarsOnUsersAvgOrderByAggregateInput
     _max: Users_CalendarsOnUsersMaxOrderByAggregateInput
@@ -473,40 +473,40 @@ export default gql`
     AND: [Users_CalendarsOnUsersScalarWhereWithAggregatesInput!]
     OR: [Users_CalendarsOnUsersScalarWhereWithAggregatesInput!]
     NOT: [Users_CalendarsOnUsersScalarWhereWithAggregatesInput!]
-    userId: Users_IntWithAggregatesFilter
-    calendarId: Users_IntWithAggregatesFilter
+    userId: IntWithAggregatesFilter
+    calendarId: IntWithAggregatesFilter
   }
 
   input Users_CalendarWhereInput {
     AND: [Users_CalendarWhereInput!]
     OR: [Users_CalendarWhereInput!]
     NOT: [Users_CalendarWhereInput!]
-    id: Users_IntFilter
-    calendarType: Users_StringFilter
+    id: IntFilter
+    calendarType: StringFilter
     users: Users_CalendarsOnUsersListRelationFilter
     calendarEvents: Users_CalendarEventListRelationFilter
   }
 
   input Users_CalendarOrderByWithRelationInput {
-    id: Users_SortOrder
-    calendarType: Users_SortOrder
+    id: SortOrder
+    calendarType: SortOrder
     users: Users_CalendarsOnUsersOrderByRelationAggregateInput
     calendarEvents: Users_CalendarEventOrderByRelationAggregateInput
   }
 
   input Users_CalendarWhereUniqueInput {
-    id: Users_Int
+    id: Int
     AND: [Users_CalendarWhereInput!]
     OR: [Users_CalendarWhereInput!]
     NOT: [Users_CalendarWhereInput!]
-    calendarType: Users_StringFilter
+    calendarType: StringFilter
     users: Users_CalendarsOnUsersListRelationFilter
     calendarEvents: Users_CalendarEventListRelationFilter
   }
 
   input Users_CalendarOrderByWithAggregationInput {
-    id: Users_SortOrder
-    calendarType: Users_SortOrder
+    id: SortOrder
+    calendarType: SortOrder
     _count: Users_CalendarCountOrderByAggregateInput
     _avg: Users_CalendarAvgOrderByAggregateInput
     _max: Users_CalendarMaxOrderByAggregateInput
@@ -518,20 +518,20 @@ export default gql`
     AND: [Users_CalendarScalarWhereWithAggregatesInput!]
     OR: [Users_CalendarScalarWhereWithAggregatesInput!]
     NOT: [Users_CalendarScalarWhereWithAggregatesInput!]
-    id: Users_IntWithAggregatesFilter
-    calendarType: Users_StringWithAggregatesFilter
+    id: IntWithAggregatesFilter
+    calendarType: StringWithAggregatesFilter
   }
 
   input Users_UserCreateInput {
-    createdAt: Users_DateTime
-    username: Users_String
-    password: Users_String
-    email: Users_String!
-    roles: [Users_String!]
-    googleId: Users_String
-    googleProfile: Users_Json
-    lastName: Users_String
-    firstName: Users_String
+    createdAt: DateTime
+    username: String
+    password: String
+    email: String!
+    roles: [String!]
+    googleId: String
+    googleProfile: Json
+    lastName: String
+    firstName: String
     profile: Users_ProfileCreateNestedOneWithoutUserInput
     teams: Users_UsersOnTeamsCreateNestedManyWithoutUserInput
     calendars: Users_CalendarsOnUsersCreateNestedManyWithoutUserInput
@@ -540,16 +540,16 @@ export default gql`
   }
 
   input Users_UserUncheckedCreateInput {
-    id: Users_Int
-    createdAt: Users_DateTime
-    username: Users_String
-    password: Users_String
-    email: Users_String!
-    roles: [Users_String!]
-    googleId: Users_String
-    googleProfile: Users_Json
-    lastName: Users_String
-    firstName: Users_String
+    id: Int
+    createdAt: DateTime
+    username: String
+    password: String
+    email: String!
+    roles: [String!]
+    googleId: String
+    googleProfile: Json
+    lastName: String
+    firstName: String
     profile: Users_ProfileUncheckedCreateNestedOneWithoutUserInput
     teams: Users_UsersOnTeamsUncheckedCreateNestedManyWithoutUserInput
     calendars: Users_CalendarsOnUsersUncheckedCreateNestedManyWithoutUserInput
@@ -558,15 +558,15 @@ export default gql`
   }
 
   input Users_UserUpdateInput {
-    createdAt: Users_DateTimeFieldUpdateOperationsInput
-    username: Users_NullableStringFieldUpdateOperationsInput
-    password: Users_NullableStringFieldUpdateOperationsInput
-    email: Users_StringFieldUpdateOperationsInput
-    roles: [Users_String!]
-    googleId: Users_NullableStringFieldUpdateOperationsInput
-    googleProfile: Users_Json
-    lastName: Users_NullableStringFieldUpdateOperationsInput
-    firstName: Users_NullableStringFieldUpdateOperationsInput
+    createdAt: DateTimeFieldUpdateOperationsInput
+    username: NullableStringFieldUpdateOperationsInput
+    password: NullableStringFieldUpdateOperationsInput
+    email: StringFieldUpdateOperationsInput
+    roles: [String!]
+    googleId: NullableStringFieldUpdateOperationsInput
+    googleProfile: Json
+    lastName: NullableStringFieldUpdateOperationsInput
+    firstName: NullableStringFieldUpdateOperationsInput
     profile: Users_ProfileUpdateOneWithoutUserNestedInput
     teams: Users_UsersOnTeamsUpdateManyWithoutUserNestedInput
     calendars: Users_CalendarsOnUsersUpdateManyWithoutUserNestedInput
@@ -575,16 +575,16 @@ export default gql`
   }
 
   input Users_UserUncheckedUpdateInput {
-    id: Users_IntFieldUpdateOperationsInput
-    createdAt: Users_DateTimeFieldUpdateOperationsInput
-    username: Users_NullableStringFieldUpdateOperationsInput
-    password: Users_NullableStringFieldUpdateOperationsInput
-    email: Users_StringFieldUpdateOperationsInput
-    roles: [Users_String!]
-    googleId: Users_NullableStringFieldUpdateOperationsInput
-    googleProfile: Users_Json
-    lastName: Users_NullableStringFieldUpdateOperationsInput
-    firstName: Users_NullableStringFieldUpdateOperationsInput
+    id: IntFieldUpdateOperationsInput
+    createdAt: DateTimeFieldUpdateOperationsInput
+    username: NullableStringFieldUpdateOperationsInput
+    password: NullableStringFieldUpdateOperationsInput
+    email: StringFieldUpdateOperationsInput
+    roles: [String!]
+    googleId: NullableStringFieldUpdateOperationsInput
+    googleProfile: Json
+    lastName: NullableStringFieldUpdateOperationsInput
+    firstName: NullableStringFieldUpdateOperationsInput
     profile: Users_ProfileUncheckedUpdateOneWithoutUserNestedInput
     teams: Users_UsersOnTeamsUncheckedUpdateManyWithoutUserNestedInput
     calendars: Users_CalendarsOnUsersUncheckedUpdateManyWithoutUserNestedInput
@@ -593,283 +593,283 @@ export default gql`
   }
 
   input Users_UserCreateManyInput {
-    id: Users_Int
-    createdAt: Users_DateTime
-    username: Users_String
-    password: Users_String
-    email: Users_String!
-    roles: [Users_String!]
-    googleId: Users_String
-    googleProfile: Users_Json
-    lastName: Users_String
-    firstName: Users_String
+    id: Int
+    createdAt: DateTime
+    username: String
+    password: String
+    email: String!
+    roles: [String!]
+    googleId: String
+    googleProfile: Json
+    lastName: String
+    firstName: String
   }
 
   input Users_UserUpdateManyMutationInput {
-    createdAt: Users_DateTimeFieldUpdateOperationsInput
-    username: Users_NullableStringFieldUpdateOperationsInput
-    password: Users_NullableStringFieldUpdateOperationsInput
-    email: Users_StringFieldUpdateOperationsInput
-    roles: [Users_String!]
-    googleId: Users_NullableStringFieldUpdateOperationsInput
-    googleProfile: Users_Json
-    lastName: Users_NullableStringFieldUpdateOperationsInput
-    firstName: Users_NullableStringFieldUpdateOperationsInput
+    createdAt: DateTimeFieldUpdateOperationsInput
+    username: NullableStringFieldUpdateOperationsInput
+    password: NullableStringFieldUpdateOperationsInput
+    email: StringFieldUpdateOperationsInput
+    roles: [String!]
+    googleId: NullableStringFieldUpdateOperationsInput
+    googleProfile: Json
+    lastName: NullableStringFieldUpdateOperationsInput
+    firstName: NullableStringFieldUpdateOperationsInput
   }
 
   input Users_UserUncheckedUpdateManyInput {
-    id: Users_IntFieldUpdateOperationsInput
-    createdAt: Users_DateTimeFieldUpdateOperationsInput
-    username: Users_NullableStringFieldUpdateOperationsInput
-    password: Users_NullableStringFieldUpdateOperationsInput
-    email: Users_StringFieldUpdateOperationsInput
-    roles: [Users_String!]
-    googleId: Users_NullableStringFieldUpdateOperationsInput
-    googleProfile: Users_Json
-    lastName: Users_NullableStringFieldUpdateOperationsInput
-    firstName: Users_NullableStringFieldUpdateOperationsInput
+    id: IntFieldUpdateOperationsInput
+    createdAt: DateTimeFieldUpdateOperationsInput
+    username: NullableStringFieldUpdateOperationsInput
+    password: NullableStringFieldUpdateOperationsInput
+    email: StringFieldUpdateOperationsInput
+    roles: [String!]
+    googleId: NullableStringFieldUpdateOperationsInput
+    googleProfile: Json
+    lastName: NullableStringFieldUpdateOperationsInput
+    firstName: NullableStringFieldUpdateOperationsInput
   }
 
   input Users_ProfileCreateInput {
     user: Users_UserCreateNestedOneWithoutProfileInput!
-    location: Users_String
-    joiningDate: Users_DateTime
-    businessPhone: Users_String
-    mobilePhone: Users_String
-    kakaoTalkId: Users_String
-    designation: Users_String
-    profileImg: Users_String
-    designationIcon: Users_String
-    coverImg: Users_String
+    location: String
+    joiningDate: DateTime
+    businessPhone: String
+    mobilePhone: String
+    kakaoTalkId: String
+    designation: String
+    profileImg: String
+    designationIcon: String
+    coverImg: String
   }
 
   input Users_ProfileUncheckedCreateInput {
-    userId: Users_Int!
-    location: Users_String
-    joiningDate: Users_DateTime
-    businessPhone: Users_String
-    mobilePhone: Users_String
-    kakaoTalkId: Users_String
-    designation: Users_String
-    profileImg: Users_String
-    designationIcon: Users_String
-    coverImg: Users_String
+    userId: Int!
+    location: String
+    joiningDate: DateTime
+    businessPhone: String
+    mobilePhone: String
+    kakaoTalkId: String
+    designation: String
+    profileImg: String
+    designationIcon: String
+    coverImg: String
   }
 
   input Users_ProfileUpdateInput {
     user: Users_UserUpdateOneRequiredWithoutProfileNestedInput
-    location: Users_NullableStringFieldUpdateOperationsInput
-    joiningDate: Users_NullableDateTimeFieldUpdateOperationsInput
-    businessPhone: Users_NullableStringFieldUpdateOperationsInput
-    mobilePhone: Users_NullableStringFieldUpdateOperationsInput
-    kakaoTalkId: Users_NullableStringFieldUpdateOperationsInput
-    designation: Users_NullableStringFieldUpdateOperationsInput
-    profileImg: Users_NullableStringFieldUpdateOperationsInput
-    designationIcon: Users_NullableStringFieldUpdateOperationsInput
-    coverImg: Users_NullableStringFieldUpdateOperationsInput
+    location: NullableStringFieldUpdateOperationsInput
+    joiningDate: NullableDateTimeFieldUpdateOperationsInput
+    businessPhone: NullableStringFieldUpdateOperationsInput
+    mobilePhone: NullableStringFieldUpdateOperationsInput
+    kakaoTalkId: NullableStringFieldUpdateOperationsInput
+    designation: NullableStringFieldUpdateOperationsInput
+    profileImg: NullableStringFieldUpdateOperationsInput
+    designationIcon: NullableStringFieldUpdateOperationsInput
+    coverImg: NullableStringFieldUpdateOperationsInput
   }
 
   input Users_ProfileUncheckedUpdateInput {
-    userId: Users_IntFieldUpdateOperationsInput
-    location: Users_NullableStringFieldUpdateOperationsInput
-    joiningDate: Users_NullableDateTimeFieldUpdateOperationsInput
-    businessPhone: Users_NullableStringFieldUpdateOperationsInput
-    mobilePhone: Users_NullableStringFieldUpdateOperationsInput
-    kakaoTalkId: Users_NullableStringFieldUpdateOperationsInput
-    designation: Users_NullableStringFieldUpdateOperationsInput
-    profileImg: Users_NullableStringFieldUpdateOperationsInput
-    designationIcon: Users_NullableStringFieldUpdateOperationsInput
-    coverImg: Users_NullableStringFieldUpdateOperationsInput
+    userId: IntFieldUpdateOperationsInput
+    location: NullableStringFieldUpdateOperationsInput
+    joiningDate: NullableDateTimeFieldUpdateOperationsInput
+    businessPhone: NullableStringFieldUpdateOperationsInput
+    mobilePhone: NullableStringFieldUpdateOperationsInput
+    kakaoTalkId: NullableStringFieldUpdateOperationsInput
+    designation: NullableStringFieldUpdateOperationsInput
+    profileImg: NullableStringFieldUpdateOperationsInput
+    designationIcon: NullableStringFieldUpdateOperationsInput
+    coverImg: NullableStringFieldUpdateOperationsInput
   }
 
   input Users_ProfileCreateManyInput {
-    userId: Users_Int!
-    location: Users_String
-    joiningDate: Users_DateTime
-    businessPhone: Users_String
-    mobilePhone: Users_String
-    kakaoTalkId: Users_String
-    designation: Users_String
-    profileImg: Users_String
-    designationIcon: Users_String
-    coverImg: Users_String
+    userId: Int!
+    location: String
+    joiningDate: DateTime
+    businessPhone: String
+    mobilePhone: String
+    kakaoTalkId: String
+    designation: String
+    profileImg: String
+    designationIcon: String
+    coverImg: String
   }
 
   input Users_ProfileUpdateManyMutationInput {
-    location: Users_NullableStringFieldUpdateOperationsInput
-    joiningDate: Users_NullableDateTimeFieldUpdateOperationsInput
-    businessPhone: Users_NullableStringFieldUpdateOperationsInput
-    mobilePhone: Users_NullableStringFieldUpdateOperationsInput
-    kakaoTalkId: Users_NullableStringFieldUpdateOperationsInput
-    designation: Users_NullableStringFieldUpdateOperationsInput
-    profileImg: Users_NullableStringFieldUpdateOperationsInput
-    designationIcon: Users_NullableStringFieldUpdateOperationsInput
-    coverImg: Users_NullableStringFieldUpdateOperationsInput
+    location: NullableStringFieldUpdateOperationsInput
+    joiningDate: NullableDateTimeFieldUpdateOperationsInput
+    businessPhone: NullableStringFieldUpdateOperationsInput
+    mobilePhone: NullableStringFieldUpdateOperationsInput
+    kakaoTalkId: NullableStringFieldUpdateOperationsInput
+    designation: NullableStringFieldUpdateOperationsInput
+    profileImg: NullableStringFieldUpdateOperationsInput
+    designationIcon: NullableStringFieldUpdateOperationsInput
+    coverImg: NullableStringFieldUpdateOperationsInput
   }
 
   input Users_ProfileUncheckedUpdateManyInput {
-    userId: Users_IntFieldUpdateOperationsInput
-    location: Users_NullableStringFieldUpdateOperationsInput
-    joiningDate: Users_NullableDateTimeFieldUpdateOperationsInput
-    businessPhone: Users_NullableStringFieldUpdateOperationsInput
-    mobilePhone: Users_NullableStringFieldUpdateOperationsInput
-    kakaoTalkId: Users_NullableStringFieldUpdateOperationsInput
-    designation: Users_NullableStringFieldUpdateOperationsInput
-    profileImg: Users_NullableStringFieldUpdateOperationsInput
-    designationIcon: Users_NullableStringFieldUpdateOperationsInput
-    coverImg: Users_NullableStringFieldUpdateOperationsInput
+    userId: IntFieldUpdateOperationsInput
+    location: NullableStringFieldUpdateOperationsInput
+    joiningDate: NullableDateTimeFieldUpdateOperationsInput
+    businessPhone: NullableStringFieldUpdateOperationsInput
+    mobilePhone: NullableStringFieldUpdateOperationsInput
+    kakaoTalkId: NullableStringFieldUpdateOperationsInput
+    designation: NullableStringFieldUpdateOperationsInput
+    profileImg: NullableStringFieldUpdateOperationsInput
+    designationIcon: NullableStringFieldUpdateOperationsInput
+    coverImg: NullableStringFieldUpdateOperationsInput
   }
 
   input Users_UsersOnTeamsCreateInput {
     team: Users_TeamCreateNestedOneWithoutUsersInput!
     user: Users_UserCreateNestedOneWithoutTeamsInput!
-    assignedAt: Users_DateTime
+    assignedAt: DateTime
   }
 
   input Users_UsersOnTeamsUncheckedCreateInput {
-    teamName: Users_String!
-    userId: Users_Int!
-    assignedAt: Users_DateTime
+    teamName: String!
+    userId: Int!
+    assignedAt: DateTime
   }
 
   input Users_UsersOnTeamsUpdateInput {
     team: Users_TeamUpdateOneRequiredWithoutUsersNestedInput
     user: Users_UserUpdateOneRequiredWithoutTeamsNestedInput
-    assignedAt: Users_DateTimeFieldUpdateOperationsInput
+    assignedAt: DateTimeFieldUpdateOperationsInput
   }
 
   input Users_UsersOnTeamsUncheckedUpdateInput {
-    teamName: Users_StringFieldUpdateOperationsInput
-    userId: Users_IntFieldUpdateOperationsInput
-    assignedAt: Users_DateTimeFieldUpdateOperationsInput
+    teamName: StringFieldUpdateOperationsInput
+    userId: IntFieldUpdateOperationsInput
+    assignedAt: DateTimeFieldUpdateOperationsInput
   }
 
   input Users_UsersOnTeamsCreateManyInput {
-    teamName: Users_String!
-    userId: Users_Int!
-    assignedAt: Users_DateTime
+    teamName: String!
+    userId: Int!
+    assignedAt: DateTime
   }
 
   input Users_UsersOnTeamsUpdateManyMutationInput {
-    assignedAt: Users_DateTimeFieldUpdateOperationsInput
+    assignedAt: DateTimeFieldUpdateOperationsInput
   }
 
   input Users_UsersOnTeamsUncheckedUpdateManyInput {
-    teamName: Users_StringFieldUpdateOperationsInput
-    userId: Users_IntFieldUpdateOperationsInput
-    assignedAt: Users_DateTimeFieldUpdateOperationsInput
+    teamName: StringFieldUpdateOperationsInput
+    userId: IntFieldUpdateOperationsInput
+    assignedAt: DateTimeFieldUpdateOperationsInput
   }
 
   input Users_TeamCreateInput {
-    teamName: Users_String!
+    teamName: String!
     users: Users_UsersOnTeamsCreateNestedManyWithoutTeamInput
-    teamType: Users_String
-    teamIcon: Users_String
+    teamType: String
+    teamIcon: String
   }
 
   input Users_TeamUncheckedCreateInput {
-    teamName: Users_String!
+    teamName: String!
     users: Users_UsersOnTeamsUncheckedCreateNestedManyWithoutTeamInput
-    teamType: Users_String
-    teamIcon: Users_String
+    teamType: String
+    teamIcon: String
   }
 
   input Users_TeamUpdateInput {
-    teamName: Users_StringFieldUpdateOperationsInput
+    teamName: StringFieldUpdateOperationsInput
     users: Users_UsersOnTeamsUpdateManyWithoutTeamNestedInput
-    teamType: Users_NullableStringFieldUpdateOperationsInput
-    teamIcon: Users_NullableStringFieldUpdateOperationsInput
+    teamType: NullableStringFieldUpdateOperationsInput
+    teamIcon: NullableStringFieldUpdateOperationsInput
   }
 
   input Users_TeamUncheckedUpdateInput {
-    teamName: Users_StringFieldUpdateOperationsInput
+    teamName: StringFieldUpdateOperationsInput
     users: Users_UsersOnTeamsUncheckedUpdateManyWithoutTeamNestedInput
-    teamType: Users_NullableStringFieldUpdateOperationsInput
-    teamIcon: Users_NullableStringFieldUpdateOperationsInput
+    teamType: NullableStringFieldUpdateOperationsInput
+    teamIcon: NullableStringFieldUpdateOperationsInput
   }
 
   input Users_TeamCreateManyInput {
-    teamName: Users_String!
-    teamType: Users_String
-    teamIcon: Users_String
+    teamName: String!
+    teamType: String
+    teamIcon: String
   }
 
   input Users_TeamUpdateManyMutationInput {
-    teamName: Users_StringFieldUpdateOperationsInput
-    teamType: Users_NullableStringFieldUpdateOperationsInput
-    teamIcon: Users_NullableStringFieldUpdateOperationsInput
+    teamName: StringFieldUpdateOperationsInput
+    teamType: NullableStringFieldUpdateOperationsInput
+    teamIcon: NullableStringFieldUpdateOperationsInput
   }
 
   input Users_TeamUncheckedUpdateManyInput {
-    teamName: Users_StringFieldUpdateOperationsInput
-    teamType: Users_NullableStringFieldUpdateOperationsInput
-    teamIcon: Users_NullableStringFieldUpdateOperationsInput
+    teamName: StringFieldUpdateOperationsInput
+    teamType: NullableStringFieldUpdateOperationsInput
+    teamIcon: NullableStringFieldUpdateOperationsInput
   }
 
   input Users_CalendarEventCreateInput {
-    url: Users_String
-    title: Users_String!
-    start: Users_DateTime!
-    end: Users_DateTime!
-    allDay: Users_Boolean!
+    url: String
+    title: String!
+    start: DateTime!
+    end: DateTime!
+    allDay: Boolean!
     calendar: Users_CalendarCreateNestedOneWithoutCalendarEventsInput!
   }
 
   input Users_CalendarEventUncheckedCreateInput {
-    id: Users_Int
-    url: Users_String
-    title: Users_String!
-    start: Users_DateTime!
-    end: Users_DateTime!
-    allDay: Users_Boolean!
-    calendarId: Users_Int!
+    id: Int
+    url: String
+    title: String!
+    start: DateTime!
+    end: DateTime!
+    allDay: Boolean!
+    calendarId: Int!
   }
 
   input Users_CalendarEventUpdateInput {
-    url: Users_NullableStringFieldUpdateOperationsInput
-    title: Users_StringFieldUpdateOperationsInput
-    start: Users_DateTimeFieldUpdateOperationsInput
-    end: Users_DateTimeFieldUpdateOperationsInput
-    allDay: Users_BoolFieldUpdateOperationsInput
+    url: NullableStringFieldUpdateOperationsInput
+    title: StringFieldUpdateOperationsInput
+    start: DateTimeFieldUpdateOperationsInput
+    end: DateTimeFieldUpdateOperationsInput
+    allDay: BoolFieldUpdateOperationsInput
     calendar: Users_CalendarUpdateOneRequiredWithoutCalendarEventsNestedInput
   }
 
   input Users_CalendarEventUncheckedUpdateInput {
-    id: Users_IntFieldUpdateOperationsInput
-    url: Users_NullableStringFieldUpdateOperationsInput
-    title: Users_StringFieldUpdateOperationsInput
-    start: Users_DateTimeFieldUpdateOperationsInput
-    end: Users_DateTimeFieldUpdateOperationsInput
-    allDay: Users_BoolFieldUpdateOperationsInput
-    calendarId: Users_IntFieldUpdateOperationsInput
+    id: IntFieldUpdateOperationsInput
+    url: NullableStringFieldUpdateOperationsInput
+    title: StringFieldUpdateOperationsInput
+    start: DateTimeFieldUpdateOperationsInput
+    end: DateTimeFieldUpdateOperationsInput
+    allDay: BoolFieldUpdateOperationsInput
+    calendarId: IntFieldUpdateOperationsInput
   }
 
   input Users_CalendarEventCreateManyInput {
-    id: Users_Int
-    url: Users_String
-    title: Users_String!
-    start: Users_DateTime!
-    end: Users_DateTime!
-    allDay: Users_Boolean!
-    calendarId: Users_Int!
+    id: Int
+    url: String
+    title: String!
+    start: DateTime!
+    end: DateTime!
+    allDay: Boolean!
+    calendarId: Int!
   }
 
   input Users_CalendarEventUpdateManyMutationInput {
-    url: Users_NullableStringFieldUpdateOperationsInput
-    title: Users_StringFieldUpdateOperationsInput
-    start: Users_DateTimeFieldUpdateOperationsInput
-    end: Users_DateTimeFieldUpdateOperationsInput
-    allDay: Users_BoolFieldUpdateOperationsInput
+    url: NullableStringFieldUpdateOperationsInput
+    title: StringFieldUpdateOperationsInput
+    start: DateTimeFieldUpdateOperationsInput
+    end: DateTimeFieldUpdateOperationsInput
+    allDay: BoolFieldUpdateOperationsInput
   }
 
   input Users_CalendarEventUncheckedUpdateManyInput {
-    id: Users_IntFieldUpdateOperationsInput
-    url: Users_NullableStringFieldUpdateOperationsInput
-    title: Users_StringFieldUpdateOperationsInput
-    start: Users_DateTimeFieldUpdateOperationsInput
-    end: Users_DateTimeFieldUpdateOperationsInput
-    allDay: Users_BoolFieldUpdateOperationsInput
-    calendarId: Users_IntFieldUpdateOperationsInput
+    id: IntFieldUpdateOperationsInput
+    url: NullableStringFieldUpdateOperationsInput
+    title: StringFieldUpdateOperationsInput
+    start: DateTimeFieldUpdateOperationsInput
+    end: DateTimeFieldUpdateOperationsInput
+    allDay: BoolFieldUpdateOperationsInput
+    calendarId: IntFieldUpdateOperationsInput
   }
 
   input Users_CalendarsOnUsersCreateInput {
@@ -878,8 +878,8 @@ export default gql`
   }
 
   input Users_CalendarsOnUsersUncheckedCreateInput {
-    userId: Users_Int!
-    calendarId: Users_Int!
+    userId: Int!
+    calendarId: Int!
   }
 
   input Users_CalendarsOnUsersUpdateInput {
@@ -888,134 +888,134 @@ export default gql`
   }
 
   input Users_CalendarsOnUsersUncheckedUpdateInput {
-    userId: Users_IntFieldUpdateOperationsInput
-    calendarId: Users_IntFieldUpdateOperationsInput
+    userId: IntFieldUpdateOperationsInput
+    calendarId: IntFieldUpdateOperationsInput
   }
 
   input Users_CalendarsOnUsersCreateManyInput {
-    userId: Users_Int!
-    calendarId: Users_Int!
+    userId: Int!
+    calendarId: Int!
   }
 
   input Users_CalendarsOnUsersUncheckedUpdateManyInput {
-    userId: Users_IntFieldUpdateOperationsInput
-    calendarId: Users_IntFieldUpdateOperationsInput
+    userId: IntFieldUpdateOperationsInput
+    calendarId: IntFieldUpdateOperationsInput
   }
 
   input Users_CalendarCreateInput {
-    calendarType: Users_String!
+    calendarType: String!
     users: Users_CalendarsOnUsersCreateNestedManyWithoutCalendarInput
     calendarEvents: Users_CalendarEventCreateNestedManyWithoutCalendarInput
   }
 
   input Users_CalendarUncheckedCreateInput {
-    id: Users_Int
-    calendarType: Users_String!
+    id: Int
+    calendarType: String!
     users: Users_CalendarsOnUsersUncheckedCreateNestedManyWithoutCalendarInput
     calendarEvents: Users_CalendarEventUncheckedCreateNestedManyWithoutCalendarInput
   }
 
   input Users_CalendarUpdateInput {
-    calendarType: Users_StringFieldUpdateOperationsInput
+    calendarType: StringFieldUpdateOperationsInput
     users: Users_CalendarsOnUsersUpdateManyWithoutCalendarNestedInput
     calendarEvents: Users_CalendarEventUpdateManyWithoutCalendarNestedInput
   }
 
   input Users_CalendarUncheckedUpdateInput {
-    id: Users_IntFieldUpdateOperationsInput
-    calendarType: Users_StringFieldUpdateOperationsInput
+    id: IntFieldUpdateOperationsInput
+    calendarType: StringFieldUpdateOperationsInput
     users: Users_CalendarsOnUsersUncheckedUpdateManyWithoutCalendarNestedInput
     calendarEvents: Users_CalendarEventUncheckedUpdateManyWithoutCalendarNestedInput
   }
 
   input Users_CalendarCreateManyInput {
-    id: Users_Int
-    calendarType: Users_String!
+    id: Int
+    calendarType: String!
   }
 
   input Users_CalendarUpdateManyMutationInput {
-    calendarType: Users_StringFieldUpdateOperationsInput
+    calendarType: StringFieldUpdateOperationsInput
   }
 
   input Users_CalendarUncheckedUpdateManyInput {
-    id: Users_IntFieldUpdateOperationsInput
-    calendarType: Users_StringFieldUpdateOperationsInput
+    id: IntFieldUpdateOperationsInput
+    calendarType: StringFieldUpdateOperationsInput
   }
 
-  input Users_IntFilter {
-    equals: Users_Int
-    in: [Users_Int!]
-    notIn: [Users_Int!]
-    lt: Users_Int
-    lte: Users_Int
-    gt: Users_Int
-    gte: Users_Int
-    not: Users_NestedIntFilter
+  input IntFilter {
+    equals: Int
+    in: [Int!]
+    notIn: [Int!]
+    lt: Int
+    lte: Int
+    gt: Int
+    gte: Int
+    not: NestedIntFilter
   }
 
-  input Users_DateTimeFilter {
-    equals: Users_DateTime
-    in: [Users_DateTime!]
-    notIn: [Users_DateTime!]
-    lt: Users_DateTime
-    lte: Users_DateTime
-    gt: Users_DateTime
-    gte: Users_DateTime
-    not: Users_NestedDateTimeFilter
+  input DateTimeFilter {
+    equals: DateTime
+    in: [DateTime!]
+    notIn: [DateTime!]
+    lt: DateTime
+    lte: DateTime
+    gt: DateTime
+    gte: DateTime
+    not: NestedDateTimeFilter
   }
 
-  input Users_StringNullableFilter {
-    equals: Users_String
-    in: [Users_String!]
-    notIn: [Users_String!]
-    lt: Users_String
-    lte: Users_String
-    gt: Users_String
-    gte: Users_String
-    contains: Users_String
-    startsWith: Users_String
-    endsWith: Users_String
-    mode: Users_QueryMode
-    not: Users_NestedStringNullableFilter
+  input StringNullableFilter {
+    equals: String
+    in: [String!]
+    notIn: [String!]
+    lt: String
+    lte: String
+    gt: String
+    gte: String
+    contains: String
+    startsWith: String
+    endsWith: String
+    mode: QueryMode
+    not: NestedStringNullableFilter
   }
 
-  input Users_StringFilter {
-    equals: Users_String
-    in: [Users_String!]
-    notIn: [Users_String!]
-    lt: Users_String
-    lte: Users_String
-    gt: Users_String
-    gte: Users_String
-    contains: Users_String
-    startsWith: Users_String
-    endsWith: Users_String
-    mode: Users_QueryMode
-    not: Users_NestedStringFilter
+  input StringFilter {
+    equals: String
+    in: [String!]
+    notIn: [String!]
+    lt: String
+    lte: String
+    gt: String
+    gte: String
+    contains: String
+    startsWith: String
+    endsWith: String
+    mode: QueryMode
+    not: NestedStringFilter
   }
 
-  input Users_StringNullableListFilter {
-    equals: [Users_String!]
-    has: Users_String
-    hasEvery: [Users_String!]
-    hasSome: [Users_String!]
-    isEmpty: Users_Boolean
+  input StringNullableListFilter {
+    equals: [String!]
+    has: String
+    hasEvery: [String!]
+    hasSome: [String!]
+    isEmpty: Boolean
   }
 
-  input Users_JsonNullableFilter {
-    equals: Users_Json
-    path: [Users_String!]
-    string_contains: Users_String
-    string_starts_with: Users_String
-    string_ends_with: Users_String
-    array_contains: Users_Json
-    array_starts_with: Users_Json
-    array_ends_with: Users_Json
-    lt: Users_Json
-    lte: Users_Json
-    gt: Users_Json
-    gte: Users_Json
-    not: Users_Json
+  input JsonNullableFilter {
+    equals: Json
+    path: [String!]
+    string_contains: String
+    string_starts_with: String
+    string_ends_with: String
+    array_contains: Json
+    array_starts_with: Json
+    array_ends_with: Json
+    lt: Json
+    lte: Json
+    gt: Json
+    gte: Json
+    not: Json
   }
 
   input Users_ProfileRelationFilter {
@@ -1042,143 +1042,143 @@ export default gql`
   }
 
   input Users_UsersOnTeamsOrderByRelationAggregateInput {
-    _count: Users_SortOrder
+    _count: SortOrder
   }
 
   input Users_CalendarsOnUsersOrderByRelationAggregateInput {
-    _count: Users_SortOrder
+    _count: SortOrder
   }
 
   input Users_UserOrderByRelationAggregateInput {
-    _count: Users_SortOrder
+    _count: SortOrder
   }
 
   input Users_UserCountOrderByAggregateInput {
-    id: Users_SortOrder
-    createdAt: Users_SortOrder
-    username: Users_SortOrder
-    password: Users_SortOrder
-    email: Users_SortOrder
-    roles: Users_SortOrder
-    googleId: Users_SortOrder
-    googleProfile: Users_SortOrder
-    lastName: Users_SortOrder
-    firstName: Users_SortOrder
+    id: SortOrder
+    createdAt: SortOrder
+    username: SortOrder
+    password: SortOrder
+    email: SortOrder
+    roles: SortOrder
+    googleId: SortOrder
+    googleProfile: SortOrder
+    lastName: SortOrder
+    firstName: SortOrder
   }
 
   input Users_UserAvgOrderByAggregateInput {
-    id: Users_SortOrder
+    id: SortOrder
   }
 
   input Users_UserMaxOrderByAggregateInput {
-    id: Users_SortOrder
-    createdAt: Users_SortOrder
-    username: Users_SortOrder
-    password: Users_SortOrder
-    email: Users_SortOrder
-    googleId: Users_SortOrder
-    lastName: Users_SortOrder
-    firstName: Users_SortOrder
+    id: SortOrder
+    createdAt: SortOrder
+    username: SortOrder
+    password: SortOrder
+    email: SortOrder
+    googleId: SortOrder
+    lastName: SortOrder
+    firstName: SortOrder
   }
 
   input Users_UserMinOrderByAggregateInput {
-    id: Users_SortOrder
-    createdAt: Users_SortOrder
-    username: Users_SortOrder
-    password: Users_SortOrder
-    email: Users_SortOrder
-    googleId: Users_SortOrder
-    lastName: Users_SortOrder
-    firstName: Users_SortOrder
+    id: SortOrder
+    createdAt: SortOrder
+    username: SortOrder
+    password: SortOrder
+    email: SortOrder
+    googleId: SortOrder
+    lastName: SortOrder
+    firstName: SortOrder
   }
 
   input Users_UserSumOrderByAggregateInput {
-    id: Users_SortOrder
+    id: SortOrder
   }
 
-  input Users_IntWithAggregatesFilter {
-    equals: Users_Int
-    in: [Users_Int!]
-    notIn: [Users_Int!]
-    lt: Users_Int
-    lte: Users_Int
-    gt: Users_Int
-    gte: Users_Int
-    not: Users_NestedIntWithAggregatesFilter
-    _count: Users_NestedIntFilter
-    _avg: Users_NestedFloatFilter
-    _sum: Users_NestedIntFilter
-    _min: Users_NestedIntFilter
-    _max: Users_NestedIntFilter
+  input IntWithAggregatesFilter {
+    equals: Int
+    in: [Int!]
+    notIn: [Int!]
+    lt: Int
+    lte: Int
+    gt: Int
+    gte: Int
+    not: NestedIntWithAggregatesFilter
+    _count: NestedIntFilter
+    _avg: NestedFloatFilter
+    _sum: NestedIntFilter
+    _min: NestedIntFilter
+    _max: NestedIntFilter
   }
 
-  input Users_DateTimeWithAggregatesFilter {
-    equals: Users_DateTime
-    in: [Users_DateTime!]
-    notIn: [Users_DateTime!]
-    lt: Users_DateTime
-    lte: Users_DateTime
-    gt: Users_DateTime
-    gte: Users_DateTime
-    not: Users_NestedDateTimeWithAggregatesFilter
-    _count: Users_NestedIntFilter
-    _min: Users_NestedDateTimeFilter
-    _max: Users_NestedDateTimeFilter
+  input DateTimeWithAggregatesFilter {
+    equals: DateTime
+    in: [DateTime!]
+    notIn: [DateTime!]
+    lt: DateTime
+    lte: DateTime
+    gt: DateTime
+    gte: DateTime
+    not: NestedDateTimeWithAggregatesFilter
+    _count: NestedIntFilter
+    _min: NestedDateTimeFilter
+    _max: NestedDateTimeFilter
   }
 
-  input Users_StringNullableWithAggregatesFilter {
-    equals: Users_String
-    in: [Users_String!]
-    notIn: [Users_String!]
-    lt: Users_String
-    lte: Users_String
-    gt: Users_String
-    gte: Users_String
-    contains: Users_String
-    startsWith: Users_String
-    endsWith: Users_String
-    mode: Users_QueryMode
-    not: Users_NestedStringNullableWithAggregatesFilter
-    _count: Users_NestedIntNullableFilter
-    _min: Users_NestedStringNullableFilter
-    _max: Users_NestedStringNullableFilter
+  input StringNullableWithAggregatesFilter {
+    equals: String
+    in: [String!]
+    notIn: [String!]
+    lt: String
+    lte: String
+    gt: String
+    gte: String
+    contains: String
+    startsWith: String
+    endsWith: String
+    mode: QueryMode
+    not: NestedStringNullableWithAggregatesFilter
+    _count: NestedIntNullableFilter
+    _min: NestedStringNullableFilter
+    _max: NestedStringNullableFilter
   }
 
-  input Users_StringWithAggregatesFilter {
-    equals: Users_String
-    in: [Users_String!]
-    notIn: [Users_String!]
-    lt: Users_String
-    lte: Users_String
-    gt: Users_String
-    gte: Users_String
-    contains: Users_String
-    startsWith: Users_String
-    endsWith: Users_String
-    mode: Users_QueryMode
-    not: Users_NestedStringWithAggregatesFilter
-    _count: Users_NestedIntFilter
-    _min: Users_NestedStringFilter
-    _max: Users_NestedStringFilter
+  input StringWithAggregatesFilter {
+    equals: String
+    in: [String!]
+    notIn: [String!]
+    lt: String
+    lte: String
+    gt: String
+    gte: String
+    contains: String
+    startsWith: String
+    endsWith: String
+    mode: QueryMode
+    not: NestedStringWithAggregatesFilter
+    _count: NestedIntFilter
+    _min: NestedStringFilter
+    _max: NestedStringFilter
   }
 
-  input Users_JsonNullableWithAggregatesFilter {
-    equals: Users_Json
-    path: [Users_String!]
-    string_contains: Users_String
-    string_starts_with: Users_String
-    string_ends_with: Users_String
-    array_contains: Users_Json
-    array_starts_with: Users_Json
-    array_ends_with: Users_Json
-    lt: Users_Json
-    lte: Users_Json
-    gt: Users_Json
-    gte: Users_Json
-    not: Users_Json
-    _count: Users_NestedIntNullableFilter
-    _min: Users_NestedJsonNullableFilter
-    _max: Users_NestedJsonNullableFilter
+  input JsonNullableWithAggregatesFilter {
+    equals: Json
+    path: [String!]
+    string_contains: String
+    string_starts_with: String
+    string_ends_with: String
+    array_contains: Json
+    array_starts_with: Json
+    array_ends_with: Json
+    lt: Json
+    lte: Json
+    gt: Json
+    gte: Json
+    not: Json
+    _count: NestedIntNullableFilter
+    _min: NestedJsonNullableFilter
+    _max: NestedJsonNullableFilter
   }
 
   input Users_UserRelationFilter {
@@ -1186,76 +1186,76 @@ export default gql`
     isNot: Users_UserWhereInput
   }
 
-  input Users_DateTimeNullableFilter {
-    equals: Users_DateTime
-    in: [Users_DateTime!]
-    notIn: [Users_DateTime!]
-    lt: Users_DateTime
-    lte: Users_DateTime
-    gt: Users_DateTime
-    gte: Users_DateTime
-    not: Users_NestedDateTimeNullableFilter
+  input DateTimeNullableFilter {
+    equals: DateTime
+    in: [DateTime!]
+    notIn: [DateTime!]
+    lt: DateTime
+    lte: DateTime
+    gt: DateTime
+    gte: DateTime
+    not: NestedDateTimeNullableFilter
   }
 
   input Users_ProfileCountOrderByAggregateInput {
-    userId: Users_SortOrder
-    location: Users_SortOrder
-    joiningDate: Users_SortOrder
-    businessPhone: Users_SortOrder
-    mobilePhone: Users_SortOrder
-    kakaoTalkId: Users_SortOrder
-    designation: Users_SortOrder
-    profileImg: Users_SortOrder
-    designationIcon: Users_SortOrder
-    coverImg: Users_SortOrder
+    userId: SortOrder
+    location: SortOrder
+    joiningDate: SortOrder
+    businessPhone: SortOrder
+    mobilePhone: SortOrder
+    kakaoTalkId: SortOrder
+    designation: SortOrder
+    profileImg: SortOrder
+    designationIcon: SortOrder
+    coverImg: SortOrder
   }
 
   input Users_ProfileAvgOrderByAggregateInput {
-    userId: Users_SortOrder
+    userId: SortOrder
   }
 
   input Users_ProfileMaxOrderByAggregateInput {
-    userId: Users_SortOrder
-    location: Users_SortOrder
-    joiningDate: Users_SortOrder
-    businessPhone: Users_SortOrder
-    mobilePhone: Users_SortOrder
-    kakaoTalkId: Users_SortOrder
-    designation: Users_SortOrder
-    profileImg: Users_SortOrder
-    designationIcon: Users_SortOrder
-    coverImg: Users_SortOrder
+    userId: SortOrder
+    location: SortOrder
+    joiningDate: SortOrder
+    businessPhone: SortOrder
+    mobilePhone: SortOrder
+    kakaoTalkId: SortOrder
+    designation: SortOrder
+    profileImg: SortOrder
+    designationIcon: SortOrder
+    coverImg: SortOrder
   }
 
   input Users_ProfileMinOrderByAggregateInput {
-    userId: Users_SortOrder
-    location: Users_SortOrder
-    joiningDate: Users_SortOrder
-    businessPhone: Users_SortOrder
-    mobilePhone: Users_SortOrder
-    kakaoTalkId: Users_SortOrder
-    designation: Users_SortOrder
-    profileImg: Users_SortOrder
-    designationIcon: Users_SortOrder
-    coverImg: Users_SortOrder
+    userId: SortOrder
+    location: SortOrder
+    joiningDate: SortOrder
+    businessPhone: SortOrder
+    mobilePhone: SortOrder
+    kakaoTalkId: SortOrder
+    designation: SortOrder
+    profileImg: SortOrder
+    designationIcon: SortOrder
+    coverImg: SortOrder
   }
 
   input Users_ProfileSumOrderByAggregateInput {
-    userId: Users_SortOrder
+    userId: SortOrder
   }
 
-  input Users_DateTimeNullableWithAggregatesFilter {
-    equals: Users_DateTime
-    in: [Users_DateTime!]
-    notIn: [Users_DateTime!]
-    lt: Users_DateTime
-    lte: Users_DateTime
-    gt: Users_DateTime
-    gte: Users_DateTime
-    not: Users_NestedDateTimeNullableWithAggregatesFilter
-    _count: Users_NestedIntNullableFilter
-    _min: Users_NestedDateTimeNullableFilter
-    _max: Users_NestedDateTimeNullableFilter
+  input DateTimeNullableWithAggregatesFilter {
+    equals: DateTime
+    in: [DateTime!]
+    notIn: [DateTime!]
+    lt: DateTime
+    lte: DateTime
+    gt: DateTime
+    gte: DateTime
+    not: NestedDateTimeNullableWithAggregatesFilter
+    _count: NestedIntNullableFilter
+    _min: NestedDateTimeNullableFilter
+    _max: NestedDateTimeNullableFilter
   }
 
   input Users_TeamRelationFilter {
@@ -1263,58 +1263,58 @@ export default gql`
     isNot: Users_TeamWhereInput
   }
 
-  input Users_UsersOnTeamsTeamNameUserIdCompoundUniqueInput {
-    teamName: Users_String!
-    userId: Users_Int!
+  input UsersOnTeamsTeamNameUserIdCompoundUniqueInput {
+    teamName: String!
+    userId: Int!
   }
 
   input Users_UsersOnTeamsCountOrderByAggregateInput {
-    teamName: Users_SortOrder
-    userId: Users_SortOrder
-    assignedAt: Users_SortOrder
+    teamName: SortOrder
+    userId: SortOrder
+    assignedAt: SortOrder
   }
 
   input Users_UsersOnTeamsAvgOrderByAggregateInput {
-    userId: Users_SortOrder
+    userId: SortOrder
   }
 
   input Users_UsersOnTeamsMaxOrderByAggregateInput {
-    teamName: Users_SortOrder
-    userId: Users_SortOrder
-    assignedAt: Users_SortOrder
+    teamName: SortOrder
+    userId: SortOrder
+    assignedAt: SortOrder
   }
 
   input Users_UsersOnTeamsMinOrderByAggregateInput {
-    teamName: Users_SortOrder
-    userId: Users_SortOrder
-    assignedAt: Users_SortOrder
+    teamName: SortOrder
+    userId: SortOrder
+    assignedAt: SortOrder
   }
 
   input Users_UsersOnTeamsSumOrderByAggregateInput {
-    userId: Users_SortOrder
+    userId: SortOrder
   }
 
   input Users_TeamCountOrderByAggregateInput {
-    teamName: Users_SortOrder
-    teamType: Users_SortOrder
-    teamIcon: Users_SortOrder
+    teamName: SortOrder
+    teamType: SortOrder
+    teamIcon: SortOrder
   }
 
   input Users_TeamMaxOrderByAggregateInput {
-    teamName: Users_SortOrder
-    teamType: Users_SortOrder
-    teamIcon: Users_SortOrder
+    teamName: SortOrder
+    teamType: SortOrder
+    teamIcon: SortOrder
   }
 
   input Users_TeamMinOrderByAggregateInput {
-    teamName: Users_SortOrder
-    teamType: Users_SortOrder
-    teamIcon: Users_SortOrder
+    teamName: SortOrder
+    teamType: SortOrder
+    teamIcon: SortOrder
   }
 
-  input Users_BoolFilter {
-    equals: Users_Boolean
-    not: Users_NestedBoolFilter
+  input BoolFilter {
+    equals: Boolean
+    not: NestedBoolFilter
   }
 
   input Users_CalendarRelationFilter {
@@ -1323,81 +1323,81 @@ export default gql`
   }
 
   input Users_CalendarEventCountOrderByAggregateInput {
-    id: Users_SortOrder
-    url: Users_SortOrder
-    title: Users_SortOrder
-    start: Users_SortOrder
-    end: Users_SortOrder
-    allDay: Users_SortOrder
-    calendarId: Users_SortOrder
+    id: SortOrder
+    url: SortOrder
+    title: SortOrder
+    start: SortOrder
+    end: SortOrder
+    allDay: SortOrder
+    calendarId: SortOrder
   }
 
   input Users_CalendarEventAvgOrderByAggregateInput {
-    id: Users_SortOrder
-    calendarId: Users_SortOrder
+    id: SortOrder
+    calendarId: SortOrder
   }
 
   input Users_CalendarEventMaxOrderByAggregateInput {
-    id: Users_SortOrder
-    url: Users_SortOrder
-    title: Users_SortOrder
-    start: Users_SortOrder
-    end: Users_SortOrder
-    allDay: Users_SortOrder
-    calendarId: Users_SortOrder
+    id: SortOrder
+    url: SortOrder
+    title: SortOrder
+    start: SortOrder
+    end: SortOrder
+    allDay: SortOrder
+    calendarId: SortOrder
   }
 
   input Users_CalendarEventMinOrderByAggregateInput {
-    id: Users_SortOrder
-    url: Users_SortOrder
-    title: Users_SortOrder
-    start: Users_SortOrder
-    end: Users_SortOrder
-    allDay: Users_SortOrder
-    calendarId: Users_SortOrder
+    id: SortOrder
+    url: SortOrder
+    title: SortOrder
+    start: SortOrder
+    end: SortOrder
+    allDay: SortOrder
+    calendarId: SortOrder
   }
 
   input Users_CalendarEventSumOrderByAggregateInput {
-    id: Users_SortOrder
-    calendarId: Users_SortOrder
+    id: SortOrder
+    calendarId: SortOrder
   }
 
-  input Users_BoolWithAggregatesFilter {
-    equals: Users_Boolean
-    not: Users_NestedBoolWithAggregatesFilter
-    _count: Users_NestedIntFilter
-    _min: Users_NestedBoolFilter
-    _max: Users_NestedBoolFilter
+  input BoolWithAggregatesFilter {
+    equals: Boolean
+    not: NestedBoolWithAggregatesFilter
+    _count: NestedIntFilter
+    _min: NestedBoolFilter
+    _max: NestedBoolFilter
   }
 
-  input Users_CalendarsOnUsersUserIdCalendarIdCompoundUniqueInput {
-    userId: Users_Int!
-    calendarId: Users_Int!
+  input CalendarsOnUsersUserIdCalendarIdCompoundUniqueInput {
+    userId: Int!
+    calendarId: Int!
   }
 
   input Users_CalendarsOnUsersCountOrderByAggregateInput {
-    userId: Users_SortOrder
-    calendarId: Users_SortOrder
+    userId: SortOrder
+    calendarId: SortOrder
   }
 
   input Users_CalendarsOnUsersAvgOrderByAggregateInput {
-    userId: Users_SortOrder
-    calendarId: Users_SortOrder
+    userId: SortOrder
+    calendarId: SortOrder
   }
 
   input Users_CalendarsOnUsersMaxOrderByAggregateInput {
-    userId: Users_SortOrder
-    calendarId: Users_SortOrder
+    userId: SortOrder
+    calendarId: SortOrder
   }
 
   input Users_CalendarsOnUsersMinOrderByAggregateInput {
-    userId: Users_SortOrder
-    calendarId: Users_SortOrder
+    userId: SortOrder
+    calendarId: SortOrder
   }
 
   input Users_CalendarsOnUsersSumOrderByAggregateInput {
-    userId: Users_SortOrder
-    calendarId: Users_SortOrder
+    userId: SortOrder
+    calendarId: SortOrder
   }
 
   input Users_CalendarEventListRelationFilter {
@@ -1407,34 +1407,34 @@ export default gql`
   }
 
   input Users_CalendarEventOrderByRelationAggregateInput {
-    _count: Users_SortOrder
+    _count: SortOrder
   }
 
   input Users_CalendarCountOrderByAggregateInput {
-    id: Users_SortOrder
-    calendarType: Users_SortOrder
+    id: SortOrder
+    calendarType: SortOrder
   }
 
   input Users_CalendarAvgOrderByAggregateInput {
-    id: Users_SortOrder
+    id: SortOrder
   }
 
   input Users_CalendarMaxOrderByAggregateInput {
-    id: Users_SortOrder
-    calendarType: Users_SortOrder
+    id: SortOrder
+    calendarType: SortOrder
   }
 
   input Users_CalendarMinOrderByAggregateInput {
-    id: Users_SortOrder
-    calendarType: Users_SortOrder
+    id: SortOrder
+    calendarType: SortOrder
   }
 
   input Users_CalendarSumOrderByAggregateInput {
-    id: Users_SortOrder
+    id: SortOrder
   }
 
   input Users_UserCreaterolesInput {
-    set: [Users_String!]!
+    set: [String!]!
   }
 
   input Users_ProfileCreateNestedOneWithoutUserInput {
@@ -1501,21 +1501,21 @@ export default gql`
     connect: [Users_UserWhereUniqueInput!]
   }
 
-  input Users_DateTimeFieldUpdateOperationsInput {
-    set: Users_DateTime
+  input DateTimeFieldUpdateOperationsInput {
+    set: DateTime
   }
 
-  input Users_NullableStringFieldUpdateOperationsInput {
-    set: Users_String
+  input NullableStringFieldUpdateOperationsInput {
+    set: String
   }
 
-  input Users_StringFieldUpdateOperationsInput {
-    set: Users_String
+  input StringFieldUpdateOperationsInput {
+    set: String
   }
 
   input Users_UserUpdaterolesInput {
-    set: [Users_String!]
-    push: [Users_String!]
+    set: [String!]
+    push: [String!]
   }
 
   input Users_ProfileUpdateOneWithoutUserNestedInput {
@@ -1582,12 +1582,12 @@ export default gql`
     deleteMany: [Users_UserScalarWhereInput!]
   }
 
-  input Users_IntFieldUpdateOperationsInput {
-    set: Users_Int
-    increment: Users_Int
-    decrement: Users_Int
-    multiply: Users_Int
-    divide: Users_Int
+  input IntFieldUpdateOperationsInput {
+    set: Int
+    increment: Int
+    decrement: Int
+    multiply: Int
+    divide: Int
   }
 
   input Users_ProfileUncheckedUpdateOneWithoutUserNestedInput {
@@ -1668,8 +1668,8 @@ export default gql`
     update: Users_UserUpdateWithoutProfileInput
   }
 
-  input Users_NullableDateTimeFieldUpdateOperationsInput {
-    set: Users_DateTime
+  input NullableDateTimeFieldUpdateOperationsInput {
+    set: DateTime
   }
 
   input Users_TeamCreateNestedOneWithoutUsersInput {
@@ -1748,8 +1748,8 @@ export default gql`
     connect: Users_CalendarWhereUniqueInput
   }
 
-  input Users_BoolFieldUpdateOperationsInput {
-    set: Users_Boolean
+  input BoolFieldUpdateOperationsInput {
+    set: Boolean
   }
 
   input Users_CalendarUpdateOneRequiredWithoutCalendarEventsNestedInput {
@@ -1872,218 +1872,218 @@ export default gql`
     deleteMany: [Users_CalendarEventScalarWhereInput!]
   }
 
-  input Users_NestedIntFilter {
-    equals: Users_Int
-    in: [Users_Int!]
-    notIn: [Users_Int!]
-    lt: Users_Int
-    lte: Users_Int
-    gt: Users_Int
-    gte: Users_Int
-    not: Users_NestedIntFilter
+  input NestedIntFilter {
+    equals: Int
+    in: [Int!]
+    notIn: [Int!]
+    lt: Int
+    lte: Int
+    gt: Int
+    gte: Int
+    not: NestedIntFilter
   }
 
-  input Users_NestedDateTimeFilter {
-    equals: Users_DateTime
-    in: [Users_DateTime!]
-    notIn: [Users_DateTime!]
-    lt: Users_DateTime
-    lte: Users_DateTime
-    gt: Users_DateTime
-    gte: Users_DateTime
-    not: Users_NestedDateTimeFilter
+  input NestedDateTimeFilter {
+    equals: DateTime
+    in: [DateTime!]
+    notIn: [DateTime!]
+    lt: DateTime
+    lte: DateTime
+    gt: DateTime
+    gte: DateTime
+    not: NestedDateTimeFilter
   }
 
-  input Users_NestedStringNullableFilter {
-    equals: Users_String
-    in: [Users_String!]
-    notIn: [Users_String!]
-    lt: Users_String
-    lte: Users_String
-    gt: Users_String
-    gte: Users_String
-    contains: Users_String
-    startsWith: Users_String
-    endsWith: Users_String
-    not: Users_NestedStringNullableFilter
+  input NestedStringNullableFilter {
+    equals: String
+    in: [String!]
+    notIn: [String!]
+    lt: String
+    lte: String
+    gt: String
+    gte: String
+    contains: String
+    startsWith: String
+    endsWith: String
+    not: NestedStringNullableFilter
   }
 
-  input Users_NestedStringFilter {
-    equals: Users_String
-    in: [Users_String!]
-    notIn: [Users_String!]
-    lt: Users_String
-    lte: Users_String
-    gt: Users_String
-    gte: Users_String
-    contains: Users_String
-    startsWith: Users_String
-    endsWith: Users_String
-    not: Users_NestedStringFilter
+  input NestedStringFilter {
+    equals: String
+    in: [String!]
+    notIn: [String!]
+    lt: String
+    lte: String
+    gt: String
+    gte: String
+    contains: String
+    startsWith: String
+    endsWith: String
+    not: NestedStringFilter
   }
 
-  input Users_NestedIntWithAggregatesFilter {
-    equals: Users_Int
-    in: [Users_Int!]
-    notIn: [Users_Int!]
-    lt: Users_Int
-    lte: Users_Int
-    gt: Users_Int
-    gte: Users_Int
-    not: Users_NestedIntWithAggregatesFilter
-    _count: Users_NestedIntFilter
-    _avg: Users_NestedFloatFilter
-    _sum: Users_NestedIntFilter
-    _min: Users_NestedIntFilter
-    _max: Users_NestedIntFilter
+  input NestedIntWithAggregatesFilter {
+    equals: Int
+    in: [Int!]
+    notIn: [Int!]
+    lt: Int
+    lte: Int
+    gt: Int
+    gte: Int
+    not: NestedIntWithAggregatesFilter
+    _count: NestedIntFilter
+    _avg: NestedFloatFilter
+    _sum: NestedIntFilter
+    _min: NestedIntFilter
+    _max: NestedIntFilter
   }
 
-  input Users_NestedFloatFilter {
-    equals: Users_Float
-    in: [Users_Float!]
-    notIn: [Users_Float!]
-    lt: Users_Float
-    lte: Users_Float
-    gt: Users_Float
-    gte: Users_Float
-    not: Users_NestedFloatFilter
+  input NestedFloatFilter {
+    equals: Float
+    in: [Float!]
+    notIn: [Float!]
+    lt: Float
+    lte: Float
+    gt: Float
+    gte: Float
+    not: NestedFloatFilter
   }
 
-  input Users_NestedDateTimeWithAggregatesFilter {
-    equals: Users_DateTime
-    in: [Users_DateTime!]
-    notIn: [Users_DateTime!]
-    lt: Users_DateTime
-    lte: Users_DateTime
-    gt: Users_DateTime
-    gte: Users_DateTime
-    not: Users_NestedDateTimeWithAggregatesFilter
-    _count: Users_NestedIntFilter
-    _min: Users_NestedDateTimeFilter
-    _max: Users_NestedDateTimeFilter
+  input NestedDateTimeWithAggregatesFilter {
+    equals: DateTime
+    in: [DateTime!]
+    notIn: [DateTime!]
+    lt: DateTime
+    lte: DateTime
+    gt: DateTime
+    gte: DateTime
+    not: NestedDateTimeWithAggregatesFilter
+    _count: NestedIntFilter
+    _min: NestedDateTimeFilter
+    _max: NestedDateTimeFilter
   }
 
-  input Users_NestedStringNullableWithAggregatesFilter {
-    equals: Users_String
-    in: [Users_String!]
-    notIn: [Users_String!]
-    lt: Users_String
-    lte: Users_String
-    gt: Users_String
-    gte: Users_String
-    contains: Users_String
-    startsWith: Users_String
-    endsWith: Users_String
-    not: Users_NestedStringNullableWithAggregatesFilter
-    _count: Users_NestedIntNullableFilter
-    _min: Users_NestedStringNullableFilter
-    _max: Users_NestedStringNullableFilter
+  input NestedStringNullableWithAggregatesFilter {
+    equals: String
+    in: [String!]
+    notIn: [String!]
+    lt: String
+    lte: String
+    gt: String
+    gte: String
+    contains: String
+    startsWith: String
+    endsWith: String
+    not: NestedStringNullableWithAggregatesFilter
+    _count: NestedIntNullableFilter
+    _min: NestedStringNullableFilter
+    _max: NestedStringNullableFilter
   }
 
-  input Users_NestedIntNullableFilter {
-    equals: Users_Int
-    in: [Users_Int!]
-    notIn: [Users_Int!]
-    lt: Users_Int
-    lte: Users_Int
-    gt: Users_Int
-    gte: Users_Int
-    not: Users_NestedIntNullableFilter
+  input NestedIntNullableFilter {
+    equals: Int
+    in: [Int!]
+    notIn: [Int!]
+    lt: Int
+    lte: Int
+    gt: Int
+    gte: Int
+    not: NestedIntNullableFilter
   }
 
-  input Users_NestedStringWithAggregatesFilter {
-    equals: Users_String
-    in: [Users_String!]
-    notIn: [Users_String!]
-    lt: Users_String
-    lte: Users_String
-    gt: Users_String
-    gte: Users_String
-    contains: Users_String
-    startsWith: Users_String
-    endsWith: Users_String
-    not: Users_NestedStringWithAggregatesFilter
-    _count: Users_NestedIntFilter
-    _min: Users_NestedStringFilter
-    _max: Users_NestedStringFilter
+  input NestedStringWithAggregatesFilter {
+    equals: String
+    in: [String!]
+    notIn: [String!]
+    lt: String
+    lte: String
+    gt: String
+    gte: String
+    contains: String
+    startsWith: String
+    endsWith: String
+    not: NestedStringWithAggregatesFilter
+    _count: NestedIntFilter
+    _min: NestedStringFilter
+    _max: NestedStringFilter
   }
 
-  input Users_NestedJsonNullableFilter {
-    equals: Users_Json
-    path: [Users_String!]
-    string_contains: Users_String
-    string_starts_with: Users_String
-    string_ends_with: Users_String
-    array_contains: Users_Json
-    array_starts_with: Users_Json
-    array_ends_with: Users_Json
-    lt: Users_Json
-    lte: Users_Json
-    gt: Users_Json
-    gte: Users_Json
-    not: Users_Json
+  input NestedJsonNullableFilter {
+    equals: Json
+    path: [String!]
+    string_contains: String
+    string_starts_with: String
+    string_ends_with: String
+    array_contains: Json
+    array_starts_with: Json
+    array_ends_with: Json
+    lt: Json
+    lte: Json
+    gt: Json
+    gte: Json
+    not: Json
   }
 
-  input Users_NestedDateTimeNullableFilter {
-    equals: Users_DateTime
-    in: [Users_DateTime!]
-    notIn: [Users_DateTime!]
-    lt: Users_DateTime
-    lte: Users_DateTime
-    gt: Users_DateTime
-    gte: Users_DateTime
-    not: Users_NestedDateTimeNullableFilter
+  input NestedDateTimeNullableFilter {
+    equals: DateTime
+    in: [DateTime!]
+    notIn: [DateTime!]
+    lt: DateTime
+    lte: DateTime
+    gt: DateTime
+    gte: DateTime
+    not: NestedDateTimeNullableFilter
   }
 
-  input Users_NestedDateTimeNullableWithAggregatesFilter {
-    equals: Users_DateTime
-    in: [Users_DateTime!]
-    notIn: [Users_DateTime!]
-    lt: Users_DateTime
-    lte: Users_DateTime
-    gt: Users_DateTime
-    gte: Users_DateTime
-    not: Users_NestedDateTimeNullableWithAggregatesFilter
-    _count: Users_NestedIntNullableFilter
-    _min: Users_NestedDateTimeNullableFilter
-    _max: Users_NestedDateTimeNullableFilter
+  input NestedDateTimeNullableWithAggregatesFilter {
+    equals: DateTime
+    in: [DateTime!]
+    notIn: [DateTime!]
+    lt: DateTime
+    lte: DateTime
+    gt: DateTime
+    gte: DateTime
+    not: NestedDateTimeNullableWithAggregatesFilter
+    _count: NestedIntNullableFilter
+    _min: NestedDateTimeNullableFilter
+    _max: NestedDateTimeNullableFilter
   }
 
-  input Users_NestedBoolFilter {
-    equals: Users_Boolean
-    not: Users_NestedBoolFilter
+  input NestedBoolFilter {
+    equals: Boolean
+    not: NestedBoolFilter
   }
 
-  input Users_NestedBoolWithAggregatesFilter {
-    equals: Users_Boolean
-    not: Users_NestedBoolWithAggregatesFilter
-    _count: Users_NestedIntFilter
-    _min: Users_NestedBoolFilter
-    _max: Users_NestedBoolFilter
+  input NestedBoolWithAggregatesFilter {
+    equals: Boolean
+    not: NestedBoolWithAggregatesFilter
+    _count: NestedIntFilter
+    _min: NestedBoolFilter
+    _max: NestedBoolFilter
   }
 
   input Users_ProfileCreateWithoutUserInput {
-    location: Users_String
-    joiningDate: Users_DateTime
-    businessPhone: Users_String
-    mobilePhone: Users_String
-    kakaoTalkId: Users_String
-    designation: Users_String
-    profileImg: Users_String
-    designationIcon: Users_String
-    coverImg: Users_String
+    location: String
+    joiningDate: DateTime
+    businessPhone: String
+    mobilePhone: String
+    kakaoTalkId: String
+    designation: String
+    profileImg: String
+    designationIcon: String
+    coverImg: String
   }
 
   input Users_ProfileUncheckedCreateWithoutUserInput {
-    location: Users_String
-    joiningDate: Users_DateTime
-    businessPhone: Users_String
-    mobilePhone: Users_String
-    kakaoTalkId: Users_String
-    designation: Users_String
-    profileImg: Users_String
-    designationIcon: Users_String
-    coverImg: Users_String
+    location: String
+    joiningDate: DateTime
+    businessPhone: String
+    mobilePhone: String
+    kakaoTalkId: String
+    designation: String
+    profileImg: String
+    designationIcon: String
+    coverImg: String
   }
 
   input Users_ProfileCreateOrConnectWithoutUserInput {
@@ -2093,12 +2093,12 @@ export default gql`
 
   input Users_UsersOnTeamsCreateWithoutUserInput {
     team: Users_TeamCreateNestedOneWithoutUsersInput!
-    assignedAt: Users_DateTime
+    assignedAt: DateTime
   }
 
   input Users_UsersOnTeamsUncheckedCreateWithoutUserInput {
-    teamName: Users_String!
-    assignedAt: Users_DateTime
+    teamName: String!
+    assignedAt: DateTime
   }
 
   input Users_UsersOnTeamsCreateOrConnectWithoutUserInput {
@@ -2108,7 +2108,7 @@ export default gql`
 
   input Users_UsersOnTeamsCreateManyUserInputEnvelope {
     data: [Users_UsersOnTeamsCreateManyUserInput!]!
-    skipDuplicates: Users_Boolean
+    skipDuplicates: Boolean
   }
 
   input Users_CalendarsOnUsersCreateWithoutUserInput {
@@ -2116,7 +2116,7 @@ export default gql`
   }
 
   input Users_CalendarsOnUsersUncheckedCreateWithoutUserInput {
-    calendarId: Users_Int!
+    calendarId: Int!
   }
 
   input Users_CalendarsOnUsersCreateOrConnectWithoutUserInput {
@@ -2126,19 +2126,19 @@ export default gql`
 
   input Users_CalendarsOnUsersCreateManyUserInputEnvelope {
     data: [Users_CalendarsOnUsersCreateManyUserInput!]!
-    skipDuplicates: Users_Boolean
+    skipDuplicates: Boolean
   }
 
   input Users_UserCreateWithoutContactedByInput {
-    createdAt: Users_DateTime
-    username: Users_String
-    password: Users_String
-    email: Users_String!
-    roles: [Users_String!]
-    googleId: Users_String
-    googleProfile: Users_Json
-    lastName: Users_String
-    firstName: Users_String
+    createdAt: DateTime
+    username: String
+    password: String
+    email: String!
+    roles: [String!]
+    googleId: String
+    googleProfile: Json
+    lastName: String
+    firstName: String
     profile: Users_ProfileCreateNestedOneWithoutUserInput
     teams: Users_UsersOnTeamsCreateNestedManyWithoutUserInput
     calendars: Users_CalendarsOnUsersCreateNestedManyWithoutUserInput
@@ -2146,16 +2146,16 @@ export default gql`
   }
 
   input Users_UserUncheckedCreateWithoutContactedByInput {
-    id: Users_Int
-    createdAt: Users_DateTime
-    username: Users_String
-    password: Users_String
-    email: Users_String!
-    roles: [Users_String!]
-    googleId: Users_String
-    googleProfile: Users_Json
-    lastName: Users_String
-    firstName: Users_String
+    id: Int
+    createdAt: DateTime
+    username: String
+    password: String
+    email: String!
+    roles: [String!]
+    googleId: String
+    googleProfile: Json
+    lastName: String
+    firstName: String
     profile: Users_ProfileUncheckedCreateNestedOneWithoutUserInput
     teams: Users_UsersOnTeamsUncheckedCreateNestedManyWithoutUserInput
     calendars: Users_CalendarsOnUsersUncheckedCreateNestedManyWithoutUserInput
@@ -2168,15 +2168,15 @@ export default gql`
   }
 
   input Users_UserCreateWithoutContactedInput {
-    createdAt: Users_DateTime
-    username: Users_String
-    password: Users_String
-    email: Users_String!
-    roles: [Users_String!]
-    googleId: Users_String
-    googleProfile: Users_Json
-    lastName: Users_String
-    firstName: Users_String
+    createdAt: DateTime
+    username: String
+    password: String
+    email: String!
+    roles: [String!]
+    googleId: String
+    googleProfile: Json
+    lastName: String
+    firstName: String
     profile: Users_ProfileCreateNestedOneWithoutUserInput
     teams: Users_UsersOnTeamsCreateNestedManyWithoutUserInput
     calendars: Users_CalendarsOnUsersCreateNestedManyWithoutUserInput
@@ -2184,16 +2184,16 @@ export default gql`
   }
 
   input Users_UserUncheckedCreateWithoutContactedInput {
-    id: Users_Int
-    createdAt: Users_DateTime
-    username: Users_String
-    password: Users_String
-    email: Users_String!
-    roles: [Users_String!]
-    googleId: Users_String
-    googleProfile: Users_Json
-    lastName: Users_String
-    firstName: Users_String
+    id: Int
+    createdAt: DateTime
+    username: String
+    password: String
+    email: String!
+    roles: [String!]
+    googleId: String
+    googleProfile: Json
+    lastName: String
+    firstName: String
     profile: Users_ProfileUncheckedCreateNestedOneWithoutUserInput
     teams: Users_UsersOnTeamsUncheckedCreateNestedManyWithoutUserInput
     calendars: Users_CalendarsOnUsersUncheckedCreateNestedManyWithoutUserInput
@@ -2217,27 +2217,27 @@ export default gql`
   }
 
   input Users_ProfileUpdateWithoutUserInput {
-    location: Users_NullableStringFieldUpdateOperationsInput
-    joiningDate: Users_NullableDateTimeFieldUpdateOperationsInput
-    businessPhone: Users_NullableStringFieldUpdateOperationsInput
-    mobilePhone: Users_NullableStringFieldUpdateOperationsInput
-    kakaoTalkId: Users_NullableStringFieldUpdateOperationsInput
-    designation: Users_NullableStringFieldUpdateOperationsInput
-    profileImg: Users_NullableStringFieldUpdateOperationsInput
-    designationIcon: Users_NullableStringFieldUpdateOperationsInput
-    coverImg: Users_NullableStringFieldUpdateOperationsInput
+    location: NullableStringFieldUpdateOperationsInput
+    joiningDate: NullableDateTimeFieldUpdateOperationsInput
+    businessPhone: NullableStringFieldUpdateOperationsInput
+    mobilePhone: NullableStringFieldUpdateOperationsInput
+    kakaoTalkId: NullableStringFieldUpdateOperationsInput
+    designation: NullableStringFieldUpdateOperationsInput
+    profileImg: NullableStringFieldUpdateOperationsInput
+    designationIcon: NullableStringFieldUpdateOperationsInput
+    coverImg: NullableStringFieldUpdateOperationsInput
   }
 
   input Users_ProfileUncheckedUpdateWithoutUserInput {
-    location: Users_NullableStringFieldUpdateOperationsInput
-    joiningDate: Users_NullableDateTimeFieldUpdateOperationsInput
-    businessPhone: Users_NullableStringFieldUpdateOperationsInput
-    mobilePhone: Users_NullableStringFieldUpdateOperationsInput
-    kakaoTalkId: Users_NullableStringFieldUpdateOperationsInput
-    designation: Users_NullableStringFieldUpdateOperationsInput
-    profileImg: Users_NullableStringFieldUpdateOperationsInput
-    designationIcon: Users_NullableStringFieldUpdateOperationsInput
-    coverImg: Users_NullableStringFieldUpdateOperationsInput
+    location: NullableStringFieldUpdateOperationsInput
+    joiningDate: NullableDateTimeFieldUpdateOperationsInput
+    businessPhone: NullableStringFieldUpdateOperationsInput
+    mobilePhone: NullableStringFieldUpdateOperationsInput
+    kakaoTalkId: NullableStringFieldUpdateOperationsInput
+    designation: NullableStringFieldUpdateOperationsInput
+    profileImg: NullableStringFieldUpdateOperationsInput
+    designationIcon: NullableStringFieldUpdateOperationsInput
+    coverImg: NullableStringFieldUpdateOperationsInput
   }
 
   input Users_UsersOnTeamsUpsertWithWhereUniqueWithoutUserInput {
@@ -2260,9 +2260,9 @@ export default gql`
     AND: [Users_UsersOnTeamsScalarWhereInput!]
     OR: [Users_UsersOnTeamsScalarWhereInput!]
     NOT: [Users_UsersOnTeamsScalarWhereInput!]
-    teamName: Users_StringFilter
-    userId: Users_IntFilter
-    assignedAt: Users_DateTimeFilter
+    teamName: StringFilter
+    userId: IntFilter
+    assignedAt: DateTimeFilter
   }
 
   input Users_CalendarsOnUsersUpsertWithWhereUniqueWithoutUserInput {
@@ -2285,8 +2285,8 @@ export default gql`
     AND: [Users_CalendarsOnUsersScalarWhereInput!]
     OR: [Users_CalendarsOnUsersScalarWhereInput!]
     NOT: [Users_CalendarsOnUsersScalarWhereInput!]
-    userId: Users_IntFilter
-    calendarId: Users_IntFilter
+    userId: IntFilter
+    calendarId: IntFilter
   }
 
   input Users_UserUpsertWithWhereUniqueWithoutContactedByInput {
@@ -2309,16 +2309,16 @@ export default gql`
     AND: [Users_UserScalarWhereInput!]
     OR: [Users_UserScalarWhereInput!]
     NOT: [Users_UserScalarWhereInput!]
-    id: Users_IntFilter
-    createdAt: Users_DateTimeFilter
-    username: Users_StringNullableFilter
-    password: Users_StringNullableFilter
-    email: Users_StringFilter
-    roles: Users_StringNullableListFilter
-    googleId: Users_StringNullableFilter
-    googleProfile: Users_JsonNullableFilter
-    lastName: Users_StringNullableFilter
-    firstName: Users_StringNullableFilter
+    id: IntFilter
+    createdAt: DateTimeFilter
+    username: StringNullableFilter
+    password: StringNullableFilter
+    email: StringFilter
+    roles: StringNullableListFilter
+    googleId: StringNullableFilter
+    googleProfile: JsonNullableFilter
+    lastName: StringNullableFilter
+    firstName: StringNullableFilter
   }
 
   input Users_UserUpsertWithWhereUniqueWithoutContactedInput {
@@ -2338,15 +2338,15 @@ export default gql`
   }
 
   input Users_UserCreateWithoutProfileInput {
-    createdAt: Users_DateTime
-    username: Users_String
-    password: Users_String
-    email: Users_String!
-    roles: [Users_String!]
-    googleId: Users_String
-    googleProfile: Users_Json
-    lastName: Users_String
-    firstName: Users_String
+    createdAt: DateTime
+    username: String
+    password: String
+    email: String!
+    roles: [String!]
+    googleId: String
+    googleProfile: Json
+    lastName: String
+    firstName: String
     teams: Users_UsersOnTeamsCreateNestedManyWithoutUserInput
     calendars: Users_CalendarsOnUsersCreateNestedManyWithoutUserInput
     contacted: Users_UserCreateNestedManyWithoutContactedByInput
@@ -2354,16 +2354,16 @@ export default gql`
   }
 
   input Users_UserUncheckedCreateWithoutProfileInput {
-    id: Users_Int
-    createdAt: Users_DateTime
-    username: Users_String
-    password: Users_String
-    email: Users_String!
-    roles: [Users_String!]
-    googleId: Users_String
-    googleProfile: Users_Json
-    lastName: Users_String
-    firstName: Users_String
+    id: Int
+    createdAt: DateTime
+    username: String
+    password: String
+    email: String!
+    roles: [String!]
+    googleId: String
+    googleProfile: Json
+    lastName: String
+    firstName: String
     teams: Users_UsersOnTeamsUncheckedCreateNestedManyWithoutUserInput
     calendars: Users_CalendarsOnUsersUncheckedCreateNestedManyWithoutUserInput
     contacted: Users_UserUncheckedCreateNestedManyWithoutContactedByInput
@@ -2387,15 +2387,15 @@ export default gql`
   }
 
   input Users_UserUpdateWithoutProfileInput {
-    createdAt: Users_DateTimeFieldUpdateOperationsInput
-    username: Users_NullableStringFieldUpdateOperationsInput
-    password: Users_NullableStringFieldUpdateOperationsInput
-    email: Users_StringFieldUpdateOperationsInput
-    roles: [Users_String!]
-    googleId: Users_NullableStringFieldUpdateOperationsInput
-    googleProfile: Users_Json
-    lastName: Users_NullableStringFieldUpdateOperationsInput
-    firstName: Users_NullableStringFieldUpdateOperationsInput
+    createdAt: DateTimeFieldUpdateOperationsInput
+    username: NullableStringFieldUpdateOperationsInput
+    password: NullableStringFieldUpdateOperationsInput
+    email: StringFieldUpdateOperationsInput
+    roles: [String!]
+    googleId: NullableStringFieldUpdateOperationsInput
+    googleProfile: Json
+    lastName: NullableStringFieldUpdateOperationsInput
+    firstName: NullableStringFieldUpdateOperationsInput
     teams: Users_UsersOnTeamsUpdateManyWithoutUserNestedInput
     calendars: Users_CalendarsOnUsersUpdateManyWithoutUserNestedInput
     contacted: Users_UserUpdateManyWithoutContactedByNestedInput
@@ -2403,16 +2403,16 @@ export default gql`
   }
 
   input Users_UserUncheckedUpdateWithoutProfileInput {
-    id: Users_IntFieldUpdateOperationsInput
-    createdAt: Users_DateTimeFieldUpdateOperationsInput
-    username: Users_NullableStringFieldUpdateOperationsInput
-    password: Users_NullableStringFieldUpdateOperationsInput
-    email: Users_StringFieldUpdateOperationsInput
-    roles: [Users_String!]
-    googleId: Users_NullableStringFieldUpdateOperationsInput
-    googleProfile: Users_Json
-    lastName: Users_NullableStringFieldUpdateOperationsInput
-    firstName: Users_NullableStringFieldUpdateOperationsInput
+    id: IntFieldUpdateOperationsInput
+    createdAt: DateTimeFieldUpdateOperationsInput
+    username: NullableStringFieldUpdateOperationsInput
+    password: NullableStringFieldUpdateOperationsInput
+    email: StringFieldUpdateOperationsInput
+    roles: [String!]
+    googleId: NullableStringFieldUpdateOperationsInput
+    googleProfile: Json
+    lastName: NullableStringFieldUpdateOperationsInput
+    firstName: NullableStringFieldUpdateOperationsInput
     teams: Users_UsersOnTeamsUncheckedUpdateManyWithoutUserNestedInput
     calendars: Users_CalendarsOnUsersUncheckedUpdateManyWithoutUserNestedInput
     contacted: Users_UserUncheckedUpdateManyWithoutContactedByNestedInput
@@ -2420,15 +2420,15 @@ export default gql`
   }
 
   input Users_TeamCreateWithoutUsersInput {
-    teamName: Users_String!
-    teamType: Users_String
-    teamIcon: Users_String
+    teamName: String!
+    teamType: String
+    teamIcon: String
   }
 
   input Users_TeamUncheckedCreateWithoutUsersInput {
-    teamName: Users_String!
-    teamType: Users_String
-    teamIcon: Users_String
+    teamName: String!
+    teamType: String
+    teamIcon: String
   }
 
   input Users_TeamCreateOrConnectWithoutUsersInput {
@@ -2437,15 +2437,15 @@ export default gql`
   }
 
   input Users_UserCreateWithoutTeamsInput {
-    createdAt: Users_DateTime
-    username: Users_String
-    password: Users_String
-    email: Users_String!
-    roles: [Users_String!]
-    googleId: Users_String
-    googleProfile: Users_Json
-    lastName: Users_String
-    firstName: Users_String
+    createdAt: DateTime
+    username: String
+    password: String
+    email: String!
+    roles: [String!]
+    googleId: String
+    googleProfile: Json
+    lastName: String
+    firstName: String
     profile: Users_ProfileCreateNestedOneWithoutUserInput
     calendars: Users_CalendarsOnUsersCreateNestedManyWithoutUserInput
     contacted: Users_UserCreateNestedManyWithoutContactedByInput
@@ -2453,16 +2453,16 @@ export default gql`
   }
 
   input Users_UserUncheckedCreateWithoutTeamsInput {
-    id: Users_Int
-    createdAt: Users_DateTime
-    username: Users_String
-    password: Users_String
-    email: Users_String!
-    roles: [Users_String!]
-    googleId: Users_String
-    googleProfile: Users_Json
-    lastName: Users_String
-    firstName: Users_String
+    id: Int
+    createdAt: DateTime
+    username: String
+    password: String
+    email: String!
+    roles: [String!]
+    googleId: String
+    googleProfile: Json
+    lastName: String
+    firstName: String
     profile: Users_ProfileUncheckedCreateNestedOneWithoutUserInput
     calendars: Users_CalendarsOnUsersUncheckedCreateNestedManyWithoutUserInput
     contacted: Users_UserUncheckedCreateNestedManyWithoutContactedByInput
@@ -2486,15 +2486,15 @@ export default gql`
   }
 
   input Users_TeamUpdateWithoutUsersInput {
-    teamName: Users_StringFieldUpdateOperationsInput
-    teamType: Users_NullableStringFieldUpdateOperationsInput
-    teamIcon: Users_NullableStringFieldUpdateOperationsInput
+    teamName: StringFieldUpdateOperationsInput
+    teamType: NullableStringFieldUpdateOperationsInput
+    teamIcon: NullableStringFieldUpdateOperationsInput
   }
 
   input Users_TeamUncheckedUpdateWithoutUsersInput {
-    teamName: Users_StringFieldUpdateOperationsInput
-    teamType: Users_NullableStringFieldUpdateOperationsInput
-    teamIcon: Users_NullableStringFieldUpdateOperationsInput
+    teamName: StringFieldUpdateOperationsInput
+    teamType: NullableStringFieldUpdateOperationsInput
+    teamIcon: NullableStringFieldUpdateOperationsInput
   }
 
   input Users_UserUpsertWithoutTeamsInput {
@@ -2509,15 +2509,15 @@ export default gql`
   }
 
   input Users_UserUpdateWithoutTeamsInput {
-    createdAt: Users_DateTimeFieldUpdateOperationsInput
-    username: Users_NullableStringFieldUpdateOperationsInput
-    password: Users_NullableStringFieldUpdateOperationsInput
-    email: Users_StringFieldUpdateOperationsInput
-    roles: [Users_String!]
-    googleId: Users_NullableStringFieldUpdateOperationsInput
-    googleProfile: Users_Json
-    lastName: Users_NullableStringFieldUpdateOperationsInput
-    firstName: Users_NullableStringFieldUpdateOperationsInput
+    createdAt: DateTimeFieldUpdateOperationsInput
+    username: NullableStringFieldUpdateOperationsInput
+    password: NullableStringFieldUpdateOperationsInput
+    email: StringFieldUpdateOperationsInput
+    roles: [String!]
+    googleId: NullableStringFieldUpdateOperationsInput
+    googleProfile: Json
+    lastName: NullableStringFieldUpdateOperationsInput
+    firstName: NullableStringFieldUpdateOperationsInput
     profile: Users_ProfileUpdateOneWithoutUserNestedInput
     calendars: Users_CalendarsOnUsersUpdateManyWithoutUserNestedInput
     contacted: Users_UserUpdateManyWithoutContactedByNestedInput
@@ -2525,16 +2525,16 @@ export default gql`
   }
 
   input Users_UserUncheckedUpdateWithoutTeamsInput {
-    id: Users_IntFieldUpdateOperationsInput
-    createdAt: Users_DateTimeFieldUpdateOperationsInput
-    username: Users_NullableStringFieldUpdateOperationsInput
-    password: Users_NullableStringFieldUpdateOperationsInput
-    email: Users_StringFieldUpdateOperationsInput
-    roles: [Users_String!]
-    googleId: Users_NullableStringFieldUpdateOperationsInput
-    googleProfile: Users_Json
-    lastName: Users_NullableStringFieldUpdateOperationsInput
-    firstName: Users_NullableStringFieldUpdateOperationsInput
+    id: IntFieldUpdateOperationsInput
+    createdAt: DateTimeFieldUpdateOperationsInput
+    username: NullableStringFieldUpdateOperationsInput
+    password: NullableStringFieldUpdateOperationsInput
+    email: StringFieldUpdateOperationsInput
+    roles: [String!]
+    googleId: NullableStringFieldUpdateOperationsInput
+    googleProfile: Json
+    lastName: NullableStringFieldUpdateOperationsInput
+    firstName: NullableStringFieldUpdateOperationsInput
     profile: Users_ProfileUncheckedUpdateOneWithoutUserNestedInput
     calendars: Users_CalendarsOnUsersUncheckedUpdateManyWithoutUserNestedInput
     contacted: Users_UserUncheckedUpdateManyWithoutContactedByNestedInput
@@ -2543,12 +2543,12 @@ export default gql`
 
   input Users_UsersOnTeamsCreateWithoutTeamInput {
     user: Users_UserCreateNestedOneWithoutTeamsInput!
-    assignedAt: Users_DateTime
+    assignedAt: DateTime
   }
 
   input Users_UsersOnTeamsUncheckedCreateWithoutTeamInput {
-    userId: Users_Int!
-    assignedAt: Users_DateTime
+    userId: Int!
+    assignedAt: DateTime
   }
 
   input Users_UsersOnTeamsCreateOrConnectWithoutTeamInput {
@@ -2558,7 +2558,7 @@ export default gql`
 
   input Users_UsersOnTeamsCreateManyTeamInputEnvelope {
     data: [Users_UsersOnTeamsCreateManyTeamInput!]!
-    skipDuplicates: Users_Boolean
+    skipDuplicates: Boolean
   }
 
   input Users_UsersOnTeamsUpsertWithWhereUniqueWithoutTeamInput {
@@ -2578,13 +2578,13 @@ export default gql`
   }
 
   input Users_CalendarCreateWithoutCalendarEventsInput {
-    calendarType: Users_String!
+    calendarType: String!
     users: Users_CalendarsOnUsersCreateNestedManyWithoutCalendarInput
   }
 
   input Users_CalendarUncheckedCreateWithoutCalendarEventsInput {
-    id: Users_Int
-    calendarType: Users_String!
+    id: Int
+    calendarType: String!
     users: Users_CalendarsOnUsersUncheckedCreateNestedManyWithoutCalendarInput
   }
 
@@ -2605,26 +2605,26 @@ export default gql`
   }
 
   input Users_CalendarUpdateWithoutCalendarEventsInput {
-    calendarType: Users_StringFieldUpdateOperationsInput
+    calendarType: StringFieldUpdateOperationsInput
     users: Users_CalendarsOnUsersUpdateManyWithoutCalendarNestedInput
   }
 
   input Users_CalendarUncheckedUpdateWithoutCalendarEventsInput {
-    id: Users_IntFieldUpdateOperationsInput
-    calendarType: Users_StringFieldUpdateOperationsInput
+    id: IntFieldUpdateOperationsInput
+    calendarType: StringFieldUpdateOperationsInput
     users: Users_CalendarsOnUsersUncheckedUpdateManyWithoutCalendarNestedInput
   }
 
   input Users_UserCreateWithoutCalendarsInput {
-    createdAt: Users_DateTime
-    username: Users_String
-    password: Users_String
-    email: Users_String!
-    roles: [Users_String!]
-    googleId: Users_String
-    googleProfile: Users_Json
-    lastName: Users_String
-    firstName: Users_String
+    createdAt: DateTime
+    username: String
+    password: String
+    email: String!
+    roles: [String!]
+    googleId: String
+    googleProfile: Json
+    lastName: String
+    firstName: String
     profile: Users_ProfileCreateNestedOneWithoutUserInput
     teams: Users_UsersOnTeamsCreateNestedManyWithoutUserInput
     contacted: Users_UserCreateNestedManyWithoutContactedByInput
@@ -2632,16 +2632,16 @@ export default gql`
   }
 
   input Users_UserUncheckedCreateWithoutCalendarsInput {
-    id: Users_Int
-    createdAt: Users_DateTime
-    username: Users_String
-    password: Users_String
-    email: Users_String!
-    roles: [Users_String!]
-    googleId: Users_String
-    googleProfile: Users_Json
-    lastName: Users_String
-    firstName: Users_String
+    id: Int
+    createdAt: DateTime
+    username: String
+    password: String
+    email: String!
+    roles: [String!]
+    googleId: String
+    googleProfile: Json
+    lastName: String
+    firstName: String
     profile: Users_ProfileUncheckedCreateNestedOneWithoutUserInput
     teams: Users_UsersOnTeamsUncheckedCreateNestedManyWithoutUserInput
     contacted: Users_UserUncheckedCreateNestedManyWithoutContactedByInput
@@ -2654,13 +2654,13 @@ export default gql`
   }
 
   input Users_CalendarCreateWithoutUsersInput {
-    calendarType: Users_String!
+    calendarType: String!
     calendarEvents: Users_CalendarEventCreateNestedManyWithoutCalendarInput
   }
 
   input Users_CalendarUncheckedCreateWithoutUsersInput {
-    id: Users_Int
-    calendarType: Users_String!
+    id: Int
+    calendarType: String!
     calendarEvents: Users_CalendarEventUncheckedCreateNestedManyWithoutCalendarInput
   }
 
@@ -2681,15 +2681,15 @@ export default gql`
   }
 
   input Users_UserUpdateWithoutCalendarsInput {
-    createdAt: Users_DateTimeFieldUpdateOperationsInput
-    username: Users_NullableStringFieldUpdateOperationsInput
-    password: Users_NullableStringFieldUpdateOperationsInput
-    email: Users_StringFieldUpdateOperationsInput
-    roles: [Users_String!]
-    googleId: Users_NullableStringFieldUpdateOperationsInput
-    googleProfile: Users_Json
-    lastName: Users_NullableStringFieldUpdateOperationsInput
-    firstName: Users_NullableStringFieldUpdateOperationsInput
+    createdAt: DateTimeFieldUpdateOperationsInput
+    username: NullableStringFieldUpdateOperationsInput
+    password: NullableStringFieldUpdateOperationsInput
+    email: StringFieldUpdateOperationsInput
+    roles: [String!]
+    googleId: NullableStringFieldUpdateOperationsInput
+    googleProfile: Json
+    lastName: NullableStringFieldUpdateOperationsInput
+    firstName: NullableStringFieldUpdateOperationsInput
     profile: Users_ProfileUpdateOneWithoutUserNestedInput
     teams: Users_UsersOnTeamsUpdateManyWithoutUserNestedInput
     contacted: Users_UserUpdateManyWithoutContactedByNestedInput
@@ -2697,16 +2697,16 @@ export default gql`
   }
 
   input Users_UserUncheckedUpdateWithoutCalendarsInput {
-    id: Users_IntFieldUpdateOperationsInput
-    createdAt: Users_DateTimeFieldUpdateOperationsInput
-    username: Users_NullableStringFieldUpdateOperationsInput
-    password: Users_NullableStringFieldUpdateOperationsInput
-    email: Users_StringFieldUpdateOperationsInput
-    roles: [Users_String!]
-    googleId: Users_NullableStringFieldUpdateOperationsInput
-    googleProfile: Users_Json
-    lastName: Users_NullableStringFieldUpdateOperationsInput
-    firstName: Users_NullableStringFieldUpdateOperationsInput
+    id: IntFieldUpdateOperationsInput
+    createdAt: DateTimeFieldUpdateOperationsInput
+    username: NullableStringFieldUpdateOperationsInput
+    password: NullableStringFieldUpdateOperationsInput
+    email: StringFieldUpdateOperationsInput
+    roles: [String!]
+    googleId: NullableStringFieldUpdateOperationsInput
+    googleProfile: Json
+    lastName: NullableStringFieldUpdateOperationsInput
+    firstName: NullableStringFieldUpdateOperationsInput
     profile: Users_ProfileUncheckedUpdateOneWithoutUserNestedInput
     teams: Users_UsersOnTeamsUncheckedUpdateManyWithoutUserNestedInput
     contacted: Users_UserUncheckedUpdateManyWithoutContactedByNestedInput
@@ -2725,13 +2725,13 @@ export default gql`
   }
 
   input Users_CalendarUpdateWithoutUsersInput {
-    calendarType: Users_StringFieldUpdateOperationsInput
+    calendarType: StringFieldUpdateOperationsInput
     calendarEvents: Users_CalendarEventUpdateManyWithoutCalendarNestedInput
   }
 
   input Users_CalendarUncheckedUpdateWithoutUsersInput {
-    id: Users_IntFieldUpdateOperationsInput
-    calendarType: Users_StringFieldUpdateOperationsInput
+    id: IntFieldUpdateOperationsInput
+    calendarType: StringFieldUpdateOperationsInput
     calendarEvents: Users_CalendarEventUncheckedUpdateManyWithoutCalendarNestedInput
   }
 
@@ -2740,7 +2740,7 @@ export default gql`
   }
 
   input Users_CalendarsOnUsersUncheckedCreateWithoutCalendarInput {
-    userId: Users_Int!
+    userId: Int!
   }
 
   input Users_CalendarsOnUsersCreateOrConnectWithoutCalendarInput {
@@ -2750,24 +2750,24 @@ export default gql`
 
   input Users_CalendarsOnUsersCreateManyCalendarInputEnvelope {
     data: [Users_CalendarsOnUsersCreateManyCalendarInput!]!
-    skipDuplicates: Users_Boolean
+    skipDuplicates: Boolean
   }
 
   input Users_CalendarEventCreateWithoutCalendarInput {
-    url: Users_String
-    title: Users_String!
-    start: Users_DateTime!
-    end: Users_DateTime!
-    allDay: Users_Boolean!
+    url: String
+    title: String!
+    start: DateTime!
+    end: DateTime!
+    allDay: Boolean!
   }
 
   input Users_CalendarEventUncheckedCreateWithoutCalendarInput {
-    id: Users_Int
-    url: Users_String
-    title: Users_String!
-    start: Users_DateTime!
-    end: Users_DateTime!
-    allDay: Users_Boolean!
+    id: Int
+    url: String
+    title: String!
+    start: DateTime!
+    end: DateTime!
+    allDay: Boolean!
   }
 
   input Users_CalendarEventCreateOrConnectWithoutCalendarInput {
@@ -2777,7 +2777,7 @@ export default gql`
 
   input Users_CalendarEventCreateManyCalendarInputEnvelope {
     data: [Users_CalendarEventCreateManyCalendarInput!]!
-    skipDuplicates: Users_Boolean
+    skipDuplicates: Boolean
   }
 
   input Users_CalendarsOnUsersUpsertWithWhereUniqueWithoutCalendarInput {
@@ -2816,37 +2816,37 @@ export default gql`
     AND: [Users_CalendarEventScalarWhereInput!]
     OR: [Users_CalendarEventScalarWhereInput!]
     NOT: [Users_CalendarEventScalarWhereInput!]
-    id: Users_IntFilter
-    url: Users_StringNullableFilter
-    title: Users_StringFilter
-    start: Users_DateTimeFilter
-    end: Users_DateTimeFilter
-    allDay: Users_BoolFilter
-    calendarId: Users_IntFilter
+    id: IntFilter
+    url: StringNullableFilter
+    title: StringFilter
+    start: DateTimeFilter
+    end: DateTimeFilter
+    allDay: BoolFilter
+    calendarId: IntFilter
   }
 
   input Users_UsersOnTeamsCreateManyUserInput {
-    teamName: Users_String!
-    assignedAt: Users_DateTime
+    teamName: String!
+    assignedAt: DateTime
   }
 
   input Users_CalendarsOnUsersCreateManyUserInput {
-    calendarId: Users_Int!
+    calendarId: Int!
   }
 
   input Users_UsersOnTeamsUpdateWithoutUserInput {
     team: Users_TeamUpdateOneRequiredWithoutUsersNestedInput
-    assignedAt: Users_DateTimeFieldUpdateOperationsInput
+    assignedAt: DateTimeFieldUpdateOperationsInput
   }
 
   input Users_UsersOnTeamsUncheckedUpdateWithoutUserInput {
-    teamName: Users_StringFieldUpdateOperationsInput
-    assignedAt: Users_DateTimeFieldUpdateOperationsInput
+    teamName: StringFieldUpdateOperationsInput
+    assignedAt: DateTimeFieldUpdateOperationsInput
   }
 
   input Users_UsersOnTeamsUncheckedUpdateManyWithoutTeamsInput {
-    teamName: Users_StringFieldUpdateOperationsInput
-    assignedAt: Users_DateTimeFieldUpdateOperationsInput
+    teamName: StringFieldUpdateOperationsInput
+    assignedAt: DateTimeFieldUpdateOperationsInput
   }
 
   input Users_CalendarsOnUsersUpdateWithoutUserInput {
@@ -2854,23 +2854,23 @@ export default gql`
   }
 
   input Users_CalendarsOnUsersUncheckedUpdateWithoutUserInput {
-    calendarId: Users_IntFieldUpdateOperationsInput
+    calendarId: IntFieldUpdateOperationsInput
   }
 
   input Users_CalendarsOnUsersUncheckedUpdateManyWithoutCalendarsInput {
-    calendarId: Users_IntFieldUpdateOperationsInput
+    calendarId: IntFieldUpdateOperationsInput
   }
 
   input Users_UserUpdateWithoutContactedByInput {
-    createdAt: Users_DateTimeFieldUpdateOperationsInput
-    username: Users_NullableStringFieldUpdateOperationsInput
-    password: Users_NullableStringFieldUpdateOperationsInput
-    email: Users_StringFieldUpdateOperationsInput
-    roles: [Users_String!]
-    googleId: Users_NullableStringFieldUpdateOperationsInput
-    googleProfile: Users_Json
-    lastName: Users_NullableStringFieldUpdateOperationsInput
-    firstName: Users_NullableStringFieldUpdateOperationsInput
+    createdAt: DateTimeFieldUpdateOperationsInput
+    username: NullableStringFieldUpdateOperationsInput
+    password: NullableStringFieldUpdateOperationsInput
+    email: StringFieldUpdateOperationsInput
+    roles: [String!]
+    googleId: NullableStringFieldUpdateOperationsInput
+    googleProfile: Json
+    lastName: NullableStringFieldUpdateOperationsInput
+    firstName: NullableStringFieldUpdateOperationsInput
     profile: Users_ProfileUpdateOneWithoutUserNestedInput
     teams: Users_UsersOnTeamsUpdateManyWithoutUserNestedInput
     calendars: Users_CalendarsOnUsersUpdateManyWithoutUserNestedInput
@@ -2878,16 +2878,16 @@ export default gql`
   }
 
   input Users_UserUncheckedUpdateWithoutContactedByInput {
-    id: Users_IntFieldUpdateOperationsInput
-    createdAt: Users_DateTimeFieldUpdateOperationsInput
-    username: Users_NullableStringFieldUpdateOperationsInput
-    password: Users_NullableStringFieldUpdateOperationsInput
-    email: Users_StringFieldUpdateOperationsInput
-    roles: [Users_String!]
-    googleId: Users_NullableStringFieldUpdateOperationsInput
-    googleProfile: Users_Json
-    lastName: Users_NullableStringFieldUpdateOperationsInput
-    firstName: Users_NullableStringFieldUpdateOperationsInput
+    id: IntFieldUpdateOperationsInput
+    createdAt: DateTimeFieldUpdateOperationsInput
+    username: NullableStringFieldUpdateOperationsInput
+    password: NullableStringFieldUpdateOperationsInput
+    email: StringFieldUpdateOperationsInput
+    roles: [String!]
+    googleId: NullableStringFieldUpdateOperationsInput
+    googleProfile: Json
+    lastName: NullableStringFieldUpdateOperationsInput
+    firstName: NullableStringFieldUpdateOperationsInput
     profile: Users_ProfileUncheckedUpdateOneWithoutUserNestedInput
     teams: Users_UsersOnTeamsUncheckedUpdateManyWithoutUserNestedInput
     calendars: Users_CalendarsOnUsersUncheckedUpdateManyWithoutUserNestedInput
@@ -2895,28 +2895,28 @@ export default gql`
   }
 
   input Users_UserUncheckedUpdateManyWithoutContactedInput {
-    id: Users_IntFieldUpdateOperationsInput
-    createdAt: Users_DateTimeFieldUpdateOperationsInput
-    username: Users_NullableStringFieldUpdateOperationsInput
-    password: Users_NullableStringFieldUpdateOperationsInput
-    email: Users_StringFieldUpdateOperationsInput
-    roles: [Users_String!]
-    googleId: Users_NullableStringFieldUpdateOperationsInput
-    googleProfile: Users_Json
-    lastName: Users_NullableStringFieldUpdateOperationsInput
-    firstName: Users_NullableStringFieldUpdateOperationsInput
+    id: IntFieldUpdateOperationsInput
+    createdAt: DateTimeFieldUpdateOperationsInput
+    username: NullableStringFieldUpdateOperationsInput
+    password: NullableStringFieldUpdateOperationsInput
+    email: StringFieldUpdateOperationsInput
+    roles: [String!]
+    googleId: NullableStringFieldUpdateOperationsInput
+    googleProfile: Json
+    lastName: NullableStringFieldUpdateOperationsInput
+    firstName: NullableStringFieldUpdateOperationsInput
   }
 
   input Users_UserUpdateWithoutContactedInput {
-    createdAt: Users_DateTimeFieldUpdateOperationsInput
-    username: Users_NullableStringFieldUpdateOperationsInput
-    password: Users_NullableStringFieldUpdateOperationsInput
-    email: Users_StringFieldUpdateOperationsInput
-    roles: [Users_String!]
-    googleId: Users_NullableStringFieldUpdateOperationsInput
-    googleProfile: Users_Json
-    lastName: Users_NullableStringFieldUpdateOperationsInput
-    firstName: Users_NullableStringFieldUpdateOperationsInput
+    createdAt: DateTimeFieldUpdateOperationsInput
+    username: NullableStringFieldUpdateOperationsInput
+    password: NullableStringFieldUpdateOperationsInput
+    email: StringFieldUpdateOperationsInput
+    roles: [String!]
+    googleId: NullableStringFieldUpdateOperationsInput
+    googleProfile: Json
+    lastName: NullableStringFieldUpdateOperationsInput
+    firstName: NullableStringFieldUpdateOperationsInput
     profile: Users_ProfileUpdateOneWithoutUserNestedInput
     teams: Users_UsersOnTeamsUpdateManyWithoutUserNestedInput
     calendars: Users_CalendarsOnUsersUpdateManyWithoutUserNestedInput
@@ -2924,16 +2924,16 @@ export default gql`
   }
 
   input Users_UserUncheckedUpdateWithoutContactedInput {
-    id: Users_IntFieldUpdateOperationsInput
-    createdAt: Users_DateTimeFieldUpdateOperationsInput
-    username: Users_NullableStringFieldUpdateOperationsInput
-    password: Users_NullableStringFieldUpdateOperationsInput
-    email: Users_StringFieldUpdateOperationsInput
-    roles: [Users_String!]
-    googleId: Users_NullableStringFieldUpdateOperationsInput
-    googleProfile: Users_Json
-    lastName: Users_NullableStringFieldUpdateOperationsInput
-    firstName: Users_NullableStringFieldUpdateOperationsInput
+    id: IntFieldUpdateOperationsInput
+    createdAt: DateTimeFieldUpdateOperationsInput
+    username: NullableStringFieldUpdateOperationsInput
+    password: NullableStringFieldUpdateOperationsInput
+    email: StringFieldUpdateOperationsInput
+    roles: [String!]
+    googleId: NullableStringFieldUpdateOperationsInput
+    googleProfile: Json
+    lastName: NullableStringFieldUpdateOperationsInput
+    firstName: NullableStringFieldUpdateOperationsInput
     profile: Users_ProfileUncheckedUpdateOneWithoutUserNestedInput
     teams: Users_UsersOnTeamsUncheckedUpdateManyWithoutUserNestedInput
     calendars: Users_CalendarsOnUsersUncheckedUpdateManyWithoutUserNestedInput
@@ -2941,49 +2941,49 @@ export default gql`
   }
 
   input Users_UserUncheckedUpdateManyWithoutContactedByInput {
-    id: Users_IntFieldUpdateOperationsInput
-    createdAt: Users_DateTimeFieldUpdateOperationsInput
-    username: Users_NullableStringFieldUpdateOperationsInput
-    password: Users_NullableStringFieldUpdateOperationsInput
-    email: Users_StringFieldUpdateOperationsInput
-    roles: [Users_String!]
-    googleId: Users_NullableStringFieldUpdateOperationsInput
-    googleProfile: Users_Json
-    lastName: Users_NullableStringFieldUpdateOperationsInput
-    firstName: Users_NullableStringFieldUpdateOperationsInput
+    id: IntFieldUpdateOperationsInput
+    createdAt: DateTimeFieldUpdateOperationsInput
+    username: NullableStringFieldUpdateOperationsInput
+    password: NullableStringFieldUpdateOperationsInput
+    email: StringFieldUpdateOperationsInput
+    roles: [String!]
+    googleId: NullableStringFieldUpdateOperationsInput
+    googleProfile: Json
+    lastName: NullableStringFieldUpdateOperationsInput
+    firstName: NullableStringFieldUpdateOperationsInput
   }
 
   input Users_UsersOnTeamsCreateManyTeamInput {
-    userId: Users_Int!
-    assignedAt: Users_DateTime
+    userId: Int!
+    assignedAt: DateTime
   }
 
   input Users_UsersOnTeamsUpdateWithoutTeamInput {
     user: Users_UserUpdateOneRequiredWithoutTeamsNestedInput
-    assignedAt: Users_DateTimeFieldUpdateOperationsInput
+    assignedAt: DateTimeFieldUpdateOperationsInput
   }
 
   input Users_UsersOnTeamsUncheckedUpdateWithoutTeamInput {
-    userId: Users_IntFieldUpdateOperationsInput
-    assignedAt: Users_DateTimeFieldUpdateOperationsInput
+    userId: IntFieldUpdateOperationsInput
+    assignedAt: DateTimeFieldUpdateOperationsInput
   }
 
   input Users_UsersOnTeamsUncheckedUpdateManyWithoutUsersInput {
-    userId: Users_IntFieldUpdateOperationsInput
-    assignedAt: Users_DateTimeFieldUpdateOperationsInput
+    userId: IntFieldUpdateOperationsInput
+    assignedAt: DateTimeFieldUpdateOperationsInput
   }
 
   input Users_CalendarsOnUsersCreateManyCalendarInput {
-    userId: Users_Int!
+    userId: Int!
   }
 
   input Users_CalendarEventCreateManyCalendarInput {
-    id: Users_Int
-    url: Users_String
-    title: Users_String!
-    start: Users_DateTime!
-    end: Users_DateTime!
-    allDay: Users_Boolean!
+    id: Int
+    url: String
+    title: String!
+    start: DateTime!
+    end: DateTime!
+    allDay: Boolean!
   }
 
   input Users_CalendarsOnUsersUpdateWithoutCalendarInput {
@@ -2991,37 +2991,37 @@ export default gql`
   }
 
   input Users_CalendarsOnUsersUncheckedUpdateWithoutCalendarInput {
-    userId: Users_IntFieldUpdateOperationsInput
+    userId: IntFieldUpdateOperationsInput
   }
 
   input Users_CalendarsOnUsersUncheckedUpdateManyWithoutUsersInput {
-    userId: Users_IntFieldUpdateOperationsInput
+    userId: IntFieldUpdateOperationsInput
   }
 
   input Users_CalendarEventUpdateWithoutCalendarInput {
-    url: Users_NullableStringFieldUpdateOperationsInput
-    title: Users_StringFieldUpdateOperationsInput
-    start: Users_DateTimeFieldUpdateOperationsInput
-    end: Users_DateTimeFieldUpdateOperationsInput
-    allDay: Users_BoolFieldUpdateOperationsInput
+    url: NullableStringFieldUpdateOperationsInput
+    title: StringFieldUpdateOperationsInput
+    start: DateTimeFieldUpdateOperationsInput
+    end: DateTimeFieldUpdateOperationsInput
+    allDay: BoolFieldUpdateOperationsInput
   }
 
   input Users_CalendarEventUncheckedUpdateWithoutCalendarInput {
-    id: Users_IntFieldUpdateOperationsInput
-    url: Users_NullableStringFieldUpdateOperationsInput
-    title: Users_StringFieldUpdateOperationsInput
-    start: Users_DateTimeFieldUpdateOperationsInput
-    end: Users_DateTimeFieldUpdateOperationsInput
-    allDay: Users_BoolFieldUpdateOperationsInput
+    id: IntFieldUpdateOperationsInput
+    url: NullableStringFieldUpdateOperationsInput
+    title: StringFieldUpdateOperationsInput
+    start: DateTimeFieldUpdateOperationsInput
+    end: DateTimeFieldUpdateOperationsInput
+    allDay: BoolFieldUpdateOperationsInput
   }
 
   input Users_CalendarEventUncheckedUpdateManyWithoutCalendarEventsInput {
-    id: Users_IntFieldUpdateOperationsInput
-    url: Users_NullableStringFieldUpdateOperationsInput
-    title: Users_StringFieldUpdateOperationsInput
-    start: Users_DateTimeFieldUpdateOperationsInput
-    end: Users_DateTimeFieldUpdateOperationsInput
-    allDay: Users_BoolFieldUpdateOperationsInput
+    id: IntFieldUpdateOperationsInput
+    url: NullableStringFieldUpdateOperationsInput
+    title: StringFieldUpdateOperationsInput
+    start: DateTimeFieldUpdateOperationsInput
+    end: DateTimeFieldUpdateOperationsInput
+    allDay: BoolFieldUpdateOperationsInput
   }
 
   type AggregateUser @shareable {
