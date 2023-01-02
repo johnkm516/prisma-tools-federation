@@ -1,3 +1,6 @@
+import Calendar from './Calendar/resolvers';
+import CalendarsOnUsers from './CalendarsOnUsers/resolvers';
+import CalendarEvent from './CalendarEvent/resolvers';
 import Team from './Team/resolvers';
 import UsersOnTeams from './UsersOnTeams/resolvers';
 import Profile from './Profile/resolvers';
@@ -13,4 +16,8 @@ export default [
   Profile,
   UsersOnTeams,
   Team,
+  ,
+  CalendarEvent,
+  CalendarsOnUsers,
+  Calendar,
 ];

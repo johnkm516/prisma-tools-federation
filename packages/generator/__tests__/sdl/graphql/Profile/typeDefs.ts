@@ -6,6 +6,9 @@ export default gql`
     user: User!
     location: String
     joiningDate: DateTime
+    businessPhone: String
+    mobilePhone: String
+    kakaoTalkId: String
     designation: String
     profileImg: String
     designationIcon: String

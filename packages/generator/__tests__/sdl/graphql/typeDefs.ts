@@ -1,3 +1,6 @@
+import Calendar from './Calendar/typeDefs';
+import CalendarsOnUsers from './CalendarsOnUsers/typeDefs';
+import CalendarEvent from './CalendarEvent/typeDefs';
 import Team from './Team/typeDefs';
 import UsersOnTeams from './UsersOnTeams/typeDefs';
 import Profile from './Profile/typeDefs';
@@ -19,4 +22,8 @@ export default mergeTypeDefs([
   Profile,
   UsersOnTeams,
   Team,
+  ,
+  CalendarEvent,
+  CalendarsOnUsers,
+  Calendar,
 ]);

@@ -33,6 +33,9 @@ export interface Resolvers {
   Profile?: Profile;
   UsersOnTeams?: UsersOnTeams;
   Team?: Team;
+  CalendarEvent?: CalendarEvent;
+  CalendarsOnUsers?: CalendarsOnUsers;
+  Calendar?: Calendar;
   Query?: Query;
   Mutation?: Mutation;
   AggregateUser?: AggregateUser;
@@ -43,6 +46,12 @@ export interface Resolvers {
   UsersOnTeamsGroupByOutputType?: UsersOnTeamsGroupByOutputType;
   AggregateTeam?: AggregateTeam;
   TeamGroupByOutputType?: TeamGroupByOutputType;
+  AggregateCalendarEvent?: AggregateCalendarEvent;
+  CalendarEventGroupByOutputType?: CalendarEventGroupByOutputType;
+  AggregateCalendarsOnUsers?: AggregateCalendarsOnUsers;
+  CalendarsOnUsersGroupByOutputType?: CalendarsOnUsersGroupByOutputType;
+  AggregateCalendar?: AggregateCalendar;
+  CalendarGroupByOutputType?: CalendarGroupByOutputType;
   AffectedRowsOutput?: AffectedRowsOutput;
   UserCountOutputType?: UserCountOutputType;
   UserCountAggregateOutputType?: UserCountAggregateOutputType;
@@ -64,6 +73,22 @@ export interface Resolvers {
   TeamCountAggregateOutputType?: TeamCountAggregateOutputType;
   TeamMinAggregateOutputType?: TeamMinAggregateOutputType;
   TeamMaxAggregateOutputType?: TeamMaxAggregateOutputType;
+  CalendarEventCountAggregateOutputType?: CalendarEventCountAggregateOutputType;
+  CalendarEventAvgAggregateOutputType?: CalendarEventAvgAggregateOutputType;
+  CalendarEventSumAggregateOutputType?: CalendarEventSumAggregateOutputType;
+  CalendarEventMinAggregateOutputType?: CalendarEventMinAggregateOutputType;
+  CalendarEventMaxAggregateOutputType?: CalendarEventMaxAggregateOutputType;
+  CalendarsOnUsersCountAggregateOutputType?: CalendarsOnUsersCountAggregateOutputType;
+  CalendarsOnUsersAvgAggregateOutputType?: CalendarsOnUsersAvgAggregateOutputType;
+  CalendarsOnUsersSumAggregateOutputType?: CalendarsOnUsersSumAggregateOutputType;
+  CalendarsOnUsersMinAggregateOutputType?: CalendarsOnUsersMinAggregateOutputType;
+  CalendarsOnUsersMaxAggregateOutputType?: CalendarsOnUsersMaxAggregateOutputType;
+  CalendarCountOutputType?: CalendarCountOutputType;
+  CalendarCountAggregateOutputType?: CalendarCountAggregateOutputType;
+  CalendarAvgAggregateOutputType?: CalendarAvgAggregateOutputType;
+  CalendarSumAggregateOutputType?: CalendarSumAggregateOutputType;
+  CalendarMinAggregateOutputType?: CalendarMinAggregateOutputType;
+  CalendarMaxAggregateOutputType?: CalendarMaxAggregateOutputType;
 }
 
 export interface User {
@@ -84,6 +109,21 @@ export interface User {
     Users_UserTeamsArgs,
     Client.UsersOnTeams[] | null
   >;
+  calendars?: Resolver<
+    Client.User,
+    Users_UserCalendarsArgs,
+    Client.CalendarsOnUsers[] | null
+  >;
+  contacted?: Resolver<
+    Client.User,
+    Users_UserContactedArgs,
+    Client.User[] | null
+  >;
+  contactedBy?: Resolver<
+    Client.User,
+    Users_UserContactedByArgs,
+    Client.User[] | null
+  >;
   _count?: Resolver<Client.User, {}, Client.Prisma.UserCountOutputType>;
 
   __resolveReference?: any;
@@ -95,6 +135,9 @@ export interface Profile {
   user?: Resolver<Client.Profile, {}, Client.User>;
   location?: Resolver<Client.Profile, {}, string | null>;
   joiningDate?: Resolver<Client.Profile, {}, Date | null>;
+  businessPhone?: Resolver<Client.Profile, {}, string | null>;
+  mobilePhone?: Resolver<Client.Profile, {}, string | null>;
+  kakaoTalkId?: Resolver<Client.Profile, {}, string | null>;
   designation?: Resolver<Client.Profile, {}, string | null>;
   profileImg?: Resolver<Client.Profile, {}, string | null>;
   designationIcon?: Resolver<Client.Profile, {}, string | null>;
@@ -122,7 +165,52 @@ export interface Team {
     Users_TeamUsersArgs,
     Client.UsersOnTeams[] | null
   >;
+  teamType?: Resolver<Client.Team, {}, string | null>;
+  teamIcon?: Resolver<Client.Team, {}, string | null>;
   _count?: Resolver<Client.Team, {}, Client.Prisma.TeamCountOutputType>;
+
+  __resolveReference?: any;
+}
+
+export interface CalendarEvent {
+  [key: string]: Resolver<any, any, any>;
+  id?: Resolver<Client.CalendarEvent, {}, number>;
+  url?: Resolver<Client.CalendarEvent, {}, string | null>;
+  title?: Resolver<Client.CalendarEvent, {}, string>;
+  start?: Resolver<Client.CalendarEvent, {}, Date>;
+  end?: Resolver<Client.CalendarEvent, {}, Date>;
+  allDay?: Resolver<Client.CalendarEvent, {}, boolean>;
+  calendarId?: Resolver<Client.CalendarEvent, {}, number>;
+  calendar?: Resolver<Client.CalendarEvent, {}, Client.Calendar>;
+
+  __resolveReference?: any;
+}
+
+export interface CalendarsOnUsers {
+  [key: string]: Resolver<any, any, any>;
+  user?: Resolver<Client.CalendarsOnUsers, {}, Client.User>;
+  userId?: Resolver<Client.CalendarsOnUsers, {}, number>;
+  calendar?: Resolver<Client.CalendarsOnUsers, {}, Client.Calendar>;
+  calendarId?: Resolver<Client.CalendarsOnUsers, {}, number>;
+
+  __resolveReference?: any;
+}
+
+export interface Calendar {
+  [key: string]: Resolver<any, any, any>;
+  id?: Resolver<Client.Calendar, {}, number>;
+  calendarType?: Resolver<Client.Calendar, {}, string>;
+  users?: Resolver<
+    Client.Calendar,
+    Users_CalendarUsersArgs,
+    Client.CalendarsOnUsers[] | null
+  >;
+  calendarEvents?: Resolver<
+    Client.Calendar,
+    Users_CalendarCalendarEventsArgs,
+    Client.CalendarEvent[] | null
+  >;
+  _count?: Resolver<Client.Calendar, {}, Client.Prisma.CalendarCountOutputType>;
 
   __resolveReference?: any;
 }
@@ -275,6 +363,132 @@ export interface Query {
     Users_FindUniqueTeamOrThrowArgs,
     Client.Team | null
   >;
+  Users_findFirstCalendarEvent?: Resolver<
+    {},
+    Users_FindFirstCalendarEventArgs,
+    Client.CalendarEvent | null
+  >;
+  Users_findFirstCalendarEventOrThrow?: Resolver<
+    {},
+    Users_FindFirstCalendarEventOrThrowArgs,
+    Client.CalendarEvent | null
+  >;
+  Users_findManyCalendarEvent?: Resolver<
+    {},
+    Users_FindManyCalendarEventArgs,
+    Client.CalendarEvent[]
+  >;
+  Users_findManyCalendarEventCount?: Resolver<
+    {},
+    Users_FindManyCalendarEventArgs,
+    number
+  >;
+  Users_aggregateCalendarEvent?: Resolver<
+    {},
+    Users_AggregateCalendarEventArgs,
+    Client.Prisma.GetCalendarEventAggregateType<Users_AggregateCalendarEventArgs>
+  >;
+  //Users_groupByCalendarEvent is not generated because model has only unique fields or relations.
+  Users_groupByCalendarEvent?: Resolver<
+    {},
+    any,
+    | Client.Prisma.GetCalendarEventGroupByPayload<Users_GroupByCalendarEventArgs>
+    | GroupByError
+  >;
+  Users_findUniqueCalendarEvent?: Resolver<
+    {},
+    Users_FindUniqueCalendarEventArgs,
+    Client.CalendarEvent | null
+  >;
+  Users_findUniqueCalendarEventOrThrow?: Resolver<
+    {},
+    Users_FindUniqueCalendarEventOrThrowArgs,
+    Client.CalendarEvent | null
+  >;
+  Users_findFirstCalendarsOnUsers?: Resolver<
+    {},
+    Users_FindFirstCalendarsOnUsersArgs,
+    Client.CalendarsOnUsers | null
+  >;
+  Users_findFirstCalendarsOnUsersOrThrow?: Resolver<
+    {},
+    Users_FindFirstCalendarsOnUsersOrThrowArgs,
+    Client.CalendarsOnUsers | null
+  >;
+  Users_findManyCalendarsOnUsers?: Resolver<
+    {},
+    Users_FindManyCalendarsOnUsersArgs,
+    Client.CalendarsOnUsers[]
+  >;
+  Users_findManyCalendarsOnUsersCount?: Resolver<
+    {},
+    Users_FindManyCalendarsOnUsersArgs,
+    number
+  >;
+  Users_aggregateCalendarsOnUsers?: Resolver<
+    {},
+    Users_AggregateCalendarsOnUsersArgs,
+    Client.Prisma.GetCalendarsOnUsersAggregateType<Users_AggregateCalendarsOnUsersArgs>
+  >;
+  //Users_groupByCalendarsOnUsers is not generated because model has only unique fields or relations.
+  Users_groupByCalendarsOnUsers?: Resolver<
+    {},
+    any,
+    | Client.Prisma.GetCalendarsOnUsersGroupByPayload<Users_GroupByCalendarsOnUsersArgs>
+    | GroupByError
+  >;
+  Users_findUniqueCalendarsOnUsers?: Resolver<
+    {},
+    Users_FindUniqueCalendarsOnUsersArgs,
+    Client.CalendarsOnUsers | null
+  >;
+  Users_findUniqueCalendarsOnUsersOrThrow?: Resolver<
+    {},
+    Users_FindUniqueCalendarsOnUsersOrThrowArgs,
+    Client.CalendarsOnUsers | null
+  >;
+  Users_findFirstCalendar?: Resolver<
+    {},
+    Users_FindFirstCalendarArgs,
+    Client.Calendar | null
+  >;
+  Users_findFirstCalendarOrThrow?: Resolver<
+    {},
+    Users_FindFirstCalendarOrThrowArgs,
+    Client.Calendar | null
+  >;
+  Users_findManyCalendar?: Resolver<
+    {},
+    Users_FindManyCalendarArgs,
+    Client.Calendar[]
+  >;
+  Users_findManyCalendarCount?: Resolver<
+    {},
+    Users_FindManyCalendarArgs,
+    number
+  >;
+  Users_aggregateCalendar?: Resolver<
+    {},
+    Users_AggregateCalendarArgs,
+    Client.Prisma.GetCalendarAggregateType<Users_AggregateCalendarArgs>
+  >;
+  //Users_groupByCalendar is not generated because model has only unique fields or relations.
+  Users_groupByCalendar?: Resolver<
+    {},
+    any,
+    | Client.Prisma.GetCalendarGroupByPayload<Users_GroupByCalendarArgs>
+    | GroupByError
+  >;
+  Users_findUniqueCalendar?: Resolver<
+    {},
+    Users_FindUniqueCalendarArgs,
+    Client.Calendar | null
+  >;
+  Users_findUniqueCalendarOrThrow?: Resolver<
+    {},
+    Users_FindUniqueCalendarOrThrowArgs,
+    Client.Calendar | null
+  >;
 }
 
 export interface Mutation {
@@ -385,6 +599,99 @@ export interface Mutation {
   Users_deleteManyTeam?: Resolver<
     {},
     Users_DeleteManyTeamArgs,
+    Client.Prisma.BatchPayload
+  >;
+  Users_createOneCalendarEvent?: Resolver<
+    {},
+    Users_CreateOneCalendarEventArgs,
+    Client.CalendarEvent
+  >;
+  Users_upsertOneCalendarEvent?: Resolver<
+    {},
+    Users_UpsertOneCalendarEventArgs,
+    Client.CalendarEvent
+  >;
+  Users_createManyCalendarEvent?: Resolver<
+    {},
+    Users_CreateManyCalendarEventArgs,
+    Client.Prisma.BatchPayload
+  >;
+  Users_deleteOneCalendarEvent?: Resolver<
+    {},
+    Users_DeleteOneCalendarEventArgs,
+    Client.CalendarEvent | null
+  >;
+  Users_updateOneCalendarEvent?: Resolver<
+    {},
+    Users_UpdateOneCalendarEventArgs,
+    Client.CalendarEvent | null
+  >;
+  //Users_updateManyCalendarEvent is not generated because model has only unique fields or relations.
+  Users_deleteManyCalendarEvent?: Resolver<
+    {},
+    Users_DeleteManyCalendarEventArgs,
+    Client.Prisma.BatchPayload
+  >;
+  Users_createOneCalendarsOnUsers?: Resolver<
+    {},
+    Users_CreateOneCalendarsOnUsersArgs,
+    Client.CalendarsOnUsers
+  >;
+  Users_upsertOneCalendarsOnUsers?: Resolver<
+    {},
+    Users_UpsertOneCalendarsOnUsersArgs,
+    Client.CalendarsOnUsers
+  >;
+  Users_createManyCalendarsOnUsers?: Resolver<
+    {},
+    Users_CreateManyCalendarsOnUsersArgs,
+    Client.Prisma.BatchPayload
+  >;
+  Users_deleteOneCalendarsOnUsers?: Resolver<
+    {},
+    Users_DeleteOneCalendarsOnUsersArgs,
+    Client.CalendarsOnUsers | null
+  >;
+  Users_updateOneCalendarsOnUsers?: Resolver<
+    {},
+    Users_UpdateOneCalendarsOnUsersArgs,
+    Client.CalendarsOnUsers | null
+  >;
+  //Users_updateManyCalendarsOnUsers is not generated because model has only unique fields or relations.
+  Users_deleteManyCalendarsOnUsers?: Resolver<
+    {},
+    Users_DeleteManyCalendarsOnUsersArgs,
+    Client.Prisma.BatchPayload
+  >;
+  Users_createOneCalendar?: Resolver<
+    {},
+    Users_CreateOneCalendarArgs,
+    Client.Calendar
+  >;
+  Users_upsertOneCalendar?: Resolver<
+    {},
+    Users_UpsertOneCalendarArgs,
+    Client.Calendar
+  >;
+  Users_createManyCalendar?: Resolver<
+    {},
+    Users_CreateManyCalendarArgs,
+    Client.Prisma.BatchPayload
+  >;
+  Users_deleteOneCalendar?: Resolver<
+    {},
+    Users_DeleteOneCalendarArgs,
+    Client.Calendar | null
+  >;
+  Users_updateOneCalendar?: Resolver<
+    {},
+    Users_UpdateOneCalendarArgs,
+    Client.Calendar | null
+  >;
+  //Users_updateManyCalendar is not generated because model has only unique fields or relations.
+  Users_deleteManyCalendar?: Resolver<
+    {},
+    Users_DeleteManyCalendarArgs,
     Client.Prisma.BatchPayload
   >;
   Users_executeRaw?: Resolver<{}, Users_ExecuteRawArgs, any>;
@@ -505,6 +812,21 @@ export interface ProfileGroupByOutputType {
     Client.Prisma.ProfileGroupByOutputType,
     {},
     Date | null
+  >;
+  businessPhone?: Resolver<
+    Client.Prisma.ProfileGroupByOutputType,
+    {},
+    string | null
+  >;
+  mobilePhone?: Resolver<
+    Client.Prisma.ProfileGroupByOutputType,
+    {},
+    string | null
+  >;
+  kakaoTalkId?: Resolver<
+    Client.Prisma.ProfileGroupByOutputType,
+    {},
+    string | null
   >;
   designation?: Resolver<
     Client.Prisma.ProfileGroupByOutputType,
@@ -636,6 +958,8 @@ export interface AggregateTeam {
 export interface TeamGroupByOutputType {
   [key: string]: Resolver<any, any, any>;
   teamName?: Resolver<Client.Prisma.TeamGroupByOutputType, {}, string>;
+  teamType?: Resolver<Client.Prisma.TeamGroupByOutputType, {}, string | null>;
+  teamIcon?: Resolver<Client.Prisma.TeamGroupByOutputType, {}, string | null>;
   _count?: Resolver<
     Client.Prisma.TeamGroupByOutputType,
     {},
@@ -653,6 +977,207 @@ export interface TeamGroupByOutputType {
   >;
 }
 
+export interface AggregateCalendarEvent {
+  [key: string]: Resolver<any, any, any>;
+  _count?: Resolver<
+    Client.Prisma.AggregateCalendarEvent,
+    {},
+    Client.Prisma.CalendarEventCountAggregateOutputType | null
+  >;
+  _avg?: Resolver<
+    Client.Prisma.AggregateCalendarEvent,
+    {},
+    Client.Prisma.CalendarEventAvgAggregateOutputType | null
+  >;
+  _sum?: Resolver<
+    Client.Prisma.AggregateCalendarEvent,
+    {},
+    Client.Prisma.CalendarEventSumAggregateOutputType | null
+  >;
+  _min?: Resolver<
+    Client.Prisma.AggregateCalendarEvent,
+    {},
+    Client.Prisma.CalendarEventMinAggregateOutputType | null
+  >;
+  _max?: Resolver<
+    Client.Prisma.AggregateCalendarEvent,
+    {},
+    Client.Prisma.CalendarEventMaxAggregateOutputType | null
+  >;
+}
+
+export interface CalendarEventGroupByOutputType {
+  [key: string]: Resolver<any, any, any>;
+  id?: Resolver<Client.Prisma.CalendarEventGroupByOutputType, {}, number>;
+  url?: Resolver<
+    Client.Prisma.CalendarEventGroupByOutputType,
+    {},
+    string | null
+  >;
+  title?: Resolver<Client.Prisma.CalendarEventGroupByOutputType, {}, string>;
+  start?: Resolver<Client.Prisma.CalendarEventGroupByOutputType, {}, Date>;
+  end?: Resolver<Client.Prisma.CalendarEventGroupByOutputType, {}, Date>;
+  allDay?: Resolver<Client.Prisma.CalendarEventGroupByOutputType, {}, boolean>;
+  calendarId?: Resolver<
+    Client.Prisma.CalendarEventGroupByOutputType,
+    {},
+    number
+  >;
+  _count?: Resolver<
+    Client.Prisma.CalendarEventGroupByOutputType,
+    {},
+    Client.Prisma.CalendarEventCountAggregateOutputType | null
+  >;
+  _avg?: Resolver<
+    Client.Prisma.CalendarEventGroupByOutputType,
+    {},
+    Client.Prisma.CalendarEventAvgAggregateOutputType | null
+  >;
+  _sum?: Resolver<
+    Client.Prisma.CalendarEventGroupByOutputType,
+    {},
+    Client.Prisma.CalendarEventSumAggregateOutputType | null
+  >;
+  _min?: Resolver<
+    Client.Prisma.CalendarEventGroupByOutputType,
+    {},
+    Client.Prisma.CalendarEventMinAggregateOutputType | null
+  >;
+  _max?: Resolver<
+    Client.Prisma.CalendarEventGroupByOutputType,
+    {},
+    Client.Prisma.CalendarEventMaxAggregateOutputType | null
+  >;
+}
+
+export interface AggregateCalendarsOnUsers {
+  [key: string]: Resolver<any, any, any>;
+  _count?: Resolver<
+    Client.Prisma.AggregateCalendarsOnUsers,
+    {},
+    Client.Prisma.CalendarsOnUsersCountAggregateOutputType | null
+  >;
+  _avg?: Resolver<
+    Client.Prisma.AggregateCalendarsOnUsers,
+    {},
+    Client.Prisma.CalendarsOnUsersAvgAggregateOutputType | null
+  >;
+  _sum?: Resolver<
+    Client.Prisma.AggregateCalendarsOnUsers,
+    {},
+    Client.Prisma.CalendarsOnUsersSumAggregateOutputType | null
+  >;
+  _min?: Resolver<
+    Client.Prisma.AggregateCalendarsOnUsers,
+    {},
+    Client.Prisma.CalendarsOnUsersMinAggregateOutputType | null
+  >;
+  _max?: Resolver<
+    Client.Prisma.AggregateCalendarsOnUsers,
+    {},
+    Client.Prisma.CalendarsOnUsersMaxAggregateOutputType | null
+  >;
+}
+
+export interface CalendarsOnUsersGroupByOutputType {
+  [key: string]: Resolver<any, any, any>;
+  userId?: Resolver<
+    Client.Prisma.CalendarsOnUsersGroupByOutputType,
+    {},
+    number
+  >;
+  calendarId?: Resolver<
+    Client.Prisma.CalendarsOnUsersGroupByOutputType,
+    {},
+    number
+  >;
+  _count?: Resolver<
+    Client.Prisma.CalendarsOnUsersGroupByOutputType,
+    {},
+    Client.Prisma.CalendarsOnUsersCountAggregateOutputType | null
+  >;
+  _avg?: Resolver<
+    Client.Prisma.CalendarsOnUsersGroupByOutputType,
+    {},
+    Client.Prisma.CalendarsOnUsersAvgAggregateOutputType | null
+  >;
+  _sum?: Resolver<
+    Client.Prisma.CalendarsOnUsersGroupByOutputType,
+    {},
+    Client.Prisma.CalendarsOnUsersSumAggregateOutputType | null
+  >;
+  _min?: Resolver<
+    Client.Prisma.CalendarsOnUsersGroupByOutputType,
+    {},
+    Client.Prisma.CalendarsOnUsersMinAggregateOutputType | null
+  >;
+  _max?: Resolver<
+    Client.Prisma.CalendarsOnUsersGroupByOutputType,
+    {},
+    Client.Prisma.CalendarsOnUsersMaxAggregateOutputType | null
+  >;
+}
+
+export interface AggregateCalendar {
+  [key: string]: Resolver<any, any, any>;
+  _count?: Resolver<
+    Client.Prisma.AggregateCalendar,
+    {},
+    Client.Prisma.CalendarCountAggregateOutputType | null
+  >;
+  _avg?: Resolver<
+    Client.Prisma.AggregateCalendar,
+    {},
+    Client.Prisma.CalendarAvgAggregateOutputType | null
+  >;
+  _sum?: Resolver<
+    Client.Prisma.AggregateCalendar,
+    {},
+    Client.Prisma.CalendarSumAggregateOutputType | null
+  >;
+  _min?: Resolver<
+    Client.Prisma.AggregateCalendar,
+    {},
+    Client.Prisma.CalendarMinAggregateOutputType | null
+  >;
+  _max?: Resolver<
+    Client.Prisma.AggregateCalendar,
+    {},
+    Client.Prisma.CalendarMaxAggregateOutputType | null
+  >;
+}
+
+export interface CalendarGroupByOutputType {
+  [key: string]: Resolver<any, any, any>;
+  id?: Resolver<Client.Prisma.CalendarGroupByOutputType, {}, number>;
+  calendarType?: Resolver<Client.Prisma.CalendarGroupByOutputType, {}, string>;
+  _count?: Resolver<
+    Client.Prisma.CalendarGroupByOutputType,
+    {},
+    Client.Prisma.CalendarCountAggregateOutputType | null
+  >;
+  _avg?: Resolver<
+    Client.Prisma.CalendarGroupByOutputType,
+    {},
+    Client.Prisma.CalendarAvgAggregateOutputType | null
+  >;
+  _sum?: Resolver<
+    Client.Prisma.CalendarGroupByOutputType,
+    {},
+    Client.Prisma.CalendarSumAggregateOutputType | null
+  >;
+  _min?: Resolver<
+    Client.Prisma.CalendarGroupByOutputType,
+    {},
+    Client.Prisma.CalendarMinAggregateOutputType | null
+  >;
+  _max?: Resolver<
+    Client.Prisma.CalendarGroupByOutputType,
+    {},
+    Client.Prisma.CalendarMaxAggregateOutputType | null
+  >;
+}
+
 export interface AffectedRowsOutput {
   [key: string]: Resolver<any, any, any>;
   count?: Resolver<Client.Prisma.BatchPayload, {}, number>;
@@ -661,6 +1186,9 @@ export interface AffectedRowsOutput {
 export interface UserCountOutputType {
   [key: string]: Resolver<any, any, any>;
   teams?: Resolver<Client.Prisma.UserCountOutputType, {}, number>;
+  calendars?: Resolver<Client.Prisma.UserCountOutputType, {}, number>;
+  contacted?: Resolver<Client.Prisma.UserCountOutputType, {}, number>;
+  contactedBy?: Resolver<Client.Prisma.UserCountOutputType, {}, number>;
 }
 
 export interface UserCountAggregateOutputType {
@@ -777,6 +1305,21 @@ export interface ProfileCountAggregateOutputType {
     {},
     number
   >;
+  businessPhone?: Resolver<
+    Client.Prisma.ProfileCountAggregateOutputType,
+    {},
+    number
+  >;
+  mobilePhone?: Resolver<
+    Client.Prisma.ProfileCountAggregateOutputType,
+    {},
+    number
+  >;
+  kakaoTalkId?: Resolver<
+    Client.Prisma.ProfileCountAggregateOutputType,
+    {},
+    number
+  >;
   designation?: Resolver<
     Client.Prisma.ProfileCountAggregateOutputType,
     {},
@@ -835,6 +1378,21 @@ export interface ProfileMinAggregateOutputType {
     {},
     Date | null
   >;
+  businessPhone?: Resolver<
+    Client.Prisma.ProfileMinAggregateOutputType,
+    {},
+    string | null
+  >;
+  mobilePhone?: Resolver<
+    Client.Prisma.ProfileMinAggregateOutputType,
+    {},
+    string | null
+  >;
+  kakaoTalkId?: Resolver<
+    Client.Prisma.ProfileMinAggregateOutputType,
+    {},
+    string | null
+  >;
   designation?: Resolver<
     Client.Prisma.ProfileMinAggregateOutputType,
     {},
@@ -873,6 +1431,21 @@ export interface ProfileMaxAggregateOutputType {
     Client.Prisma.ProfileMaxAggregateOutputType,
     {},
     Date | null
+  >;
+  businessPhone?: Resolver<
+    Client.Prisma.ProfileMaxAggregateOutputType,
+    {},
+    string | null
+  >;
+  mobilePhone?: Resolver<
+    Client.Prisma.ProfileMaxAggregateOutputType,
+    {},
+    string | null
+  >;
+  kakaoTalkId?: Resolver<
+    Client.Prisma.ProfileMaxAggregateOutputType,
+    {},
+    string | null
   >;
   designation?: Resolver<
     Client.Prisma.ProfileMaxAggregateOutputType,
@@ -984,6 +1557,8 @@ export interface TeamCountOutputType {
 export interface TeamCountAggregateOutputType {
   [key: string]: Resolver<any, any, any>;
   teamName?: Resolver<Client.Prisma.TeamCountAggregateOutputType, {}, number>;
+  teamType?: Resolver<Client.Prisma.TeamCountAggregateOutputType, {}, number>;
+  teamIcon?: Resolver<Client.Prisma.TeamCountAggregateOutputType, {}, number>;
   _all?: Resolver<Client.Prisma.TeamCountAggregateOutputType, {}, number>;
 }
 
@@ -994,12 +1569,320 @@ export interface TeamMinAggregateOutputType {
     {},
     string | null
   >;
+  teamType?: Resolver<
+    Client.Prisma.TeamMinAggregateOutputType,
+    {},
+    string | null
+  >;
+  teamIcon?: Resolver<
+    Client.Prisma.TeamMinAggregateOutputType,
+    {},
+    string | null
+  >;
 }
 
 export interface TeamMaxAggregateOutputType {
   [key: string]: Resolver<any, any, any>;
   teamName?: Resolver<
     Client.Prisma.TeamMaxAggregateOutputType,
+    {},
+    string | null
+  >;
+  teamType?: Resolver<
+    Client.Prisma.TeamMaxAggregateOutputType,
+    {},
+    string | null
+  >;
+  teamIcon?: Resolver<
+    Client.Prisma.TeamMaxAggregateOutputType,
+    {},
+    string | null
+  >;
+}
+
+export interface CalendarEventCountAggregateOutputType {
+  [key: string]: Resolver<any, any, any>;
+  id?: Resolver<
+    Client.Prisma.CalendarEventCountAggregateOutputType,
+    {},
+    number
+  >;
+  url?: Resolver<
+    Client.Prisma.CalendarEventCountAggregateOutputType,
+    {},
+    number
+  >;
+  title?: Resolver<
+    Client.Prisma.CalendarEventCountAggregateOutputType,
+    {},
+    number
+  >;
+  start?: Resolver<
+    Client.Prisma.CalendarEventCountAggregateOutputType,
+    {},
+    number
+  >;
+  end?: Resolver<
+    Client.Prisma.CalendarEventCountAggregateOutputType,
+    {},
+    number
+  >;
+  allDay?: Resolver<
+    Client.Prisma.CalendarEventCountAggregateOutputType,
+    {},
+    number
+  >;
+  calendarId?: Resolver<
+    Client.Prisma.CalendarEventCountAggregateOutputType,
+    {},
+    number
+  >;
+  _all?: Resolver<
+    Client.Prisma.CalendarEventCountAggregateOutputType,
+    {},
+    number
+  >;
+}
+
+export interface CalendarEventAvgAggregateOutputType {
+  [key: string]: Resolver<any, any, any>;
+  id?: Resolver<
+    Client.Prisma.CalendarEventAvgAggregateOutputType,
+    {},
+    number | null
+  >;
+  calendarId?: Resolver<
+    Client.Prisma.CalendarEventAvgAggregateOutputType,
+    {},
+    number | null
+  >;
+}
+
+export interface CalendarEventSumAggregateOutputType {
+  [key: string]: Resolver<any, any, any>;
+  id?: Resolver<
+    Client.Prisma.CalendarEventSumAggregateOutputType,
+    {},
+    number | null
+  >;
+  calendarId?: Resolver<
+    Client.Prisma.CalendarEventSumAggregateOutputType,
+    {},
+    number | null
+  >;
+}
+
+export interface CalendarEventMinAggregateOutputType {
+  [key: string]: Resolver<any, any, any>;
+  id?: Resolver<
+    Client.Prisma.CalendarEventMinAggregateOutputType,
+    {},
+    number | null
+  >;
+  url?: Resolver<
+    Client.Prisma.CalendarEventMinAggregateOutputType,
+    {},
+    string | null
+  >;
+  title?: Resolver<
+    Client.Prisma.CalendarEventMinAggregateOutputType,
+    {},
+    string | null
+  >;
+  start?: Resolver<
+    Client.Prisma.CalendarEventMinAggregateOutputType,
+    {},
+    Date | null
+  >;
+  end?: Resolver<
+    Client.Prisma.CalendarEventMinAggregateOutputType,
+    {},
+    Date | null
+  >;
+  allDay?: Resolver<
+    Client.Prisma.CalendarEventMinAggregateOutputType,
+    {},
+    boolean | null
+  >;
+  calendarId?: Resolver<
+    Client.Prisma.CalendarEventMinAggregateOutputType,
+    {},
+    number | null
+  >;
+}
+
+export interface CalendarEventMaxAggregateOutputType {
+  [key: string]: Resolver<any, any, any>;
+  id?: Resolver<
+    Client.Prisma.CalendarEventMaxAggregateOutputType,
+    {},
+    number | null
+  >;
+  url?: Resolver<
+    Client.Prisma.CalendarEventMaxAggregateOutputType,
+    {},
+    string | null
+  >;
+  title?: Resolver<
+    Client.Prisma.CalendarEventMaxAggregateOutputType,
+    {},
+    string | null
+  >;
+  start?: Resolver<
+    Client.Prisma.CalendarEventMaxAggregateOutputType,
+    {},
+    Date | null
+  >;
+  end?: Resolver<
+    Client.Prisma.CalendarEventMaxAggregateOutputType,
+    {},
+    Date | null
+  >;
+  allDay?: Resolver<
+    Client.Prisma.CalendarEventMaxAggregateOutputType,
+    {},
+    boolean | null
+  >;
+  calendarId?: Resolver<
+    Client.Prisma.CalendarEventMaxAggregateOutputType,
+    {},
+    number | null
+  >;
+}
+
+export interface CalendarsOnUsersCountAggregateOutputType {
+  [key: string]: Resolver<any, any, any>;
+  userId?: Resolver<
+    Client.Prisma.CalendarsOnUsersCountAggregateOutputType,
+    {},
+    number
+  >;
+  calendarId?: Resolver<
+    Client.Prisma.CalendarsOnUsersCountAggregateOutputType,
+    {},
+    number
+  >;
+  _all?: Resolver<
+    Client.Prisma.CalendarsOnUsersCountAggregateOutputType,
+    {},
+    number
+  >;
+}
+
+export interface CalendarsOnUsersAvgAggregateOutputType {
+  [key: string]: Resolver<any, any, any>;
+  userId?: Resolver<
+    Client.Prisma.CalendarsOnUsersAvgAggregateOutputType,
+    {},
+    number | null
+  >;
+  calendarId?: Resolver<
+    Client.Prisma.CalendarsOnUsersAvgAggregateOutputType,
+    {},
+    number | null
+  >;
+}
+
+export interface CalendarsOnUsersSumAggregateOutputType {
+  [key: string]: Resolver<any, any, any>;
+  userId?: Resolver<
+    Client.Prisma.CalendarsOnUsersSumAggregateOutputType,
+    {},
+    number | null
+  >;
+  calendarId?: Resolver<
+    Client.Prisma.CalendarsOnUsersSumAggregateOutputType,
+    {},
+    number | null
+  >;
+}
+
+export interface CalendarsOnUsersMinAggregateOutputType {
+  [key: string]: Resolver<any, any, any>;
+  userId?: Resolver<
+    Client.Prisma.CalendarsOnUsersMinAggregateOutputType,
+    {},
+    number | null
+  >;
+  calendarId?: Resolver<
+    Client.Prisma.CalendarsOnUsersMinAggregateOutputType,
+    {},
+    number | null
+  >;
+}
+
+export interface CalendarsOnUsersMaxAggregateOutputType {
+  [key: string]: Resolver<any, any, any>;
+  userId?: Resolver<
+    Client.Prisma.CalendarsOnUsersMaxAggregateOutputType,
+    {},
+    number | null
+  >;
+  calendarId?: Resolver<
+    Client.Prisma.CalendarsOnUsersMaxAggregateOutputType,
+    {},
+    number | null
+  >;
+}
+
+export interface CalendarCountOutputType {
+  [key: string]: Resolver<any, any, any>;
+  users?: Resolver<Client.Prisma.CalendarCountOutputType, {}, number>;
+  calendarEvents?: Resolver<Client.Prisma.CalendarCountOutputType, {}, number>;
+}
+
+export interface CalendarCountAggregateOutputType {
+  [key: string]: Resolver<any, any, any>;
+  id?: Resolver<Client.Prisma.CalendarCountAggregateOutputType, {}, number>;
+  calendarType?: Resolver<
+    Client.Prisma.CalendarCountAggregateOutputType,
+    {},
+    number
+  >;
+  _all?: Resolver<Client.Prisma.CalendarCountAggregateOutputType, {}, number>;
+}
+
+export interface CalendarAvgAggregateOutputType {
+  [key: string]: Resolver<any, any, any>;
+  id?: Resolver<
+    Client.Prisma.CalendarAvgAggregateOutputType,
+    {},
+    number | null
+  >;
+}
+
+export interface CalendarSumAggregateOutputType {
+  [key: string]: Resolver<any, any, any>;
+  id?: Resolver<
+    Client.Prisma.CalendarSumAggregateOutputType,
+    {},
+    number | null
+  >;
+}
+
+export interface CalendarMinAggregateOutputType {
+  [key: string]: Resolver<any, any, any>;
+  id?: Resolver<
+    Client.Prisma.CalendarMinAggregateOutputType,
+    {},
+    number | null
+  >;
+  calendarType?: Resolver<
+    Client.Prisma.CalendarMinAggregateOutputType,
+    {},
+    string | null
+  >;
+}
+
+export interface CalendarMaxAggregateOutputType {
+  [key: string]: Resolver<any, any, any>;
+  id?: Resolver<
+    Client.Prisma.CalendarMaxAggregateOutputType,
+    {},
+    number | null
+  >;
+  calendarType?: Resolver<
+    Client.Prisma.CalendarMaxAggregateOutputType,
     {},
     string | null
   >;
@@ -1014,6 +1897,33 @@ export interface Users_UserTeamsArgs {
   distinct?: UsersOnTeamsScalarFieldEnum[] | null;
 }
 
+export interface Users_UserCalendarsArgs {
+  where?: Users_CalendarsOnUsersWhereInput | null;
+  orderBy?: Users_CalendarsOnUsersOrderByWithRelationInput[] | null;
+  cursor?: Users_CalendarsOnUsersWhereUniqueInput | null;
+  take?: number | null;
+  skip?: number | null;
+  distinct?: CalendarsOnUsersScalarFieldEnum[] | null;
+}
+
+export interface Users_UserContactedArgs {
+  where?: Users_UserWhereInput | null;
+  orderBy?: Users_UserOrderByWithRelationInput[] | null;
+  cursor?: Users_UserWhereUniqueInput | null;
+  take?: number | null;
+  skip?: number | null;
+  distinct?: UserScalarFieldEnum[] | null;
+}
+
+export interface Users_UserContactedByArgs {
+  where?: Users_UserWhereInput | null;
+  orderBy?: Users_UserOrderByWithRelationInput[] | null;
+  cursor?: Users_UserWhereUniqueInput | null;
+  take?: number | null;
+  skip?: number | null;
+  distinct?: UserScalarFieldEnum[] | null;
+}
+
 export interface Users_TeamUsersArgs {
   where?: Users_UsersOnTeamsWhereInput | null;
   orderBy?: Users_UsersOnTeamsOrderByWithRelationInput[] | null;
@@ -1021,6 +1931,24 @@ export interface Users_TeamUsersArgs {
   take?: number | null;
   skip?: number | null;
   distinct?: UsersOnTeamsScalarFieldEnum[] | null;
+}
+
+export interface Users_CalendarUsersArgs {
+  where?: Users_CalendarsOnUsersWhereInput | null;
+  orderBy?: Users_CalendarsOnUsersOrderByWithRelationInput[] | null;
+  cursor?: Users_CalendarsOnUsersWhereUniqueInput | null;
+  take?: number | null;
+  skip?: number | null;
+  distinct?: CalendarsOnUsersScalarFieldEnum[] | null;
+}
+
+export interface Users_CalendarCalendarEventsArgs {
+  where?: Users_CalendarEventWhereInput | null;
+  orderBy?: Users_CalendarEventOrderByWithRelationInput[] | null;
+  cursor?: Users_CalendarEventWhereUniqueInput | null;
+  take?: number | null;
+  skip?: number | null;
+  distinct?: CalendarEventScalarFieldEnum[] | null;
 }
 
 export interface Users_FindFirstUserArgs {
@@ -1249,6 +2177,177 @@ export interface Users_FindUniqueTeamOrThrowArgs {
   where: Users_TeamWhereUniqueInput | null;
 }
 
+export interface Users_FindFirstCalendarEventArgs {
+  where?: Users_CalendarEventWhereInput | null;
+  orderBy?: Users_CalendarEventOrderByWithRelationInput[] | null;
+  cursor?: Users_CalendarEventWhereUniqueInput | null;
+  take?: number | null;
+  skip?: number | null;
+  distinct?: CalendarEventScalarFieldEnum[] | null;
+}
+
+export interface Users_FindFirstCalendarEventOrThrowArgs {
+  where?: Users_CalendarEventWhereInput | null;
+  orderBy?: Users_CalendarEventOrderByWithRelationInput[] | null;
+  cursor?: Users_CalendarEventWhereUniqueInput | null;
+  take?: number | null;
+  skip?: number | null;
+  distinct?: CalendarEventScalarFieldEnum[] | null;
+}
+
+export interface Users_FindManyCalendarEventArgs {
+  where?: Users_CalendarEventWhereInput;
+  orderBy?: Users_CalendarEventOrderByWithRelationInput[];
+  cursor?: Users_CalendarEventWhereUniqueInput;
+  take?: number;
+  skip?: number;
+  distinct?: CalendarEventScalarFieldEnum[];
+}
+
+export interface Users_AggregateCalendarEventArgs {
+  where?: Users_CalendarEventWhereInput;
+  orderBy?: Users_CalendarEventOrderByWithRelationInput[];
+  cursor?: Users_CalendarEventWhereUniqueInput;
+  take?: number;
+  skip?: number;
+  _count?: Client.Prisma.CalendarEventCountAggregateInputType;
+  _avg?: Client.Prisma.CalendarEventAvgAggregateInputType;
+  _sum?: Client.Prisma.CalendarEventSumAggregateInputType;
+  _min?: Client.Prisma.CalendarEventMinAggregateInputType;
+  _max?: Client.Prisma.CalendarEventMaxAggregateInputType;
+}
+
+export interface Users_GroupByCalendarEventArgs {
+  where?: Users_CalendarEventWhereInput;
+  orderBy?: Users_CalendarEventOrderByWithAggregationInput[];
+  by: CalendarEventScalarFieldEnum[];
+  having?: Users_CalendarEventScalarWhereWithAggregatesInput;
+  take?: number;
+  skip?: number;
+}
+
+export interface Users_FindUniqueCalendarEventArgs {
+  where: Users_CalendarEventWhereUniqueInput | null;
+}
+
+export interface Users_FindUniqueCalendarEventOrThrowArgs {
+  where: Users_CalendarEventWhereUniqueInput | null;
+}
+
+export interface Users_FindFirstCalendarsOnUsersArgs {
+  where?: Users_CalendarsOnUsersWhereInput | null;
+  orderBy?: Users_CalendarsOnUsersOrderByWithRelationInput[] | null;
+  cursor?: Users_CalendarsOnUsersWhereUniqueInput | null;
+  take?: number | null;
+  skip?: number | null;
+  distinct?: CalendarsOnUsersScalarFieldEnum[] | null;
+}
+
+export interface Users_FindFirstCalendarsOnUsersOrThrowArgs {
+  where?: Users_CalendarsOnUsersWhereInput | null;
+  orderBy?: Users_CalendarsOnUsersOrderByWithRelationInput[] | null;
+  cursor?: Users_CalendarsOnUsersWhereUniqueInput | null;
+  take?: number | null;
+  skip?: number | null;
+  distinct?: CalendarsOnUsersScalarFieldEnum[] | null;
+}
+
+export interface Users_FindManyCalendarsOnUsersArgs {
+  where?: Users_CalendarsOnUsersWhereInput;
+  orderBy?: Users_CalendarsOnUsersOrderByWithRelationInput[];
+  cursor?: Users_CalendarsOnUsersWhereUniqueInput;
+  take?: number;
+  skip?: number;
+  distinct?: CalendarsOnUsersScalarFieldEnum[];
+}
+
+export interface Users_AggregateCalendarsOnUsersArgs {
+  where?: Users_CalendarsOnUsersWhereInput;
+  orderBy?: Users_CalendarsOnUsersOrderByWithRelationInput[];
+  cursor?: Users_CalendarsOnUsersWhereUniqueInput;
+  take?: number;
+  skip?: number;
+  _count?: Client.Prisma.CalendarsOnUsersCountAggregateInputType;
+  _avg?: Client.Prisma.CalendarsOnUsersAvgAggregateInputType;
+  _sum?: Client.Prisma.CalendarsOnUsersSumAggregateInputType;
+  _min?: Client.Prisma.CalendarsOnUsersMinAggregateInputType;
+  _max?: Client.Prisma.CalendarsOnUsersMaxAggregateInputType;
+}
+
+export interface Users_GroupByCalendarsOnUsersArgs {
+  where?: Users_CalendarsOnUsersWhereInput;
+  orderBy?: Users_CalendarsOnUsersOrderByWithAggregationInput[];
+  by: CalendarsOnUsersScalarFieldEnum[];
+  having?: Users_CalendarsOnUsersScalarWhereWithAggregatesInput;
+  take?: number;
+  skip?: number;
+}
+
+export interface Users_FindUniqueCalendarsOnUsersArgs {
+  where: Users_CalendarsOnUsersWhereUniqueInput | null;
+}
+
+export interface Users_FindUniqueCalendarsOnUsersOrThrowArgs {
+  where: Users_CalendarsOnUsersWhereUniqueInput | null;
+}
+
+export interface Users_FindFirstCalendarArgs {
+  where?: Users_CalendarWhereInput | null;
+  orderBy?: Users_CalendarOrderByWithRelationInput[] | null;
+  cursor?: Users_CalendarWhereUniqueInput | null;
+  take?: number | null;
+  skip?: number | null;
+  distinct?: CalendarScalarFieldEnum[] | null;
+}
+
+export interface Users_FindFirstCalendarOrThrowArgs {
+  where?: Users_CalendarWhereInput | null;
+  orderBy?: Users_CalendarOrderByWithRelationInput[] | null;
+  cursor?: Users_CalendarWhereUniqueInput | null;
+  take?: number | null;
+  skip?: number | null;
+  distinct?: CalendarScalarFieldEnum[] | null;
+}
+
+export interface Users_FindManyCalendarArgs {
+  where?: Users_CalendarWhereInput;
+  orderBy?: Users_CalendarOrderByWithRelationInput[];
+  cursor?: Users_CalendarWhereUniqueInput;
+  take?: number;
+  skip?: number;
+  distinct?: CalendarScalarFieldEnum[];
+}
+
+export interface Users_AggregateCalendarArgs {
+  where?: Users_CalendarWhereInput;
+  orderBy?: Users_CalendarOrderByWithRelationInput[];
+  cursor?: Users_CalendarWhereUniqueInput;
+  take?: number;
+  skip?: number;
+  _count?: Client.Prisma.CalendarCountAggregateInputType;
+  _avg?: Client.Prisma.CalendarAvgAggregateInputType;
+  _sum?: Client.Prisma.CalendarSumAggregateInputType;
+  _min?: Client.Prisma.CalendarMinAggregateInputType;
+  _max?: Client.Prisma.CalendarMaxAggregateInputType;
+}
+
+export interface Users_GroupByCalendarArgs {
+  where?: Users_CalendarWhereInput;
+  orderBy?: Users_CalendarOrderByWithAggregationInput[];
+  by: CalendarScalarFieldEnum[];
+  having?: Users_CalendarScalarWhereWithAggregatesInput;
+  take?: number;
+  skip?: number;
+}
+
+export interface Users_FindUniqueCalendarArgs {
+  where: Users_CalendarWhereUniqueInput | null;
+}
+
+export interface Users_FindUniqueCalendarOrThrowArgs {
+  where: Users_CalendarWhereUniqueInput | null;
+}
+
 export interface Users_CreateOneUserArgs {
   data: Users_UserCreateInput;
 }
@@ -1372,10 +2471,109 @@ export interface Users_UpdateOneTeamArgs {
   where: Users_TeamWhereUniqueInput | null;
 }
 
-//UpdateManyTeamArgs is not generated as the related model contains only unique or relation fields
+export interface Users_UpdateManyTeamArgs {
+  data: Users_TeamUpdateManyMutationInput;
+  where?: Users_TeamWhereInput;
+}
 
 export interface Users_DeleteManyTeamArgs {
   where?: Users_TeamWhereInput;
+}
+
+export interface Users_CreateOneCalendarEventArgs {
+  data: Users_CalendarEventCreateInput;
+}
+
+export interface Users_UpsertOneCalendarEventArgs {
+  where: Users_CalendarEventWhereUniqueInput;
+  create: Users_CalendarEventCreateInput;
+  update: Users_CalendarEventUpdateInput;
+}
+
+export interface Users_CreateManyCalendarEventArgs {
+  data: Users_CalendarEventCreateManyInput[];
+  skipDuplicates?: boolean;
+}
+
+export interface Users_DeleteOneCalendarEventArgs {
+  where: Users_CalendarEventWhereUniqueInput | null;
+}
+
+export interface Users_UpdateOneCalendarEventArgs {
+  data: Users_CalendarEventUpdateInput | null;
+  where: Users_CalendarEventWhereUniqueInput | null;
+}
+
+export interface Users_UpdateManyCalendarEventArgs {
+  data: Users_CalendarEventUpdateManyMutationInput;
+  where?: Users_CalendarEventWhereInput;
+}
+
+export interface Users_DeleteManyCalendarEventArgs {
+  where?: Users_CalendarEventWhereInput;
+}
+
+export interface Users_CreateOneCalendarsOnUsersArgs {
+  data: Users_CalendarsOnUsersCreateInput;
+}
+
+export interface Users_UpsertOneCalendarsOnUsersArgs {
+  where: Users_CalendarsOnUsersWhereUniqueInput;
+  create: Users_CalendarsOnUsersCreateInput;
+  update: Users_CalendarsOnUsersUpdateInput;
+}
+
+export interface Users_CreateManyCalendarsOnUsersArgs {
+  data: Users_CalendarsOnUsersCreateManyInput[];
+  skipDuplicates?: boolean;
+}
+
+export interface Users_DeleteOneCalendarsOnUsersArgs {
+  where: Users_CalendarsOnUsersWhereUniqueInput | null;
+}
+
+export interface Users_UpdateOneCalendarsOnUsersArgs {
+  data: Users_CalendarsOnUsersUpdateInput | null;
+  where: Users_CalendarsOnUsersWhereUniqueInput | null;
+}
+
+//UpdateManyCalendarsOnUsersArgs is not generated as the related model contains only unique or relation fields
+
+export interface Users_DeleteManyCalendarsOnUsersArgs {
+  where?: Users_CalendarsOnUsersWhereInput;
+}
+
+export interface Users_CreateOneCalendarArgs {
+  data: Users_CalendarCreateInput;
+}
+
+export interface Users_UpsertOneCalendarArgs {
+  where: Users_CalendarWhereUniqueInput;
+  create: Users_CalendarCreateInput;
+  update: Users_CalendarUpdateInput;
+}
+
+export interface Users_CreateManyCalendarArgs {
+  data: Users_CalendarCreateManyInput[];
+  skipDuplicates?: boolean;
+}
+
+export interface Users_DeleteOneCalendarArgs {
+  where: Users_CalendarWhereUniqueInput | null;
+}
+
+export interface Users_UpdateOneCalendarArgs {
+  data: Users_CalendarUpdateInput | null;
+  where: Users_CalendarWhereUniqueInput | null;
+}
+
+export interface Users_UpdateManyCalendarArgs {
+  data: Users_CalendarUpdateManyMutationInput;
+  where?: Users_CalendarWhereInput;
+}
+
+export interface Users_DeleteManyCalendarArgs {
+  where?: Users_CalendarWhereInput;
 }
 
 export interface Users_ExecuteRawArgs {
@@ -1404,6 +2602,9 @@ export interface Users_UserWhereInput {
   firstName?: StringNullableFilter | null;
   profile?: Users_ProfileWhereInput | null;
   teams?: Users_UsersOnTeamsListRelationFilter;
+  calendars?: Users_CalendarsOnUsersListRelationFilter;
+  contacted?: Users_UserListRelationFilter;
+  contactedBy?: Users_UserListRelationFilter;
 }
 
 export interface Users_UserOrderByWithRelationInput {
@@ -1419,6 +2620,9 @@ export interface Users_UserOrderByWithRelationInput {
   firstName?: SortOrder;
   profile?: Users_ProfileOrderByWithRelationInput;
   teams?: Users_UsersOnTeamsOrderByRelationAggregateInput;
+  calendars?: Users_CalendarsOnUsersOrderByRelationAggregateInput;
+  contacted?: Users_UserOrderByRelationAggregateInput;
+  contactedBy?: Users_UserOrderByRelationAggregateInput;
 }
 
 export type Users_UserWhereUniqueInput = AtLeast<
@@ -1438,6 +2642,9 @@ export type Users_UserWhereUniqueInput = AtLeast<
     firstName?: StringNullableFilter | null;
     profile?: Users_ProfileWhereInput | null;
     teams?: Users_UsersOnTeamsListRelationFilter;
+    calendars?: Users_CalendarsOnUsersListRelationFilter;
+    contacted?: Users_UserListRelationFilter;
+    contactedBy?: Users_UserListRelationFilter;
   },
   'id' | 'username' | 'email' | 'googleId'
 >;
@@ -1484,6 +2691,9 @@ export interface Users_ProfileWhereInput {
   user?: Users_UserWhereInput;
   location?: StringNullableFilter | null;
   joiningDate?: DateTimeNullableFilter | null;
+  businessPhone?: StringNullableFilter | null;
+  mobilePhone?: StringNullableFilter | null;
+  kakaoTalkId?: StringNullableFilter | null;
   designation?: StringNullableFilter | null;
   profileImg?: StringNullableFilter | null;
   designationIcon?: StringNullableFilter | null;
@@ -1495,6 +2705,9 @@ export interface Users_ProfileOrderByWithRelationInput {
   user?: Users_UserOrderByWithRelationInput;
   location?: SortOrder;
   joiningDate?: SortOrder;
+  businessPhone?: SortOrder;
+  mobilePhone?: SortOrder;
+  kakaoTalkId?: SortOrder;
   designation?: SortOrder;
   profileImg?: SortOrder;
   designationIcon?: SortOrder;
@@ -1504,6 +2717,9 @@ export interface Users_ProfileOrderByWithRelationInput {
 export type Users_ProfileWhereUniqueInput = AtLeast<
   {
     userId?: number;
+    businessPhone?: string;
+    mobilePhone?: string;
+    kakaoTalkId?: string;
     AND?: Users_ProfileWhereInput[];
     OR?: Users_ProfileWhereInput[];
     NOT?: Users_ProfileWhereInput[];
@@ -1515,13 +2731,16 @@ export type Users_ProfileWhereUniqueInput = AtLeast<
     designationIcon?: StringNullableFilter | null;
     coverImg?: StringNullableFilter | null;
   },
-  'userId'
+  'userId' | 'businessPhone' | 'mobilePhone' | 'kakaoTalkId'
 >;
 
 export interface Users_ProfileOrderByWithAggregationInput {
   userId?: SortOrder;
   location?: SortOrder;
   joiningDate?: SortOrder;
+  businessPhone?: SortOrder;
+  mobilePhone?: SortOrder;
+  kakaoTalkId?: SortOrder;
   designation?: SortOrder;
   profileImg?: SortOrder;
   designationIcon?: SortOrder;
@@ -1540,6 +2759,9 @@ export interface Users_ProfileScalarWhereWithAggregatesInput {
   userId?: IntWithAggregatesFilter;
   location?: StringNullableWithAggregatesFilter | null;
   joiningDate?: DateTimeNullableWithAggregatesFilter | null;
+  businessPhone?: StringNullableWithAggregatesFilter | null;
+  mobilePhone?: StringNullableWithAggregatesFilter | null;
+  kakaoTalkId?: StringNullableWithAggregatesFilter | null;
   designation?: StringNullableWithAggregatesFilter | null;
   profileImg?: StringNullableWithAggregatesFilter | null;
   designationIcon?: StringNullableWithAggregatesFilter | null;
@@ -1606,11 +2828,15 @@ export interface Users_TeamWhereInput {
   NOT?: Users_TeamWhereInput[];
   teamName?: StringFilter;
   users?: Users_UsersOnTeamsListRelationFilter;
+  teamType?: StringNullableFilter | null;
+  teamIcon?: StringNullableFilter | null;
 }
 
 export interface Users_TeamOrderByWithRelationInput {
   teamName?: SortOrder;
   users?: Users_UsersOnTeamsOrderByRelationAggregateInput;
+  teamType?: SortOrder;
+  teamIcon?: SortOrder;
 }
 
 export type Users_TeamWhereUniqueInput = AtLeast<
@@ -1620,12 +2846,16 @@ export type Users_TeamWhereUniqueInput = AtLeast<
     OR?: Users_TeamWhereInput[];
     NOT?: Users_TeamWhereInput[];
     users?: Users_UsersOnTeamsListRelationFilter;
+    teamType?: StringNullableFilter | null;
+    teamIcon?: StringNullableFilter | null;
   },
   'teamName'
 >;
 
 export interface Users_TeamOrderByWithAggregationInput {
   teamName?: SortOrder;
+  teamType?: SortOrder;
+  teamIcon?: SortOrder;
   _count?: Users_TeamCountOrderByAggregateInput;
   _max?: Users_TeamMaxOrderByAggregateInput;
   _min?: Users_TeamMinOrderByAggregateInput;
@@ -1636,6 +2866,175 @@ export interface Users_TeamScalarWhereWithAggregatesInput {
   OR?: Users_TeamScalarWhereWithAggregatesInput[];
   NOT?: Users_TeamScalarWhereWithAggregatesInput[];
   teamName?: StringWithAggregatesFilter;
+  teamType?: StringNullableWithAggregatesFilter | null;
+  teamIcon?: StringNullableWithAggregatesFilter | null;
+}
+
+export interface Users_CalendarEventWhereInput {
+  AND?: Users_CalendarEventWhereInput[];
+  OR?: Users_CalendarEventWhereInput[];
+  NOT?: Users_CalendarEventWhereInput[];
+  id?: IntFilter;
+  url?: StringNullableFilter | null;
+  title?: StringFilter;
+  start?: DateTimeFilter;
+  end?: DateTimeFilter;
+  allDay?: BoolFilter;
+  calendarId?: IntFilter;
+  calendar?: Users_CalendarWhereInput;
+}
+
+export interface Users_CalendarEventOrderByWithRelationInput {
+  id?: SortOrder;
+  url?: SortOrder;
+  title?: SortOrder;
+  start?: SortOrder;
+  end?: SortOrder;
+  allDay?: SortOrder;
+  calendarId?: SortOrder;
+  calendar?: Users_CalendarOrderByWithRelationInput;
+}
+
+export type Users_CalendarEventWhereUniqueInput = AtLeast<
+  {
+    id?: number;
+    AND?: Users_CalendarEventWhereInput[];
+    OR?: Users_CalendarEventWhereInput[];
+    NOT?: Users_CalendarEventWhereInput[];
+    url?: StringNullableFilter | null;
+    title?: StringFilter;
+    start?: DateTimeFilter;
+    end?: DateTimeFilter;
+    allDay?: BoolFilter;
+    calendarId?: IntFilter;
+    calendar?: Users_CalendarWhereInput;
+  },
+  'id'
+>;
+
+export interface Users_CalendarEventOrderByWithAggregationInput {
+  id?: SortOrder;
+  url?: SortOrder;
+  title?: SortOrder;
+  start?: SortOrder;
+  end?: SortOrder;
+  allDay?: SortOrder;
+  calendarId?: SortOrder;
+  _count?: Users_CalendarEventCountOrderByAggregateInput;
+  _avg?: Users_CalendarEventAvgOrderByAggregateInput;
+  _max?: Users_CalendarEventMaxOrderByAggregateInput;
+  _min?: Users_CalendarEventMinOrderByAggregateInput;
+  _sum?: Users_CalendarEventSumOrderByAggregateInput;
+}
+
+export interface Users_CalendarEventScalarWhereWithAggregatesInput {
+  AND?: Users_CalendarEventScalarWhereWithAggregatesInput[];
+  OR?: Users_CalendarEventScalarWhereWithAggregatesInput[];
+  NOT?: Users_CalendarEventScalarWhereWithAggregatesInput[];
+  id?: IntWithAggregatesFilter;
+  url?: StringNullableWithAggregatesFilter | null;
+  title?: StringWithAggregatesFilter;
+  start?: DateTimeWithAggregatesFilter;
+  end?: DateTimeWithAggregatesFilter;
+  allDay?: BoolWithAggregatesFilter;
+  calendarId?: IntWithAggregatesFilter;
+}
+
+export interface Users_CalendarsOnUsersWhereInput {
+  AND?: Users_CalendarsOnUsersWhereInput[];
+  OR?: Users_CalendarsOnUsersWhereInput[];
+  NOT?: Users_CalendarsOnUsersWhereInput[];
+  user?: Users_UserWhereInput;
+  userId?: IntFilter;
+  calendar?: Users_CalendarWhereInput;
+  calendarId?: IntFilter;
+}
+
+export interface Users_CalendarsOnUsersOrderByWithRelationInput {
+  user?: Users_UserOrderByWithRelationInput;
+  userId?: SortOrder;
+  calendar?: Users_CalendarOrderByWithRelationInput;
+  calendarId?: SortOrder;
+}
+
+export type Users_CalendarsOnUsersWhereUniqueInput = AtLeast<
+  {
+    userId_calendarId?: CalendarsOnUsersUserIdCalendarIdCompoundUniqueInput;
+    AND?: Users_CalendarsOnUsersWhereInput[];
+    OR?: Users_CalendarsOnUsersWhereInput[];
+    NOT?: Users_CalendarsOnUsersWhereInput[];
+    user?: Users_UserWhereInput;
+    userId?: IntFilter;
+    calendar?: Users_CalendarWhereInput;
+    calendarId?: IntFilter;
+  },
+  'userId_calendarId'
+>;
+
+export interface Users_CalendarsOnUsersOrderByWithAggregationInput {
+  userId?: SortOrder;
+  calendarId?: SortOrder;
+  _count?: Users_CalendarsOnUsersCountOrderByAggregateInput;
+  _avg?: Users_CalendarsOnUsersAvgOrderByAggregateInput;
+  _max?: Users_CalendarsOnUsersMaxOrderByAggregateInput;
+  _min?: Users_CalendarsOnUsersMinOrderByAggregateInput;
+  _sum?: Users_CalendarsOnUsersSumOrderByAggregateInput;
+}
+
+export interface Users_CalendarsOnUsersScalarWhereWithAggregatesInput {
+  AND?: Users_CalendarsOnUsersScalarWhereWithAggregatesInput[];
+  OR?: Users_CalendarsOnUsersScalarWhereWithAggregatesInput[];
+  NOT?: Users_CalendarsOnUsersScalarWhereWithAggregatesInput[];
+  userId?: IntWithAggregatesFilter;
+  calendarId?: IntWithAggregatesFilter;
+}
+
+export interface Users_CalendarWhereInput {
+  AND?: Users_CalendarWhereInput[];
+  OR?: Users_CalendarWhereInput[];
+  NOT?: Users_CalendarWhereInput[];
+  id?: IntFilter;
+  calendarType?: StringFilter;
+  users?: Users_CalendarsOnUsersListRelationFilter;
+  calendarEvents?: Users_CalendarEventListRelationFilter;
+}
+
+export interface Users_CalendarOrderByWithRelationInput {
+  id?: SortOrder;
+  calendarType?: SortOrder;
+  users?: Users_CalendarsOnUsersOrderByRelationAggregateInput;
+  calendarEvents?: Users_CalendarEventOrderByRelationAggregateInput;
+}
+
+export type Users_CalendarWhereUniqueInput = AtLeast<
+  {
+    id?: number;
+    AND?: Users_CalendarWhereInput[];
+    OR?: Users_CalendarWhereInput[];
+    NOT?: Users_CalendarWhereInput[];
+    calendarType?: StringFilter;
+    users?: Users_CalendarsOnUsersListRelationFilter;
+    calendarEvents?: Users_CalendarEventListRelationFilter;
+  },
+  'id'
+>;
+
+export interface Users_CalendarOrderByWithAggregationInput {
+  id?: SortOrder;
+  calendarType?: SortOrder;
+  _count?: Users_CalendarCountOrderByAggregateInput;
+  _avg?: Users_CalendarAvgOrderByAggregateInput;
+  _max?: Users_CalendarMaxOrderByAggregateInput;
+  _min?: Users_CalendarMinOrderByAggregateInput;
+  _sum?: Users_CalendarSumOrderByAggregateInput;
+}
+
+export interface Users_CalendarScalarWhereWithAggregatesInput {
+  AND?: Users_CalendarScalarWhereWithAggregatesInput[];
+  OR?: Users_CalendarScalarWhereWithAggregatesInput[];
+  NOT?: Users_CalendarScalarWhereWithAggregatesInput[];
+  id?: IntWithAggregatesFilter;
+  calendarType?: StringWithAggregatesFilter;
 }
 
 export interface Users_UserCreateInput {
@@ -1650,6 +3049,9 @@ export interface Users_UserCreateInput {
   firstName?: string | null;
   profile?: Users_ProfileCreateNestedOneWithoutUserInput;
   teams?: Users_UsersOnTeamsCreateNestedManyWithoutUserInput;
+  calendars?: Users_CalendarsOnUsersCreateNestedManyWithoutUserInput;
+  contacted?: Users_UserCreateNestedManyWithoutContactedByInput;
+  contactedBy?: Users_UserCreateNestedManyWithoutContactedInput;
 }
 
 export interface Users_UserUncheckedCreateInput {
@@ -1665,6 +3067,9 @@ export interface Users_UserUncheckedCreateInput {
   firstName?: string | null;
   profile?: Users_ProfileUncheckedCreateNestedOneWithoutUserInput;
   teams?: Users_UsersOnTeamsUncheckedCreateNestedManyWithoutUserInput;
+  calendars?: Users_CalendarsOnUsersUncheckedCreateNestedManyWithoutUserInput;
+  contacted?: Users_UserUncheckedCreateNestedManyWithoutContactedByInput;
+  contactedBy?: Users_UserUncheckedCreateNestedManyWithoutContactedInput;
 }
 
 export interface Users_UserUpdateInput {
@@ -1679,6 +3084,9 @@ export interface Users_UserUpdateInput {
   firstName?: NullableStringFieldUpdateOperationsInput | null;
   profile?: Users_ProfileUpdateOneWithoutUserNestedInput;
   teams?: Users_UsersOnTeamsUpdateManyWithoutUserNestedInput;
+  calendars?: Users_CalendarsOnUsersUpdateManyWithoutUserNestedInput;
+  contacted?: Users_UserUpdateManyWithoutContactedByNestedInput;
+  contactedBy?: Users_UserUpdateManyWithoutContactedNestedInput;
 }
 
 export interface Users_UserUncheckedUpdateInput {
@@ -1694,6 +3102,9 @@ export interface Users_UserUncheckedUpdateInput {
   firstName?: NullableStringFieldUpdateOperationsInput | null;
   profile?: Users_ProfileUncheckedUpdateOneWithoutUserNestedInput;
   teams?: Users_UsersOnTeamsUncheckedUpdateManyWithoutUserNestedInput;
+  calendars?: Users_CalendarsOnUsersUncheckedUpdateManyWithoutUserNestedInput;
+  contacted?: Users_UserUncheckedUpdateManyWithoutContactedByNestedInput;
+  contactedBy?: Users_UserUncheckedUpdateManyWithoutContactedNestedInput;
 }
 
 export interface Users_UserCreateManyInput {
@@ -1738,6 +3149,9 @@ export interface Users_ProfileCreateInput {
   user: Users_UserCreateNestedOneWithoutProfileInput;
   location?: string | null;
   joiningDate?: Date | null;
+  businessPhone?: string | null;
+  mobilePhone?: string | null;
+  kakaoTalkId?: string | null;
   designation?: string | null;
   profileImg?: string | null;
   designationIcon?: string | null;
@@ -1748,6 +3162,9 @@ export interface Users_ProfileUncheckedCreateInput {
   userId: number;
   location?: string | null;
   joiningDate?: Date | null;
+  businessPhone?: string | null;
+  mobilePhone?: string | null;
+  kakaoTalkId?: string | null;
   designation?: string | null;
   profileImg?: string | null;
   designationIcon?: string | null;
@@ -1758,6 +3175,9 @@ export interface Users_ProfileUpdateInput {
   user?: Users_UserUpdateOneRequiredWithoutProfileNestedInput;
   location?: NullableStringFieldUpdateOperationsInput | null;
   joiningDate?: NullableDateTimeFieldUpdateOperationsInput | null;
+  businessPhone?: NullableStringFieldUpdateOperationsInput | null;
+  mobilePhone?: NullableStringFieldUpdateOperationsInput | null;
+  kakaoTalkId?: NullableStringFieldUpdateOperationsInput | null;
   designation?: NullableStringFieldUpdateOperationsInput | null;
   profileImg?: NullableStringFieldUpdateOperationsInput | null;
   designationIcon?: NullableStringFieldUpdateOperationsInput | null;
@@ -1768,6 +3188,9 @@ export interface Users_ProfileUncheckedUpdateInput {
   userId?: IntFieldUpdateOperationsInput;
   location?: NullableStringFieldUpdateOperationsInput | null;
   joiningDate?: NullableDateTimeFieldUpdateOperationsInput | null;
+  businessPhone?: NullableStringFieldUpdateOperationsInput | null;
+  mobilePhone?: NullableStringFieldUpdateOperationsInput | null;
+  kakaoTalkId?: NullableStringFieldUpdateOperationsInput | null;
   designation?: NullableStringFieldUpdateOperationsInput | null;
   profileImg?: NullableStringFieldUpdateOperationsInput | null;
   designationIcon?: NullableStringFieldUpdateOperationsInput | null;
@@ -1778,6 +3201,9 @@ export interface Users_ProfileCreateManyInput {
   userId: number;
   location?: string | null;
   joiningDate?: Date | null;
+  businessPhone?: string | null;
+  mobilePhone?: string | null;
+  kakaoTalkId?: string | null;
   designation?: string | null;
   profileImg?: string | null;
   designationIcon?: string | null;
@@ -1787,6 +3213,9 @@ export interface Users_ProfileCreateManyInput {
 export interface Users_ProfileUpdateManyMutationInput {
   location?: NullableStringFieldUpdateOperationsInput | null;
   joiningDate?: NullableDateTimeFieldUpdateOperationsInput | null;
+  businessPhone?: NullableStringFieldUpdateOperationsInput | null;
+  mobilePhone?: NullableStringFieldUpdateOperationsInput | null;
+  kakaoTalkId?: NullableStringFieldUpdateOperationsInput | null;
   designation?: NullableStringFieldUpdateOperationsInput | null;
   profileImg?: NullableStringFieldUpdateOperationsInput | null;
   designationIcon?: NullableStringFieldUpdateOperationsInput | null;
@@ -1797,6 +3226,9 @@ export interface Users_ProfileUncheckedUpdateManyInput {
   userId?: IntFieldUpdateOperationsInput;
   location?: NullableStringFieldUpdateOperationsInput | null;
   joiningDate?: NullableDateTimeFieldUpdateOperationsInput | null;
+  businessPhone?: NullableStringFieldUpdateOperationsInput | null;
+  mobilePhone?: NullableStringFieldUpdateOperationsInput | null;
+  kakaoTalkId?: NullableStringFieldUpdateOperationsInput | null;
   designation?: NullableStringFieldUpdateOperationsInput | null;
   profileImg?: NullableStringFieldUpdateOperationsInput | null;
   designationIcon?: NullableStringFieldUpdateOperationsInput | null;
@@ -1846,33 +3278,183 @@ export interface Users_UsersOnTeamsUncheckedUpdateManyInput {
 export interface Users_TeamCreateInput {
   teamName: string;
   users?: Users_UsersOnTeamsCreateNestedManyWithoutTeamInput;
+  teamType?: string | null;
+  teamIcon?: string | null;
 }
 
 export interface Users_TeamUncheckedCreateInput {
   teamName: string;
   users?: Users_UsersOnTeamsUncheckedCreateNestedManyWithoutTeamInput;
+  teamType?: string | null;
+  teamIcon?: string | null;
 }
 
 export interface Users_TeamUpdateInput {
   teamName?: StringFieldUpdateOperationsInput;
   users?: Users_UsersOnTeamsUpdateManyWithoutTeamNestedInput;
+  teamType?: NullableStringFieldUpdateOperationsInput | null;
+  teamIcon?: NullableStringFieldUpdateOperationsInput | null;
 }
 
 export interface Users_TeamUncheckedUpdateInput {
   teamName?: StringFieldUpdateOperationsInput;
   users?: Users_UsersOnTeamsUncheckedUpdateManyWithoutTeamNestedInput;
+  teamType?: NullableStringFieldUpdateOperationsInput | null;
+  teamIcon?: NullableStringFieldUpdateOperationsInput | null;
 }
 
 export interface Users_TeamCreateManyInput {
   teamName: string;
+  teamType?: string | null;
+  teamIcon?: string | null;
 }
 
 export interface Users_TeamUpdateManyMutationInput {
   teamName?: StringFieldUpdateOperationsInput;
+  teamType?: NullableStringFieldUpdateOperationsInput | null;
+  teamIcon?: NullableStringFieldUpdateOperationsInput | null;
 }
 
 export interface Users_TeamUncheckedUpdateManyInput {
   teamName?: StringFieldUpdateOperationsInput;
+  teamType?: NullableStringFieldUpdateOperationsInput | null;
+  teamIcon?: NullableStringFieldUpdateOperationsInput | null;
+}
+
+export interface Users_CalendarEventCreateInput {
+  url?: string | null;
+  title: string;
+  start: Date;
+  end: Date;
+  allDay: boolean;
+  calendar: Users_CalendarCreateNestedOneWithoutCalendarEventsInput;
+}
+
+export interface Users_CalendarEventUncheckedCreateInput {
+  id?: number;
+  url?: string | null;
+  title: string;
+  start: Date;
+  end: Date;
+  allDay: boolean;
+  calendarId: number;
+}
+
+export interface Users_CalendarEventUpdateInput {
+  url?: NullableStringFieldUpdateOperationsInput | null;
+  title?: StringFieldUpdateOperationsInput;
+  start?: DateTimeFieldUpdateOperationsInput;
+  end?: DateTimeFieldUpdateOperationsInput;
+  allDay?: BoolFieldUpdateOperationsInput;
+  calendar?: Users_CalendarUpdateOneRequiredWithoutCalendarEventsNestedInput;
+}
+
+export interface Users_CalendarEventUncheckedUpdateInput {
+  id?: IntFieldUpdateOperationsInput;
+  url?: NullableStringFieldUpdateOperationsInput | null;
+  title?: StringFieldUpdateOperationsInput;
+  start?: DateTimeFieldUpdateOperationsInput;
+  end?: DateTimeFieldUpdateOperationsInput;
+  allDay?: BoolFieldUpdateOperationsInput;
+  calendarId?: IntFieldUpdateOperationsInput;
+}
+
+export interface Users_CalendarEventCreateManyInput {
+  id?: number;
+  url?: string | null;
+  title: string;
+  start: Date;
+  end: Date;
+  allDay: boolean;
+  calendarId: number;
+}
+
+export interface Users_CalendarEventUpdateManyMutationInput {
+  url?: NullableStringFieldUpdateOperationsInput | null;
+  title?: StringFieldUpdateOperationsInput;
+  start?: DateTimeFieldUpdateOperationsInput;
+  end?: DateTimeFieldUpdateOperationsInput;
+  allDay?: BoolFieldUpdateOperationsInput;
+}
+
+export interface Users_CalendarEventUncheckedUpdateManyInput {
+  id?: IntFieldUpdateOperationsInput;
+  url?: NullableStringFieldUpdateOperationsInput | null;
+  title?: StringFieldUpdateOperationsInput;
+  start?: DateTimeFieldUpdateOperationsInput;
+  end?: DateTimeFieldUpdateOperationsInput;
+  allDay?: BoolFieldUpdateOperationsInput;
+  calendarId?: IntFieldUpdateOperationsInput;
+}
+
+export interface Users_CalendarsOnUsersCreateInput {
+  user: Users_UserCreateNestedOneWithoutCalendarsInput;
+  calendar: Users_CalendarCreateNestedOneWithoutUsersInput;
+}
+
+export interface Users_CalendarsOnUsersUncheckedCreateInput {
+  userId: number;
+  calendarId: number;
+}
+
+export interface Users_CalendarsOnUsersUpdateInput {
+  user?: Users_UserUpdateOneRequiredWithoutCalendarsNestedInput;
+  calendar?: Users_CalendarUpdateOneRequiredWithoutUsersNestedInput;
+}
+
+export interface Users_CalendarsOnUsersUncheckedUpdateInput {
+  userId?: IntFieldUpdateOperationsInput;
+  calendarId?: IntFieldUpdateOperationsInput;
+}
+
+export interface Users_CalendarsOnUsersCreateManyInput {
+  userId: number;
+  calendarId: number;
+}
+
+export interface Users_CalendarsOnUsersUncheckedUpdateManyInput {
+  userId?: IntFieldUpdateOperationsInput;
+  calendarId?: IntFieldUpdateOperationsInput;
+}
+
+export interface Users_CalendarCreateInput {
+  calendarType: string;
+  users?: Users_CalendarsOnUsersCreateNestedManyWithoutCalendarInput;
+  calendarEvents?: Users_CalendarEventCreateNestedManyWithoutCalendarInput;
+}
+
+export interface Users_CalendarUncheckedCreateInput {
+  id?: number;
+  calendarType: string;
+  users?: Users_CalendarsOnUsersUncheckedCreateNestedManyWithoutCalendarInput;
+  calendarEvents?: Users_CalendarEventUncheckedCreateNestedManyWithoutCalendarInput;
+}
+
+export interface Users_CalendarUpdateInput {
+  calendarType?: StringFieldUpdateOperationsInput;
+  users?: Users_CalendarsOnUsersUpdateManyWithoutCalendarNestedInput;
+  calendarEvents?: Users_CalendarEventUpdateManyWithoutCalendarNestedInput;
+}
+
+export interface Users_CalendarUncheckedUpdateInput {
+  id?: IntFieldUpdateOperationsInput;
+  calendarType?: StringFieldUpdateOperationsInput;
+  users?: Users_CalendarsOnUsersUncheckedUpdateManyWithoutCalendarNestedInput;
+  calendarEvents?: Users_CalendarEventUncheckedUpdateManyWithoutCalendarNestedInput;
+}
+
+export interface Users_CalendarCreateManyInput {
+  id?: number;
+  calendarType: string;
+}
+
+export interface Users_CalendarUpdateManyMutationInput {
+  calendarType?: StringFieldUpdateOperationsInput;
+}
+
+export interface Users_CalendarUncheckedUpdateManyInput {
+  id?: IntFieldUpdateOperationsInput;
+  calendarType?: StringFieldUpdateOperationsInput;
 }
 
 export interface IntFilter {
@@ -1962,7 +3544,27 @@ export interface Users_UsersOnTeamsListRelationFilter {
   none?: Users_UsersOnTeamsWhereInput;
 }
 
+export interface Users_CalendarsOnUsersListRelationFilter {
+  every?: Users_CalendarsOnUsersWhereInput;
+  some?: Users_CalendarsOnUsersWhereInput;
+  none?: Users_CalendarsOnUsersWhereInput;
+}
+
+export interface Users_UserListRelationFilter {
+  every?: Users_UserWhereInput;
+  some?: Users_UserWhereInput;
+  none?: Users_UserWhereInput;
+}
+
 export interface Users_UsersOnTeamsOrderByRelationAggregateInput {
+  _count?: SortOrder;
+}
+
+export interface Users_CalendarsOnUsersOrderByRelationAggregateInput {
+  _count?: SortOrder;
+}
+
+export interface Users_UserOrderByRelationAggregateInput {
   _count?: SortOrder;
 }
 
@@ -2114,6 +3716,9 @@ export interface Users_ProfileCountOrderByAggregateInput {
   userId?: SortOrder;
   location?: SortOrder;
   joiningDate?: SortOrder;
+  businessPhone?: SortOrder;
+  mobilePhone?: SortOrder;
+  kakaoTalkId?: SortOrder;
   designation?: SortOrder;
   profileImg?: SortOrder;
   designationIcon?: SortOrder;
@@ -2128,6 +3733,9 @@ export interface Users_ProfileMaxOrderByAggregateInput {
   userId?: SortOrder;
   location?: SortOrder;
   joiningDate?: SortOrder;
+  businessPhone?: SortOrder;
+  mobilePhone?: SortOrder;
+  kakaoTalkId?: SortOrder;
   designation?: SortOrder;
   profileImg?: SortOrder;
   designationIcon?: SortOrder;
@@ -2138,6 +3746,9 @@ export interface Users_ProfileMinOrderByAggregateInput {
   userId?: SortOrder;
   location?: SortOrder;
   joiningDate?: SortOrder;
+  businessPhone?: SortOrder;
+  mobilePhone?: SortOrder;
+  kakaoTalkId?: SortOrder;
   designation?: SortOrder;
   profileImg?: SortOrder;
   designationIcon?: SortOrder;
@@ -2200,14 +3811,141 @@ export interface Users_UsersOnTeamsSumOrderByAggregateInput {
 
 export interface Users_TeamCountOrderByAggregateInput {
   teamName?: SortOrder;
+  teamType?: SortOrder;
+  teamIcon?: SortOrder;
 }
 
 export interface Users_TeamMaxOrderByAggregateInput {
   teamName?: SortOrder;
+  teamType?: SortOrder;
+  teamIcon?: SortOrder;
 }
 
 export interface Users_TeamMinOrderByAggregateInput {
   teamName?: SortOrder;
+  teamType?: SortOrder;
+  teamIcon?: SortOrder;
+}
+
+export interface BoolFilter {
+  equals?: boolean;
+  not?: NestedBoolFilter;
+}
+
+export interface Users_CalendarRelationFilter {
+  is?: Users_CalendarWhereInput;
+  isNot?: Users_CalendarWhereInput;
+}
+
+export interface Users_CalendarEventCountOrderByAggregateInput {
+  id?: SortOrder;
+  url?: SortOrder;
+  title?: SortOrder;
+  start?: SortOrder;
+  end?: SortOrder;
+  allDay?: SortOrder;
+  calendarId?: SortOrder;
+}
+
+export interface Users_CalendarEventAvgOrderByAggregateInput {
+  id?: SortOrder;
+  calendarId?: SortOrder;
+}
+
+export interface Users_CalendarEventMaxOrderByAggregateInput {
+  id?: SortOrder;
+  url?: SortOrder;
+  title?: SortOrder;
+  start?: SortOrder;
+  end?: SortOrder;
+  allDay?: SortOrder;
+  calendarId?: SortOrder;
+}
+
+export interface Users_CalendarEventMinOrderByAggregateInput {
+  id?: SortOrder;
+  url?: SortOrder;
+  title?: SortOrder;
+  start?: SortOrder;
+  end?: SortOrder;
+  allDay?: SortOrder;
+  calendarId?: SortOrder;
+}
+
+export interface Users_CalendarEventSumOrderByAggregateInput {
+  id?: SortOrder;
+  calendarId?: SortOrder;
+}
+
+export interface BoolWithAggregatesFilter {
+  equals?: boolean;
+  not?: NestedBoolWithAggregatesFilter;
+  _count?: NestedIntFilter;
+  _min?: NestedBoolFilter;
+  _max?: NestedBoolFilter;
+}
+
+export interface CalendarsOnUsersUserIdCalendarIdCompoundUniqueInput {
+  userId: number;
+  calendarId: number;
+}
+
+export interface Users_CalendarsOnUsersCountOrderByAggregateInput {
+  userId?: SortOrder;
+  calendarId?: SortOrder;
+}
+
+export interface Users_CalendarsOnUsersAvgOrderByAggregateInput {
+  userId?: SortOrder;
+  calendarId?: SortOrder;
+}
+
+export interface Users_CalendarsOnUsersMaxOrderByAggregateInput {
+  userId?: SortOrder;
+  calendarId?: SortOrder;
+}
+
+export interface Users_CalendarsOnUsersMinOrderByAggregateInput {
+  userId?: SortOrder;
+  calendarId?: SortOrder;
+}
+
+export interface Users_CalendarsOnUsersSumOrderByAggregateInput {
+  userId?: SortOrder;
+  calendarId?: SortOrder;
+}
+
+export interface Users_CalendarEventListRelationFilter {
+  every?: Users_CalendarEventWhereInput;
+  some?: Users_CalendarEventWhereInput;
+  none?: Users_CalendarEventWhereInput;
+}
+
+export interface Users_CalendarEventOrderByRelationAggregateInput {
+  _count?: SortOrder;
+}
+
+export interface Users_CalendarCountOrderByAggregateInput {
+  id?: SortOrder;
+  calendarType?: SortOrder;
+}
+
+export interface Users_CalendarAvgOrderByAggregateInput {
+  id?: SortOrder;
+}
+
+export interface Users_CalendarMaxOrderByAggregateInput {
+  id?: SortOrder;
+  calendarType?: SortOrder;
+}
+
+export interface Users_CalendarMinOrderByAggregateInput {
+  id?: SortOrder;
+  calendarType?: SortOrder;
+}
+
+export interface Users_CalendarSumOrderByAggregateInput {
+  id?: SortOrder;
 }
 
 export interface Users_UserCreaterolesInput {
@@ -2227,6 +3965,25 @@ export interface Users_UsersOnTeamsCreateNestedManyWithoutUserInput {
   connect?: Users_UsersOnTeamsWhereUniqueInput[];
 }
 
+export interface Users_CalendarsOnUsersCreateNestedManyWithoutUserInput {
+  create?: Users_CalendarsOnUsersCreateWithoutUserInput[];
+  connectOrCreate?: Users_CalendarsOnUsersCreateOrConnectWithoutUserInput[];
+  createMany?: Users_CalendarsOnUsersCreateManyUserInputEnvelope;
+  connect?: Users_CalendarsOnUsersWhereUniqueInput[];
+}
+
+export interface Users_UserCreateNestedManyWithoutContactedByInput {
+  create?: Users_UserCreateWithoutContactedByInput[];
+  connectOrCreate?: Users_UserCreateOrConnectWithoutContactedByInput[];
+  connect?: Users_UserWhereUniqueInput[];
+}
+
+export interface Users_UserCreateNestedManyWithoutContactedInput {
+  create?: Users_UserCreateWithoutContactedInput[];
+  connectOrCreate?: Users_UserCreateOrConnectWithoutContactedInput[];
+  connect?: Users_UserWhereUniqueInput[];
+}
+
 export interface Users_ProfileUncheckedCreateNestedOneWithoutUserInput {
   create?: Users_ProfileUncheckedCreateWithoutUserInput;
   connectOrCreate?: Users_ProfileCreateOrConnectWithoutUserInput;
@@ -2238,6 +3995,25 @@ export interface Users_UsersOnTeamsUncheckedCreateNestedManyWithoutUserInput {
   connectOrCreate?: Users_UsersOnTeamsCreateOrConnectWithoutUserInput[];
   createMany?: Users_UsersOnTeamsCreateManyUserInputEnvelope;
   connect?: Users_UsersOnTeamsWhereUniqueInput[];
+}
+
+export interface Users_CalendarsOnUsersUncheckedCreateNestedManyWithoutUserInput {
+  create?: Users_CalendarsOnUsersCreateWithoutUserInput[];
+  connectOrCreate?: Users_CalendarsOnUsersCreateOrConnectWithoutUserInput[];
+  createMany?: Users_CalendarsOnUsersCreateManyUserInputEnvelope;
+  connect?: Users_CalendarsOnUsersWhereUniqueInput[];
+}
+
+export interface Users_UserUncheckedCreateNestedManyWithoutContactedByInput {
+  create?: Users_UserCreateWithoutContactedByInput[];
+  connectOrCreate?: Users_UserCreateOrConnectWithoutContactedByInput[];
+  connect?: Users_UserWhereUniqueInput[];
+}
+
+export interface Users_UserUncheckedCreateNestedManyWithoutContactedInput {
+  create?: Users_UserCreateWithoutContactedInput[];
+  connectOrCreate?: Users_UserCreateOrConnectWithoutContactedInput[];
+  connect?: Users_UserWhereUniqueInput[];
 }
 
 export interface DateTimeFieldUpdateOperationsInput {
@@ -2281,6 +4057,46 @@ export interface Users_UsersOnTeamsUpdateManyWithoutUserNestedInput {
   deleteMany?: Users_UsersOnTeamsScalarWhereInput[];
 }
 
+export interface Users_CalendarsOnUsersUpdateManyWithoutUserNestedInput {
+  create?: Users_CalendarsOnUsersCreateWithoutUserInput[];
+  connectOrCreate?: Users_CalendarsOnUsersCreateOrConnectWithoutUserInput[];
+  upsert?: Users_CalendarsOnUsersUpsertWithWhereUniqueWithoutUserInput[];
+  createMany?: Users_CalendarsOnUsersCreateManyUserInputEnvelope;
+  set?: Users_CalendarsOnUsersWhereUniqueInput[];
+  disconnect?: Users_CalendarsOnUsersWhereUniqueInput[];
+  delete?: Users_CalendarsOnUsersWhereUniqueInput[];
+  connect?: Users_CalendarsOnUsersWhereUniqueInput[];
+  update?: Users_CalendarsOnUsersUpdateWithWhereUniqueWithoutUserInput[];
+  updateMany?: Users_CalendarsOnUsersUpdateManyWithWhereWithoutUserInput[];
+  deleteMany?: Users_CalendarsOnUsersScalarWhereInput[];
+}
+
+export interface Users_UserUpdateManyWithoutContactedByNestedInput {
+  create?: Users_UserCreateWithoutContactedByInput[];
+  connectOrCreate?: Users_UserCreateOrConnectWithoutContactedByInput[];
+  upsert?: Users_UserUpsertWithWhereUniqueWithoutContactedByInput[];
+  set?: Users_UserWhereUniqueInput[];
+  disconnect?: Users_UserWhereUniqueInput[];
+  delete?: Users_UserWhereUniqueInput[];
+  connect?: Users_UserWhereUniqueInput[];
+  update?: Users_UserUpdateWithWhereUniqueWithoutContactedByInput[];
+  updateMany?: Users_UserUpdateManyWithWhereWithoutContactedByInput[];
+  deleteMany?: Users_UserScalarWhereInput[];
+}
+
+export interface Users_UserUpdateManyWithoutContactedNestedInput {
+  create?: Users_UserCreateWithoutContactedInput[];
+  connectOrCreate?: Users_UserCreateOrConnectWithoutContactedInput[];
+  upsert?: Users_UserUpsertWithWhereUniqueWithoutContactedInput[];
+  set?: Users_UserWhereUniqueInput[];
+  disconnect?: Users_UserWhereUniqueInput[];
+  delete?: Users_UserWhereUniqueInput[];
+  connect?: Users_UserWhereUniqueInput[];
+  update?: Users_UserUpdateWithWhereUniqueWithoutContactedInput[];
+  updateMany?: Users_UserUpdateManyWithWhereWithoutContactedInput[];
+  deleteMany?: Users_UserScalarWhereInput[];
+}
+
 export interface IntFieldUpdateOperationsInput {
   set?: number;
   increment?: number;
@@ -2311,6 +4127,46 @@ export interface Users_UsersOnTeamsUncheckedUpdateManyWithoutUserNestedInput {
   update?: Users_UsersOnTeamsUpdateWithWhereUniqueWithoutUserInput[];
   updateMany?: Users_UsersOnTeamsUpdateManyWithWhereWithoutUserInput[];
   deleteMany?: Users_UsersOnTeamsScalarWhereInput[];
+}
+
+export interface Users_CalendarsOnUsersUncheckedUpdateManyWithoutUserNestedInput {
+  create?: Users_CalendarsOnUsersCreateWithoutUserInput[];
+  connectOrCreate?: Users_CalendarsOnUsersCreateOrConnectWithoutUserInput[];
+  upsert?: Users_CalendarsOnUsersUpsertWithWhereUniqueWithoutUserInput[];
+  createMany?: Users_CalendarsOnUsersCreateManyUserInputEnvelope;
+  set?: Users_CalendarsOnUsersWhereUniqueInput[];
+  disconnect?: Users_CalendarsOnUsersWhereUniqueInput[];
+  delete?: Users_CalendarsOnUsersWhereUniqueInput[];
+  connect?: Users_CalendarsOnUsersWhereUniqueInput[];
+  update?: Users_CalendarsOnUsersUpdateWithWhereUniqueWithoutUserInput[];
+  updateMany?: Users_CalendarsOnUsersUpdateManyWithWhereWithoutUserInput[];
+  deleteMany?: Users_CalendarsOnUsersScalarWhereInput[];
+}
+
+export interface Users_UserUncheckedUpdateManyWithoutContactedByNestedInput {
+  create?: Users_UserCreateWithoutContactedByInput[];
+  connectOrCreate?: Users_UserCreateOrConnectWithoutContactedByInput[];
+  upsert?: Users_UserUpsertWithWhereUniqueWithoutContactedByInput[];
+  set?: Users_UserWhereUniqueInput[];
+  disconnect?: Users_UserWhereUniqueInput[];
+  delete?: Users_UserWhereUniqueInput[];
+  connect?: Users_UserWhereUniqueInput[];
+  update?: Users_UserUpdateWithWhereUniqueWithoutContactedByInput[];
+  updateMany?: Users_UserUpdateManyWithWhereWithoutContactedByInput[];
+  deleteMany?: Users_UserScalarWhereInput[];
+}
+
+export interface Users_UserUncheckedUpdateManyWithoutContactedNestedInput {
+  create?: Users_UserCreateWithoutContactedInput[];
+  connectOrCreate?: Users_UserCreateOrConnectWithoutContactedInput[];
+  upsert?: Users_UserUpsertWithWhereUniqueWithoutContactedInput[];
+  set?: Users_UserWhereUniqueInput[];
+  disconnect?: Users_UserWhereUniqueInput[];
+  delete?: Users_UserWhereUniqueInput[];
+  connect?: Users_UserWhereUniqueInput[];
+  update?: Users_UserUpdateWithWhereUniqueWithoutContactedInput[];
+  updateMany?: Users_UserUpdateManyWithWhereWithoutContactedInput[];
+  deleteMany?: Users_UserScalarWhereInput[];
 }
 
 export interface Users_UserCreateNestedOneWithoutProfileInput {
@@ -2399,6 +4255,136 @@ export interface Users_UsersOnTeamsUncheckedUpdateManyWithoutTeamNestedInput {
   update?: Users_UsersOnTeamsUpdateWithWhereUniqueWithoutTeamInput[];
   updateMany?: Users_UsersOnTeamsUpdateManyWithWhereWithoutTeamInput[];
   deleteMany?: Users_UsersOnTeamsScalarWhereInput[];
+}
+
+export interface Users_CalendarCreateNestedOneWithoutCalendarEventsInput {
+  create?: Users_CalendarUncheckedCreateWithoutCalendarEventsInput;
+  connectOrCreate?: Users_CalendarCreateOrConnectWithoutCalendarEventsInput;
+  connect?: Users_CalendarWhereUniqueInput;
+}
+
+export interface BoolFieldUpdateOperationsInput {
+  set?: boolean;
+}
+
+export interface Users_CalendarUpdateOneRequiredWithoutCalendarEventsNestedInput {
+  create?: Users_CalendarUncheckedCreateWithoutCalendarEventsInput;
+  connectOrCreate?: Users_CalendarCreateOrConnectWithoutCalendarEventsInput;
+  upsert?: Users_CalendarUpsertWithoutCalendarEventsInput;
+  connect?: Users_CalendarWhereUniqueInput;
+  update?: Users_CalendarUpdateWithoutCalendarEventsInput;
+}
+
+export interface Users_UserCreateNestedOneWithoutCalendarsInput {
+  create?: Users_UserUncheckedCreateWithoutCalendarsInput;
+  connectOrCreate?: Users_UserCreateOrConnectWithoutCalendarsInput;
+  connect?: Users_UserWhereUniqueInput;
+}
+
+export interface Users_CalendarCreateNestedOneWithoutUsersInput {
+  create?: Users_CalendarUncheckedCreateWithoutUsersInput;
+  connectOrCreate?: Users_CalendarCreateOrConnectWithoutUsersInput;
+  connect?: Users_CalendarWhereUniqueInput;
+}
+
+export interface Users_UserUpdateOneRequiredWithoutCalendarsNestedInput {
+  create?: Users_UserUncheckedCreateWithoutCalendarsInput;
+  connectOrCreate?: Users_UserCreateOrConnectWithoutCalendarsInput;
+  upsert?: Users_UserUpsertWithoutCalendarsInput;
+  connect?: Users_UserWhereUniqueInput;
+  update?: Users_UserUpdateWithoutCalendarsInput;
+}
+
+export interface Users_CalendarUpdateOneRequiredWithoutUsersNestedInput {
+  create?: Users_CalendarUncheckedCreateWithoutUsersInput;
+  connectOrCreate?: Users_CalendarCreateOrConnectWithoutUsersInput;
+  upsert?: Users_CalendarUpsertWithoutUsersInput;
+  connect?: Users_CalendarWhereUniqueInput;
+  update?: Users_CalendarUpdateWithoutUsersInput;
+}
+
+export interface Users_CalendarsOnUsersCreateNestedManyWithoutCalendarInput {
+  create?: Users_CalendarsOnUsersCreateWithoutCalendarInput[];
+  connectOrCreate?: Users_CalendarsOnUsersCreateOrConnectWithoutCalendarInput[];
+  createMany?: Users_CalendarsOnUsersCreateManyCalendarInputEnvelope;
+  connect?: Users_CalendarsOnUsersWhereUniqueInput[];
+}
+
+export interface Users_CalendarEventCreateNestedManyWithoutCalendarInput {
+  create?: Users_CalendarEventCreateWithoutCalendarInput[];
+  connectOrCreate?: Users_CalendarEventCreateOrConnectWithoutCalendarInput[];
+  createMany?: Users_CalendarEventCreateManyCalendarInputEnvelope;
+  connect?: Users_CalendarEventWhereUniqueInput[];
+}
+
+export interface Users_CalendarsOnUsersUncheckedCreateNestedManyWithoutCalendarInput {
+  create?: Users_CalendarsOnUsersCreateWithoutCalendarInput[];
+  connectOrCreate?: Users_CalendarsOnUsersCreateOrConnectWithoutCalendarInput[];
+  createMany?: Users_CalendarsOnUsersCreateManyCalendarInputEnvelope;
+  connect?: Users_CalendarsOnUsersWhereUniqueInput[];
+}
+
+export interface Users_CalendarEventUncheckedCreateNestedManyWithoutCalendarInput {
+  create?: Users_CalendarEventCreateWithoutCalendarInput[];
+  connectOrCreate?: Users_CalendarEventCreateOrConnectWithoutCalendarInput[];
+  createMany?: Users_CalendarEventCreateManyCalendarInputEnvelope;
+  connect?: Users_CalendarEventWhereUniqueInput[];
+}
+
+export interface Users_CalendarsOnUsersUpdateManyWithoutCalendarNestedInput {
+  create?: Users_CalendarsOnUsersCreateWithoutCalendarInput[];
+  connectOrCreate?: Users_CalendarsOnUsersCreateOrConnectWithoutCalendarInput[];
+  upsert?: Users_CalendarsOnUsersUpsertWithWhereUniqueWithoutCalendarInput[];
+  createMany?: Users_CalendarsOnUsersCreateManyCalendarInputEnvelope;
+  set?: Users_CalendarsOnUsersWhereUniqueInput[];
+  disconnect?: Users_CalendarsOnUsersWhereUniqueInput[];
+  delete?: Users_CalendarsOnUsersWhereUniqueInput[];
+  connect?: Users_CalendarsOnUsersWhereUniqueInput[];
+  update?: Users_CalendarsOnUsersUpdateWithWhereUniqueWithoutCalendarInput[];
+  updateMany?: Users_CalendarsOnUsersUpdateManyWithWhereWithoutCalendarInput[];
+  deleteMany?: Users_CalendarsOnUsersScalarWhereInput[];
+}
+
+export interface Users_CalendarEventUpdateManyWithoutCalendarNestedInput {
+  create?: Users_CalendarEventCreateWithoutCalendarInput[];
+  connectOrCreate?: Users_CalendarEventCreateOrConnectWithoutCalendarInput[];
+  upsert?: Users_CalendarEventUpsertWithWhereUniqueWithoutCalendarInput[];
+  createMany?: Users_CalendarEventCreateManyCalendarInputEnvelope;
+  set?: Users_CalendarEventWhereUniqueInput[];
+  disconnect?: Users_CalendarEventWhereUniqueInput[];
+  delete?: Users_CalendarEventWhereUniqueInput[];
+  connect?: Users_CalendarEventWhereUniqueInput[];
+  update?: Users_CalendarEventUpdateWithWhereUniqueWithoutCalendarInput[];
+  updateMany?: Users_CalendarEventUpdateManyWithWhereWithoutCalendarInput[];
+  deleteMany?: Users_CalendarEventScalarWhereInput[];
+}
+
+export interface Users_CalendarsOnUsersUncheckedUpdateManyWithoutCalendarNestedInput {
+  create?: Users_CalendarsOnUsersCreateWithoutCalendarInput[];
+  connectOrCreate?: Users_CalendarsOnUsersCreateOrConnectWithoutCalendarInput[];
+  upsert?: Users_CalendarsOnUsersUpsertWithWhereUniqueWithoutCalendarInput[];
+  createMany?: Users_CalendarsOnUsersCreateManyCalendarInputEnvelope;
+  set?: Users_CalendarsOnUsersWhereUniqueInput[];
+  disconnect?: Users_CalendarsOnUsersWhereUniqueInput[];
+  delete?: Users_CalendarsOnUsersWhereUniqueInput[];
+  connect?: Users_CalendarsOnUsersWhereUniqueInput[];
+  update?: Users_CalendarsOnUsersUpdateWithWhereUniqueWithoutCalendarInput[];
+  updateMany?: Users_CalendarsOnUsersUpdateManyWithWhereWithoutCalendarInput[];
+  deleteMany?: Users_CalendarsOnUsersScalarWhereInput[];
+}
+
+export interface Users_CalendarEventUncheckedUpdateManyWithoutCalendarNestedInput {
+  create?: Users_CalendarEventCreateWithoutCalendarInput[];
+  connectOrCreate?: Users_CalendarEventCreateOrConnectWithoutCalendarInput[];
+  upsert?: Users_CalendarEventUpsertWithWhereUniqueWithoutCalendarInput[];
+  createMany?: Users_CalendarEventCreateManyCalendarInputEnvelope;
+  set?: Users_CalendarEventWhereUniqueInput[];
+  disconnect?: Users_CalendarEventWhereUniqueInput[];
+  delete?: Users_CalendarEventWhereUniqueInput[];
+  connect?: Users_CalendarEventWhereUniqueInput[];
+  update?: Users_CalendarEventUpdateWithWhereUniqueWithoutCalendarInput[];
+  updateMany?: Users_CalendarEventUpdateManyWithWhereWithoutCalendarInput[];
+  deleteMany?: Users_CalendarEventScalarWhereInput[];
 }
 
 export interface NestedIntFilter {
@@ -2578,9 +4564,25 @@ export interface NestedDateTimeNullableWithAggregatesFilter {
   _max?: NestedDateTimeNullableFilter;
 }
 
+export interface NestedBoolFilter {
+  equals?: boolean;
+  not?: NestedBoolFilter;
+}
+
+export interface NestedBoolWithAggregatesFilter {
+  equals?: boolean;
+  not?: NestedBoolWithAggregatesFilter;
+  _count?: NestedIntFilter;
+  _min?: NestedBoolFilter;
+  _max?: NestedBoolFilter;
+}
+
 export interface Users_ProfileCreateWithoutUserInput {
   location?: string | null;
   joiningDate?: Date | null;
+  businessPhone?: string | null;
+  mobilePhone?: string | null;
+  kakaoTalkId?: string | null;
   designation?: string | null;
   profileImg?: string | null;
   designationIcon?: string | null;
@@ -2590,6 +4592,9 @@ export interface Users_ProfileCreateWithoutUserInput {
 export interface Users_ProfileUncheckedCreateWithoutUserInput {
   location?: string | null;
   joiningDate?: Date | null;
+  businessPhone?: string | null;
+  mobilePhone?: string | null;
+  kakaoTalkId?: string | null;
   designation?: string | null;
   profileImg?: string | null;
   designationIcon?: string | null;
@@ -2621,6 +4626,100 @@ export interface Users_UsersOnTeamsCreateManyUserInputEnvelope {
   skipDuplicates?: boolean;
 }
 
+export interface Users_CalendarsOnUsersCreateWithoutUserInput {
+  calendar: Users_CalendarCreateNestedOneWithoutUsersInput;
+}
+
+export interface Users_CalendarsOnUsersUncheckedCreateWithoutUserInput {
+  calendarId: number;
+}
+
+export interface Users_CalendarsOnUsersCreateOrConnectWithoutUserInput {
+  where: Users_CalendarsOnUsersWhereUniqueInput;
+  create: Users_CalendarsOnUsersUncheckedCreateWithoutUserInput;
+}
+
+export interface Users_CalendarsOnUsersCreateManyUserInputEnvelope {
+  data: Users_CalendarsOnUsersCreateManyUserInput[];
+  skipDuplicates?: boolean;
+}
+
+export interface Users_UserCreateWithoutContactedByInput {
+  createdAt?: Date;
+  username?: string | null;
+  password?: string | null;
+  email: string;
+  roles?: Users_UserCreaterolesInput;
+  googleId?: string | null;
+  googleProfile?: NullableJsonNullValueInput;
+  lastName?: string | null;
+  firstName?: string | null;
+  profile?: Users_ProfileCreateNestedOneWithoutUserInput;
+  teams?: Users_UsersOnTeamsCreateNestedManyWithoutUserInput;
+  calendars?: Users_CalendarsOnUsersCreateNestedManyWithoutUserInput;
+  contacted?: Users_UserCreateNestedManyWithoutContactedByInput;
+}
+
+export interface Users_UserUncheckedCreateWithoutContactedByInput {
+  id?: number;
+  createdAt?: Date;
+  username?: string | null;
+  password?: string | null;
+  email: string;
+  roles?: Users_UserCreaterolesInput;
+  googleId?: string | null;
+  googleProfile?: NullableJsonNullValueInput;
+  lastName?: string | null;
+  firstName?: string | null;
+  profile?: Users_ProfileUncheckedCreateNestedOneWithoutUserInput;
+  teams?: Users_UsersOnTeamsUncheckedCreateNestedManyWithoutUserInput;
+  calendars?: Users_CalendarsOnUsersUncheckedCreateNestedManyWithoutUserInput;
+  contacted?: Users_UserUncheckedCreateNestedManyWithoutContactedByInput;
+}
+
+export interface Users_UserCreateOrConnectWithoutContactedByInput {
+  where: Users_UserWhereUniqueInput;
+  create: Users_UserUncheckedCreateWithoutContactedByInput;
+}
+
+export interface Users_UserCreateWithoutContactedInput {
+  createdAt?: Date;
+  username?: string | null;
+  password?: string | null;
+  email: string;
+  roles?: Users_UserCreaterolesInput;
+  googleId?: string | null;
+  googleProfile?: NullableJsonNullValueInput;
+  lastName?: string | null;
+  firstName?: string | null;
+  profile?: Users_ProfileCreateNestedOneWithoutUserInput;
+  teams?: Users_UsersOnTeamsCreateNestedManyWithoutUserInput;
+  calendars?: Users_CalendarsOnUsersCreateNestedManyWithoutUserInput;
+  contactedBy?: Users_UserCreateNestedManyWithoutContactedInput;
+}
+
+export interface Users_UserUncheckedCreateWithoutContactedInput {
+  id?: number;
+  createdAt?: Date;
+  username?: string | null;
+  password?: string | null;
+  email: string;
+  roles?: Users_UserCreaterolesInput;
+  googleId?: string | null;
+  googleProfile?: NullableJsonNullValueInput;
+  lastName?: string | null;
+  firstName?: string | null;
+  profile?: Users_ProfileUncheckedCreateNestedOneWithoutUserInput;
+  teams?: Users_UsersOnTeamsUncheckedCreateNestedManyWithoutUserInput;
+  calendars?: Users_CalendarsOnUsersUncheckedCreateNestedManyWithoutUserInput;
+  contactedBy?: Users_UserUncheckedCreateNestedManyWithoutContactedInput;
+}
+
+export interface Users_UserCreateOrConnectWithoutContactedInput {
+  where: Users_UserWhereUniqueInput;
+  create: Users_UserUncheckedCreateWithoutContactedInput;
+}
+
 export interface Users_ProfileUpsertWithoutUserInput {
   update: Users_ProfileUncheckedUpdateWithoutUserInput;
   create: Users_ProfileUncheckedCreateWithoutUserInput;
@@ -2635,6 +4734,9 @@ export interface Users_ProfileUpdateToOneWithWhereWithoutUserInput {
 export interface Users_ProfileUpdateWithoutUserInput {
   location?: NullableStringFieldUpdateOperationsInput | null;
   joiningDate?: NullableDateTimeFieldUpdateOperationsInput | null;
+  businessPhone?: NullableStringFieldUpdateOperationsInput | null;
+  mobilePhone?: NullableStringFieldUpdateOperationsInput | null;
+  kakaoTalkId?: NullableStringFieldUpdateOperationsInput | null;
   designation?: NullableStringFieldUpdateOperationsInput | null;
   profileImg?: NullableStringFieldUpdateOperationsInput | null;
   designationIcon?: NullableStringFieldUpdateOperationsInput | null;
@@ -2644,6 +4746,9 @@ export interface Users_ProfileUpdateWithoutUserInput {
 export interface Users_ProfileUncheckedUpdateWithoutUserInput {
   location?: NullableStringFieldUpdateOperationsInput | null;
   joiningDate?: NullableDateTimeFieldUpdateOperationsInput | null;
+  businessPhone?: NullableStringFieldUpdateOperationsInput | null;
+  mobilePhone?: NullableStringFieldUpdateOperationsInput | null;
+  kakaoTalkId?: NullableStringFieldUpdateOperationsInput | null;
   designation?: NullableStringFieldUpdateOperationsInput | null;
   profileImg?: NullableStringFieldUpdateOperationsInput | null;
   designationIcon?: NullableStringFieldUpdateOperationsInput | null;
@@ -2675,6 +4780,78 @@ export interface Users_UsersOnTeamsScalarWhereInput {
   assignedAt?: DateTimeFilter;
 }
 
+export interface Users_CalendarsOnUsersUpsertWithWhereUniqueWithoutUserInput {
+  where: Users_CalendarsOnUsersWhereUniqueInput;
+  update: Users_CalendarsOnUsersUncheckedUpdateWithoutUserInput;
+  create: Users_CalendarsOnUsersUncheckedCreateWithoutUserInput;
+}
+
+export interface Users_CalendarsOnUsersUpdateWithWhereUniqueWithoutUserInput {
+  where: Users_CalendarsOnUsersWhereUniqueInput;
+  data: Users_CalendarsOnUsersUncheckedUpdateWithoutUserInput;
+}
+
+export interface Users_CalendarsOnUsersUpdateManyWithWhereWithoutUserInput {
+  where: Users_CalendarsOnUsersScalarWhereInput;
+  data: Users_CalendarsOnUsersUncheckedUpdateManyWithoutCalendarsInput;
+}
+
+export interface Users_CalendarsOnUsersScalarWhereInput {
+  AND?: Users_CalendarsOnUsersScalarWhereInput[];
+  OR?: Users_CalendarsOnUsersScalarWhereInput[];
+  NOT?: Users_CalendarsOnUsersScalarWhereInput[];
+  userId?: IntFilter;
+  calendarId?: IntFilter;
+}
+
+export interface Users_UserUpsertWithWhereUniqueWithoutContactedByInput {
+  where: Users_UserWhereUniqueInput;
+  update: Users_UserUncheckedUpdateWithoutContactedByInput;
+  create: Users_UserUncheckedCreateWithoutContactedByInput;
+}
+
+export interface Users_UserUpdateWithWhereUniqueWithoutContactedByInput {
+  where: Users_UserWhereUniqueInput;
+  data: Users_UserUncheckedUpdateWithoutContactedByInput;
+}
+
+export interface Users_UserUpdateManyWithWhereWithoutContactedByInput {
+  where: Users_UserScalarWhereInput;
+  data: Users_UserUncheckedUpdateManyWithoutContactedInput;
+}
+
+export interface Users_UserScalarWhereInput {
+  AND?: Users_UserScalarWhereInput[];
+  OR?: Users_UserScalarWhereInput[];
+  NOT?: Users_UserScalarWhereInput[];
+  id?: IntFilter;
+  createdAt?: DateTimeFilter;
+  username?: StringNullableFilter | null;
+  password?: StringNullableFilter | null;
+  email?: StringFilter;
+  roles?: StringNullableListFilter;
+  googleId?: StringNullableFilter | null;
+  googleProfile?: JsonNullableFilter;
+  lastName?: StringNullableFilter | null;
+  firstName?: StringNullableFilter | null;
+}
+
+export interface Users_UserUpsertWithWhereUniqueWithoutContactedInput {
+  where: Users_UserWhereUniqueInput;
+  update: Users_UserUncheckedUpdateWithoutContactedInput;
+  create: Users_UserUncheckedCreateWithoutContactedInput;
+}
+
+export interface Users_UserUpdateWithWhereUniqueWithoutContactedInput {
+  where: Users_UserWhereUniqueInput;
+  data: Users_UserUncheckedUpdateWithoutContactedInput;
+}
+
+export interface Users_UserUpdateManyWithWhereWithoutContactedInput {
+  where: Users_UserScalarWhereInput;
+  data: Users_UserUncheckedUpdateManyWithoutContactedByInput;
+}
+
 export interface Users_UserCreateWithoutProfileInput {
   createdAt?: Date;
   username?: string | null;
@@ -2686,6 +4863,9 @@ export interface Users_UserCreateWithoutProfileInput {
   lastName?: string | null;
   firstName?: string | null;
   teams?: Users_UsersOnTeamsCreateNestedManyWithoutUserInput;
+  calendars?: Users_CalendarsOnUsersCreateNestedManyWithoutUserInput;
+  contacted?: Users_UserCreateNestedManyWithoutContactedByInput;
+  contactedBy?: Users_UserCreateNestedManyWithoutContactedInput;
 }
 
 export interface Users_UserUncheckedCreateWithoutProfileInput {
@@ -2700,6 +4880,9 @@ export interface Users_UserUncheckedCreateWithoutProfileInput {
   lastName?: string | null;
   firstName?: string | null;
   teams?: Users_UsersOnTeamsUncheckedCreateNestedManyWithoutUserInput;
+  calendars?: Users_CalendarsOnUsersUncheckedCreateNestedManyWithoutUserInput;
+  contacted?: Users_UserUncheckedCreateNestedManyWithoutContactedByInput;
+  contactedBy?: Users_UserUncheckedCreateNestedManyWithoutContactedInput;
 }
 
 export interface Users_UserCreateOrConnectWithoutProfileInput {
@@ -2729,6 +4912,9 @@ export interface Users_UserUpdateWithoutProfileInput {
   lastName?: NullableStringFieldUpdateOperationsInput | null;
   firstName?: NullableStringFieldUpdateOperationsInput | null;
   teams?: Users_UsersOnTeamsUpdateManyWithoutUserNestedInput;
+  calendars?: Users_CalendarsOnUsersUpdateManyWithoutUserNestedInput;
+  contacted?: Users_UserUpdateManyWithoutContactedByNestedInput;
+  contactedBy?: Users_UserUpdateManyWithoutContactedNestedInput;
 }
 
 export interface Users_UserUncheckedUpdateWithoutProfileInput {
@@ -2743,14 +4929,21 @@ export interface Users_UserUncheckedUpdateWithoutProfileInput {
   lastName?: NullableStringFieldUpdateOperationsInput | null;
   firstName?: NullableStringFieldUpdateOperationsInput | null;
   teams?: Users_UsersOnTeamsUncheckedUpdateManyWithoutUserNestedInput;
+  calendars?: Users_CalendarsOnUsersUncheckedUpdateManyWithoutUserNestedInput;
+  contacted?: Users_UserUncheckedUpdateManyWithoutContactedByNestedInput;
+  contactedBy?: Users_UserUncheckedUpdateManyWithoutContactedNestedInput;
 }
 
 export interface Users_TeamCreateWithoutUsersInput {
   teamName: string;
+  teamType?: string | null;
+  teamIcon?: string | null;
 }
 
 export interface Users_TeamUncheckedCreateWithoutUsersInput {
   teamName: string;
+  teamType?: string | null;
+  teamIcon?: string | null;
 }
 
 export interface Users_TeamCreateOrConnectWithoutUsersInput {
@@ -2769,6 +4962,9 @@ export interface Users_UserCreateWithoutTeamsInput {
   lastName?: string | null;
   firstName?: string | null;
   profile?: Users_ProfileCreateNestedOneWithoutUserInput;
+  calendars?: Users_CalendarsOnUsersCreateNestedManyWithoutUserInput;
+  contacted?: Users_UserCreateNestedManyWithoutContactedByInput;
+  contactedBy?: Users_UserCreateNestedManyWithoutContactedInput;
 }
 
 export interface Users_UserUncheckedCreateWithoutTeamsInput {
@@ -2783,6 +4979,9 @@ export interface Users_UserUncheckedCreateWithoutTeamsInput {
   lastName?: string | null;
   firstName?: string | null;
   profile?: Users_ProfileUncheckedCreateNestedOneWithoutUserInput;
+  calendars?: Users_CalendarsOnUsersUncheckedCreateNestedManyWithoutUserInput;
+  contacted?: Users_UserUncheckedCreateNestedManyWithoutContactedByInput;
+  contactedBy?: Users_UserUncheckedCreateNestedManyWithoutContactedInput;
 }
 
 export interface Users_UserCreateOrConnectWithoutTeamsInput {
@@ -2803,10 +5002,14 @@ export interface Users_TeamUpdateToOneWithWhereWithoutUsersInput {
 
 export interface Users_TeamUpdateWithoutUsersInput {
   teamName?: StringFieldUpdateOperationsInput;
+  teamType?: NullableStringFieldUpdateOperationsInput | null;
+  teamIcon?: NullableStringFieldUpdateOperationsInput | null;
 }
 
 export interface Users_TeamUncheckedUpdateWithoutUsersInput {
   teamName?: StringFieldUpdateOperationsInput;
+  teamType?: NullableStringFieldUpdateOperationsInput | null;
+  teamIcon?: NullableStringFieldUpdateOperationsInput | null;
 }
 
 export interface Users_UserUpsertWithoutTeamsInput {
@@ -2831,6 +5034,9 @@ export interface Users_UserUpdateWithoutTeamsInput {
   lastName?: NullableStringFieldUpdateOperationsInput | null;
   firstName?: NullableStringFieldUpdateOperationsInput | null;
   profile?: Users_ProfileUpdateOneWithoutUserNestedInput;
+  calendars?: Users_CalendarsOnUsersUpdateManyWithoutUserNestedInput;
+  contacted?: Users_UserUpdateManyWithoutContactedByNestedInput;
+  contactedBy?: Users_UserUpdateManyWithoutContactedNestedInput;
 }
 
 export interface Users_UserUncheckedUpdateWithoutTeamsInput {
@@ -2845,6 +5051,9 @@ export interface Users_UserUncheckedUpdateWithoutTeamsInput {
   lastName?: NullableStringFieldUpdateOperationsInput | null;
   firstName?: NullableStringFieldUpdateOperationsInput | null;
   profile?: Users_ProfileUncheckedUpdateOneWithoutUserNestedInput;
+  calendars?: Users_CalendarsOnUsersUncheckedUpdateManyWithoutUserNestedInput;
+  contacted?: Users_UserUncheckedUpdateManyWithoutContactedByNestedInput;
+  contactedBy?: Users_UserUncheckedUpdateManyWithoutContactedNestedInput;
 }
 
 export interface Users_UsersOnTeamsCreateWithoutTeamInput {
@@ -2883,9 +5092,261 @@ export interface Users_UsersOnTeamsUpdateManyWithWhereWithoutTeamInput {
   data: Users_UsersOnTeamsUncheckedUpdateManyWithoutUsersInput;
 }
 
+export interface Users_CalendarCreateWithoutCalendarEventsInput {
+  calendarType: string;
+  users?: Users_CalendarsOnUsersCreateNestedManyWithoutCalendarInput;
+}
+
+export interface Users_CalendarUncheckedCreateWithoutCalendarEventsInput {
+  id?: number;
+  calendarType: string;
+  users?: Users_CalendarsOnUsersUncheckedCreateNestedManyWithoutCalendarInput;
+}
+
+export interface Users_CalendarCreateOrConnectWithoutCalendarEventsInput {
+  where: Users_CalendarWhereUniqueInput;
+  create: Users_CalendarUncheckedCreateWithoutCalendarEventsInput;
+}
+
+export interface Users_CalendarUpsertWithoutCalendarEventsInput {
+  update: Users_CalendarUncheckedUpdateWithoutCalendarEventsInput;
+  create: Users_CalendarUncheckedCreateWithoutCalendarEventsInput;
+  where?: Users_CalendarWhereInput;
+}
+
+export interface Users_CalendarUpdateToOneWithWhereWithoutCalendarEventsInput {
+  where?: Users_CalendarWhereInput;
+  data: Users_CalendarUncheckedUpdateWithoutCalendarEventsInput;
+}
+
+export interface Users_CalendarUpdateWithoutCalendarEventsInput {
+  calendarType?: StringFieldUpdateOperationsInput;
+  users?: Users_CalendarsOnUsersUpdateManyWithoutCalendarNestedInput;
+}
+
+export interface Users_CalendarUncheckedUpdateWithoutCalendarEventsInput {
+  id?: IntFieldUpdateOperationsInput;
+  calendarType?: StringFieldUpdateOperationsInput;
+  users?: Users_CalendarsOnUsersUncheckedUpdateManyWithoutCalendarNestedInput;
+}
+
+export interface Users_UserCreateWithoutCalendarsInput {
+  createdAt?: Date;
+  username?: string | null;
+  password?: string | null;
+  email: string;
+  roles?: Users_UserCreaterolesInput;
+  googleId?: string | null;
+  googleProfile?: NullableJsonNullValueInput;
+  lastName?: string | null;
+  firstName?: string | null;
+  profile?: Users_ProfileCreateNestedOneWithoutUserInput;
+  teams?: Users_UsersOnTeamsCreateNestedManyWithoutUserInput;
+  contacted?: Users_UserCreateNestedManyWithoutContactedByInput;
+  contactedBy?: Users_UserCreateNestedManyWithoutContactedInput;
+}
+
+export interface Users_UserUncheckedCreateWithoutCalendarsInput {
+  id?: number;
+  createdAt?: Date;
+  username?: string | null;
+  password?: string | null;
+  email: string;
+  roles?: Users_UserCreaterolesInput;
+  googleId?: string | null;
+  googleProfile?: NullableJsonNullValueInput;
+  lastName?: string | null;
+  firstName?: string | null;
+  profile?: Users_ProfileUncheckedCreateNestedOneWithoutUserInput;
+  teams?: Users_UsersOnTeamsUncheckedCreateNestedManyWithoutUserInput;
+  contacted?: Users_UserUncheckedCreateNestedManyWithoutContactedByInput;
+  contactedBy?: Users_UserUncheckedCreateNestedManyWithoutContactedInput;
+}
+
+export interface Users_UserCreateOrConnectWithoutCalendarsInput {
+  where: Users_UserWhereUniqueInput;
+  create: Users_UserUncheckedCreateWithoutCalendarsInput;
+}
+
+export interface Users_CalendarCreateWithoutUsersInput {
+  calendarType: string;
+  calendarEvents?: Users_CalendarEventCreateNestedManyWithoutCalendarInput;
+}
+
+export interface Users_CalendarUncheckedCreateWithoutUsersInput {
+  id?: number;
+  calendarType: string;
+  calendarEvents?: Users_CalendarEventUncheckedCreateNestedManyWithoutCalendarInput;
+}
+
+export interface Users_CalendarCreateOrConnectWithoutUsersInput {
+  where: Users_CalendarWhereUniqueInput;
+  create: Users_CalendarUncheckedCreateWithoutUsersInput;
+}
+
+export interface Users_UserUpsertWithoutCalendarsInput {
+  update: Users_UserUncheckedUpdateWithoutCalendarsInput;
+  create: Users_UserUncheckedCreateWithoutCalendarsInput;
+  where?: Users_UserWhereInput;
+}
+
+export interface Users_UserUpdateToOneWithWhereWithoutCalendarsInput {
+  where?: Users_UserWhereInput;
+  data: Users_UserUncheckedUpdateWithoutCalendarsInput;
+}
+
+export interface Users_UserUpdateWithoutCalendarsInput {
+  createdAt?: DateTimeFieldUpdateOperationsInput;
+  username?: NullableStringFieldUpdateOperationsInput | null;
+  password?: NullableStringFieldUpdateOperationsInput | null;
+  email?: StringFieldUpdateOperationsInput;
+  roles?: Users_UserUpdaterolesInput;
+  googleId?: NullableStringFieldUpdateOperationsInput | null;
+  googleProfile?: NullableJsonNullValueInput;
+  lastName?: NullableStringFieldUpdateOperationsInput | null;
+  firstName?: NullableStringFieldUpdateOperationsInput | null;
+  profile?: Users_ProfileUpdateOneWithoutUserNestedInput;
+  teams?: Users_UsersOnTeamsUpdateManyWithoutUserNestedInput;
+  contacted?: Users_UserUpdateManyWithoutContactedByNestedInput;
+  contactedBy?: Users_UserUpdateManyWithoutContactedNestedInput;
+}
+
+export interface Users_UserUncheckedUpdateWithoutCalendarsInput {
+  id?: IntFieldUpdateOperationsInput;
+  createdAt?: DateTimeFieldUpdateOperationsInput;
+  username?: NullableStringFieldUpdateOperationsInput | null;
+  password?: NullableStringFieldUpdateOperationsInput | null;
+  email?: StringFieldUpdateOperationsInput;
+  roles?: Users_UserUpdaterolesInput;
+  googleId?: NullableStringFieldUpdateOperationsInput | null;
+  googleProfile?: NullableJsonNullValueInput;
+  lastName?: NullableStringFieldUpdateOperationsInput | null;
+  firstName?: NullableStringFieldUpdateOperationsInput | null;
+  profile?: Users_ProfileUncheckedUpdateOneWithoutUserNestedInput;
+  teams?: Users_UsersOnTeamsUncheckedUpdateManyWithoutUserNestedInput;
+  contacted?: Users_UserUncheckedUpdateManyWithoutContactedByNestedInput;
+  contactedBy?: Users_UserUncheckedUpdateManyWithoutContactedNestedInput;
+}
+
+export interface Users_CalendarUpsertWithoutUsersInput {
+  update: Users_CalendarUncheckedUpdateWithoutUsersInput;
+  create: Users_CalendarUncheckedCreateWithoutUsersInput;
+  where?: Users_CalendarWhereInput;
+}
+
+export interface Users_CalendarUpdateToOneWithWhereWithoutUsersInput {
+  where?: Users_CalendarWhereInput;
+  data: Users_CalendarUncheckedUpdateWithoutUsersInput;
+}
+
+export interface Users_CalendarUpdateWithoutUsersInput {
+  calendarType?: StringFieldUpdateOperationsInput;
+  calendarEvents?: Users_CalendarEventUpdateManyWithoutCalendarNestedInput;
+}
+
+export interface Users_CalendarUncheckedUpdateWithoutUsersInput {
+  id?: IntFieldUpdateOperationsInput;
+  calendarType?: StringFieldUpdateOperationsInput;
+  calendarEvents?: Users_CalendarEventUncheckedUpdateManyWithoutCalendarNestedInput;
+}
+
+export interface Users_CalendarsOnUsersCreateWithoutCalendarInput {
+  user: Users_UserCreateNestedOneWithoutCalendarsInput;
+}
+
+export interface Users_CalendarsOnUsersUncheckedCreateWithoutCalendarInput {
+  userId: number;
+}
+
+export interface Users_CalendarsOnUsersCreateOrConnectWithoutCalendarInput {
+  where: Users_CalendarsOnUsersWhereUniqueInput;
+  create: Users_CalendarsOnUsersUncheckedCreateWithoutCalendarInput;
+}
+
+export interface Users_CalendarsOnUsersCreateManyCalendarInputEnvelope {
+  data: Users_CalendarsOnUsersCreateManyCalendarInput[];
+  skipDuplicates?: boolean;
+}
+
+export interface Users_CalendarEventCreateWithoutCalendarInput {
+  url?: string | null;
+  title: string;
+  start: Date;
+  end: Date;
+  allDay: boolean;
+}
+
+export interface Users_CalendarEventUncheckedCreateWithoutCalendarInput {
+  id?: number;
+  url?: string | null;
+  title: string;
+  start: Date;
+  end: Date;
+  allDay: boolean;
+}
+
+export interface Users_CalendarEventCreateOrConnectWithoutCalendarInput {
+  where: Users_CalendarEventWhereUniqueInput;
+  create: Users_CalendarEventUncheckedCreateWithoutCalendarInput;
+}
+
+export interface Users_CalendarEventCreateManyCalendarInputEnvelope {
+  data: Users_CalendarEventCreateManyCalendarInput[];
+  skipDuplicates?: boolean;
+}
+
+export interface Users_CalendarsOnUsersUpsertWithWhereUniqueWithoutCalendarInput {
+  where: Users_CalendarsOnUsersWhereUniqueInput;
+  update: Users_CalendarsOnUsersUncheckedUpdateWithoutCalendarInput;
+  create: Users_CalendarsOnUsersUncheckedCreateWithoutCalendarInput;
+}
+
+export interface Users_CalendarsOnUsersUpdateWithWhereUniqueWithoutCalendarInput {
+  where: Users_CalendarsOnUsersWhereUniqueInput;
+  data: Users_CalendarsOnUsersUncheckedUpdateWithoutCalendarInput;
+}
+
+export interface Users_CalendarsOnUsersUpdateManyWithWhereWithoutCalendarInput {
+  where: Users_CalendarsOnUsersScalarWhereInput;
+  data: Users_CalendarsOnUsersUncheckedUpdateManyWithoutUsersInput;
+}
+
+export interface Users_CalendarEventUpsertWithWhereUniqueWithoutCalendarInput {
+  where: Users_CalendarEventWhereUniqueInput;
+  update: Users_CalendarEventUncheckedUpdateWithoutCalendarInput;
+  create: Users_CalendarEventUncheckedCreateWithoutCalendarInput;
+}
+
+export interface Users_CalendarEventUpdateWithWhereUniqueWithoutCalendarInput {
+  where: Users_CalendarEventWhereUniqueInput;
+  data: Users_CalendarEventUncheckedUpdateWithoutCalendarInput;
+}
+
+export interface Users_CalendarEventUpdateManyWithWhereWithoutCalendarInput {
+  where: Users_CalendarEventScalarWhereInput;
+  data: Users_CalendarEventUncheckedUpdateManyWithoutCalendarEventsInput;
+}
+
+export interface Users_CalendarEventScalarWhereInput {
+  AND?: Users_CalendarEventScalarWhereInput[];
+  OR?: Users_CalendarEventScalarWhereInput[];
+  NOT?: Users_CalendarEventScalarWhereInput[];
+  id?: IntFilter;
+  url?: StringNullableFilter | null;
+  title?: StringFilter;
+  start?: DateTimeFilter;
+  end?: DateTimeFilter;
+  allDay?: BoolFilter;
+  calendarId?: IntFilter;
+}
+
 export interface Users_UsersOnTeamsCreateManyUserInput {
   teamName: string;
   assignedAt?: Date;
+}
+
+export interface Users_CalendarsOnUsersCreateManyUserInput {
+  calendarId: number;
 }
 
 export interface Users_UsersOnTeamsUpdateWithoutUserInput {
@@ -2901,6 +5362,110 @@ export interface Users_UsersOnTeamsUncheckedUpdateWithoutUserInput {
 export interface Users_UsersOnTeamsUncheckedUpdateManyWithoutTeamsInput {
   teamName?: StringFieldUpdateOperationsInput;
   assignedAt?: DateTimeFieldUpdateOperationsInput;
+}
+
+export interface Users_CalendarsOnUsersUpdateWithoutUserInput {
+  calendar?: Users_CalendarUpdateOneRequiredWithoutUsersNestedInput;
+}
+
+export interface Users_CalendarsOnUsersUncheckedUpdateWithoutUserInput {
+  calendarId?: IntFieldUpdateOperationsInput;
+}
+
+export interface Users_CalendarsOnUsersUncheckedUpdateManyWithoutCalendarsInput {
+  calendarId?: IntFieldUpdateOperationsInput;
+}
+
+export interface Users_UserUpdateWithoutContactedByInput {
+  createdAt?: DateTimeFieldUpdateOperationsInput;
+  username?: NullableStringFieldUpdateOperationsInput | null;
+  password?: NullableStringFieldUpdateOperationsInput | null;
+  email?: StringFieldUpdateOperationsInput;
+  roles?: Users_UserUpdaterolesInput;
+  googleId?: NullableStringFieldUpdateOperationsInput | null;
+  googleProfile?: NullableJsonNullValueInput;
+  lastName?: NullableStringFieldUpdateOperationsInput | null;
+  firstName?: NullableStringFieldUpdateOperationsInput | null;
+  profile?: Users_ProfileUpdateOneWithoutUserNestedInput;
+  teams?: Users_UsersOnTeamsUpdateManyWithoutUserNestedInput;
+  calendars?: Users_CalendarsOnUsersUpdateManyWithoutUserNestedInput;
+  contacted?: Users_UserUpdateManyWithoutContactedByNestedInput;
+}
+
+export interface Users_UserUncheckedUpdateWithoutContactedByInput {
+  id?: IntFieldUpdateOperationsInput;
+  createdAt?: DateTimeFieldUpdateOperationsInput;
+  username?: NullableStringFieldUpdateOperationsInput | null;
+  password?: NullableStringFieldUpdateOperationsInput | null;
+  email?: StringFieldUpdateOperationsInput;
+  roles?: Users_UserUpdaterolesInput;
+  googleId?: NullableStringFieldUpdateOperationsInput | null;
+  googleProfile?: NullableJsonNullValueInput;
+  lastName?: NullableStringFieldUpdateOperationsInput | null;
+  firstName?: NullableStringFieldUpdateOperationsInput | null;
+  profile?: Users_ProfileUncheckedUpdateOneWithoutUserNestedInput;
+  teams?: Users_UsersOnTeamsUncheckedUpdateManyWithoutUserNestedInput;
+  calendars?: Users_CalendarsOnUsersUncheckedUpdateManyWithoutUserNestedInput;
+  contacted?: Users_UserUncheckedUpdateManyWithoutContactedByNestedInput;
+}
+
+export interface Users_UserUncheckedUpdateManyWithoutContactedInput {
+  id?: IntFieldUpdateOperationsInput;
+  createdAt?: DateTimeFieldUpdateOperationsInput;
+  username?: NullableStringFieldUpdateOperationsInput | null;
+  password?: NullableStringFieldUpdateOperationsInput | null;
+  email?: StringFieldUpdateOperationsInput;
+  roles?: Users_UserUpdaterolesInput;
+  googleId?: NullableStringFieldUpdateOperationsInput | null;
+  googleProfile?: NullableJsonNullValueInput;
+  lastName?: NullableStringFieldUpdateOperationsInput | null;
+  firstName?: NullableStringFieldUpdateOperationsInput | null;
+}
+
+export interface Users_UserUpdateWithoutContactedInput {
+  createdAt?: DateTimeFieldUpdateOperationsInput;
+  username?: NullableStringFieldUpdateOperationsInput | null;
+  password?: NullableStringFieldUpdateOperationsInput | null;
+  email?: StringFieldUpdateOperationsInput;
+  roles?: Users_UserUpdaterolesInput;
+  googleId?: NullableStringFieldUpdateOperationsInput | null;
+  googleProfile?: NullableJsonNullValueInput;
+  lastName?: NullableStringFieldUpdateOperationsInput | null;
+  firstName?: NullableStringFieldUpdateOperationsInput | null;
+  profile?: Users_ProfileUpdateOneWithoutUserNestedInput;
+  teams?: Users_UsersOnTeamsUpdateManyWithoutUserNestedInput;
+  calendars?: Users_CalendarsOnUsersUpdateManyWithoutUserNestedInput;
+  contactedBy?: Users_UserUpdateManyWithoutContactedNestedInput;
+}
+
+export interface Users_UserUncheckedUpdateWithoutContactedInput {
+  id?: IntFieldUpdateOperationsInput;
+  createdAt?: DateTimeFieldUpdateOperationsInput;
+  username?: NullableStringFieldUpdateOperationsInput | null;
+  password?: NullableStringFieldUpdateOperationsInput | null;
+  email?: StringFieldUpdateOperationsInput;
+  roles?: Users_UserUpdaterolesInput;
+  googleId?: NullableStringFieldUpdateOperationsInput | null;
+  googleProfile?: NullableJsonNullValueInput;
+  lastName?: NullableStringFieldUpdateOperationsInput | null;
+  firstName?: NullableStringFieldUpdateOperationsInput | null;
+  profile?: Users_ProfileUncheckedUpdateOneWithoutUserNestedInput;
+  teams?: Users_UsersOnTeamsUncheckedUpdateManyWithoutUserNestedInput;
+  calendars?: Users_CalendarsOnUsersUncheckedUpdateManyWithoutUserNestedInput;
+  contactedBy?: Users_UserUncheckedUpdateManyWithoutContactedNestedInput;
+}
+
+export interface Users_UserUncheckedUpdateManyWithoutContactedByInput {
+  id?: IntFieldUpdateOperationsInput;
+  createdAt?: DateTimeFieldUpdateOperationsInput;
+  username?: NullableStringFieldUpdateOperationsInput | null;
+  password?: NullableStringFieldUpdateOperationsInput | null;
+  email?: StringFieldUpdateOperationsInput;
+  roles?: Users_UserUpdaterolesInput;
+  googleId?: NullableStringFieldUpdateOperationsInput | null;
+  googleProfile?: NullableJsonNullValueInput;
+  lastName?: NullableStringFieldUpdateOperationsInput | null;
+  firstName?: NullableStringFieldUpdateOperationsInput | null;
 }
 
 export interface Users_UsersOnTeamsCreateManyTeamInput {
@@ -2923,6 +5488,74 @@ export interface Users_UsersOnTeamsUncheckedUpdateManyWithoutUsersInput {
   assignedAt?: DateTimeFieldUpdateOperationsInput;
 }
 
+export interface Users_CalendarsOnUsersCreateManyCalendarInput {
+  userId: number;
+}
+
+export interface Users_CalendarEventCreateManyCalendarInput {
+  id?: number;
+  url?: string | null;
+  title: string;
+  start: Date;
+  end: Date;
+  allDay: boolean;
+}
+
+export interface Users_CalendarsOnUsersUpdateWithoutCalendarInput {
+  user?: Users_UserUpdateOneRequiredWithoutCalendarsNestedInput;
+}
+
+export interface Users_CalendarsOnUsersUncheckedUpdateWithoutCalendarInput {
+  userId?: IntFieldUpdateOperationsInput;
+}
+
+export interface Users_CalendarsOnUsersUncheckedUpdateManyWithoutUsersInput {
+  userId?: IntFieldUpdateOperationsInput;
+}
+
+export interface Users_CalendarEventUpdateWithoutCalendarInput {
+  url?: NullableStringFieldUpdateOperationsInput | null;
+  title?: StringFieldUpdateOperationsInput;
+  start?: DateTimeFieldUpdateOperationsInput;
+  end?: DateTimeFieldUpdateOperationsInput;
+  allDay?: BoolFieldUpdateOperationsInput;
+}
+
+export interface Users_CalendarEventUncheckedUpdateWithoutCalendarInput {
+  id?: IntFieldUpdateOperationsInput;
+  url?: NullableStringFieldUpdateOperationsInput | null;
+  title?: StringFieldUpdateOperationsInput;
+  start?: DateTimeFieldUpdateOperationsInput;
+  end?: DateTimeFieldUpdateOperationsInput;
+  allDay?: BoolFieldUpdateOperationsInput;
+}
+
+export interface Users_CalendarEventUncheckedUpdateManyWithoutCalendarEventsInput {
+  id?: IntFieldUpdateOperationsInput;
+  url?: NullableStringFieldUpdateOperationsInput | null;
+  title?: StringFieldUpdateOperationsInput;
+  start?: DateTimeFieldUpdateOperationsInput;
+  end?: DateTimeFieldUpdateOperationsInput;
+  allDay?: BoolFieldUpdateOperationsInput;
+}
+
+export enum CalendarEventScalarFieldEnum {
+  id = 'id',
+  url = 'url',
+  title = 'title',
+  start = 'start',
+  end = 'end',
+  allDay = 'allDay',
+  calendarId = 'calendarId',
+}
+export enum CalendarScalarFieldEnum {
+  id = 'id',
+  calendarType = 'calendarType',
+}
+export enum CalendarsOnUsersScalarFieldEnum {
+  userId = 'userId',
+  calendarId = 'calendarId',
+}
 export enum JsonNullValueFilter {
   DbNull = 'DbNull',
   JsonNull = 'JsonNull',
@@ -2936,6 +5569,9 @@ export enum ProfileScalarFieldEnum {
   userId = 'userId',
   location = 'location',
   joiningDate = 'joiningDate',
+  businessPhone = 'businessPhone',
+  mobilePhone = 'mobilePhone',
+  kakaoTalkId = 'kakaoTalkId',
   designation = 'designation',
   profileImg = 'profileImg',
   designationIcon = 'designationIcon',
@@ -2951,6 +5587,8 @@ export enum SortOrder {
 }
 export enum TeamScalarFieldEnum {
   teamName = 'teamName',
+  teamType = 'teamType',
+  teamIcon = 'teamIcon',
 }
 export enum TransactionIsolationLevel {
   ReadUncommitted = 'ReadUncommitted',
@@ -3001,6 +5639,24 @@ export interface Users_TransactionalMutationInput {
   Users_DeleteOneTeam: Users_DeleteOneTeamArgs;
   Users_UpdateOneTeam: Users_UpdateOneTeamArgs;
   Users_DeleteManyTeam: Users_DeleteManyTeamArgs;
+  Users_CreateOneCalendarEvent: Users_CreateOneCalendarEventArgs;
+  Users_UpsertOneCalendarEvent: Users_UpsertOneCalendarEventArgs;
+  Users_CreateManyCalendarEvent: Users_CreateManyCalendarEventArgs;
+  Users_DeleteOneCalendarEvent: Users_DeleteOneCalendarEventArgs;
+  Users_UpdateOneCalendarEvent: Users_UpdateOneCalendarEventArgs;
+  Users_DeleteManyCalendarEvent: Users_DeleteManyCalendarEventArgs;
+  Users_CreateOneCalendarsOnUsers: Users_CreateOneCalendarsOnUsersArgs;
+  Users_UpsertOneCalendarsOnUsers: Users_UpsertOneCalendarsOnUsersArgs;
+  Users_CreateManyCalendarsOnUsers: Users_CreateManyCalendarsOnUsersArgs;
+  Users_DeleteOneCalendarsOnUsers: Users_DeleteOneCalendarsOnUsersArgs;
+  Users_UpdateOneCalendarsOnUsers: Users_UpdateOneCalendarsOnUsersArgs;
+  Users_DeleteManyCalendarsOnUsers: Users_DeleteManyCalendarsOnUsersArgs;
+  Users_CreateOneCalendar: Users_CreateOneCalendarArgs;
+  Users_UpsertOneCalendar: Users_UpsertOneCalendarArgs;
+  Users_CreateManyCalendar: Users_CreateManyCalendarArgs;
+  Users_DeleteOneCalendar: Users_DeleteOneCalendarArgs;
+  Users_UpdateOneCalendar: Users_UpdateOneCalendarArgs;
+  Users_DeleteManyCalendar: Users_DeleteManyCalendarArgs;
 }
 
 export interface Users_TransactionalBatchMutationArgs {

@@ -100,38 +100,38 @@ async function getSchema(schema: string) {
       fieldsTypeMap: fieldsTypeMap,
     };
     modelMap.set(model.name, result);
-    result.generateUpdateMany = false;
-
-    model.fields.forEach((field) => {
-      if (
-        !keyFields.some((row) => row.includes(field.name)) &&
-        !field.relationName
-      ) {
-        result.generateUpdateMany = true;
-      }
-    });
-
-    const inputTypeRegex = new RegExp(
-      `(${model.name})(WhereInput|OrderByWithRelationInput|WhereUniqueInput|ScalarWhereInput|OrderByWithAggregationInput|ScalarWhereWithAggregatesInput|CreateInput|UncheckedCreateInput|UpdateInput|UncheckedUpdateInput|CreateManyInput|UpdateManyMutationInput|UncheckedUpdateManyInput|CountOrderByAggregateInput|AvgOrderByAggregateInput|MaxOrderByAggregateInput|MinOrderByAggregateInput|SumOrderByAggregateInput|Create.*?Input|Update.*?Input|Unchecked.*?Input|UpsertWithout.*?Input|UpsertWithWhereUniqueWithout.*?Input|UncheckedUpdateWithout.*?Input|UncheckedUpdateManyWithout.*?Input|UncheckedCreateWithout.*?Input|OrderByRelationAggregateInput|ListRelationFilter|RelationFilter)`,
-    );
-    const inputTypes = document.schema.inputObjectTypes.prisma
-      .filter((type) => type.name.match(inputTypeRegex)?.input)
-      .map((type) => type.name);
-    inputTypes.forEach((typename) => {
-      modelInputTypesMap.set(typename, model.name);
-    });
-
-    const outputTypeRegex = new RegExp(
-      `(${model.name}(GroupByOutputType|CountOutputType|CountAggregateOutputType|AvgAggregateOutputType|SumAggregateOutputType|MinAggregateOutputType|MaxAggregateOutputType))|^(Aggregate)(${model.name})$`,
-    );
-    const outputTypes = document.schema.outputObjectTypes.prisma
-      .filter((type) => type.name.match(outputTypeRegex)?.input)
-      .map((type) => type.name);
-    outputTypes.forEach((typename) => {
-      modelOutputTypesMap.set(typename, model.name);
-    });
 
     return result;
+  });
+
+  let modelRegexStr = Array.from(modelMap.keys()).join('|');
+  const inputTypeRegex = new RegExp(
+    `(?<model>${modelRegexStr})(WhereInput|OrderByWithRelationInput|WhereUniqueInput|ScalarWhereInput|OrderByWithAggregationInput|ScalarWhereWithAggregatesInput|CreateInput|UncheckedCreateInput|UpdateInput|UncheckedUpdateInput|CreateManyInput|UpdateManyMutationInput|UncheckedUpdateManyInput|CountOrderByAggregateInput|AvgOrderByAggregateInput|MaxOrderByAggregateInput|MinOrderByAggregateInput|SumOrderByAggregateInput|Create.*?Input|Update.*?Input|Unchecked.*?Input|UpsertWithout.*?Input|UpsertWithWhereUniqueWithout.*?Input|UncheckedUpdateWithout.*?Input|UncheckedUpdateManyWithout.*?Input|UncheckedCreateWithout.*?Input|OrderByRelationAggregateInput|ListRelationFilter|RelationFilter)`,
+  );
+  document.schema.inputObjectTypes.prisma.forEach((type) => {
+    let matched = type.name.match(inputTypeRegex);
+    if (matched?.input && matched.groups?.model) {
+      modelInputTypesMap.set(matched.input, matched.groups.model);
+      if (matched.input.endsWith('UpdateManyMutationInput')) {
+        type.fields.length == 0
+          ? (modelMap.get(matched.groups.model)!.generateUpdateMany = false)
+          : (modelMap.get(matched.groups.model)!.generateUpdateMany = true);
+      }
+    }
+  });
+
+  const outputTypeRegex = new RegExp(
+    `((?<model>${modelRegexStr})(GroupByOutputType|CountOutputType|CountAggregateOutputType|AvgAggregateOutputType|SumAggregateOutputType|MinAggregateOutputType|MaxAggregateOutputType))|((Aggregate)(?<model2>${modelRegexStr}))`,
+  );
+
+  document.schema.outputObjectTypes.prisma.forEach((type) => {
+    let matched = type.name.match(outputTypeRegex);
+    if (matched?.input && (matched.groups?.model || matched.groups?.model2)) {
+      modelOutputTypesMap.set(
+        matched.input,
+        matched.groups.model ? matched.groups?.model : matched.groups?.model2,
+      );
+    }
   });
 
   document.datamodel.models = models;

@@ -57,7 +57,9 @@ const resolvers: Resolvers = {
     Users_deleteManyTeam: async (_parent, args, { prisma }) => {
       return prisma.team.deleteMany(args);
     },
-    //updateMany for this model cannot exist as this model contains only unique fields or relations.
+    Users_updateManyTeam: (_parent, args, { prisma }) => {
+      return prisma.team.updateMany(args);
+    },
   },
   Team: {
     __resolveReference(reference, { prisma }) {

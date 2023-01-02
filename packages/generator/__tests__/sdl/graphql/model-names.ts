@@ -2,7 +2,15 @@ import { wrapSchema, RenameTypes, RenameRootFields } from '@graphql-tools/wrap';
 import { GraphQLSchema } from 'graphql';
 
 export const modelNames = () => {
-  return ['User', 'Profile', 'UsersOnTeams', 'Team'];
+  return [
+    'User',
+    'Profile',
+    'UsersOnTeams',
+    'Team',
+    'CalendarEvent',
+    'CalendarsOnUsers',
+    'Calendar',
+  ];
 };
 
 //This subgraph's name is set to "Users".

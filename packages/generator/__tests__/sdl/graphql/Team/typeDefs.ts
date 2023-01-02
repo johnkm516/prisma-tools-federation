@@ -11,6 +11,8 @@ export default gql`
       skip: Int
       distinct: UsersOnTeamsScalarFieldEnum
     ): [UsersOnTeams!]!
+    teamType: String
+    teamIcon: String
     _count: TeamCountOutputType!
   }
 
@@ -79,6 +81,9 @@ export default gql`
       update: Users_TeamUpdateInput!
     ): Team
     Users_deleteManyTeam(where: Users_TeamWhereInput): BatchPayload
-    # updateMany for this model cannot exist as this model contains only unique fields or relations.
+    Users_updateManyTeam(
+      data: Users_TeamUpdateManyMutationInput!
+      where: Users_TeamWhereInput
+    ): BatchPayload
   }
 `;

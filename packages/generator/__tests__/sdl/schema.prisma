@@ -23,13 +23,19 @@ model User {
   firstName     String?
   profile       Profile?
   teams         UsersOnTeams[]
+  calendars     CalendarsOnUsers[]
+  contacted     User[]  @relation("UserContact")
+  contactedBy   User[]  @relation("UserContact")
 }
 
 model Profile {
   userId            Int  @unique  @id
   user              User @relation(fields: [userId], references: [id])
   location          String?
-  joiningDate       DateTime?
+  joiningDate       DateTime? @default(now())
+  businessPhone     String?   @unique
+  mobilePhone       String?   @unique
+  kakaoTalkId       String?   @unique
   designation       String?
   profileImg        String?
   designationIcon   String?
@@ -49,4 +55,33 @@ model UsersOnTeams {
 model Team {
   teamName      String  @unique @id
   users         UsersOnTeams[]
+  teamType      String?
+  teamIcon      String?
+}
+
+model CalendarEvent {
+  id              Int      @id @default(autoincrement())
+  url             String?  @default("")
+  title           String   
+  start           DateTime
+  end             DateTime
+  allDay          Boolean
+  calendarId      Int
+  calendar        Calendar  @relation(fields: [calendarId], references: [id])
+}
+
+model CalendarsOnUsers {
+  user          User     @relation(fields: [userId], references: [id])
+  userId        Int
+  calendar      Calendar @relation(fields: [calendarId], references: [id])
+  calendarId    Int     
+
+  @@id([userId, calendarId])
+}
+
+model Calendar {
+  id      Int     @id @default(autoincrement())
+  calendarType    String
+  users           CalendarsOnUsers[]
+  calendarEvents  CalendarEvent[]
 }

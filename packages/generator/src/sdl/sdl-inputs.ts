@@ -114,11 +114,8 @@ type BatchPayload @shareable {
     //console.log(readyDmmf.schema.outputObjectTypes.prisma.map(p => p.name));
 
     inputObjectTypes.forEach((input) => {
-      const model = readyDmmf.modelmap?.get(
-        readyDmmf.modelInputTypesMap?.get(input.name) ?? ``,
-      );
       if (input.fields.length > 0) {
-        if (options?.federation && model) {
+        if (options?.federation) {
           fileContent += `input ${options?.federation}_${input.name} {\n`;
         } else {
           fileContent += `input ${input.name} {\n`;
@@ -137,11 +134,7 @@ type BatchPayload @shareable {
               hasEmptyTypeFields(inputType.type as string, schema, options);
 
             if (!hasEmptyType) {
-              const inputTypeModel = readyDmmf.modelmap?.get(
-                readyDmmf.modelInputTypesMap?.get(inputType.type as string) ??
-                  ``,
-              );
-              if (options?.federation && inputTypeModel) {
+              if (options?.federation) {
                 fileContent += `  ${field.name}: ${
                   inputType.isList
                     ? `[${options?.federation}_${inputType.type}!]`
@@ -257,9 +250,22 @@ type BatchPayload @shareable {
       );
       const TransactionalBatchInput: string[] = [];
       const MutationsArgsInputs: string[] = [];
+      let modelRegexStr = Array.from(readyDmmf.modelmap!.keys()).join('|');
+      const updateManyRegex = new RegExp(
+        `(updateMany(?<model>${modelRegexStr}))`,
+      );
       if (Mutation) {
         Mutation.fields.forEach((field) => {
           if (field.name != 'executeRaw' && field.name != 'queryRaw') {
+            let match = field.name.match(updateManyRegex);
+            if (match && match.groups?.model) {
+              if (
+                readyDmmf.modelmap?.get(match.groups?.model)
+                  ?.generateUpdateMany == false
+              ) {
+                return;
+              }
+            }
             TransactionalBatchInput.push(
               options?.federation
                 ? `  ${options.federation}_${field.name}: ${options.federation}_${field.name}Input`
