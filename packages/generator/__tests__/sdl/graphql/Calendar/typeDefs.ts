@@ -13,13 +13,13 @@ export default gql`
       distinct: CalendarsOnUsersScalarFieldEnum
     ): [CalendarsOnUsers!]!
     calendarEvents(
-      where: Users_CalendarEventWhereInput
-      orderBy: Users_CalendarEventOrderByWithRelationInput
-      cursor: Users_CalendarEventWhereUniqueInput
+      where: Users_CalendarEventsOnCalendarsWhereInput
+      orderBy: Users_CalendarEventsOnCalendarsOrderByWithRelationInput
+      cursor: Users_CalendarEventsOnCalendarsWhereUniqueInput
       take: Int
       skip: Int
-      distinct: CalendarEventScalarFieldEnum
-    ): [CalendarEvent!]!
+      distinct: CalendarEventsOnCalendarsScalarFieldEnum
+    ): [CalendarEventsOnCalendars!]!
     _count: CalendarCountOutputType!
   }
 

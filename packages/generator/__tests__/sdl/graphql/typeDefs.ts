@@ -1,3 +1,5 @@
+import Order from './Order/typeDefs';
+import CalendarEventsOnCalendars from './CalendarEventsOnCalendars/typeDefs';
 import Calendar from './Calendar/typeDefs';
 import CalendarsOnUsers from './CalendarsOnUsers/typeDefs';
 import CalendarEvent from './CalendarEvent/typeDefs';
@@ -26,4 +28,8 @@ export default mergeTypeDefs([
   CalendarEvent,
   CalendarsOnUsers,
   Calendar,
+  ,
+  CalendarEventsOnCalendars,
+  ,
+  Order,
 ]);

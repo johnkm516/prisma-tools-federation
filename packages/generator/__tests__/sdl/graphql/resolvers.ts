@@ -1,3 +1,5 @@
+import Order from './Order/resolvers';
+import CalendarEventsOnCalendars from './CalendarEventsOnCalendars/resolvers';
 import Calendar from './Calendar/resolvers';
 import CalendarsOnUsers from './CalendarsOnUsers/resolvers';
 import CalendarEvent from './CalendarEvent/resolvers';
@@ -20,4 +22,8 @@ export default [
   CalendarEvent,
   CalendarsOnUsers,
   Calendar,
+  ,
+  CalendarEventsOnCalendars,
+  ,
+  Order,
 ];

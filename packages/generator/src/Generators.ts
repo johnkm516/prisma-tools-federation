@@ -104,9 +104,13 @@ async function getSchema(schema: string) {
     return result;
   });
 
-  let modelRegexStr = Array.from(modelMap.keys()).join('|');
+  let modelRegexStr = Array.from(modelMap.keys())
+    .sort(function (a, b) {
+      return b.length - a.length; //Sort in decreasing length to make model token greedy
+    })
+    .join('|');
   const inputTypeRegex = new RegExp(
-    `(?<model>${modelRegexStr})(WhereInput|OrderByWithRelationInput|WhereUniqueInput|ScalarWhereInput|OrderByWithAggregationInput|ScalarWhereWithAggregatesInput|CreateInput|UncheckedCreateInput|UpdateInput|UncheckedUpdateInput|CreateManyInput|UpdateManyMutationInput|UncheckedUpdateManyInput|CountOrderByAggregateInput|AvgOrderByAggregateInput|MaxOrderByAggregateInput|MinOrderByAggregateInput|SumOrderByAggregateInput|Create.*?Input|Update.*?Input|Unchecked.*?Input|UpsertWithout.*?Input|UpsertWithWhereUniqueWithout.*?Input|UncheckedUpdateWithout.*?Input|UncheckedUpdateManyWithout.*?Input|UncheckedCreateWithout.*?Input|OrderByRelationAggregateInput|ListRelationFilter|RelationFilter)`,
+    `(?<model>${modelRegexStr})(WhereInput|OrderByWithRelationInput|WhereUniqueInput|ScalarWhereInput|OrderByWithAggregationInput|ScalarWhereWithAggregatesInput|CreateInput|UncheckedCreateInput|UpdateInput|UncheckedUpdateInput|CreateManyInput|UpdateManyMutationInput|UncheckedUpdateManyInput|CountOrderByAggregateInput|AvgOrderByAggregateInput|MaxOrderByAggregateInput|MinOrderByAggregateInput|SumOrderByAggregateInput|Create.*?Input|Update.*?Input|Unchecked.*?Input|UpsertWithout.*?Input|UpsertWithWhereUniqueWithout.*?Input|UncheckedUpdateWithout.*?Input|UncheckedUpdateManyWithout.*?Input|UncheckedCreateWithout.*?Input|.*CompoundUniqueInput|OrderByRelationAggregateInput|ListRelationFilter|RelationFilter)`,
   );
   document.schema.inputObjectTypes.prisma.forEach((type) => {
     let matched = type.name.match(inputTypeRegex);

@@ -45,6 +45,14 @@ export default gql`
       skip: Int
       distinct: UserScalarFieldEnum
     ): [User!]!
+    orders(
+      where: Users_OrderWhereInput
+      orderBy: Users_OrderOrderByWithRelationInput
+      cursor: Users_OrderWhereUniqueInput
+      take: Int
+      skip: Int
+      distinct: OrderScalarFieldEnum
+    ): [Order!]!
     _count: UserCountOutputType!
   }
 

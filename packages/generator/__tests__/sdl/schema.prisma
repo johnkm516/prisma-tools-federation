@@ -26,6 +26,7 @@ model User {
   calendars     CalendarsOnUsers[]
   contacted     User[]  @relation("UserContact")
   contactedBy   User[]  @relation("UserContact")
+  orders        Order[]
 }
 
 model Profile {
@@ -66,8 +67,23 @@ model CalendarEvent {
   start           DateTime
   end             DateTime
   allDay          Boolean
-  calendarId      Int
-  calendar        Calendar  @relation(fields: [calendarId], references: [id])
+  calendar        CalendarEventsOnCalendars[]
+}
+
+model CalendarEventsOnCalendars {
+  calendar          Calendar        @relation(fields:[calendarId], references: [id])
+  calendarId        Int         
+  calendarEvent     CalendarEvent   @relation(fields:[calendarEventId], references: [id])
+  calendarEventId   Int
+
+  @@id([calendarId, calendarEventId])
+}
+
+model Calendar {
+  id      Int     @id @default(autoincrement())
+  calendarType    String
+  users           CalendarsOnUsers[]
+  calendarEvents  CalendarEventsOnCalendars[]
 }
 
 model CalendarsOnUsers {
@@ -79,9 +95,11 @@ model CalendarsOnUsers {
   @@id([userId, calendarId])
 }
 
-model Calendar {
-  id      Int     @id @default(autoincrement())
-  calendarType    String
-  users           CalendarsOnUsers[]
-  calendarEvents  CalendarEvent[]
+model Order {
+  styleNumber             String      @unique
+  purchaseOrderNumber     String      @unique
+  author                  User        @relation(fields: [authorId], references: [id])
+  authorId                Int
+  
+  @@id([styleNumber, purchaseOrderNumber])
 }

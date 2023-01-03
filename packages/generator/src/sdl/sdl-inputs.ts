@@ -250,14 +250,17 @@ type BatchPayload @shareable {
         }
       });
 
-    console.log(options?.includeTransactionalBatchMutation);
     if (options?.includeTransactionalBatchMutation) {
       const Mutation = schema?.outputObjectTypes.prisma.find(
         (outputType) => outputType.name === 'Mutation',
       );
       const TransactionalBatchInput: string[] = [];
       const MutationsArgsInputs: string[] = [];
-      let modelRegexStr = Array.from(readyDmmf.modelmap!.keys()).join('|');
+      let modelRegexStr = Array.from(readyDmmf.modelmap!.keys())
+        .sort(function (a, b) {
+          return b.length - a.length; //Sort in decreasing length to make model token greedy
+        })
+        .join('|');
       const updateManyRegex = new RegExp(
         `(updateMany(?<model>${modelRegexStr}))`,
       );
